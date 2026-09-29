@@ -259,11 +259,11 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 .item.t-legendary .pic{position:relative;overflow:hidden}
 .item.t-legendary .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%);transform:translateX(-100%);animation:shine 3.2s ease-in-out infinite}
 @keyframes shine{60%,100%{transform:translateX(100%)}}
-.tierbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.tierbar{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}
 .tierbar .tb{background:#fff;border-radius:14px;padding:8px;text-align:center;display:grid;font-size:12px;font-weight:800}
 .tierbar .tb b{font-size:18px;font-variant-numeric:tabular-nums}
 .tierbar .t-common{color:#6E6661}.tierbar .t-rare{color:#2F6F9E}.tierbar .t-epic{color:#7443B0}.tierbar .t-legendary{color:#9A6A00;background:linear-gradient(160deg,#FFF1C5,#fff)}
-@media (max-width:420px){.tierbar{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.tierbar{grid-template-columns:repeat(3,1fr)}}
 .pop-prize.legend .rays{background:repeating-conic-gradient(#FBD46D 0 10deg,#FFF8E1 10deg 20deg)}
 .dlist{margin-top:14px;background:#fff;border-radius:16px;padding:8px 12px}
 .dlist summary{cursor:pointer;font-weight:800;min-height:40px;display:flex;align-items:center}
@@ -275,6 +275,12 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 #chatText{margin:4px 0 10px;font-size:15px;line-height:1.55}
 #chatText.chatin{animation:popin .35s cubic-bezier(.3,1.6,.5,1)}
 .factline{background:var(--sky);border-radius:14px;padding:10px 12px;font-size:14px;font-weight:700;margin:0 0 12px}
+.tier.t-mythic{background:linear-gradient(90deg,#FFB3C8,#FFE9A6,#B7F0C8,#A9D4EE,#D6C2F5);color:#5B3A8E}
+.item.t-mythic{box-shadow:0 0 0 3px transparent,0 10px 26px rgba(183,132,201,.45);background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FF8FC0,#FFD95F,#7FE3A8,#7FB6F0,#B784C9) border-box;border:3px solid transparent}
+.item.t-mythic .pic{position:relative;overflow:hidden}
+.item.t-mythic .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.8) 45%,rgba(255,200,240,.5) 55%,transparent 70%);transform:translateX(-100%);animation:shine 2.6s ease-in-out infinite}
+.tierbar .t-mythic{color:#6B3FA0;background:linear-gradient(160deg,#FFE5EC,#E8F4FF)}
+.pop-prize.mythic .rays{background:repeating-conic-gradient(#FFB3C8 0 8deg,#FFE9A6 8deg 16deg,#B7F0C8 16deg 24deg,#A9D4EE 24deg 32deg,#D6C2F5 32deg 40deg)}
 /* pop-ups */
 .pop-ov{position:fixed;inset:0;z-index:85;background:rgba(91,75,73,.3);display:grid;place-items:center;padding:16px}
 .pop-card{position:relative;overflow:hidden;background:var(--cream);border-radius:32px;padding:22px 18px 18px;max-width:380px;width:100%;text-align:center;box-shadow:0 18px 40px rgba(91,75,73,.25);border:4px solid #fff;animation:jelly .75s cubic-bezier(.3,1.6,.5,1)}
@@ -1654,8 +1660,8 @@ var WALLS={
 
 
 /* ---------- Rarity tiers · harder collecting · quests ---------- */
-var TIERS=['common','rare','epic','legendary'];
-var TIER_NAME={common:['Common','普通'],rare:['Rare','稀有'],epic:['Epic','史詩'],legendary:['Legendary','傳說']};
+var TIERS=['common','rare','epic','legendary','mythic'];
+var TIER_NAME={common:['Common','普通'],rare:['Rare','稀有'],epic:['Epic','史詩'],legendary:['Legendary','傳說'],mythic:['Mythic','神話']};
 function tierName(t){return L(TIER_NAME[t][0],TIER_NAME[t][1]);}
 /* existing shop items: tier from original price, then prices raised */
 ITEMS.forEach(function(it){if(it.tier)return;if(it.sec){it.tier='rare';return;}if(it.id==='w0'){it.tier='common';return;}
@@ -1699,16 +1705,32 @@ var SW3='stroke="#O" stroke-width="3"';
 WALLS.w_neon="url('data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="240" height="160"><rect width="240" height="160" fill="#1B1633"/><rect x="14" y="16" width="70" height="34" rx="6" fill="none" stroke="#FF5FA2" stroke-width="3"/><text x="49" y="40" font-size="18" text-anchor="middle" fill="#FF8FC0" font-family="sans-serif" font-weight="700">科學</text><rect x="120" y="30" width="96" height="30" rx="6" fill="none" stroke="#5FF0FF" stroke-width="3"/><text x="168" y="51" font-size="15" text-anchor="middle" fill="#9AF7FF" font-family="sans-serif" font-weight="700">加油 GO!</text><rect x="40" y="92" width="34" height="56" rx="5" fill="none" stroke="#FFD95F" stroke-width="3"/><text x="57" y="116" font-size="14" text-anchor="middle" fill="#FFE68F" font-family="sans-serif" font-weight="700">溫</text><text x="57" y="138" font-size="14" text-anchor="middle" fill="#FFE68F" font-family="sans-serif" font-weight="700">書</text><circle cx="170" cy="120" r="18" fill="none" stroke="#9D7BFF" stroke-width="3"/><path d="M160 120 h20 M170 110 v20" stroke="#C4B0FF" stroke-width="3"/></svg>').replace(/'/g,'%27')+"') 0 0/240px 160px";
 WALLS.w6='radial-gradient(circle at 20% 30%,#FFD1DC 3px,transparent 3.5px) 0 0/46px 46px,radial-gradient(circle at 70% 70%,#FFE5EC 2.5px,transparent 3px) 0 0/60px 60px,linear-gradient(#5B4E86,#C08AB8)';
 WALLS.w_galaxy='radial-gradient(circle at 15% 25%,#fff 1.5px,transparent 2px) 0 0/40px 40px,radial-gradient(circle at 60% 70%,#FFF1C5 2px,transparent 2.5px) 0 0/70px 70px,radial-gradient(ellipse at 70% 30%,rgba(247,169,181,.55),transparent 55%),radial-gradient(ellipse at 25% 75%,rgba(143,199,232,.5),transparent 55%),linear-gradient(135deg,#1E1B4B,#3B2A6B 60%,#1A3A5C)';
+/* ---------- 🌈 Mythic outfits: original designs inspired by favourite pop-culture vibes ---------- */
+function streakQ(n){return {en:'Reach a '+n+'-day study streak',zh:'連續溫習 '+n+' 日',f:function(){return [S.best,n];}};}
+[
+ QI('h_thunderhood','wear','hat','Thunder critter hood','雷電小獸帽','mythic',streakQ(40),'<path d="M56 78 Q54 40 100 36 Q146 40 144 78 Q124 70 100 70 Q76 70 56 78Z" fill="#FFD84D" '+SW3+'/><path d="M62 58 L44 6 L86 44Z" fill="#FFD84D" '+SW3+' stroke-linejoin="round"/><path d="M138 58 L156 6 L114 44Z" fill="#FFD84D" '+SW3+' stroke-linejoin="round"/><path d="M47 14 L44 6 L56 16Z M153 14 L156 6 L144 16Z" fill="#7A4B2A"/><path d="M104 40 L92 56 L102 56 L94 70 L112 50 L102 50 L108 40Z" fill="#F28C2B" stroke="#O" stroke-width="2" stroke-linejoin="round"/>'),
+ QI('h_pigears','wear','hat','Muddy-puddle piggy ears','泥氹小豬耳朵','mythic',streakQ(60),'<path d="M58 72 Q100 52 142 72" stroke="#F58FB1" stroke-width="7" fill="none"/><path d="M66 70 Q50 40 68 34 Q82 44 82 64Z" fill="#FFB3C8" '+SW3+' stroke-linejoin="round"/><path d="M134 70 Q150 40 132 34 Q118 44 118 64Z" fill="#FFB3C8" '+SW3+' stroke-linejoin="round"/><path d="M70 60 Q64 46 70 42 M130 60 Q136 46 130 42" stroke="#F58FB1" stroke-width="3" fill="none"/><ellipse cx="150" cy="84" rx="9" ry="4" fill="#A0724A" opacity=".8"/>'),
+ QI('h_moontiara','wear','hat','Magical-girl moon tiara','魔法少女月光頭冠','mythic',streakQ(80),'<path d="M62 74 Q100 56 138 74 L136 66 Q100 50 64 66Z" fill="#FBD46D" '+SW3+'/><path d="M100 60 m-14 0 a14 14 0 1 0 28 0 a11 11 0 1 1 -28 0Z" fill="#FFF1A8" stroke="#E0B23A" stroke-width="2"/><circle cx="100" cy="58" r="4" fill="#F28C9B"/><path d="M76 66 l4 -8 l4 8Z M116 66 l4 -8 l4 8Z" fill="#C9B6EA" stroke="#O" stroke-width="1.5"/><path d="M58 70 l-8 -10 l12 2Z M142 70 l8 -10 l-12 2Z" fill="#FFB3C8" stroke="#O" stroke-width="1.5"/><circle class="spark" cx="100" cy="36" r="3" fill="#fff" stroke="#E0B23A"/>'),
+ QI('a_herocape','wear','acc','Super-scientist hero cape','科學超級英雄披風','mythic',streakQ(100),'<path d="M40 142 Q100 162 160 142 L184 196 Q100 210 16 196Z" fill="#D8343A" '+SW3+' stroke-linejoin="round"/><path d="M40 142 Q100 162 160 142 L166 156 Q100 176 34 156Z" fill="#2F4FA8"/><circle cx="100" cy="156" r="11" fill="#FBD46D" '+SW3+'/><path d="M100 148 l2.5 5 l5.5 .8 l-4 3.8 l1 5.4 l-5 -2.6 l-5 2.6 l1 -5.4 l-4 -3.8 l5.5 -.8Z" fill="#D8343A"/>'),
+ QI('g_foxmask','wear','glasses','Festival fox mask','祭典狐狸面具','mythic',streakQ(120),'<path d="M58 118 Q56 94 70 86 L64 70 L84 84 Q100 80 116 84 L136 70 L130 86 Q144 94 142 118 Q130 128 100 128 Q70 128 58 118Z" fill="#FFFFFF" '+SW3+' stroke-linejoin="round"/><path d="M70 106 Q80 98 90 106 M110 106 Q120 98 130 106" stroke="#D8343A" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M66 82 L72 78 M134 82 L128 78" stroke="#D8343A" stroke-width="3"/><path d="M96 88 Q100 82 104 88" stroke="#D8343A" stroke-width="3" fill="none"/><circle cx="80" cy="112" r="3" fill="#O"/><circle cx="120" cy="112" r="3" fill="#O"/>'),
+ QI('w_castle','room','wall','Fireworks fairy castle','煙花童話城堡','mythic',streakQ(150),null),
+ QI('i_starlightwand','wear','hand','Starlight magical wand','魔法少女星光棒','mythic',streakQ(200),'<path d="M158 160 L174 108" stroke="#FFB3C8" stroke-width="6" stroke-linecap="round"/><path d="M176 104 C160 88 170 72 180 82 C190 72 200 88 184 104Z" fill="#F58FB1" '+SW3+'/><path d="M180 70 l3 7 l7 1 l-5 5 l1 7 l-6 -3 l-6 3 l1 -7 l-5 -5 l7 -1Z" fill="#FBD46D" stroke="#O" stroke-width="2"/><path d="M168 112 Q150 120 156 132 M178 112 Q196 122 188 134" stroke="#A9D4EE" stroke-width="3" fill="none"/><circle class="spark" cx="200" cy="70" r="3" fill="#C9B6EA"/><circle class="spark" cx="158" cy="80" r="2.5" fill="#FBD46D" style="animation-delay:.5s"/>'),
+ QI('h_trainercap','wear','hat','Monster-trainer cap','怪獸訓練家帽','mythic',{en:'Get 3★ in ALL sub-topics AND a 50-day streak',zh:'所有小節 3★ 並連續溫習 50 日',f:function(){return [threeStars()+Math.min(S.best,50),ALLSECS.length+50];}},'<path d="M64 72 Q64 34 100 32 Q136 34 136 72Z" fill="#E23A34" '+SW3+'/><path d="M66 62 Q100 52 134 62 L136 72 L64 72Z" fill="#FFFFFF" '+SW3+'/><path d="M100 32 L100 62" stroke="#O" stroke-width="2"/><circle cx="100" cy="48" r="7" fill="#fff" '+SW3+'/><circle cx="100" cy="48" r="2.5" fill="#O"/><path d="M60 74 Q34 76 30 84 Q60 86 100 76Z" fill="#E23A34" '+SW3+' stroke-linejoin="round"/>'),
+ QI('i_gauntlet','wear','hand','Energy gauntlet','能量手套','mythic',{en:'Answer 1500 quiz questions correctly',zh:'測驗中答對 1500 題',f:function(){return [S.tc||0,1500];}},'<path d="M150 150 L152 118 L150 96 Q150 90 156 90 Q160 90 160 96 L162 112 L164 88 Q164 82 170 82 Q176 82 176 88 L175 112 L180 92 Q182 86 188 88 Q192 90 190 96 L186 118 L194 108 Q198 104 202 108 Q204 112 200 116 L186 142 L182 156Z" fill="#C0392B" '+SW3+' stroke-linejoin="round"/><circle cx="170" cy="128" r="9" fill="#9EF0FF" stroke="#FBD46D" stroke-width="3"/><circle class="spark" cx="170" cy="128" r="14" fill="none" stroke="#9EF0FF" stroke-width="2"/><rect x="148" y="150" width="36" height="12" rx="3" fill="#FBD46D" '+SW3+'/>'),
+ QI('a_sailor','wear','acc','Anime sailor collar','動漫水手服領','mythic',{en:'Spell 500 words correctly in dictation',zh:'默書中正確拼寫 500 個詞彙',f:function(){return [(S.dict||{}).n||0,500];}},'<path d="M44 146 Q100 166 156 146 L150 176 L100 190 L50 176Z" fill="#2F4F8C" '+SW3+' stroke-linejoin="round"/><path d="M50 156 Q100 174 150 156" stroke="#fff" stroke-width="3" fill="none"/><path d="M100 166 L84 186 L96 186 L100 176 L104 186 L116 186Z" fill="#E23A34" '+SW3+' stroke-linejoin="round"/><circle cx="100" cy="168" r="6" fill="#E23A34" '+SW3+'/>')
+].forEach(function(it){ITEMS.push(it);});
+WALLS.w_castle="url('data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200"><defs><linearGradient id="n" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B2A6E"/><stop offset="1" stop-color="#B784C9"/></linearGradient></defs><rect width="320" height="200" fill="url(#n)"/><g stroke="#FFD95F" stroke-width="2"><path d="M60 40 l0 -14 M60 40 l12 -8 M60 40 l14 2 M60 40 l8 12 M60 40 l-8 12 M60 40 l-14 2 M60 40 l-12 -8"/></g><g stroke="#FF8FC0" stroke-width="2"><path d="M258 34 l0 -12 M258 34 l10 -7 M258 34 l12 2 M258 34 l7 10 M258 34 l-7 10 M258 34 l-12 2 M258 34 l-10 -7"/></g><circle cx="120" cy="24" r="2" fill="#fff"/><circle cx="200" cy="50" r="1.5" fill="#fff"/><circle cx="30" cy="90" r="1.5" fill="#fff"/><g fill="#F6E6FF" stroke="#8E6BB8" stroke-width="2"><rect x="110" y="110" width="100" height="90"/><rect x="92" y="96" width="26" height="104"/><rect x="202" y="96" width="26" height="104"/><rect x="146" y="70" width="28" height="60"/></g><g fill="#7FB6F0" stroke="#5A7FC0" stroke-width="2"><path d="M88 96 L105 64 L122 96Z"/><path d="M198 96 L215 64 L232 96Z"/><path d="M142 70 L160 30 L178 70Z"/></g><path d="M148 200 L148 170 Q160 156 172 170 L172 200Z" fill="#8E6BB8"/><circle cx="160" cy="100" r="7" fill="#FFD95F"/><path d="M160 30 l0 -10 l10 4Z" fill="#FF8FC0"/></svg>').replace(/'/g,'%27')+"') center bottom/cover";
+
 function questItems(){return ITEMS.filter(function(i){return i.quest;});}
 function checkQuests(){questItems().forEach(function(it){if(S.owned[it.id])return;var v=it.quest.f();if(v[0]>=v[1]){S.owned[it.id]=1;var t=it;setTimeout(function(){specialPopup(t);},1500);}});}
-function tierBadge(it){var t=it.tier||'common';return '<span class="tier t-'+t+'">'+(t==='legendary'?'👑 ':t==='epic'?'💎 ':t==='rare'?'✦ ':'')+tierName(t)+(it.sec?' · ✿'+it.sec:'')+'</span>';}
+function tierBadge(it){var t=it.tier||'common';return '<span class="tier t-'+t+'">'+(t==='mythic'?'🌈 ':t==='legendary'?'👑 ':t==='epic'?'💎 ':t==='rare'?'✦ ':'')+tierName(t)+(it.sec?' · ✿'+it.sec:'')+'</span>';}
 function tierRank(t){return TIERS.indexOf(t||'common');}
 function tierCounts(filter){var o={};TIERS.forEach(function(t){o[t]=[0,0];});ITEMS.forEach(function(it){if(it.id==='w0'||!filter(it))return;var t=it.tier||'common';o[t][1]++;if(isOwned(it))o[t][0]++;});PETS.forEach(function(P){if(!filter({pet:1}))return;var t=P.tier||'common';o[t][1]++;if(S.pets[P.id])o[t][0]++;});return o;}
-function lockLine(it){if(it.quest){var v=it.quest.f(),pc=Math.min(100,Math.round(v[0]/v[1]*100));return '<div class="sub">🎯 '+esc(L(it.quest.en,it.quest.zh))+'</div><div class="prog" style="width:100%"><i style="width:'+pc+'%;background:'+(it.tier==='legendary'?'var(--gold)':'#A58BD6')+'"></i></div><div class="sub">'+Math.min(v[0],v[1])+' / '+v[1]+'</div>';}
+function lockLine(it){if(it.quest){var v=it.quest.f(),pc=Math.min(100,Math.round(v[0]/v[1]*100));return '<div class="sub">🎯 '+esc(L(it.quest.en,it.quest.zh))+'</div><div class="prog" style="width:100%"><i style="width:'+pc+'%;background:'+(it.tier==='legendary'?'var(--gold)':it.tier==='mythic'?'linear-gradient(90deg,#FF9AA2,#FFD58A,#9EE0C0,#9DB8F0,#D9A8F0)':'#A58BD6')+'"></i></div><div class="sub">'+Math.min(v[0],v[1])+' / '+v[1]+'</div>';}
  if(it.sec)return '<div class="sub">🔒 '+L('Get 3★ (5/5) in the '+it.sec+' quiz','在 '+it.sec+' 測驗取得 3★（5/5）')+'</div>';return '';}
 function shopHTML(){var tabs=[['food','🍙 '+L('Snacks','小食')],['wear','👒 '+L('Wardrobe','衣櫃')],['room','🛋️ '+L('Room decor','房間裝飾')],['pets','🐾 '+L('Pets','寵物')],['quests','🎯 '+L('Quests','任務')]];
  var h='<h1 class="h-sec">🛍️ '+L('Shop','商店')+'</h1><div class="tabs" role="tablist">'+tabs.map(function(t){return '<button role="tab" data-shop="'+t[0]+'" aria-selected="'+(shopTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div>';
- if(shopTab==='wear'||shopTab==='room'||shopTab==='quests')h+='<p class="muted" style="margin:10px 0 0;font-size:14px">'+TIERS.map(function(t){return tierBadge({tier:t});}).join(' ')+'<br>'+L('✦ Rare sub-topic items: 3★ in that quiz · 💎 Epic unit rewards: 3★ in a whole unit · 👑 Legendary: very hard milestones.','✦ 稀有小節物品：該測驗 3★ · 💎 史詩單元獎勵：整個單元 3★ · 👑 傳說：非常困難的里程碑。')+'</p>';
+ if(shopTab==='wear'||shopTab==='room'||shopTab==='quests')h+='<p class="muted" style="margin:10px 0 0;font-size:14px">'+TIERS.map(function(t){return tierBadge({tier:t});}).join(' ')+'<br>'+L('✦ Rare sub-topic items: 3★ in that quiz · 💎 Epic unit rewards: 3★ in a whole unit · 👑 Legendary: very hard milestones · 🌈 Mythic: long streaks and the toughest challenges.','✦ 稀有小節物品：該測驗 3★ · 💎 史詩單元獎勵：整個單元 3★ · 👑 傳說：非常困難的里程碑 · 🌈 神話：超長連續溫習及最艱難挑戰。')+'</p>';
  h+='<div class="items">';
  if(shopTab==='food')FOODS.forEach(function(f){h+='<div class="item"><div class="pic" style="font-size:54px">'+f.e+'</div><div class="nm">'+esc(LL(f))+'</div><div class="sub">⚡+'+f.en2+(f.hp?' 💗+'+f.hp:'')+' · '+L('Have ','持有 ')+(S.food[f.id]||0)+'</div><button class="btn small" data-buyfood="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>🪙 '+f.price+'</button></div>';});
  else if(shopTab==='pets')PETS.slice().sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier);}).forEach(function(P){var has=!!S.pets[P.id];h+='<div class="item t-'+(P.tier||'common')+'">'+tierBadge(P)+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">'+esc(L(P.desc[0],P.desc[1]))+'</div>'+
@@ -1758,7 +1780,14 @@ var TROPHIES=[
  {id:'spec10',e:'🎀',en:'Treasure Hunter',zh:'尋寶獵人',den:'Unlock 10 special items',dzh:'解鎖 10 件特別物品',tier:2,f:function(){return [specialsOwned(),10];}},
  {id:'specall',e:'👑',en:'Complete Collector',zh:'完美收藏家',den:'Unlock every special item',dzh:'解鎖所有特別物品',tier:3,f:function(){return [specialsOwned(),specialsTotal()];}},
  {id:'spell',e:'✍️',en:'Spelling Star',zh:'串字之星',den:'Spell 100 words correctly in dictation',dzh:'默書中正確拼寫 100 個詞彙',tier:2,f:function(){return [(S.dict||{}).n||0,100];}},
- {id:'legend',e:'👑',en:'Legend Hunter',zh:'傳說獵人',den:'Unlock 3 legendary items',dzh:'解鎖 3 件傳說物品',tier:3,f:function(){return [ITEMS.filter(function(i){return i.tier==='legendary'&&S.owned[i.id];}).length,3];}}
+ {id:'legend',e:'👑',en:'Legend Hunter',zh:'傳說獵人',den:'Unlock 3 legendary items',dzh:'解鎖 3 件傳說物品',tier:3,f:function(){return [ITEMS.filter(function(i){return i.tier==='legendary'&&S.owned[i.id];}).length,3];}},
+ {id:'st21',e:'🔥',en:'3-Week Flame',zh:'三星期火焰',den:'Study 21 days in a row',dzh:'連續溫習 21 日',tier:2,f:function(){return [S.best,21];}},
+ {id:'st30',e:'🌟',en:'30-Day Star',zh:'30 日之星',den:'Study 30 days in a row',dzh:'連續溫習 30 日',tier:2,f:function(){return [S.best,30];}},
+ {id:'st50',e:'💫',en:'50-Day Hero',zh:'50 日英雄',den:'Study 50 days in a row',dzh:'連續溫習 50 日',tier:3,f:function(){return [S.best,50];}},
+ {id:'st75',e:'🌠',en:'75-Day Legend',zh:'75 日傳奇',den:'Study 75 days in a row',dzh:'連續溫習 75 日',tier:3,f:function(){return [S.best,75];}},
+ {id:'st100',e:'💯',en:'100-Day Champion',zh:'100 日冠軍',den:'Study 100 days in a row',dzh:'連續溫習 100 日',tier:3,f:function(){return [S.best,100];}},
+ {id:'st150',e:'🏔️',en:'150-Day Summit',zh:'150 日登峰',den:'Study 150 days in a row',dzh:'連續溫習 150 日',tier:3,f:function(){return [S.best,150];}},
+ {id:'st200',e:'🌈',en:'200-Day Mythic Master',zh:'200 日神話大師',den:'Study 200 days in a row',dzh:'連續溫習 200 日',tier:3,f:function(){return [S.best,200];}}
 ];
 
 /* ---------- state ---------- */
@@ -1767,7 +1796,7 @@ function newPet(){return {xp:0,stage:1,energy:80,happy:80,eq:{hat:null,glasses:n
 function defaultState(){return {v:1,lang:'zh',coins:40,xpTotal:0,pets:{mochi:newPet()},active:'mochi',owned:{w0:1},
  room:{wall:'w0',prop:null},food:{onigiri:2,apple:1},streak:0,best:0,lastDay:null,shields:0,days:0,hist:[],
  secs:{},q:{},seen:{},mistakes:{},cleared:0,quizzes:0,perfect:0,studies:0,studyDay:{},matchWins:0,matchDay:{d:'',n:0},
- trophies:{},gift:'',vocabDay:{},dict:{n:0,miss:{},perf:0},specGot:{},mig4:1,lastTick:Date.now(),sfx:true,music:false,started:false};}
+ trophies:{},gift:'',vocabDay:{},dict:{n:0,miss:{},perf:0},tc:0,specGot:{},mig4:1,lastTick:Date.now(),sfx:true,music:false,started:false};}
 function upgradeState(o){if(!o.mig4){o.specGot={};for(var q in (o.secs||{}))if((o.secs[q].stars||0)>0)o.specGot[q]=1;o.mig4=1;}var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];if(o.dict&&o.dict.perf==null)o.dict.perf=0;return o;}
 function load(k){try{var r=localStorage.getItem(k||KEY);if(r){return upgradeState(JSON.parse(r));}}catch(e){}return null;}
 function save(){try{S.lastTick=Date.now();S.upd=Date.now();localStorage.setItem(storeKey(),JSON.stringify(S));}catch(e){}cloudSaveSoon();}
@@ -1899,7 +1928,7 @@ function nextPop(){var p=popQ.shift();if(!p)return;var r=$('#poproot');
  $('#popOk').onclick=function(){closePop();if(p.f){if(!popQ.length){$('#ovroot').innerHTML='';Q=null;stopStudyTimer();}p.f();}};$('#pop').onclick=function(e){if(e.target.id==='pop')closePop();};}
 function closePop(){$('#poproot').innerHTML='';setTimeout(nextPop,250);}
 function flameSVG(n){var big=n>=7;return '<svg class="flame" viewBox="0 0 80 96" aria-hidden="true"><path d="M40 4 C54 24 70 36 70 60 C70 80 56 92 40 92 C24 92 10 80 10 60 C10 44 20 36 26 24 C30 34 34 38 38 38 C36 26 36 14 40 4Z" fill="'+(big?'#F7A06B':'#FFB77A')+'" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M40 40 C48 52 56 58 56 70 C56 82 48 88 40 88 C32 88 24 82 24 70 C24 60 32 54 40 40Z" fill="#FFE9A6"/><circle cx="33" cy="68" r="3.5" fill="'+O+'"/><circle cx="47" cy="68" r="3.5" fill="'+O+'"/><path d="M35 76 Q40 81 45 76" stroke="'+O+'" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="27" cy="74" rx="4" ry="2.5" fill="#FFB3C1"/><ellipse cx="53" cy="74" rx="4" ry="2.5" fill="#FFB3C1"/></svg>';}
-var MILESTONES=[3,7,14,21,30,50,100];
+var MILESTONES=[3,7,14,21,30,50,75,100,150,200];
 var STREAK_LINES=[['Tiny steps every day grow a big brain!','每日一小步，腦袋長大一大步！'],['Consistency beats cramming. You are proof!','持之以恆勝過臨急抱佛腳，你就是證明！'],['Your pet is doing a happy wiggle for you!','你的寵物正為你扭扭跳！'],['Same time tomorrow? I will be waiting 💕','明天同一時間見？我會等你 💕'],['Future-you just said thank you!','未來的你剛剛說了聲多謝！'],['Your flame is getting warmer and warmer!','你的小火焰越來越溫暖了！']];
 function streakPopup(kind,extra){var P=petDef(S.active),n=S.streak,pet='<div class="pop-pet">'+petSVG(S.active,kind==='broken'?'sad':'joy')+'</div>',h='';
  if(kind==='up'){var next=MILESTONES.filter(function(m){return m>n;})[0]||n+1,prevM=0;MILESTONES.forEach(function(m){if(m<=n)prevM=m;});
@@ -1920,7 +1949,7 @@ function openingPopup(){var t=today();if(!S.lastDay||S.lastDay===t||S.streak<1)r
  setTimeout(function(){if(gap===1)streakPopup('remind');else if(gap<=1+S.shields)streakPopup('shield');else streakPopup('broken');},700);}
 function specialPopup(it){var eq=null;if(it.cat==='wear'){eq={hat:null,glasses:null,acc:null,hand:null};eq[it.slot]=it.id;}var t=it.tier||'rare';
  var why=it.sec?L('You got 3★ in <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b>!','你在 <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b> 取得 3★！'):it.quest?L('Quest complete: <b>'+esc(it.quest.en)+'</b>','完成任務：<b>'+esc(it.quest.zh)+'</b>'):'';
- var h='<div class="pop-prize'+(t==='legendary'?' legend':'')+'"><div class="rays"></div><div class="prize-pic">'+(eq?petSVG(S.active,'joy',{eq:eq}):itemPic(it))+'</div></div>'+tierBadge(it)+'<h2 style="margin-top:8px">'+(t==='legendary'?'👑 '+L('LEGENDARY! ','傳說級！'):'')+esc(LL(it))+'</h2><p>'+why+' '+L('This reward is yours forever.','這份獎勵永遠屬於你。')+'</p>';
+ var h='<div class="pop-prize'+(t==='legendary'?' legend':t==='mythic'?' legend mythic':'')+'"><div class="rays"></div><div class="prize-pic">'+(eq?petSVG(S.active,'joy',{eq:eq}):itemPic(it))+'</div></div>'+tierBadge(it)+'<h2 style="margin-top:8px">'+(t==='legendary'?'👑 '+L('LEGENDARY! ','傳說級！'):t==='mythic'?'🌈 '+L('MYTHIC! ','神話級！'):'')+esc(LL(it))+'</h2><p>'+why+' '+L('This reward is yours forever.','這份獎勵永遠屬於你。')+'</p>';
  confetti();if(t==='legendary')setTimeout(confetti,700);popup(h,it.slot==='sticker'?L('Stick it up!','貼上去！'):L('Use it now!','立即使用！'),function(){if(it.slot!=='sticker'){equip(it.id);}curScreen='home';render();});}
 
 /* ---------- pet SVG ---------- */
@@ -2126,7 +2155,7 @@ function showQ(){var qid=Q.ids[Q.i],q=qById(qid),sec=secById(qid.split('#')[0]);
 function answer(i){if(Q.answered)return;Q.answered=true;var qid=Q.ids[Q.i],q=qById(qid),o=Q.opts[i],ok=o.ok,dt=(Date.now()-Q.shown)/1000;
  var btns=document.querySelectorAll('.opt');btns.forEach(function(b,k){b.disabled=true;if(Q.opts[k].ok)b.classList.add('right');});
  if(!ok)btns[i].classList.add('wrong');
- Q.res.push(ok);S.q[qid]=ok?1:0;var p=curPet();var msg='',cool=0;
+ Q.res.push(ok);S.q[qid]=ok?1:0;if(ok)S.tc=(S.tc||0)+1;var p=curPet();var msg='',cool=0;
  if(Q.mode==='quiz'){if(!ok){S.mistakes[qid]=S.mistakes[qid]||{s:0,t:Date.now()};S.mistakes[qid].s=0;}}
  else{var m=S.mistakes[qid];if(m){if(ok){m.s++;if(m.s>=2){delete S.mistakes[qid];S.cleared++;var g=gain(6,8);msg='<b>🔨 '+L('Mistake crushed! +','錯題清除！+')+g.c+' 🪙</b> '+pick([L('You turned a weak spot into a strong one.','你把弱點變成強項了。'),L('That\'s real learning!','這才是真正的學習！'),L('Your brain just levelled up.','你的腦袋升級了。')])+'<br>';confetti();}else msg='<b>'+L('One more correct in a row to clear it!','再連續答對一次就能清除！')+'</b><br>';}else m.s=0;}}
  if(!ok&&dt<3){cool=4;msg+='<b>🐢 '+L('Too quick! Read every option before tapping.','太快了！先讀完所有選項再作答。')+'</b><br>';p.happy=clamp(p.happy-2,5,100);}
@@ -2224,7 +2253,7 @@ function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(f
 var B32='0123456789ABCDEFGHJKMNPQRSTVWXYZ',EPOCH=dayNum('2025-01-01');
 function wearIds(){return ITEMS.filter(function(i){return i.id!=='w0'&&!i.sec;}).map(function(i){return i.id;});}
 function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.round(v),Math.pow(2,n)-1));for(var i=n-1;i>=0;i--)bits.push((v>>i)&1);}
- w(5,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),4);
+ w(6,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),4);
  PETS.forEach(function(P){var p=S.pets[P.id];w(p?1:0,1);w(p?p.stage:0,2);w(p?p.xp/5:0,12);});
  var ids=wearIds();ids.forEach(function(id){w(S.owned[id]?1:0,1);});
  var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,7);});
@@ -2238,11 +2267,11 @@ function scramble(bits){var x=0x5EED1;for(var i=0;i<bits.length;i++){x=(x*110351
 function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1');var bits=[];
  for(var i=0;i<code.length;i++){var v=B32.indexOf(code[i]);if(v<0)return null;for(var k=4;k>=0;k--)bits.push((v>>k)&1);}
  scramble(bits);var pos=0;function r(n){var v=0;for(var i=0;i<n;i++){if(pos>=bits.length)throw 0;v=v*2+bits[pos++];}return v;}
- try{var o={};var ver=r(4);if(ver<1||ver>5)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:4);o.pets={};PETS.slice(0,v1?6:ver<4?12:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
-  o.owned={};wearIds().slice(0,ver<4?40:ver<5?59:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
+ try{var o={};var ver=r(4);if(ver<1||ver>6)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:4);o.pets={};PETS.slice(0,v1?6:ver<4?12:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
+  o.owned={};wearIds().slice(0,ver<4?40:ver<5?59:ver<6?64:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
   o.wall=ver<4?(['w0','w1','w2','w3','w4','w5'][r(3)]||'w0'):(eqItems[r(7)]||'w0');var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
   o.streak=r(9);o.best=r(9);o.shields=r(2);var ld=r(13);o.lastDay=ld?fromDayNum(ld+EPOCH):null;o.days=r(10);o.quizzes=r(11);o.perfect=r(9);o.cleared=r(10);o.studies=r(10);o.matchWins=r(8);
-  o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:ver===3?22:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
+  o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:ver===3?22:ver<6?23:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
   var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
   if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
 function applyCode(o){if(!AUTH.mode)AUTH.mode='guest';var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
@@ -2529,7 +2558,7 @@ var hash=location.hash.replace('#','');
 render();
 if(hash&&hash.length>20){var det=document.querySelector('details');if(det){det.open=true;$('#inCode').value=hash;previewCode(hash);}}
 setInterval(function(){if(S.started&&curScreen==='home'&&!$('#ov')){render();}else if(S.started)decay();},60000);
-window.__game={quiz:function(ids){startQuiz(null,'practice',ids);},AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;}};
+window.__game={pet:function(a,b,c){return petSVG(a,b,c);},check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;}};
 })();
 
 </script>

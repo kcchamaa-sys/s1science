@@ -42,7 +42,8 @@ It must copy the format of my finished game **"Mochi Science Pals 麻糬科學�
 - **Pets:** original Chiikawa × Sumikko-style SVG pets with Energy, Happiness and Level; moods (overjoyed, happy, sleepy, hungry, lonely, studying); 3 evolution stages; 15 pets.
 - **Care loop:** feed snacks, Term Match mini-game (EN ↔ 中文), dress-up, room decoration.
 - **Pet chat card:** fun subject facts (with Hong Kong examples) and personal encouragement (streak, mistakes waiting, next sub-topic). It rotates every ~20 s and has 💡 Fun fact / 💪 Cheer me on buttons.
-- **Rarity tiers:** Common / ✦ Rare / 💎 Epic / 👑 Legendary.
+- **Rarity tiers:** Common / ✦ Rare / 💎 Epic / 👑 Legendary / 🌈 Mythic.
+  - Mythic outfits (original, cartoon-inspired, no official names or logos) need 40–200-day streaks or huge challenges.
   - Rare sub-topic items need 3★ (5/5) in that quiz.
   - Epic unit rewards need 3★ in every sub-topic of a unit.
   - Legendary items and a legendary pet need very hard milestones (all 3★, 30-day streak, master 300 questions, clear 100 mistakes, spell 300 words, 20 perfect dictations, 20 trophies, 60 study days).
