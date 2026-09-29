@@ -198,6 +198,29 @@ textarea,input[type=text]{width:100%;font:inherit;font-family:ui-monospace,Menlo
 .say.slow{background:var(--butter);border-color:#EBD89A}
 .say.inl{margin-right:8px;vertical-align:middle}
 .say.talk{animation:boing .5s cubic-bezier(.3,1.6,.5,1)}
+.ctx{background:var(--butter);border-radius:16px;padding:10px 12px;margin-bottom:10px;font-size:15px;line-height:1.5}
+.ctx b{font-size:13px}
+.fig{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px;margin-bottom:10px;display:flex;justify-content:center;overflow:hidden}
+.fig svg{width:100%;max-width:400px;height:auto;display:block}
+.keybox{display:grid;gap:4px;font-size:14px;width:100%;text-align:left}
+.chip.acct{max-width:40vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.chip.acct.warn{border-color:var(--bad);background:#FDECEF}
+.card.login{width:100%;text-align:center}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
+.tile{background:#fff;border-radius:18px;padding:12px;box-shadow:var(--shadow);display:grid;gap:2px}
+.tile b{font-size:22px;font-variant-numeric:tabular-nums}
+.tile span{font-size:12px;color:var(--ink2);font-weight:700}
+.tdl{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14px}
+.tdl select{min-height:44px;border-radius:12px;border:2px solid var(--line);background:#fff;font:inherit;padding:0 8px;color:var(--ink)}
+.tbl{overflow-x:auto;background:#fff;border-radius:18px;box-shadow:var(--shadow);max-width:100%}
+.tbl table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+.tbl th,.tbl td{padding:8px 10px;text-align:left;border-bottom:1px solid #F3ECE6;white-space:nowrap}
+.tbl th button{font-weight:800;font-size:13px;color:var(--ink2);min-height:36px}
+.tbl td.n{text-align:right;font-variant-numeric:tabular-nums}
+.tbl .lnk{text-align:left;font-weight:700;min-height:36px;text-decoration:underline;text-decoration-color:var(--rose);text-underline-offset:3px}
+.acc{display:inline-block;padding:1px 8px;border-radius:999px;font-weight:800;font-size:12px;font-variant-numeric:tabular-nums}
+.minibar{display:inline-block;width:70px;height:8px;border-radius:9px;background:#F3ECE6;overflow:hidden;vertical-align:middle}
+.minibar i{display:block;height:100%}
 /* pop-ups */
 .pop-ov{position:fixed;inset:0;z-index:85;background:rgba(91,75,73,.3);display:grid;place-items:center;padding:16px}
 .pop-card{position:relative;overflow:hidden;background:var(--cream);border-radius:32px;padding:22px 18px 18px;max-width:380px;width:100%;text-align:center;box-shadow:0 18px 40px rgba(91,75,73,.25);border:4px solid #fff;animation:jelly .75s cubic-bezier(.3,1.6,.5,1)}
@@ -228,6 +251,11 @@ textarea,input[type=text]{width:100%;font:inherit;font-family:ui-monospace,Menlo
 <div id="app"></div>
 <div id="ovroot"></div>
 <div id="poproot"></div>
+<script>
+/* ▼▼ CLASS LOGIN SETTINGS – fill in after following server/SETUP.md (leave empty = guest only) ▼▼ */
+window.S1_CONFIG={GOOGLE_CLIENT_ID:"",API_URL:""};
+/* ▲▲ ------------------------------------------------------------------------------------- ▲▲ */
+</script>
 <script>
 /* ===== CONTENT: S1 Science (HK junior science textbook, Units 1–4) =====
    M(bloom, qEN, qZH, [[correctEN,correctZH],[wrongEN,wrongZH],...], explainEN, explainZH)  – first option is correct; shuffled at runtime
@@ -855,6 +883,162 @@ M(6,'Plan how to find the density of an irregular stone. Which method is BEST?',
 
 var IPA={"science": "ˈsaɪəns", "experiment": "ɪkˈsperɪmənt", "discovery": "dɪˈskʌvəri", "invention": "ɪnˈvenʃn", "evidence": "ˈevɪdəns", "technology": "tekˈnɒlədʒi", "scientific": "ˌsaɪənˈtɪfɪk", "investigation": "ɪnˌvestɪˈɡeɪʃn", "hypothesis": "haɪˈpɒθəsɪs", "conclusion": "kənˈkluːʒn", "fair": "feə", "test": "test", "independent": "ˌɪndɪˈpendənt", "variable": "ˈveəriəbl", "dependent": "dɪˈpendənt", "controlled": "kənˈtrəʊld", "pattern": "ˈpætn", "seeking": "ˈsiːkɪŋ", "classifying": "ˈklæsɪfaɪɪŋ", "laboratory": "ləˈbɒrətri", "safety": "ˈseɪfti", "spectacles": "ˈspektəklz", "fire": "ˈfaɪə", "extinguisher": "ɪkˈstɪŋɡwɪʃə", "blanket": "ˈblæŋkɪt", "sand": "sænd", "bucket": "ˈbʌkɪt", "eye": "aɪ", "wash": "wɒʃ", "bottle": "ˈbɒtl", "fume": "fjuːm", "cupboard": "ˈkʌbəd", "hazard": "ˈhæzəd", "warning": "ˈwɔːnɪŋ", "symbol": "ˈsɪmbl", "triangle": "ˈtraɪæŋɡl", "beaker": "ˈbiːkə", "conical": "ˈkɒnɪkl", "flask": "flɑːsk", "bunsen": "ˈbʌnsn", "burner": "ˈbɜːnə", "tripod": "ˈtraɪpɒd", "wire": "ˈwaɪə", "gauze": "ɡɔːz", "measuring": "ˈmeʒərɪŋ", "cylinder": "ˈsɪlɪndə", "meniscus": "məˈnɪskəs", "error": "ˈerə", "luminous": "ˈluːmɪnəs", "flame": "fleɪm", "non-luminous": "ˌnɒnˈluːmɪnəs", "strike": "straɪk", "back": "bæk", "physical": "ˈfɪzɪkl", "state": "steɪt", "melting": "ˈmeltɪŋ", "point": "pɔɪnt", "freezing": "ˈfriːzɪŋ", "boiling": "ˈbɔɪlɪŋ", "evaporation": "ɪˌvæpəˈreɪʃn", "condensation": "ˌkɒndenˈseɪʃn", "water": "ˈwɔːtə", "vapour": "ˈveɪpə", "steam": "stiːm", "cycle": "ˈsaɪkl", "precipitation": "prɪˌsɪpɪˈteɪʃn", "humidity": "hjuːˈmɪdəti", "rate": "reɪt", "of": "əv", "surface": "ˈsɜːfɪs", "area": "ˈeəriə", "dissolve": "dɪˈzɒlv", "solvent": "ˈsɒlvənt", "solute": "ˈsɒljuːt", "solution": "səˈluːʃn", "soluble": "ˈsɒljəbl", "insoluble": "ɪnˈsɒljəbl", "dissolving": "dɪˈzɒlvɪŋ", "saturated": "ˈsætʃəreɪtɪd", "solubility": "ˌsɒljuˈbɪləti", "impurity": "ɪmˈpjʊərəti", "microorganism": "ˌmaɪkrəʊˈɔːɡənɪzəm", "sedimentation": "ˌsedɪmenˈteɪʃn", "filtration": "fɪlˈtreɪʃn", "distillation": "ˌdɪstɪˈleɪʃn", "alum": "ˈæləm", "filtrate": "ˈfɪltreɪt", "residue": "ˈrezɪdjuː", "distillate": "ˈdɪstɪlət", "filter": "ˈfɪltə", "paper": "ˈpeɪpə", "chlorine": "ˈklɔːriːn", "ozone": "ˈəʊzəʊn", "ultraviolet": "ˌʌltrəˈvaɪələt", "light": "laɪt", "fluoride": "ˈflɔːraɪd", "fluoridation": "ˌflɔːrɪˈdeɪʃn", "treatment": "ˈtriːtmənt", "works": "wɜːks", "conservation": "ˌkɒnsəˈveɪʃn", "pollution": "pəˈluːʃn", "pollutant": "pəˈluːtənt", "microplastic": "ˌmaɪkrəʊˈplæstɪk", "sewage": "ˈsuːɪdʒ", "living": "ˈlɪvɪŋ", "thing": "θɪŋ", "non-living": "ˌnɒnˈlɪvɪŋ", "vital": "ˈvaɪtl", "function": "ˈfʌŋkʃn", "stimulus": "ˈstɪmjələs", "excrete": "ɪkˈskriːt", "reproduce": "ˌriːprəˈdjuːs", "biodiversity": "ˌbaɪəʊdaɪˈvɜːsəti", "classification": "ˌklæsɪfɪˈkeɪʃn", "key": "kiː", "feature": "ˈfiːtʃə", "vertebrate": "ˈvɜːtɪbrət", "invertebrate": "ɪnˈvɜːtɪbrət", "amphibian": "æmˈfɪbiən", "reptile": "ˈreptaɪl", "mammal": "ˈmæml", "vascular": "ˈvæskjələ", "plant": "plɑːnt", "flowering": "ˈflaʊərɪŋ", "habitat": "ˈhæbɪtæt", "tree": "triː", "diagram": "ˈdaɪəɡræm", "identify": "aɪˈdentɪfaɪ", "sustainable": "səˈsteɪnəbl", "development": "dɪˈveləpmənt", "extinct": "ɪkˈstɪŋkt", "endangered": "ɪnˈdeɪndʒəd", "species": "ˈspiːʃiːz", "overhunted": "ˌəʊvəˈhʌntɪd", "foreign": "ˈfɒrən", "native": "ˈneɪtɪv", "cell": "sel", "microscope": "ˈmaɪkrəskəʊp", "magnification": "ˌmæɡnɪfɪˈkeɪʃn", "wall": "wɔːl", "membrane": "ˈmembreɪn", "cytoplasm": "ˈsaɪtəʊplæzəm", "nucleus": "ˈnjuːkliəs", "vacuole": "ˈvækjuəʊl", "chloroplast": "ˈklɒrəplæst", "division": "dɪˈvɪʒn", "differentiation": "ˌdɪfərenʃiˈeɪʃn", "chromosome": "ˈkrəʊməsəʊm", "dna": "ˌdiː en ˈeɪ", "double": "ˈdʌbl", "helix": "ˈhiːlɪks", "base": "beɪs", "gene": "dʒiːn", "tissue": "ˈtɪʃuː", "organ": "ˈɔːɡən", "sperm": "spɜːm", "ovum": "ˈəʊvəm", "zygote": "ˈzaɪɡəʊt", "testis": "ˈtestɪs", "duct": "dʌkt", "urethra": "jʊˈriːθrə", "ovary": "ˈəʊvəri", "oviduct": "ˈəʊvɪdʌkt", "uterus": "ˈjuːtərəs", "sex": "seks", "hormone": "ˈhɔːməʊn", "puberty": "ˈpjuːbəti", "menstrual": "ˈmenstruəl", "menstruation": "ˌmenstruˈeɪʃn", "ovulation": "ˌɒvjuˈleɪʃn", "uterine": "ˈjuːtəraɪn", "lining": "ˈlaɪnɪŋ", "fertilization": "ˌfɜːtəlaɪˈzeɪʃn", "implantation": "ˌɪmplɑːnˈteɪʃn", "embryo": "ˈembriəʊ", "foetus": "ˈfiːtəs", "placenta": "pləˈsentə", "umbilical": "ʌmˈbɪlɪkl", "cord": "kɔːd", "amniotic": "ˌæmniˈɒtɪk", "fluid": "ˈfluːɪd", "pregnancy": "ˈpreɡnənsi", "parental": "pəˈrentl", "care": "keə", "family": "ˈfæməli", "planning": "ˈplænɪŋ", "contraceptive": "ˌkɒntrəˈseptɪv", "pill": "pɪl", "condom": "ˈkɒndɒm", "rhythm": "ˈrɪðəm", "method": "ˈmeθəd", "sterilization": "ˌsterəlaɪˈzeɪʃn", "intrauterine": "ˌɪntrəˈjuːtəraɪn", "device": "dɪˈvaɪs", "iud": "ˌaɪ juː ˈdiː", "heredity": "həˈredəti", "variation": "ˌveəriˈeɪʃn", "continuous": "kənˈtɪnjuəs", "discontinuous": "ˌdɪskənˈtɪnjuəs", "bar": "bɑː", "chart": "tʃɑːt", "histogram": "ˈhɪstəɡræm", "identical": "aɪˈdentɪkl", "twins": "twɪnz", "non-identical": "ˌnɒnaɪˈdentɪkl", "energy": "ˈenədʒi", "thermal": "ˈθɜːml", "chemical": "ˈkemɪkl", "kinetic": "kɪˈnetɪk", "potential": "pəˈtenʃl", "electrical": "ɪˈlektrɪkl", "conversion": "kənˈvɜːʃn", "joule": "dʒuːl", "law": "lɔː", "sankey": "ˈsæŋki", "efficiency": "ɪˈfɪʃnsi", "heat": "hiːt", "transfer": "ˈtrænsfɜː", "conduction": "kənˈdʌkʃn", "convection": "kənˈvekʃn", "radiation": "ˌreɪdiˈeɪʃn", "conductor": "kənˈdʌktə", "insulator": "ˈɪnsjuleɪtə", "vacuum": "ˈvækjuːm", "absorber": "əbˈzɔːbə", "emitter": "iˈmɪtə", "source": "sɔːs", "fossil": "ˈfɒsl", "fuel": "ˈfjuːəl", "non-renewable": "ˌnɒnrɪˈnjuːəbl", "renewable": "rɪˈnjuːəbl", "air": "eə", "acid": "ˈæsɪd", "rain": "reɪn", "global": "ˈɡləʊbl", "warming": "ˈwɔːmɪŋ", "solar": "ˈsəʊlə", "wind": "wɪnd", "power": "ˈpaʊə", "biomass": "ˈbaɪəʊmæs", "hydroelectric": "ˌhaɪdrəʊɪˈlektrɪk", "nuclear": "ˈnjuːkliə", "matter": "ˈmætə", "mass": "mæs", "particle": "ˈpɑːtɪkl", "randomly": "ˈrændəmli", "zig-zag": "ˈzɪɡzæɡ", "path": "pɑːθ", "theory": "ˈθɪəri", "atom": "ˈætəm", "molecule": "ˈmɒlɪkjuːl", "solid": "ˈsɒlɪd", "liquid": "ˈlɪkwɪd", "gas": "ɡæs", "model": "ˈmɒdl", "vibrate": "vaɪˈbreɪt", "compress": "kəmˈpres", "conserve": "kənˈsɜːv", "concentration": "ˌkɒnsnˈtreɪʃn", "concentrated": "ˈkɒnsntreɪtɪd", "dilute": "daɪˈluːt", "expansion": "ɪkˈspænʃn", "and": "ənd", "contraction": "kənˈtrækʃn", "expand": "ɪkˈspænd", "contract": "kənˈtrækt", "thermostat": "ˈθɜːməstæt", "bimetallic": "ˌbaɪmɪˈtælɪk", "strip": "strɪp", "pressure": "ˈpreʃə", "atmospheric": "ˌætməsˈferɪk", "bombard": "bɒmˈbɑːd", "suction": "ˈsʌkʃn", "cup": "kʌp", "density": "ˈdensəti", "volume": "ˈvɒljuːm", "sink": "sɪŋk", "float": "fləʊt", "medium": "ˈmiːdiəm"};
 
+/* ===== Question contexts + picture questions =====
+   CTX: context (and optional figure) attached to existing questions, keyed "section#index".
+   XQ:  new picture questions APPENDED to each section (keeps saved progress indexes stable).
+   FIGS: diagrams (inline SVG / HTML). Letter labels (A, B, P, Q…) are language-neutral. */
+var FO='#5B4B49';
+function svgWrap(vb,body,label){return '<svg viewBox="'+vb+'" role="img" aria-label="'+(label||'diagram')+'" font-family="M PLUS Rounded 1c,Noto Sans TC,sans-serif" font-size="13" fill="'+FO+'">'+body+'</svg>';}
+function lab(x,y,t,sz){return '<g><circle cx="'+x+'" cy="'+y+'" r="11" fill="#fff" stroke="'+FO+'" stroke-width="2"/><text x="'+x+'" y="'+(y+4.5)+'" text-anchor="middle" font-weight="800" font-size="'+(sz||13)+'">'+t+'</text></g>';}
+function T2(x,y,en,zh,anchor,sz){return '<text x="'+x+'" y="'+y+'" text-anchor="'+(anchor||'middle')+'" font-size="'+(sz||12)+'" font-weight="700">'+L(en,zh)+'</text>';}
+function ghs(icon){return '<g><rect x="20" y="20" width="80" height="80" transform="rotate(45 60 60)" fill="#fff" stroke="#D9344B" stroke-width="7"/>'+icon+'</g>';}
+var FIGS={
+ haz_flam:function(){return svgWrap('0 0 120 120',ghs('<path d="M60 30 C74 48 80 58 76 72 C74 80 66 86 60 86 C50 86 42 78 44 66 C45 58 50 54 52 46 C55 54 58 56 60 56 C58 46 56 38 60 30Z" fill="#2E2A29"/><rect x="40" y="86" width="40" height="5" fill="#2E2A29"/>'),'hazard symbol');},
+ haz_corr:function(){return svgWrap('0 0 120 120',ghs('<rect x="40" y="36" width="10" height="22" rx="2" fill="#2E2A29" transform="rotate(-30 45 47)"/><rect x="66" y="36" width="10" height="22" rx="2" fill="#2E2A29" transform="rotate(30 71 47)"/><circle cx="48" cy="66" r="2.5" fill="#2E2A29"/><circle cx="70" cy="66" r="2.5" fill="#2E2A29"/><path d="M36 80 L56 80 L54 76 L50 80 L46 75 L42 80" fill="#2E2A29"/><path d="M64 84 L86 84 L86 76 Q76 72 68 78Z" fill="#2E2A29"/>'),'hazard symbol');},
+ haz_tox:function(){return svgWrap('0 0 120 120',ghs('<circle cx="60" cy="50" r="15" fill="#2E2A29"/><rect x="52" y="60" width="16" height="10" rx="3" fill="#2E2A29"/><circle cx="54" cy="50" r="4" fill="#fff"/><circle cx="66" cy="50" r="4" fill="#fff"/><path d="M40 72 L80 90 M80 72 L40 90" stroke="#2E2A29" stroke-width="6" stroke-linecap="round"/>'),'hazard symbol');},
+ haz_harm:function(){return svgWrap('0 0 120 120',ghs('<rect x="55" y="34" width="10" height="34" rx="4" fill="#2E2A29"/><circle cx="60" cy="80" r="6" fill="#2E2A29"/>'),'hazard symbol');},
+ app4:function(){return svgWrap('0 0 330 150',
+  '<path d="M20 50 L20 125 Q20 132 27 132 L68 132 Q75 132 75 125 L75 50" fill="#EAF6FB" stroke="'+FO+'" stroke-width="3"/><path d="M16 50 L22 50" stroke="'+FO+'" stroke-width="3"/><rect x="22" y="100" width="51" height="30" fill="#A9D4EE"/>'+lab(48,24,'A')+
+  '<path d="M112 40 L126 40 L126 70 L150 124 Q152 132 144 132 L94 132 Q86 132 88 124 L112 70Z" fill="#EAF6FB" stroke="'+FO+'" stroke-width="3" stroke-linejoin="round"/><path d="M94 116 L144 116 L148 126 L90 126Z" fill="#A9D4EE"/>'+lab(119,18,'B')+
+  '<rect x="190" y="20" width="24" height="108" fill="#EAF6FB" stroke="'+FO+'" stroke-width="3"/><path d="M178 132 L226 132" stroke="'+FO+'" stroke-width="5" stroke-linecap="round"/><path d="M190 40 h8 M190 55 h12 M190 70 h8 M190 85 h12 M190 100 h8 M190 115 h12" stroke="'+FO+'" stroke-width="1.5"/><rect x="192" y="95" width="20" height="31" fill="#A9D4EE"/>'+lab(202,8,'C',11)+
+  '<path d="M270 30 L270 120 Q270 132 281 132 Q292 132 292 120 L292 30" fill="#EAF6FB" stroke="'+FO+'" stroke-width="3"/><path d="M272 104 L290 104 L290 120 Q290 130 281 130 Q272 130 272 120Z" fill="#A9D4EE"/>'+lab(281,14,'D'),'apparatus');},
+ cyl:function(){var s='<rect x="90" y="10" width="60" height="160" fill="#F4FAFD" stroke="'+FO+'" stroke-width="3"/>';
+  s+='<path d="M92 96 Q120 112 148 96 L148 168 L92 168Z" fill="#A9D4EE"/>';
+  for(var v=30;v<=40;v++){var y=160-(v-30)*14;s+='<path d="M90 '+y+' h'+(v%5===0?22:12)+'" stroke="'+FO+'" stroke-width="1.6"/>';if(v%5===0)s+='<text x="84" y="'+(y+4)+'" text-anchor="end" font-weight="700">'+v+'</text>';}
+  s+='<text x="158" y="24" font-weight="700">cm³</text><path d="M30 104 L86 104" stroke="#E2828F" stroke-width="2" stroke-dasharray="4 3"/><circle cx="24" cy="104" r="8" fill="#fff" stroke="'+FO+'" stroke-width="2"/><circle cx="26" cy="104" r="3" fill="'+FO+'"/>';
+  return svgWrap('0 0 200 180',s,'measuring cylinder');},
+ bunsen:function(){function burner(x,open){return '<rect x="'+(x-10)+'" y="110" width="20" height="50" rx="3" fill="#D9DEE6" stroke="'+FO+'" stroke-width="3"/><rect x="'+(x-26)+'" y="160" width="52" height="10" rx="4" fill="#C9C3BC" stroke="'+FO+'" stroke-width="3"/><circle cx="'+x+'" cy="146" r="5" fill="'+(open?'#fff':FO)+'" stroke="'+FO+'" stroke-width="2"/>';}
+  return svgWrap('0 0 300 180','<path d="M80 108 C60 90 76 70 66 50 C82 58 74 32 88 20 C90 40 104 50 98 70 C108 80 100 100 80 108Z" fill="#FBD46D" stroke="#E0A33A" stroke-width="2"/>'+burner(80,false)+lab(30,40,'P')+
+   '<path d="M220 108 C206 94 210 76 220 56 C230 76 234 94 220 108Z" fill="#8FC7E8" stroke="#5E9FD0" stroke-width="2"/><path d="M220 104 C214 96 216 88 220 80 C224 88 226 96 220 104Z" fill="#DDF0FB"/>'+burner(220,true)+lab(270,40,'Q'),'two Bunsen flames');},
+ heatcurve:function(){var s='<path d="M40 150 L40 12 M40 150 L300 150" stroke="'+FO+'" stroke-width="2.5"/>'+T2(14,80,'Temp','溫度','middle',11)+T2(170,172,'Time','時間','middle',11);
+  s+='<text x="34" y="118" text-anchor="end" font-size="11">0 °C</text><text x="34" y="54" text-anchor="end" font-size="11">100 °C</text><path d="M40 114 h260 M40 50 h260" stroke="#D9CFC6" stroke-dasharray="3 4"/>';
+  s+='<path d="M44 146 L80 114 L140 114 L190 50 L250 50 L292 20" stroke="#E07A3F" stroke-width="4" fill="none" stroke-linejoin="round"/>';
+  s+=lab(56,122,'A')+lab(110,100,'B')+lab(176,90,'C')+lab(220,36,'D')+lab(280,44,'E');
+  return svgWrap('0 0 310 180',s,'heating curve of ice');},
+ watercycle:function(){var s='<rect x="0" y="0" width="320" height="180" fill="#EAF6FB"/><path d="M0 150 Q40 140 80 150 T160 150 L160 180 L0 180Z" fill="#8FC7E8"/><path d="M150 180 L220 90 L300 180Z" fill="#B7DDA8" stroke="'+FO+'" stroke-width="2"/><circle cx="30" cy="30" r="14" fill="#FBD46D"/>';
+  s+='<path d="M70 50 Q60 36 76 34 Q82 22 98 28 Q114 24 116 38 Q126 44 116 52Z" fill="#fff" stroke="'+FO+'" stroke-width="2"/><path d="M212 44 Q202 30 218 28 Q224 16 240 22 Q256 18 258 32 Q268 38 258 46Z" fill="#DDE3EA" stroke="'+FO+'" stroke-width="2"/>';
+  s+='<path d="M60 136 Q54 110 66 90 Q56 76 72 62" stroke="#E07A3F" stroke-width="3" fill="none" stroke-dasharray="5 4" marker-end="url(#ah)"/><path d="M126 40 L196 36" stroke="'+FO+'" stroke-width="3" marker-end="url(#ah)"/>';
+  s+='<path d="M222 56 l-4 10 M236 56 l-4 10 M250 56 l-4 10 M229 70 l-4 10 M243 70 l-4 10" stroke="#5E9FD0" stroke-width="3" stroke-linecap="round"/>';
+  s+='<defs><marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="'+FO+'"/></marker></defs>';
+  s+=lab(40,100,'1')+lab(96,68,'2')+lab(160,24,'3')+lab(276,78,'4');return svgWrap('0 0 320 180',s,'water cycle');},
+ filtration:function(){return svgWrap('0 0 220 190','<path d="M60 20 L160 20 L118 80 L118 110 L102 110 L102 80Z" fill="#fff" stroke="'+FO+'" stroke-width="3" stroke-linejoin="round"/><path d="M72 28 L148 28 L114 74 L106 74Z" fill="#F4E9DC" stroke="#C9A77E" stroke-width="2"/><path d="M84 40 L136 40 L114 70 L106 70Z" fill="#B98B64"/><path d="M110 112 l0 8 M110 126 l0 6" stroke="#8FC7E8" stroke-width="3"/><path d="M92 120 L128 120 L128 136 L160 176 Q162 182 156 182 L64 182 Q58 182 60 176 L92 136Z" fill="#fff" stroke="'+FO+'" stroke-width="3" stroke-linejoin="round"/><path d="M68 166 L152 166 L158 178 L62 178Z" fill="#CFE9F7"/>'+lab(170,50,'P')+'<path d="M160 50 L128 52" stroke="'+FO+'" stroke-width="1.5"/>'+lab(190,170,'Q')+'<path d="M180 170 L150 172" stroke="'+FO+'" stroke-width="1.5"/>','filtration set-up');},
+ distill:function(){return svgWrap('0 0 330 190','<circle cx="60" cy="110" r="34" fill="#fff" stroke="'+FO+'" stroke-width="3"/><path d="M30 122 Q60 146 90 122 L90 130 Q60 150 30 130Z" fill="#8FC7E8"/><path d="M26 118 Q60 140 94 118 Q94 142 60 144 Q26 142 26 118Z" fill="#A9D4EE"/><rect x="52" y="30" width="16" height="50" fill="#fff" stroke="'+FO+'" stroke-width="3"/><path d="M66 46 L230 110" stroke="'+FO+'" stroke-width="8"/><path d="M66 46 L230 110" stroke="#fff" stroke-width="3"/><path d="M110 50 L200 86 L190 110 L100 74Z" fill="rgba(169,212,238,.5)" stroke="'+FO+'" stroke-width="2.5"/><path d="M60 158 L60 186 M44 186 L76 186" stroke="'+FO+'" stroke-width="3"/><path d="M50 160 C44 150 48 146 54 150 C54 144 62 142 60 150 C68 146 70 154 64 160Z" fill="#F7A06B"/>'+
+  '<rect x="220" y="100" width="22" height="70" rx="10" fill="#fff" stroke="'+FO+'" stroke-width="3"/><path d="M222 146 L240 146 L240 160 Q240 168 231 168 Q222 168 222 160Z" fill="#DDF0FB"/><path d="M200 130 L262 130 L258 182 L204 182Z" fill="rgba(143,199,232,.35)" stroke="'+FO+'" stroke-width="2.5"/>'+
+  lab(150,40,'X')+'<path d="M150 51 L152 64" stroke="'+FO+'" stroke-width="1.5"/>'+lab(290,150,'Y')+'<path d="M279 152 L240 156" stroke="'+FO+'" stroke-width="1.5"/>'+lab(110,130,'Z')+'<path d="M99 128 L80 124" stroke="'+FO+'" stroke-width="1.5"/>','distillation set-up');},
+ animals:function(){return svgWrap('0 0 340 120',
+  '<path d="M20 60 Q44 36 70 60 Q44 84 20 60Z" fill="#A9D4EE" stroke="'+FO+'" stroke-width="2.5"/><path d="M70 60 L84 48 L84 72Z" fill="#A9D4EE" stroke="'+FO+'" stroke-width="2.5"/><circle cx="32" cy="57" r="2.5" fill="'+FO+'"/><path d="M42 52 Q46 60 42 68" stroke="'+FO+'" stroke-width="2" fill="none"/>'+lab(50,104,'P')+
+  '<ellipse cx="130" cy="66" rx="28" ry="18" fill="#9BCB8E" stroke="'+FO+'" stroke-width="2.5"/><circle cx="118" cy="48" r="8" fill="#9BCB8E" stroke="'+FO+'" stroke-width="2.5"/><circle cx="142" cy="48" r="8" fill="#9BCB8E" stroke="'+FO+'" stroke-width="2.5"/><circle cx="118" cy="48" r="3" fill="'+FO+'"/><circle cx="142" cy="48" r="3" fill="'+FO+'"/><path d="M104 80 l-8 6 M156 80 l8 6" stroke="'+FO+'" stroke-width="3"/>'+lab(130,104,'Q')+
+  '<ellipse cx="210" cy="64" rx="22" ry="16" fill="#FFE9A6" stroke="'+FO+'" stroke-width="2.5"/><circle cx="226" cy="46" r="11" fill="#FFE9A6" stroke="'+FO+'" stroke-width="2.5"/><path d="M236 44 L246 47 L236 50Z" fill="#F2A65A"/><circle cx="229" cy="43" r="2" fill="'+FO+'"/><path d="M198 58 Q210 50 220 64" stroke="'+FO+'" stroke-width="2" fill="none"/><path d="M204 80 l-2 8 M216 80 l2 8" stroke="#F2A65A" stroke-width="2.5"/>'+lab(210,104,'R')+
+  '<path d="M270 60 Q280 30 296 52 Q312 30 322 60 Q314 56 308 64 Q300 58 296 66 Q292 58 284 64 Q278 56 270 60Z" fill="#8A7E7C" stroke="'+FO+'" stroke-width="2.5"/><circle cx="296" cy="52" r="9" fill="#8A7E7C" stroke="'+FO+'" stroke-width="2.5"/><path d="M289 44 L291 36 L295 44 M297 44 L301 36 L303 44" fill="#8A7E7C" stroke="'+FO+'" stroke-width="2"/><circle cx="293" cy="52" r="1.8" fill="#fff"/><circle cx="299" cy="52" r="1.8" fill="#fff"/>'+lab(296,104,'S'),'four animals');},
+ plantcell:function(){return svgWrap('0 0 300 180','<rect x="40" y="16" width="180" height="150" rx="14" fill="#E3F1D8" stroke="#6FA06A" stroke-width="7"/><rect x="48" y="24" width="164" height="134" rx="10" fill="none" stroke="'+FO+'" stroke-width="1.8"/><rect x="84" y="46" width="100" height="84" rx="26" fill="#DDF0FB" stroke="#8FC7E8" stroke-width="2"/><circle cx="194" cy="50" r="14" fill="#C9B6EA" stroke="'+FO+'" stroke-width="2"/>'+
+  [[62,50],[64,120],[196,130],[120,146],[70,86]].map(function(c){return '<ellipse cx="'+c[0]+'" cy="'+c[1]+'" rx="10" ry="6" fill="#6FA06A"/>';}).join('')+
+  lab(260,26,'A')+'<path d="M249 28 L222 36" stroke="'+FO+'" stroke-width="1.5"/>'+lab(260,72,'B')+'<path d="M249 72 L212 76" stroke="'+FO+'" stroke-width="1.5"/>'+lab(260,118,'C')+'<path d="M249 120 L206 128" stroke="'+FO+'" stroke-width="1.5"/>'+lab(260,164,'D')+'<path d="M250 158 L204 58" stroke="'+FO+'" stroke-width="1.5"/>'+lab(20,160,'E')+'<path d="M28 152 L96 110" stroke="'+FO+'" stroke-width="1.5"/>','plant cell');},
+ microscope:function(){return svgWrap('0 0 240 200','<rect x="40" y="176" width="130" height="16" rx="6" fill="#C9B6EA" stroke="'+FO+'" stroke-width="3"/><path d="M150 176 L150 80 Q150 60 130 56" stroke="'+FO+'" stroke-width="12" fill="none" stroke-linecap="round"/><rect x="60" y="126" width="90" height="10" rx="3" fill="#fff" stroke="'+FO+'" stroke-width="3"/><rect x="92" y="18" width="26" height="80" rx="6" fill="#fff" stroke="'+FO+'" stroke-width="3" transform="rotate(-15 105 58)"/><rect x="100" y="98" width="14" height="20" rx="3" fill="#D9DEE6" stroke="'+FO+'" stroke-width="3"/><circle cx="96" cy="160" r="9" fill="#FFF1A8" stroke="'+FO+'" stroke-width="2.5"/>'+
+  lab(200,20,'A')+'<path d="M189 22 L118 22" stroke="'+FO+'" stroke-width="1.5"/>'+lab(200,108,'B')+'<path d="M189 108 L116 108" stroke="'+FO+'" stroke-width="1.5"/>'+lab(20,131,'C')+'<path d="M31 131 L60 131" stroke="'+FO+'" stroke-width="1.5"/>'+lab(20,168,'D')+'<path d="M31 166 L87 160" stroke="'+FO+'" stroke-width="1.5"/>','light microscope');},
+ female:function(){return svgWrap('0 0 300 190','<path d="M118 60 Q150 50 182 60 Q190 110 162 130 L160 176 L140 176 L138 130 Q110 110 118 60Z" fill="#FFD9E2" stroke="'+FO+'" stroke-width="3"/><path d="M120 66 Q90 40 66 60 Q58 70 64 80" stroke="'+FO+'" stroke-width="7" fill="none"/><path d="M120 66 Q90 40 66 60 Q58 70 64 80" stroke="#FFD9E2" stroke-width="3" fill="none"/><path d="M180 66 Q210 40 234 60 Q242 70 236 80" stroke="'+FO+'" stroke-width="7" fill="none"/><path d="M180 66 Q210 40 234 60 Q242 70 236 80" stroke="#FFD9E2" stroke-width="3" fill="none"/><ellipse cx="62" cy="92" rx="14" ry="10" fill="#F7A9B5" stroke="'+FO+'" stroke-width="2.5"/><ellipse cx="238" cy="92" rx="14" ry="10" fill="#F7A9B5" stroke="'+FO+'" stroke-width="2.5"/>'+
+  lab(26,120,'A')+'<path d="M34 112 L52 98" stroke="'+FO+'" stroke-width="1.5"/>'+lab(270,30,'B')+'<path d="M259 34 L220 50" stroke="'+FO+'" stroke-width="1.5"/>'+lab(230,130,'C')+'<path d="M219 128 L176 100" stroke="'+FO+'" stroke-width="1.5"/>'+lab(210,172,'D')+'<path d="M199 172 L162 166" stroke="'+FO+'" stroke-width="1.5"/>','female reproductive system');},
+ foetus:function(){return svgWrap('0 0 300 190','<ellipse cx="140" cy="96" rx="96" ry="84" fill="#FFD9E2" stroke="'+FO+'" stroke-width="3"/><ellipse cx="140" cy="100" rx="80" ry="68" fill="#DDF0FB"/><path d="M60 60 Q46 96 64 132 Q76 110 72 90 Q70 72 60 60Z" fill="#E2828F" stroke="'+FO+'" stroke-width="2"/><circle cx="150" cy="74" r="22" fill="#FFE9D6" stroke="'+FO+'" stroke-width="2.5"/><ellipse cx="160" cy="118" rx="34" ry="26" fill="#FFE9D6" stroke="'+FO+'" stroke-width="2.5"/><path d="M72 100 Q100 130 136 118" stroke="#C9B6EA" stroke-width="6" fill="none"/>'+
+  lab(26,90,'P')+'<path d="M37 92 L60 96" stroke="'+FO+'" stroke-width="1.5"/>'+lab(100,176,'Q')+'<path d="M104 165 L104 122" stroke="'+FO+'" stroke-width="1.5"/>'+lab(272,70,'R')+'<path d="M261 72 L208 84" stroke="'+FO+'" stroke-width="1.5"/>','foetus in the uterus');},
+ charts:function(){var s='<path d="M20 110 L20 14 M20 110 L150 110" stroke="'+FO+'" stroke-width="2"/>';[[30,60],[60,40],[90,90],[120,70]].forEach(function(b){s+='<rect x="'+b[0]+'" y="'+(110-b[1])+'" width="20" height="'+b[1]+'" fill="#F7A9B5" stroke="'+FO+'" stroke-width="1.5"/>';});
+  s+='<path d="M190 110 L190 14 M190 110 L320 110" stroke="'+FO+'" stroke-width="2"/>';[20,48,86,64,30].forEach(function(h,i){s+='<rect x="'+(196+i*24)+'" y="'+(110-h)+'" width="24" height="'+h+'" fill="#A9D4EE" stroke="'+FO+'" stroke-width="1.5"/>';});
+  s+=lab(86,130,'P')+lab(256,130,'Q');return svgWrap('0 0 330 146',s,'two charts');},
+ sankey:function(){return svgWrap('0 0 320 170','<path d="M10 30 L170 30 L170 80 L10 80Z" fill="#FBD46D"/><path d="M170 30 L270 30 L270 40 L170 40Z" fill="#FFF1A8"/><path d="M270 22 L300 35 L270 48Z" fill="#FFF1A8"/><path d="M170 40 L170 80 Q220 80 220 120 L220 140 L180 140 L180 120 Q180 100 170 100Z" fill="#F7A06B"/><path d="M170 80 Q210 80 210 120 L210 140" fill="none"/><path d="M168 140 L232 140 L200 166Z" fill="#F7A06B"/>'+
+  T2(80,60,'100 J electrical','100 J 電能','middle',12)+T2(236,18,'20 J light','20 J 光能','middle',12)+T2(290,120,'80 J thermal','80 J 熱能','middle',12),'Sankey diagram of a light bulb');},
+ convection:function(){return svgWrap('0 0 240 190','<path d="M50 20 L50 150 Q50 160 60 160 L180 160 Q190 160 190 150 L190 20" fill="#EAF6FB" stroke="'+FO+'" stroke-width="3"/><path d="M76 140 L76 50 Q76 40 90 40 L150 40 Q164 40 164 50 L164 140 Q164 146 156 146 L84 146" stroke="#E07A3F" stroke-width="3.5" fill="none" stroke-dasharray="7 5"/><path d="M70 64 L76 50 L82 64 M158 126 L164 140 L170 126" stroke="#E07A3F" stroke-width="3.5" fill="none"/><path d="M66 176 C60 166 64 162 70 166 C70 160 78 158 76 166 C84 162 86 170 80 176Z" fill="#F7A06B"/>'+T2(120,184,'heat','加熱','middle',11),'convection in a beaker');},
+ particles:function(){var s='';function box(x,l){return '<rect x="'+x+'" y="10" width="90" height="90" rx="6" fill="#fff" stroke="'+FO+'" stroke-width="2.5"/>'+lab(x+45,120,l);}
+  s+=box(10,'P');for(var r=0;r<5;r++)for(var c=0;c<5;c++)s+='<circle cx="'+(24+c*16)+'" cy="'+(24+r*16)+'" r="7" fill="#C9B6EA" stroke="'+FO+'" stroke-width="1.2"/>';
+  s+=box(120,'Q');[[132,60],[148,66],[163,58],[178,68],[194,62],[138,76],[154,82],[170,76],[186,84],[198,78],[134,92],[150,96],[166,92],[182,96],[196,94],[142,44],[176,46]].forEach(function(p){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="7" fill="#A9D4EE" stroke="'+FO+'" stroke-width="1.2"/>';});
+  s+=box(230,'R');[[246,26],[296,40],[262,70],[306,84],[280,50],[250,92]].forEach(function(p){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="7" fill="#FFE9A6" stroke="'+FO+'" stroke-width="1.2"/>';});
+  return svgWrap('0 0 330 136',s,'particle diagrams');},
+ bimetal:function(){return svgWrap('0 0 300 150','<path d="M20 110 Q150 20 280 110" stroke="#F2C14E" stroke-width="10" fill="none"/><path d="M20 120 Q150 30 280 120" stroke="#8A9099" stroke-width="10" fill="none"/><rect x="6" y="104" width="20" height="30" fill="#C9C3BC" stroke="'+FO+'" stroke-width="2"/>'+T2(150,48,'brass','黃銅','middle',13)+T2(150,98,'iron','鐵','middle',13)+'<path d="M140 140 C132 128 136 122 144 128 C144 118 154 116 152 126 C162 120 164 132 156 140Z" fill="#F7A06B"/>'+T2(200,142,'heated','加熱','start',11),'bimetallic strip bending');},
+ displace:function(){function cyl(x,lvl,stone){var s='<rect x="'+x+'" y="14" width="56" height="130" fill="#F4FAFD" stroke="'+FO+'" stroke-width="3"/>';for(var v=40;v<=80;v+=5){var y=140-(v-40)*3;s+='<path d="M'+x+' '+y+' h'+(v%10===0?16:9)+'" stroke="'+FO+'" stroke-width="1.4"/>';if(v%10===0)s+='<text x="'+(x-4)+'" y="'+(y+4)+'" text-anchor="end" font-size="11">'+v+'</text>';}
+   var ly=140-(lvl-40)*3;s+='<rect x="'+(x+2)+'" y="'+ly+'" width="52" height="'+(142-ly)+'" fill="#A9D4EE" opacity=".8"/>';if(stone)s+='<path d="M'+(x+16)+' 134 Q'+(x+14)+' 120 '+(x+28)+' 118 Q'+(x+42)+' 120 '+(x+40)+' 134Z" fill="#8A7E7C" stroke="'+FO+'" stroke-width="2"/>';return s;}
+  return svgWrap('0 0 300 170',cyl(50,50,false)+cyl(200,65,true)+'<path d="M128 80 L178 80" stroke="'+FO+'" stroke-width="3"/><path d="M170 74 L180 80 L170 86" fill="none" stroke="'+FO+'" stroke-width="3"/><text x="264" y="12" font-size="11">cm³</text>'+T2(78,164,'before','放入前','middle',11)+T2(228,164,'after','放入後','middle',11),'water displacement');},
+ density:function(){return svgWrap('0 0 220 180','<path d="M50 20 L50 160 Q50 170 60 170 L160 170 Q170 170 170 160 L170 20" fill="#fff" stroke="'+FO+'" stroke-width="3"/><rect x="52" y="50" width="116" height="55" fill="#FFF1C5"/><rect x="52" y="105" width="116" height="63" fill="#CFE9F7"/><rect x="96" y="92" width="26" height="26" fill="#9BCB8E" stroke="'+FO+'" stroke-width="2"/><circle cx="136" cy="156" r="11" fill="#8A7E7C" stroke="'+FO+'" stroke-width="2"/>'+
+  lab(196,70,'W')+'<path d="M185 70 L168 70" stroke="'+FO+'" stroke-width="1.5"/>'+lab(196,140,'Y')+'<path d="M185 140 L168 140" stroke="'+FO+'" stroke-width="1.5"/>'+lab(24,104,'X')+'<path d="M35 104 L96 104" stroke="'+FO+'" stroke-width="1.5"/>'+lab(24,156,'Z')+'<path d="M35 156 L124 156" stroke="'+FO+'" stroke-width="1.5"/>','liquids and solids in a beaker');},
+ key_fly:function(){return '<div class="keybox"><b>'+L('Key for butterflies','蝴蝶檢索表')+'</b>'+
+  '<div>1a '+L('Has tails on wings','翅膀有尾突')+' → <b>'+L('Paris Peacock','巴黎翠鳳蝶')+'</b></div><div>1b '+L('No tails on wings','翅膀沒有尾突')+' → '+L('go to 2','到 2')+'</div>'+
+  '<div>2a '+L('Has black eyespots','有黑色眼斑')+' → <b>'+L('Common Five-ring','矍眼蝶')+'</b></div><div>2b '+L('No black eyespots','沒有黑色眼斑')+' → '+L('go to 3','到 3')+'</div>'+
+  '<div>3a '+L('Has stripes on wings','翅膀有條紋')+' → <b>'+L('Common Lascar','金蟠蛺蝶')+'</b></div><div>3b '+L('No stripes on wings','翅膀沒有條紋')+' → <b>'+L('Yellow Orange Tip','橙粉蝶')+'</b></div></div>';}
+};
+var LETTERS=function(arr,ok){return arr.map(function(x){return [x,x];});};
+function F(q,fig,ce,cz){q.fig=fig;if(ce){q.ce=ce;q.cz=cz;}q.fx=1;return q;}
+/* context/figures for existing questions */
+var CTX={
+ '1.2#6':['Mary pours 100 cm³ of salt water and 100 cm³ of tap water into two identical cups. She puts both cups in the same freezer and records how long each takes to freeze.','Mary 把 100 cm³ 鹽水和 100 cm³ 自來水分別倒入兩個相同的杯，放進同一個冰格，並記錄兩杯水各需多少時間凝固。'],
+ '1.2#7':['Mary pours 100 cm³ of salt water and 100 cm³ of tap water into two identical cups. She puts both cups in the same freezer and records how long each takes to freeze.','Mary 把 100 cm³ 鹽水和 100 cm³ 自來水分別倒入兩個相同的杯，放進同一個冰格，並記錄兩杯水各需多少時間凝固。'],
+ '1.2#8':['Tom lets the same toy car roll down a ramp. He changes the height of the ramp each time and measures how far the car travels on the floor.','Tom 讓同一輛玩具車從斜台滑下，每次改變斜台的高度，並量度車在地上行走的距離。'],
+ '1.2#9':['Plant A: sunlight + water. Plant B: dark + no water. The student wants to find out whether plants need light to grow.','植物 A：有陽光＋有水。植物 B：在暗處＋沒有水。學生想知道植物生長是否需要光。'],
+ '2.2#9':['Two identical wet cloths with the same amount of water are hung in two rooms: one at 20 °C, one at 30 °C. The time for each to dry is recorded.','兩塊相同、含水量相同的濕布分別掛在 20 °C 和 30 °C 的房間，並記錄各自變乾所需時間。'],
+ '2.3#8':['Salt and sugar are added little by little to water, with stirring, until no more can dissolve.','把鹽和糖分別逐少加入水中並攪拌，直至不能再溶解為止。'],
+ '2.3#9':['Salt dissolves in water. At 20 °C, the maximum amount of salt that can dissolve in 100 g of water is 36 g.','鹽可溶於水。在 20 °C 時，100 g 水最多可溶解 36 g 鹽。'],
+ '3.3#5':[null,null,'key_fly'],'3.3#6':[null,null,'key_fly'],
+ '4.1#9':['Under a light microscope, the image you see is upside down and left–right reversed (inverted).','在光學顯微鏡下看到的影像是上下和左右倒轉的（倒像）。'],
+ '5.2#11':['Two identical cans, one painted dull black and one shiny silver, each hold the same amount of water at the same starting temperature.','兩個相同的罐，一個塗上暗啞黑色，一個是光亮銀色，各盛有相同份量、相同起始溫度的水。'],
+ '6.1#4':['Jayden weighs a closed container: 411.88 g. He pumps some air out and weighs it again: 410.80 g.','Jayden 量度一個密封容器的質量：411.88 g。他抽走部分空氣後再量度：410.80 g。'],
+ '6.3#8':['Sugar and water are placed in a beaker on an electronic balance. The total reading is 250 g. The sugar is then stirred until it all dissolves.','把糖和水放在電子天平上的燒杯中，總讀數為 250 g。然後攪拌直至糖完全溶解。'],
+ '6.5#6':['The nozzle of the syringe is sealed with a finger, so no air can get in or out.','用手指封住針筒嘴，空氣不能進出。'],
+ '6.6#9':[null,null,'density'],
+ '5.1#10':['An electric motor is used to lift a load.','一個電動摩打用來提起重物。']
+};
+/* new picture questions (appended) */
+var XQ={
+ '1.3':[
+  F(M(1,'What does this hazard warning symbol mean?','這個危險警告標記代表甚麼？',[['Flammable','易燃'],['Corrosive','腐蝕性'],['Toxic','有毒'],['Harmful','有害']],'A flame = flammable. Keep away from flames and sparks.','火焰＝易燃，要遠離火焰和火花。'),'haz_flam'),
+  F(M(1,'What does this hazard warning symbol mean?','這個危險警告標記代表甚麼？',[['Corrosive','腐蝕性'],['Flammable','易燃'],['Toxic','有毒'],['Harmful','有害']],'Liquid eating into a hand and a surface = corrosive.','液體侵蝕手和物件表面＝腐蝕性。'),'haz_corr'),
+  F(M(1,'What does this hazard warning symbol mean?','這個危險警告標記代表甚麼？',[['Toxic','有毒'],['Harmful','有害'],['Flammable','易燃'],['Corrosive','腐蝕性']],'Skull and crossbones = toxic (poisonous).','骷髏骨＝有毒。'),'haz_tox'),
+  F(M(3,'A bottle has this label. Which safety precaution is MOST suitable?','一個瓶子貼有這個標記，哪項安全措施最合適？',[['Keep it away from flames and sparks','使它遠離火焰和火花'],['Wash it down the sink with lots of water','用大量水沖入水槽'],['Heat it strongly to test it','強烈加熱測試'],['Smell it closely to check','靠近嗅一嗅檢查']],'It is flammable – keep away from fire.','它是易燃的，要遠離火源。'),'haz_flam'),
+  F(M(2,'What does this hazard warning symbol mean?','這個危險警告標記代表甚麼？',[['Harmful / irritant','有害／刺激性'],['Toxic','有毒'],['Flammable','易燃'],['Corrosive','腐蝕性']],'The exclamation mark warns the chemical is harmful or irritating.','感嘆號表示化學品有害或有刺激性。'),'haz_harm')],
+ '1.4':[
+  F(M(1,'Which one is a conical flask?','哪一個是錐形瓶？',[['B','B'],['A','A'],['C','C'],['D','D']],'A beaker (A), conical flask (B), measuring cylinder (C), test tube (D).','燒杯 (A)、錐形瓶 (B)、量筒 (C)、試管 (D)。'),'app4'),
+  F(M(2,'You need to measure exactly 25 cm³ of water. Which apparatus should you use?','你需要準確量度 25 cm³ 水，應使用哪件儀器？',[['C','C'],['A','A'],['B','B'],['D','D']],'The measuring cylinder (C) has a fine scale.','量筒 (C) 有精細的刻度。'),'app4'),
+  F(M(3,'The eye is at the correct position. What is the volume of water?','眼睛位置正確，水的體積是多少？',[['34 cm³','34 cm³'],['35 cm³','35 cm³'],['36 cm³','36 cm³'],['40 cm³','40 cm³']],'Read the BOTTOM of the meniscus at eye level: 34 cm³.','視線與彎液面底部同一水平，讀數為 34 cm³。'),'cyl','Each small mark on the scale is 1 cm³.','刻度上每一小格代表 1 cm³。'),
+  F(M(2,'Which flame should be used to heat a beaker of water?','應用哪個火焰加熱一燒杯水？',[['Q – it is hotter','Q－因為它較熱'],['P – it is hotter','P－因為它較熱'],['P – it is easier to see','P－因為它較容易看見'],['Either – they are the same','兩者皆可－它們相同']],'Q is the blue non-luminous flame – hotter and clean.','Q 是藍色無光焰，較熱且不會留下煤煙。'),'bunsen','The small circle on each burner shows the air hole (filled = closed, empty = open).','每盞本生燈上的小圓圈代表空氣孔（實心＝關上，空心＝打開）。'),
+  F(M(2,'Flame P is produced when the air hole is…','火焰 P 在空氣孔怎樣時產生？',[['closed','關上'],['fully open','完全打開'],['removed','拆除'],['half filled with water','一半注滿水']],'Closed air hole → yellow luminous flame.','空氣孔關上 → 黃色光焰。'),'bunsen')],
+ '2.1':[
+  F(M(3,'The graph shows ice being heated steadily. Which part shows water BOILING?','圖表顯示冰被持續加熱。哪一部分表示水在沸騰？',[['D','D'],['B','B'],['C','C'],['E','E']],'The flat part at 100 °C is boiling.','在 100 °C 的平坦部分表示沸騰。'),'heatcurve'),
+  F(M(4,'In part B of the graph, the substance is…','在圖表的 B 部分，物質正在……',[['melting – temperature stays at 0 °C','熔化－溫度維持在 0 °C'],['boiling at 100 °C','在 100 °C 沸騰'],['cooling down','冷卻'],['a gas only','只是氣體']],'Flat line at 0 °C = melting (ice + water).','0 °C 的平坦線＝熔化（冰＋水）。'),'heatcurve')],
+ '2.2':[
+  F(M(2,'The diagram shows the water cycle. Which number shows PRECIPITATION?','圖中顯示水循環，哪個數字表示降水？',[['4','4'],['1','1'],['2','2'],['3','3']],'Rain falling from clouds = precipitation (4).','雨從雲落下＝降水 (4)。'),'watercycle'),
+  F(M(3,'In the water cycle diagram, process 1 is…','在水循環圖中，過程 1 是……',[['evaporation','蒸發'],['condensation','凝結'],['precipitation','降水'],['transportation','運送']],'Sea water turns into water vapour and rises.','海水變成水汽並上升。'),'watercycle')],
+ '2.4':[
+  F(M(2,'Muddy water is filtered. What is Q called?','把泥水過濾，Q 稱為甚麼？',[['Filtrate','濾液'],['Residue','殘餘物'],['Distillate','餾液'],['Sediment','沉積物']],'The liquid passing through the filter paper is the filtrate; P (mud) is the residue.','穿過濾紙的液體是濾液；P（泥）是殘餘物。'),'filtration'),
+  F(M(2,'Sea water is distilled. What is liquid Y?','把海水蒸餾，液體 Y 是甚麼？',[['Distillate (pure water)','餾液（純水）'],['Filtrate','濾液'],['Residue','殘餘物'],['Salt solution','鹽溶液']],'Steam condenses in the condenser (X) and is collected as distillate (Y).','蒸汽在冷凝器 (X) 凝結，收集到的是餾液 (Y)。'),'distill'),
+  F(M(4,'After distillation, what is left behind in flask Z?','蒸餾後，燒瓶 Z 中剩下甚麼？',[['Soluble impurities such as salt','可溶雜質，例如鹽'],['Pure water only','只有純水'],['Nothing at all','甚麼也沒有'],['Distillate','餾液']],'Only water boils off; dissolved salts stay in the flask.','只有水被煮沸離開；溶解了的鹽留在燒瓶中。'),'distill')],
+ '3.2':[
+  F(M(2,'Which animal is a MAMMAL?','哪種動物是哺乳類？',[['S','S'],['P','P'],['Q','Q'],['R','R']],'S is a bat: it has fur and feeds its young on milk, even though it has wings.','S 是蝙蝠：雖然有翼，但有毛並以乳汁餵哺幼兒。'),'animals','P: a fish · Q: a frog · R: a bird · S: a bat','P：魚 · Q：青蛙 · R：鳥 · S：蝙蝠'),
+  F(M(3,'Which animal breathes with GILLS throughout its whole life?','哪種動物一生都用鰓呼吸？',[['P','P'],['Q','Q'],['R','R'],['S','S']],'Fish use gills all their life; frogs use gills only when young.','魚一生用鰓呼吸；青蛙只在幼體時用鰓。'),'animals','P: a fish · Q: a frog · R: a bird · S: a bat','P：魚 · Q：青蛙 · R：鳥 · S：蝙蝠')],
+ '4.1':[
+  F(M(2,'In the plant cell, where does photosynthesis take place?','在這個植物細胞中，光合作用在哪裏進行？',[['C','C'],['A','A'],['D','D'],['E','E']],'C are chloroplasts (green).','C 是葉綠體（綠色）。'),'plantcell'),
+  F(M(3,'Which labelled part is found in BOTH plant and animal cells?','哪個標示部分同時存在於植物和動物細胞？',[['D','D'],['A','A'],['C','C'],['E','E']],'D is the nucleus. A (cell wall), C (chloroplast) and the large vacuole E are plant features.','D 是細胞核。A（細胞壁）、C（葉綠體）和大液泡 E 是植物細胞的特徵。'),'plantcell'),
+  F(M(2,'Which part of the microscope do you look through?','你從顯微鏡的哪一部分觀看？',[['A (eyepiece)','A（目鏡）'],['B (objective)','B（物鏡）'],['C (stage)','C（載物台）'],['D (light)','D（光源）']],'You look through the eyepiece.','從目鏡觀看。'),'microscope'),
+  F(M(3,'Part A is ×10 and part B is ×40. What is the total magnification?','A 部分是 ×10，B 部分是 ×40，總放大率是多少？',[['×400','×400'],['×50','×50'],['×30','×30'],['×4','×4']],'Eyepiece × objective = 10 × 40.','目鏡 × 物鏡＝10 × 40。'),'microscope')],
+ '4.3':[
+  F(M(2,'In the diagram, where does fertilization usually take place?','在圖中，受精通常在哪裏發生？',[['B','B'],['A','A'],['C','C'],['D','D']],'B is the oviduct.','B 是輸卵管。'),'female'),
+  F(M(2,'Which part releases ova?','哪一部分釋放卵？',[['A','A'],['B','B'],['C','C'],['D','D']],'A is the ovary.','A 是卵巢。'),'female'),
+  F(M(2,'Where does the embryo develop?','胚胎在哪裏發育？',[['C','C'],['A','A'],['B','B'],['D','D']],'C is the uterus.','C 是子宮。'),'female')],
+ '4.4':[
+  F(M(2,'Which labelled part passes nutrients and oxygen from the mother to the foetus?','哪個標示部分把養分和氧由母親傳給胎兒？',[['P (placenta)','P（胎盤）'],['Q (umbilical cord)','Q（臍帶）'],['R (amniotic fluid)','R（羊水）'],['None of them','全部都不是']],'Exchange happens at the placenta; the cord carries the blood.','物質交換在胎盤進行；臍帶負責輸送血液。'),'foetus'),
+  F(M(3,'Which labelled part protects the foetus from bumps?','哪個標示部分保護胎兒免受碰撞？',[['R','R'],['P','P'],['Q','Q'],['The uterus wall only','只有子宮壁']],'R is amniotic fluid – a shock absorber.','R 是羊水，有減震作用。'),'foetus')],
+ '4.6':[
+  F(M(2,'Which graph should be used to show the blood groups of a class?','應用哪個圖表示一班學生的血型？',[['P (bar chart)','P（棒形圖）'],['Q (histogram)','Q（直方圖）'],['Either one','兩者皆可'],['Neither','兩者皆不可']],'Blood group is discontinuous → bar chart with gaps.','血型屬不連續變異 → 有空隙的棒形圖。'),'charts'),
+  F(M(3,'Graph Q has bars that touch. Which data would it BEST show?','圖 Q 的棒互相緊貼，它最適合表示哪種數據？',[['Heights of students','學生的身高'],['Blood groups','血型'],['Tongue rolling (yes/no)','能否捲舌'],['Earlobe type','耳垂類型']],'Histograms show continuous data like height.','直方圖表示身高等連續數據。'),'charts')],
+ '5.1':[
+  F(M(3,'The Sankey diagram shows a filament bulb. What is its efficiency?','桑基圖顯示一個鎢絲燈泡，它的效率是多少？',[['20%','20%'],['80%','80%'],['100%','100%'],['25%','25%']],'Useful (light) ÷ input = 20 ÷ 100 × 100%.','有用輸出（光）÷ 輸入＝20 ÷ 100 × 100%。'),'sankey'),
+  F(M(2,'In the Sankey diagram, which energy is WASTED?','在桑基圖中，哪種能量被浪費了？',[['80 J thermal energy','80 J 熱能'],['20 J light energy','20 J 光能'],['100 J electrical energy','100 J 電能'],['No energy is wasted','沒有能量被浪費']],'A bulb is meant to give light; the heat is wasted.','燈泡的用途是發光，熱能被浪費了。'),'sankey')],
+ '5.2':[
+  F(M(2,'The dashed arrows show how water moves when the beaker is heated. This is…','虛線箭嘴顯示燒杯受熱時水的移動，這是……',[['a convection current','對流'],['conduction','傳導'],['radiation','輻射'],['evaporation','蒸發']],'Warm water rises above the flame, cool water sinks to replace it.','火焰上方的暖水上升，冷水下沉補充。'),'convection')],
+ '6.2':[
+  F(M(2,'Which box represents a LIQUID?','哪個方格代表液體？',[['Q','Q'],['P','P'],['R','R'],['None','沒有']],'Q: closely packed but no regular pattern.','Q：粒子緊密但沒有規則排列。'),'particles'),
+  F(M(3,'Which box shows a substance that can be COMPRESSED easily?','哪個方格代表的物質容易被壓縮？',[['R','R'],['P','P'],['Q','Q'],['All of them','全部']],'R is a gas – large spaces between particles.','R 是氣體，粒子間空隙很大。'),'particles')],
+ '6.4':[
+  F(M(4,'A straight bimetallic strip bends like this when heated. Which metal expands MORE?','一條直的雙層金屬片受熱後彎成這樣，哪種金屬膨脹得較多？',[['Brass','黃銅'],['Iron','鐵'],['Both expand equally','兩者膨脹一樣多'],['Neither expands','兩者都沒有膨脹']],'The metal on the OUTSIDE of the curve has become longer.','在彎曲外側的金屬變得較長。'),'bimetal')],
+ '6.6':[
+  F(M(4,'A stone of mass 45 g is lowered into the water. What is the density of the stone?','把一塊質量 45 g 的石頭放入水中，石頭的密度是多少？',[['3 g/cm³','3 g/cm³'],['0.9 g/cm³','0.9 g/cm³'],['15 g/cm³','15 g/cm³'],['0.33 g/cm³','0.33 g/cm³']],'Volume = 65 − 50 = 15 cm³; density = 45 ÷ 15 = 3 g/cm³.','體積＝65 − 50＝15 cm³；密度＝45 ÷ 15＝3 g/cm³。'),'displace','Water level before: 50 cm³. After the stone is added: 65 cm³.','放入前水位：50 cm³。放入石頭後：65 cm³。')]
+};
+(function(){for(var k in CTX){var p=k.split('#');CHAPTERS.forEach(function(c){c.sections.forEach(function(s){if(s.id===p[0]){var q=s.qs[+p[1]];if(q){if(CTX[k][0]){q.ce=CTX[k][0];q.cz=CTX[k][1];}if(CTX[k][2])q.fig=CTX[k][2];}}});});}
+ CHAPTERS.forEach(function(c){c.sections.forEach(function(s){if(XQ[s.id])XQ[s.id].forEach(function(q){s.qs.push(q);});});});})();
+
 </script>
 <script>
 /* ===================== Mochi Science Pals – game engine ===================== */
@@ -867,6 +1051,7 @@ var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'
 
 /* ---------- helpers ---------- */
 function L(en,zh){return S&&S.lang==='en'?en:zh;}
+window.L=L;
 function LL(o){return S.lang==='en'?o.en:o.zh;}
 function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function dayNum(s){var p=s.split('-');return Math.round(Date.UTC(+p[0],+p[1]-1,+p[2])/864e5);}
@@ -1071,8 +1256,8 @@ function defaultState(){return {v:1,lang:'zh',coins:40,xpTotal:0,pets:{mochi:new
  room:{wall:'w0',prop:null},food:{onigiri:2,apple:1},streak:0,best:0,lastDay:null,shields:0,days:0,hist:[],
  secs:{},q:{},seen:{},mistakes:{},cleared:0,quizzes:0,perfect:0,studies:0,studyDay:{},matchWins:0,matchDay:{d:'',n:0},
  trophies:{},gift:'',vocabDay:{},lastTick:Date.now(),sfx:true,music:false,started:false};}
-function load(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];return o;}}catch(e){}return null;}
-function save(){try{S.lastTick=Date.now();localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function load(k){try{var r=localStorage.getItem(k||KEY);if(r){var o=JSON.parse(r);var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];return o;}}catch(e){}return null;}
+function save(){try{S.lastTick=Date.now();S.upd=Date.now();localStorage.setItem(storeKey(),JSON.stringify(S));}catch(e){}cloudSaveSoon();}
 window.addEventListener('pagehide',function(){if(S&&S.started)save();});
 document.addEventListener('visibilitychange',function(){if(document.hidden&&S&&S.started)save();});
 
@@ -1165,9 +1350,9 @@ function openVocab(cid){var c=CHAPTERS.filter(function(x){return x.id==cid;})[0]
  '<p class="muted" style="margin:0 0 6px;font-size:13px">'+voiceNote()+'</p><p style="margin:0 0 10px">'+L('Tap 🔊 to hear the British pronunciation, 🐢 to hear it slowly. <b>Listen & Repeat</b> plays every word and gives you time to say it out loud.','按 🔊 聽英式讀音，按 🐢 慢速播放。<b>聆聽跟讀</b>會逐個播放，並留時間讓你讀出來。')+'</p>'+
  '<div class="row" style="position:sticky;top:-18px;background:var(--cream);padding-block:8px;z-index:2"><button class="btn green" id="vPlay">▶ '+L('Listen & Repeat','聆聽跟讀')+' ('+all.length+')</button><button class="btn white" id="vStop">⏹ '+L('Stop','停止')+'</button><span id="vStat" class="muted" style="font-weight:700"></span></div>'+h,function(){stopSay();});
  $('#xClose').onclick=closeModal;$('#vStop').onclick=function(){stopSay();document.querySelectorAll('.vterm.now').forEach(function(x){x.classList.remove('now');});$('#vStat').textContent='';};
- $('#vPlay').onclick=function(){stopSay();var run=seqRun,i=0;
+ $('#vPlay').onclick=function(){stopSay();var run=seqRun,i=0,vt0=Date.now();
   function step(){if(run!==seqRun||!$('#vStat'))return;document.querySelectorAll('.vterm.now').forEach(function(x){x.classList.remove('now');});
-   if(i>=all.length){$('#vStat').textContent='✅ '+L('Done!','完成！');var t=today();S.vocabDay=S.vocabDay||{};if(S.vocabDay[cid]!==t){S.vocabDay[cid]=t;var g=gain(5,5);toast('🗣️ '+L('Great listening! +','聽得好！+')+g.c+' 🪙');}else toast('🗣️ '+L('Great listening!','聽得好！'));var p=curPet();p.happy=clamp(p.happy+5,5,100);save();return;}
+   if(i>=all.length){$('#vStat').textContent='✅ '+L('Done!','完成！');logRec({mode:'vocab',unit:String(cid),sec:'',ans:all.length,cor:all.length,stars:0,secs:Math.round((Date.now()-vt0)/1000),status:'done',start:new Date(vt0).toISOString()});var t=today();S.vocabDay=S.vocabDay||{};if(S.vocabDay[cid]!==t){S.vocabDay[cid]=t;var g=gain(5,5);toast('🗣️ '+L('Great listening! +','聽得好！+')+g.c+' 🪙');}else toast('🗣️ '+L('Great listening!','聽得好！'));var p=curPet();p.happy=clamp(p.happy+5,5,100);save();return;}
    var row=document.querySelector('.vterm[data-vi="'+i+'"]');if(row){row.classList.add('now');row.scrollIntoView({block:'center',behavior:'smooth'});}
    $('#vStat').textContent='🔊 '+(i+1)+'/'+all.length;var w=all[i][0];
    say(w,false,function(){if(run!==seqRun)return;var st=$('#vStat');if(st)st.textContent='🗣️ '+L('Your turn!','輪到你！');setTimeout(function(){i++;step();},Math.min(4000,1600+w.length*70));});}
@@ -1291,14 +1476,15 @@ function render(){var a=$('#app');if(!S.started){a.innerHTML=welcomeHTML();bindW
  var mCount=Object.keys(S.mistakes).length;
  var top='<header class="top"><div class="brand">'+miniLogo()+'<span>'+L('Mochi Science Pals','麻糬科學小夥伴')+'<br><small>'+L('S1 Science','中一科學')+'</small></span></div>'+
  '<span class="chip" title="'+L('Coins','金幣')+'">🪙 '+S.coins+'</span><span class="chip" title="'+L('Streak','連續日數')+'">🔥 '+S.streak+'</span>'+
- '<button class="iconbtn" id="bLang" aria-label="Language">'+L('中文','EN')+'</button>'+
+ '<button class="chip acct'+(AUTH.stale?' warn':'')+'" id="bAcct" aria-label="Account">'+(AUTH.stale?'⚠️ ':AUTH.mode==='google'?'☁️ ':'👤 ')+esc(dispName())+'</button><button class="iconbtn" id="bLang" aria-label="Language">'+L('中文','EN')+'</button>'+
  '<button class="iconbtn" id="bSfx" aria-label="Sound effects">'+(S.sfx?'🔊':'🔇')+'</button>'+
  '<button class="iconbtn" id="bMusic" aria-label="Music" aria-pressed="'+S.music+'">'+(S.music?'🎵':'<s>🎵</s>')+'</button>'+
  '<button class="iconbtn" id="bSave" aria-label="Save code">💾</button></header>';
  var body='';
- if(curScreen==='home')body=homeHTML();else if(curScreen==='study')body=studyHTML();else if(curScreen==='practice')body=practiceHTML();else if(curScreen==='shop')body=shopHTML();else body=colHTML();
- var tabs=[['home','🏠',L('Home','小窩')],['study','📚',L('Study','溫習')],['practice','📓',L('Mistakes','錯題本')],['shop','🛍️',L('Shop','商店')],['col','🏆',L('Collection','收藏')]];
- var nav='<nav class="nav" aria-label="Main"><div class="nav-in">'+tabs.map(function(t){return '<button data-nav="'+t[0]+'"'+(curScreen===t[0]?' aria-current="page"':'')+'><span class="ni">'+t[1]+'</span>'+t[2]+(t[0]==='practice'&&mCount?'<span class="badge">'+mCount+'</span>':'')+'</button>';}).join('')+'</div></nav>';
+ if(curScreen==='teacher'&&!(AUTH.user&&AUTH.user.teacher))curScreen='home';
+ if(curScreen==='teacher')body=teacherHTML();else if(curScreen==='home')body=homeHTML();else if(curScreen==='study')body=studyHTML();else if(curScreen==='practice')body=practiceHTML();else if(curScreen==='shop')body=shopHTML();else body=colHTML();
+ var tabs=[['home','🏠',L('Home','小窩')],['study','📚',L('Study','溫習')],['practice','📓',L('Mistakes','錯題本')],['shop','🛍️',L('Shop','商店')],['col','🏆',L('Collection','收藏')]];if(AUTH.user&&AUTH.user.teacher)tabs.push(['teacher','📊',L('Teacher','老師')]);
+ var nav='<nav class="nav" aria-label="Main"><div class="nav-in" style="grid-template-columns:repeat('+tabs.length+',1fr)">'+tabs.map(function(t){return '<button data-nav="'+t[0]+'"'+(curScreen===t[0]?' aria-current="page"':'')+'><span class="ni">'+t[1]+'</span>'+t[2]+(t[0]==='practice'&&mCount?'<span class="badge">'+mCount+'</span>':'')+'</button>';}).join('')+'</div></nav>';
  a.innerHTML='<div class="app">'+top+'<main>'+body+'</main><p class="foot">'+L('Fan-inspired original art · made for HK S1 Science revision · progress saves on this device','原創角色（靈感來自日系可愛風）· 為香港中一科學溫習而設 · 進度儲存在此裝置')+'</p></div>'+nav;
  bindCommon();bindScreen();}
 function miniLogo(){return '<svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><circle cx="11" cy="12" r="6" fill="#fff" stroke="'+O+'" stroke-width="2.5"/><circle cx="29" cy="12" r="6" fill="#fff" stroke="'+O+'" stroke-width="2.5"/><ellipse cx="20" cy="23" rx="16" ry="14" fill="#fff" stroke="'+O+'" stroke-width="2.5"/><circle cx="14" cy="22" r="2" fill="'+O+'"/><circle cx="26" cy="22" r="2" fill="'+O+'"/><ellipse cx="10" cy="27" rx="3" ry="2" fill="#FFB3C1"/><ellipse cx="30" cy="27" rx="3" ry="2" fill="#FFB3C1"/></svg>';}
@@ -1306,7 +1492,7 @@ function bindCommon(){
  $('#bLang').onclick=function(){S.lang=S.lang==='en'?'zh':'en';bubble=null;sfx('tap');save();render();};
  $('#bSfx').onclick=function(){S.sfx=!S.sfx;save();render();sfx('tap');};
  $('#bMusic').onclick=function(){S.music=!S.music;save();if(S.music)startMusic();else stopMusic();render();};
- $('#bSave').onclick=function(){sfx('tap');openSave();};
+ $('#bSave').onclick=function(){sfx('tap');openSave();};$('#bAcct').onclick=function(){sfx('tap');openAccount();};
  document.querySelectorAll('[data-nav]').forEach(function(b){b.onclick=function(){curScreen=b.dataset.nav;sfx('tap');render();window.scrollTo(0,0);};});}
 
 /* HOME */
@@ -1370,7 +1556,7 @@ function openStudy(id){var s=secById(id);if(!s)return;var need=20,t=0;setTempMoo
  '<div class="row" style="margin-top:18px;flex-wrap:nowrap"><div class="ring" id="ring" style="--p:0"><span id="ringT">'+need+'s</span></div><button class="btn green" id="bDone" disabled style="flex:1">'+L('I\'ve read it ✓','我讀完了 ✓')+'</button></div>');
  $('#xClose').onclick=closeModal;
  studyTimer=setInterval(function(){t++;var r=$('#ring');if(!r){stopStudyTimer();return;}r.style.setProperty('--p',Math.min(100,t/need*100));$('#ringT').textContent=t>=need?'✓':(need-t)+'s';if(t>=need){$('#bDone').disabled=false;clearInterval(studyTimer);studyTimer=null;}},1000);
- $('#bDone').onclick=function(){stopStudyTimer();var first=S.studyDay[s.id]!==today();S.studyDay[s.id]=today();S.studies++;markActive();
+ $('#bDone').onclick=function(){stopStudyTimer();logRec({mode:'study',unit:String(s.chap.id),sec:s.id,ans:0,cor:0,stars:0,secs:t,status:'done',start:new Date(Date.now()-t*1000).toISOString()});var first=S.studyDay[s.id]!==today();S.studyDay[s.id]=today();S.studies++;markActive();
   var p=curPet();p.energy=clamp(p.energy-4,5,100);p.happy=clamp(p.happy+4,5,100);var g=first?gain(8,15):gain(0,5);sfx('coin');
   modal('<div class="empty"><div style="width:140px;margin:0 auto">'+petSVG(S.active,'joy')+'</div><h2>'+L('Study session complete!','溫習完成！')+'</h2><p>'+(first?'+'+g.c+' 🪙 · +'+g.x+' XP':'+'+g.x+' XP · '+L('(coins once per day per sub-topic)','（每小節每日可得一次金幣）'))+'</p><p class="muted">'+L('Strike while the memory is warm:','趁記憶還熱，馬上試試：')+'</p><div class="row" style="justify-content:center"><button class="btn" id="goQ">✏️ '+L('Take the quiz','做測驗')+'</button><button class="btn white" id="goH">'+L('Later','稍後')+'</button></div></div>');
   $('#goQ').onclick=function(){$('#ovroot').innerHTML='';startQuiz(s.id,'quiz');};$('#goH').onclick=closeModal;tempMood=null;};}
@@ -1385,19 +1571,21 @@ function pickQs(sec){var n=sec.qs.length,seen=S.seen[sec.id]||[],skip=seen.slice
 function startQuiz(id,mode,list){var ids;
  if(mode==='quiz')ids=pickQs(secById(id));else ids=list;
  if(!ids.length)return;
- Q={mode:mode,sec:id,ids:ids,i:0,res:[],shown:0,answered:false,fast:0};showQ();}
+ Q={mode:mode,sec:id,ids:ids,i:0,res:[],shown:0,answered:false,fast:0,t0:Date.now()};showQ();}
+function quizRec(status,stars){if(!Q)return;var done=Q.ids.slice(0,Q.res.length);var sec=Q.mode==='quiz'?secById(Q.sec):null;
+ logRec({mode:Q.mode,unit:sec?String(sec.chap.id):'',sec:sec?Q.sec:'',ans:Q.res.length,cor:Q.res.filter(Boolean).length,stars:stars||0,secs:Math.round((Date.now()-Q.t0)/1000),status:status,start:new Date(Q.t0).toISOString(),ids:done.join(' '),wrong:done.filter(function(id,i){return !Q.res[i];}).join(' ')});}
 function optsFor(q){if(q.t==='tf')return [{en:TF_EN[0],zh:TF_ZH[0],ok:q.a},{en:TF_EN[1],zh:TF_ZH[1],ok:!q.a}];
- return shuffle(q.o.map(function(o,i){return {en:o[0],zh:o[1],ok:i===0};}));}
+ var os=q.o.map(function(o,i){return {en:o[0],zh:o[1],ok:i===0};});if(os.every(function(o){return o.en.length<=2;}))return os.sort(function(a,b){return a.en<b.en?-1:1;});return shuffle(os);}
 function showQ(){var qid=Q.ids[Q.i],q=qById(qid),sec=secById(qid.split('#')[0]);Q.opts=optsFor(q);Q.answered=false;Q.shown=Date.now();
  var dots=Q.ids.map(function(_,i){return '<span class="'+(i<Q.res.length?(Q.res[i]?'ok':'no'):(i===Q.i?'cur':''))+'"></span>';}).join('');
  var title=Q.mode==='quiz'?'✏️ '+sec.id+' '+esc(LL(sec)):'📓 '+L('Mistake practice','錯題練習');
  var extra=Q.mode==='practice'?'<span class="pips" title="'+L('Correct in a row','連續答對')+'">'+[0,1].map(function(k){return '<i class="'+((S.mistakes[qid]||{}).s>k?'on':'')+'"></i>';}).join('')+'</span>':'';
  modal('<div class="sheet-h"><h2>'+title+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
  '<div class="qtop"><div class="dots">'+dots+'</div><span class="bloom">'+L(BLOOM[q.b][0],BLOOM[q.b][1])+' · L'+q.b+'</span>'+extra+(Q.mode==='practice'?'<span class="muted" style="font-size:12px">'+sec.id+'</span>':'')+'</div>'+
- '<div class="card qcard"><div class="qtext">'+(S.lang==='en'?'<button class="say inl" data-say="'+esc(q.en)+'" aria-label="Read question aloud">🔊</button>':'')+(q.t==='tf'?'<span class="tag" style="background:var(--sky)">'+L('True or false?','是非題')+'</span><br>':'')+esc(LL(q))+'</div>'+
+ '<div class="card qcard">'+(q.ce?'<div class="ctx"><b>📋 '+L('Context','情境')+'</b><div>'+esc(L(q.ce,q.cz))+'</div></div>':'')+(q.fig&&FIGS[q.fig]?'<div class="fig">'+FIGS[q.fig]()+'</div>':'')+'<div class="qtext">'+(S.lang==='en'?'<button class="say inl" data-say="'+esc(q.en)+'" aria-label="Read question aloud">🔊</button>':'')+(q.t==='tf'?'<span class="tag" style="background:var(--sky)">'+L('True or false?','是非題')+'</span><br>':'')+esc(LL(q))+'</div>'+
  '<div class="opts'+(q.t==='tf'?' two':'')+'" id="opts">'+Q.opts.map(function(o,i){return '<button class="opt" data-i="'+i+'"><span class="k">'+(q.t==='tf'?(i===0?'✓':'✗'):'ABCD'[i])+'</span><span>'+esc(LL(o))+'</span></button>';}).join('')+'</div><div id="fb"></div></div>',function(){Q=null;});
  $('#ov').dataset.lock='1';
- $('#xClose').onclick=function(){if(Q&&Q.res.length&&Q.mode==='quiz'){confirmBox(L('Leave quiz?','離開測驗？'),L('Your answers so far won\'t earn stars.','目前的答案不會獲得星星。'),L('Leave','離開'),function(){Q=null;});}else{Q=null;closeModal();}};
+ $('#xClose').onclick=function(){if(Q&&Q.res.length&&Q.mode==='quiz'){confirmBox(L('Leave quiz?','離開測驗？'),L('Your answers so far won\'t earn stars.','目前的答案不會獲得星星。'),L('Leave','離開'),function(){quizRec('quit');Q=null;});}else{if(Q&&Q.res.length)quizRec('quit');Q=null;closeModal();}};
  document.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){answer(+b.dataset.i);};});}
 function answer(i){if(Q.answered)return;Q.answered=true;var qid=Q.ids[Q.i],q=qById(qid),o=Q.opts[i],ok=o.ok,dt=(Date.now()-Q.shown)/1000;
  var btns=document.querySelectorAll('.opt');btns.forEach(function(b,k){b.disabled=true;if(Q.opts[k].ok)b.classList.add('right');});
@@ -1415,7 +1603,7 @@ function answer(i){if(Q.answered)return;Q.answered=true;var qid=Q.ids[Q.i],q=qBy
  nb.scrollIntoView({block:'nearest',behavior:'smooth'});save();}
 function finishQuiz(){var n=Q.res.filter(Boolean).length,tot=Q.res.length,p=curPet(),html;
  if(Q.mode==='quiz'){var sec=secById(Q.sec),r=S.secs[Q.sec]||{stars:0,best:0,plays:0},st=n===5?3:n===4?2:n===3?1:0;
-  var wasNone=!(r.stars>0);r.plays++;r.best=Math.max(r.best,n);var newStar=st>r.stars;r.stars=Math.max(r.stars,st);S.secs[Q.sec]=r;S.quizzes++;if(n===5)S.perfect++;
+  quizRec('done',st);var wasNone=!(r.stars>0);r.plays++;r.best=Math.max(r.best,n);var newStar=st>r.stars;r.stars=Math.max(r.stars,st);S.secs[Q.sec]=r;S.quizzes++;if(n===5)S.perfect++;
   p.energy=clamp(p.energy-8,5,100);p.happy=clamp(p.happy+(n>=3?6:-2),5,100);markActive();checkPetUnlocks();
   var g=gain(n*5+(n===5?10:0),n*10);
   var mood=n>=4?'joy':n>=2?'happy':'sad';
@@ -1426,7 +1614,7 @@ function finishQuiz(){var n=Q.res.filter(Boolean).length,tot=Q.res.length,p=curP
   var sid=Q.sec;Q=null;modal(html);if(wasNone&&st>0){var spi=specialFor(sid);if(spi)setTimeout(function(){specialPopup(spi);},900);}sfx(n>=4?'fanfare':'coin');if(n===5)confetti();
   $('#again').onclick=function(){$('#ovroot').innerHTML='';startQuiz(sid,'quiz');};if($('#notes'))$('#notes').onclick=function(){$('#ovroot').innerHTML='';openStudy(sid);};
   $('#home').onclick=function(){curScreen='home';closeModal();};}
- else{S.quizzes+=0;markActive();var left=Object.keys(S.mistakes).length;p.happy=clamp(p.happy+4,5,100);checkTrophies();checkPetUnlocks();
+ else{quizRec('done',0);markActive();var left=Object.keys(S.mistakes).length;p.happy=clamp(p.happy+4,5,100);checkTrophies();checkPetUnlocks();
   html='<div class="empty"><div style="width:140px;margin:0 auto">'+petSVG(S.active,n>=tot/2?'joy':'happy')+'</div><h2>'+L('Practice done!','練習完成！')+'</h2><p>'+n+' / '+tot+' '+L('correct','答對')+'</p><p class="muted">'+(left?L(left+' mistakes left. Each one needs 2 correct in a row.','尚餘 '+left+' 條錯題，每條需連續答對 2 次。'):L('Your 錯題本 is empty. Amazing!','錯題本已清空，太厲害了！'))+'</p><div class="row" style="justify-content:center">'+(left?'<button class="btn pink" id="again">🔁 '+L('Keep going','繼續')+'</button>':'')+'<button class="btn white" id="home">'+L('Done','完成')+'</button></div></div>';
   Q=null;modal(html);sfx('coin');if($('#again'))$('#again').onclick=function(){$('#ovroot').innerHTML='';startPractice(practiceFilter);};$('#home').onclick=closeModal;}
  save();}
@@ -1500,7 +1688,7 @@ function openEvolve(){var p=curPet(),P=petDef(S.active),ev=EVO[p.stage+1];if(!ev
  '<p style="text-align:center"><b>'+L(STAGE[p.stage][0],STAGE[p.stage][1])+' → '+L(STAGE[p.stage+1][0],STAGE[p.stage+1][1])+'</b></p><ul class="notes"><li><span>'+(lv>=ev.lv?'✅':'⬜')+' '+L('Reach Level ','達到等級 ')+ev.lv+' ('+L('now ','現在 ')+lv+')</span></li><li><span>'+(S.coins>=ev.cost?'✅':'⬜')+' 🪙 '+ev.cost+'</span></li></ul><div class="row" style="justify-content:center;margin-top:14px"><button class="btn pink" id="doEvo"'+(ok?'':' disabled')+'>✨ '+L('Evolve now','立即進化')+'</button></div>'+(lv<ev.lv?'<p class="muted" style="text-align:center">'+L('Quizzes and study sessions give XP.','測驗和溫習會給予經驗值。')+'</p>':''));
  $('#xClose').onclick=closeModal;$('#doEvo').onclick=function(){S.coins-=ev.cost;p.stage++;sfx('fanfare');confetti();checkTrophies();save();bubble=L('I feel brand new!!','我煥然一新了！！');setTempMood('joy',4000);closeModal();};}
 function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(function(s){s.terms.forEach(function(t){pool.push(t);});});var pairs=shuffle(pool).slice(0,6);
- var cards=[];pairs.forEach(function(t,i){cards.push({p:i,txt:t[0],en:1});cards.push({p:i,txt:t[1]});});cards=shuffle(cards);var open=[],done=0,moves=0,lock=false;
+ var cards=[];pairs.forEach(function(t,i){cards.push({p:i,txt:t[0],en:1});cards.push({p:i,txt:t[1]});});cards=shuffle(cards);var open=[],done=0,moves=0,lock=false,mt0=Date.now();
  var t=today();if(S.matchDay.d!==t)S.matchDay={d:t,n:0};
  modal('<div class="sheet-h"><h2>🃏 '+L('Term Match','詞彙配對')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><p class="muted" style="margin-top:0">'+L('Match each English term with its Chinese partner · ','把英文詞彙與中文配對 · ')+esc(LL(chap))+'</p><div class="match" id="mg">'+cards.map(function(c,i){return '<button class="mc" data-c="'+i+'" aria-label="card">?</button>';}).join('')+'</div><p class="muted" id="mv" style="text-align:center">'+L('Moves: 0','步數：0')+'</p>');
  $('#xClose').onclick=closeModal;
@@ -1508,7 +1696,7 @@ function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(f
   b.classList.add('up');b.textContent=cards[i].txt;if(cards[i].en)say(cards[i].txt);else sfx('flip');open.push(b);
   if(open.length===2){moves++;$('#mv').textContent=L('Moves: ','步數：')+moves;var a=cards[+open[0].dataset.c],c=cards[+open[1].dataset.c];
    if(a.p===c.p){open.forEach(function(x){x.classList.remove('up');x.classList.add('done');});open=[];done++;sfx('right');
-    if(done===6){var p=curPet();p.happy=clamp(p.happy+22,5,100);p.energy=clamp(p.energy-5,5,100);S.matchWins++;S.matchDay.n++;var paid=S.matchDay.n<=3;if(paid)gain(moves<=10?8:5,6);else {checkTrophies();save();}
+    if(done===6){var p=curPet();p.happy=clamp(p.happy+22,5,100);p.energy=clamp(p.energy-5,5,100);S.matchWins++;S.matchDay.n++;logRec({mode:'match',unit:String(chap.id),sec:'',ans:6,cor:6,stars:0,secs:Math.round((Date.now()-mt0)/1000),status:'done',start:new Date(mt0).toISOString()});var paid=S.matchDay.n<=3;if(paid)gain(moves<=10?8:5,6);else {checkTrophies();save();}
      setTimeout(function(){modal('<div class="empty"><div style="width:140px;margin:0 auto">'+petSVG(S.active,'joy')+'</div><h2>'+L('All matched!','全部配對成功！')+'</h2><p>💗 +22'+(paid?' · 🪙 +'+(moves<=10?8:5)+' ×'+streakMult().toFixed(1):'')+'</p><p class="muted">'+(paid?'':L('(Coins for the first 3 games each day)','（每日首 3 局有金幣）'))+'</p><div class="row" style="justify-content:center"><button class="btn lav" id="again">🔁 '+L('Play again','再玩')+'</button><button class="btn white" id="home">'+L('Done','完成')+'</button></div></div>');confetti();
       $('#again').onclick=function(){$('#ovroot').innerHTML='';openMatch();};$('#home').onclick=closeModal;},500);}}
    else{lock=true;open.forEach(function(x){x.classList.add('bad');});setTimeout(function(){open.forEach(function(x){x.classList.remove('up','bad');x.textContent='?';});open=[];lock=false;},800);}}};});}
@@ -1538,7 +1726,7 @@ function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').r
   o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
   var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
   if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
-function applyCode(o){var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
+function applyCode(o){if(!AUTH.mode)AUTH.mode='guest';var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
  S.coins=o.coins;S.pets={};PETS.forEach(function(P,i){if(o.pets[P.id]){var p=newPet();p.stage=o.pets[P.id].st;p.xp=o.pets[P.id].xp;S.pets[P.id]=p;}});
  S.active=PETS[o.active]&&S.pets[PETS[o.active].id]?PETS[o.active].id:Object.keys(S.pets)[0];S.pets[S.active].eq=o.eq;
  S.owned=o.owned;S.owned.w0=1;if(!S.pets[S.active])S.active=Object.keys(S.pets)[0];S.room={wall:o.wall,prop:o.prop};['streak','best','shields','lastDay','days','quizzes','perfect','cleared','studies','matchWins'].forEach(function(k){S[k]=o[k];});
@@ -1562,21 +1750,24 @@ function previewCode(v){var o=unpack(v);var pv=$('#prev');if(!pv)return;
  $('#doLoad').onclick=function(){applyCode(o);sfx('fanfare');toast(L('Save loaded! Welcome back ✿','已載入存檔！歡迎回來 ✿'));curScreen='home';closeModal();};}
 
 /* WELCOME */
-function welcomeHTML(){var saved=load();
- return '<div class="app"><div class="welcome"><div style="width:190px">'+petSVG('mochi','joy',{stage:1,eq:{hat:'h_sprout'}})+'</div><h1>'+L('Mochi Science Pals','麻糬科學小夥伴')+'</h1><p class="muted" style="margin:0">'+L('Study S1 Science, earn coins, and raise a squishy study buddy.','溫習中一科學、賺金幣，養大你的軟綿綿溫習拍檔。')+'</p>'+
+function welcomeHTML(){var saved=load(KEY),cloud=cloudOn();
+ return '<div class="app"><div class="welcome"><div style="width:170px">'+petSVG('mochi','joy',{stage:1,eq:{hat:'h_sprout'}})+'</div><h1>'+L('Mochi Science Pals','麻糬科學小夥伴')+'</h1><p class="muted" style="margin:0">'+L('Study S1 Science, earn coins, and raise a squishy study buddy.','溫習中一科學、賺金幣，養大你的軟綿綿溫習拍檔。')+'</p>'+
  '<div class="lang2"><button class="btn '+(S.lang==='zh'?'pink':'white')+'" data-lang="zh">繁體中文</button><button class="btn '+(S.lang==='en'?'pink':'white')+'" data-lang="en">English</button></div>'+
- (saved&&saved.started?'<div class="card" style="width:100%"><b>'+L('Welcome back!','歡迎回來！')+'</b><p class="muted" style="margin:4px 0 10px">'+LL(petDef(saved.active))+' · 🪙 '+saved.coins+' · 🔥 '+saved.streak+'</p><div class="row" style="justify-content:center"><button class="btn green" id="wResume">▶ '+L('Resume game','繼續遊戲')+'</button><button class="btn white" id="wFresh">'+L('Start fresh','重新開始')+'</button></div></div>':
- '<button class="btn green" id="wStart" style="min-width:220px">🌱 '+L('Meet your pet','認識你的寵物')+'</button>')+
+ '<div class="card login"><b>🎓 '+L('Students & teachers','學生及老師')+'</b><p class="muted" style="margin:4px 0 10px;font-size:14px">'+(cloud?L('Sign in with your school Google account. Your progress is saved to your class record and works on any device.','用學校 Google 帳戶登入。進度會儲存到班級紀錄，任何裝置都可繼續。'):L('Class sign-in is not switched on for this page. You can play as a guest.','此頁面未開通班級登入，你可以用訪客身分遊玩。'))+'</p>'+(cloud?'<div id="gbtn" style="display:flex;justify-content:center;min-height:44px"></div>':'')+'<div id="loginMsg" role="status" aria-live="polite"></div></div>'+
+ '<div class="card login"><b>🙋 '+L('Guest','訪客')+'</b><p class="muted" style="margin:4px 0 10px;font-size:14px">'+L('Guest progress stays on this device only. Your teacher can\'t see it.','訪客進度只儲存在此裝置，老師看不到。')+'</p>'+
+ (saved&&saved.started?'<p class="muted" style="margin:0 0 10px">'+LL(petDef(saved.active))+' · 🪙 '+saved.coins+' · 🔥 '+saved.streak+'</p><div class="row" style="justify-content:center"><button class="btn green" id="wResume">▶ '+L('Continue as guest','以訪客繼續')+'</button><button class="btn white" id="wFresh">'+L('Start fresh','重新開始')+'</button></div>':
+ '<button class="btn green" id="wStart" style="min-width:220px">🌱 '+L('Play as guest','以訪客身分遊玩')+'</button>')+'</div>'+
  '<details style="width:100%;text-align:left"><summary style="cursor:pointer;font-weight:800;min-height:44px">🔑 '+L('I have a save code','我有存檔碼')+'</summary><textarea id="inCode" rows="3" aria-label="Save code"></textarea><div id="prev"></div><button class="btn pink small" id="chk" style="margin-top:8px">🔍 '+L('Preview','預覽')+'</button></details>'+
  '<p class="foot">'+L('Original characters inspired by cosy Japanese kawaii art. Not affiliated with any brand.','原創角色，靈感來自日系療癒可愛風，與任何品牌無關。')+'</p></div></div>';}
-function bindWelcome(){document.querySelectorAll('[data-lang]').forEach(function(b){b.onclick=function(){S.lang=b.dataset.lang;var sv=load();if(sv){sv.lang=S.lang;try{localStorage.setItem(KEY,JSON.stringify(sv));}catch(e){}}render();};});
- var st=$('#wStart');if(st)st.onclick=function(){S.started=true;S.lastTick=Date.now();ac();sfx('fanfare');bubble=L('Hi! I\'m Mochi. Let\'s study together!','你好！我係麻糬，一齊溫書啦！');save();render();};
- var rs=$('#wResume');if(rs)rs.onclick=function(){var lang=S.lang;S=load();S.lang=lang;ac();sfx('tap');if(S.music)startMusic();render();openingPopup();};
- var fr=$('#wFresh');if(fr)fr.onclick=function(){confirmBox(L('Start fresh?','重新開始？'),L('This erases all pets, coins and stars on this device. Copy your save code first if you want to keep them.','這會清除此裝置上所有寵物、金幣和星星。如想保留，請先複製存檔碼。'),L('Erase & start','清除並開始'),function(){var lang=S.lang;S=defaultState();S.lang=lang;S.started=true;save();bubble=L('Hi! I\'m Mochi!','你好！我係麻糬！');});};
+function bindWelcome(){document.querySelectorAll('[data-lang]').forEach(function(b){b.onclick=function(){S.lang=b.dataset.lang;var sv=load(KEY);if(sv){sv.lang=S.lang;try{localStorage.setItem(KEY,JSON.stringify(sv));}catch(e){}}render();};});
+ if(cloudOn())renderGBtn('gbtn');
+ var st=$('#wStart');if(st)st.onclick=function(){AUTH.mode='guest';S.started=true;S.lastTick=Date.now();ac();sfx('fanfare');bubble=L('Hi! I\'m Mochi. Let\'s study together!','你好！我係麻糬，一齊溫書啦！');save();render();};
+ var rs=$('#wResume');if(rs)rs.onclick=function(){AUTH.mode='guest';var lang=S.lang;S=load(KEY);S.lang=lang;ac();sfx('tap');if(S.music)startMusic();render();openingPopup();};
+ var fr=$('#wFresh');if(fr)fr.onclick=function(){confirmBox(L('Start fresh?','重新開始？'),L('This erases the guest pets, coins and stars on this device. Copy your save code first if you want to keep them.','這會清除此裝置上訪客的寵物、金幣和星星。如想保留，請先複製存檔碼。'),L('Erase & start','清除並開始'),function(){AUTH.mode='guest';var lang=S.lang;S=defaultState();S.lang=lang;S.started=true;save();bubble=L('Hi! I\'m Mochi!','你好！我係麻糬！');});};
  var ck=$('#chk');if(ck)ck.onclick=function(){previewCode($('#inCode').value);};}
 
 /* bind per screen */
-function bindScreen(){
+function bindScreen(){if(curScreen==='teacher')bindTeacher();
  var pt=$('#petTap');if(pt)pt.onclick=function(){var svg=pt.querySelector('.pet');svg.classList.remove('boing');void svg.getBoundingClientRect();svg.classList.add('boing');sfx('boing');var p=curPet();p.happy=clamp(p.happy+1,5,100);bubble=line(moodOf(S.active));var bb=$('.bubble');if(bb)bb.textContent=bubble;else render();};
  var m={bFeed:openFeed,bPlay:function(){var p=curPet();if(p.energy<12){bubble=L('Too tired to play… feed me first?','太攰玩唔到……可唔可以先餵我？');render();return;}openMatch();},bStudy:function(){curScreen='study';render();},bDress:openDress,bEvo:openEvolve,bSwitch:openSwitch,
   bGift:function(){S.gift=today();S.coins+=10;S.food.onigiri=(S.food.onigiri||0)+1;sfx('coin');confetti();toast('🎁 +10 🪙 · +1 🍙');save();render();},
@@ -1595,6 +1786,146 @@ function bindScreen(){
  document.querySelectorAll('main [data-active]').forEach(function(b){b.onclick=function(){S.active=b.dataset.active;sfx('boing');save();render();};});
  document.querySelectorAll('[data-buypet]').forEach(function(b){b.onclick=function(){var P=petDef(b.dataset.buypet);if(S.coins<P.price||S.pets[P.id])return;S.coins-=P.price;S.pets[P.id]=newPet();S.active=P.id;sfx('fanfare');confetti();bubble=L('Nice to meet you!','很高興認識你！');bubblePet=P.id;checkTrophies();save();curScreen='home';render();};});}
 
+
+/* =====================================================================
+   CLASS LOGIN (Google) · CLOUD SAVE · RECORDS · TEACHER DASHBOARD
+   Needs window.S1_CONFIG = {GOOGLE_CLIENT_ID, API_URL}. Empty = guest only.
+   ===================================================================== */
+var CFGX=window.S1_CONFIG||{};
+var AUTH={mode:null,user:null,token:null,exp:0,stale:false,lastSync:0};
+var SESSION=Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
+function cloudOn(){return !!(CFGX.GOOGLE_CLIENT_ID&&CFGX.API_URL);}
+function storeKey(){return AUTH.mode==='google'&&AUTH.user?KEY+'_u_'+AUTH.user.email:KEY;}
+function dispName(){var u=AUTH.user;if(!u)return L('Guest','訪客');return (S.lang==='en'?(u.en||u.zh):(u.zh||u.en))||u.email;}
+function tokenOk(){return !!AUTH.token&&Date.now()<AUTH.exp-30000;}
+function post(action,data){return fetch(CFGX.API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({action:action,token:AUTH.token,app:'s1sci'},data||{}))}).then(function(r){return r.json();});}
+function api(action,data){if(AUTH.mode!=='google')return Promise.resolve({ok:false,error:'guest'});if(!tokenOk()){markStale();return Promise.resolve({ok:false,error:'expired'});}
+ return post(action,data).then(function(j){if(!j.ok&&j.error==='expired')markStale();return j;},function(){return {ok:false,error:'network'};});}
+function markStale(){if(!AUTH.stale){AUTH.stale=true;if(S.started&&!$('#ov'))render();}}
+function errText(e){return {not_listed:L('This Google account is not on the class list. Please sign in with your school account, or play as a guest.','此 Google 帳戶不在班級名單內。請用學校帳戶登入，或以訪客身分遊玩。'),bad_client:L('Sign-in is not set up correctly (client ID mismatch). Please tell your teacher.','登入設定有誤（Client ID 不符），請通知老師。'),expired:L('Your sign-in has expired. Please sign in again.','登入已過期，請重新登入。'),forbidden:L('Teacher access only.','只限老師使用。'),network:L('Could not reach the class server. Check your internet connection.','無法連接班級伺服器，請檢查網絡。'),unverified:L('Please use a verified Google account.','請使用已驗證的 Google 帳戶。')}[e]||(L('Sign-in failed: ','登入失敗：')+e);}
+
+/* ---- Google Identity Services ---- */
+var gisReady=false,gisLoading=false;
+function withGIS(cb){if(window.google&&google.accounts&&google.accounts.id){if(!gisReady){google.accounts.id.initialize({client_id:CFGX.GOOGLE_CLIENT_ID,callback:onCredential,auto_select:false,cancel_on_tap_outside:true});gisReady=true;}cb();return;}
+ if(gisLoading){setTimeout(function(){withGIS(cb);},300);return;}gisLoading=true;
+ var sc=document.createElement('script');sc.src='https://accounts.google.com/gsi/client';sc.async=true;
+ sc.onload=function(){gisLoading=false;withGIS(cb);};sc.onerror=function(){gisLoading=false;loginMsg(L('Could not load Google sign-in. Check your internet, or play as a guest.','無法載入 Google 登入，請檢查網絡或以訪客身分遊玩。'),true);};document.head.appendChild(sc);}
+function renderGBtn(id){var el=document.getElementById(id);if(!el||!cloudOn())return;withGIS(function(){el.innerHTML='';google.accounts.id.renderButton(el,{theme:'outline',size:'large',shape:'pill',text:'signin_with',locale:S.lang==='en'?'en-GB':'zh-TW',width:260});});}
+function jwtPayload(t){try{var p=t.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');while(p.length%4)p+='=';return JSON.parse(decodeURIComponent(escape(atob(p))));}catch(e){return {};}}
+function loginMsg(t,bad){var m=$('#loginMsg');if(m)m.innerHTML='<p style="margin:8px 0 0;font-weight:700;color:'+(bad?'#B4475A':'var(--ink2)')+'">'+esc(t)+'</p>';}
+function onCredential(resp){var tok=resp.credential,pl=jwtPayload(tok),em=String(pl.email||'').toLowerCase();
+ if(AUTH.mode==='google'&&AUTH.user&&em===AUTH.user.email){AUTH.token=tok;AUTH.exp=(pl.exp||0)*1000;AUTH.stale=false;$('#ovroot').innerHTML='';toast('☁️ '+L('Reconnected – progress synced','已重新連線，進度已同步'));flushQueue();cloudSaveSoon(1);render();return;}
+ AUTH.token=tok;AUTH.exp=(pl.exp||0)*1000;loginMsg('⏳ '+L('Checking the class list…','正在核對班級名單…'));
+ post('login',{}).then(function(j){if(!j.ok){AUTH.token=null;loginMsg(errText(j.error),true);return;}
+  AUTH.mode='google';AUTH.user=j.user;AUTH.stale=false;AUTH.lastSync=Date.now();
+  var lang=S.lang,local=load(storeKey()),remote=null;try{remote=j.progress?JSON.parse(j.progress):null;}catch(e){}
+  var chosen=(remote&&(!local||(remote.upd||0)>(local.upd||0)))?remote:local;
+  if(chosen){var d=defaultState();for(var k in d)if(!(k in chosen))chosen[k]=d[k];S=chosen;}else{S=defaultState();bubble=L('Hi! I\'m Mochi. Let\'s study together!','你好！我係麻糬，一齊溫書啦！');}
+  S.lang=lang;S.started=true;curScreen=AUTH.user.teacher?'teacher':'home';ac();save();render();if(!AUTH.user.teacher)openingPopup();flushQueue();
+  toast('👋 '+L('Hi ','你好，')+dispName()+(AUTH.user.cls?' ('+AUTH.user.cls+(AUTH.user.no?'-'+AUTH.user.no:'')+')':''));
+ },function(){AUTH.token=null;loginMsg(errText('network'),true);});}
+function signOut(){if(AUTH.mode==='google'){try{cloudSave();}catch(e){}}save();try{if(window.google&&google.accounts)google.accounts.id.disableAutoSelect();}catch(e){}
+ var lang=S.lang;AUTH={mode:null,user:null,token:null,exp:0,stale:false,lastSync:0};TD.data=null;S=defaultState();S.lang=lang;curScreen='home';$('#ovroot').innerHTML='';render();}
+
+/* ---- records queue + cloud save ---- */
+function qKey(){return KEY+'_queue_'+(AUTH.user?AUTH.user.email:'');}
+function getQ(){try{return JSON.parse(localStorage.getItem(qKey())||'[]');}catch(e){return [];}}
+function setQ(a){try{localStorage.setItem(qKey(),JSON.stringify(a.slice(-300)));}catch(e){}}
+function logRec(r){if(AUTH.mode!=='google')return;r.session=SESSION;r.lang=S.lang==='en'?'English':'中文';r.end=new Date().toISOString();var a=getQ();a.push(r);setQ(a);flushQueue();}
+var flushing=false;
+function flushQueue(){if(flushing||AUTH.mode!=='google')return;var a=getQ();if(!a.length)return;flushing=true;
+ api('record',{records:a}).then(function(j){flushing=false;if(j.ok){setQ(getQ().slice(a.length));AUTH.lastSync=Date.now();}});}
+var cloudTimer=null;
+function cloudSaveSoon(now){if(AUTH.mode!=='google')return;clearTimeout(cloudTimer);cloudTimer=setTimeout(cloudSave,now?50:6000);}
+function totalStars(){var n=0;for(var k in S.secs)n+=S.secs[k].stars||0;return n;}
+function cloudPayload(){var st=JSON.stringify(S);if(st.length>45000){var c=JSON.parse(st);c.seen={};c.hist=(c.hist||[]).slice(-7);st=JSON.stringify(c);}
+ return {state:st,summary:{streak:S.streak,best:S.best,stars:totalStars(),level:petLevel(curPet().xp),coins:S.coins,pet:S.active,quizzes:S.quizzes,mistakes:Object.keys(S.mistakes).length,cleared:S.cleared,trophies:Object.keys(S.trophies).length,lastDay:S.lastDay||''}};}
+function cloudSave(){if(AUTH.mode!=='google')return;if(!tokenOk()){markStale();return;}api('save',cloudPayload()).then(function(j){if(j.ok)AUTH.lastSync=Date.now();});}
+window.addEventListener('pagehide',function(){if(AUTH.mode==='google'&&tokenOk()&&navigator.sendBeacon){try{navigator.sendBeacon(CFGX.API_URL,JSON.stringify(Object.assign({action:'save',token:AUTH.token},cloudPayload())));var a=getQ();if(a.length)navigator.sendBeacon(CFGX.API_URL,JSON.stringify({action:'record',token:AUTH.token,records:a}));}catch(e){}}});
+
+/* ---- account sheet ---- */
+function openAccount(){var u=AUTH.user,q=getQ().length,h='<div class="sheet-h"><h2>👤 '+L('Account','帳戶')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>';
+ if(AUTH.mode==='google'){h+='<div class="card grid" style="gap:6px"><b style="font-size:18px">'+esc(u.zh||'')+' '+esc(u.en||'')+'</b><span class="muted">'+(u.cls?esc(u.cls)+(u.no?' · '+L('No. ','班號 ')+esc(u.no):''):'')+(u.teacher?' <span class="tag">'+L('Teacher','老師')+'</span>':'')+'</span><span class="muted" style="font-size:13px">'+esc(u.email)+'</span>'+
+  '<span style="font-size:14px">'+(AUTH.stale?'⚠️ '+L('Sign-in expired – sign in again to keep syncing.','登入已過期，請重新登入以繼續同步。'):'☁️ '+L('Synced ','已同步 ')+(AUTH.lastSync?new Date(AUTH.lastSync).toLocaleTimeString():'')+(q?' · '+q+L(' records waiting',' 條記錄待上傳'):''))+'</span></div>'+
+  (AUTH.stale?'<div id="gbtn2" style="display:flex;justify-content:center;margin-top:12px;min-height:44px"></div>':'<div class="row" style="margin-top:12px"><button class="btn green" id="aSync">☁️ '+L('Sync now','立即同步')+'</button></div>')+
+  '<div class="row" style="margin-top:12px"><button class="btn white" id="aOut">🚪 '+L('Sign out','登出')+'</button></div>';}
+ else h+='<p>'+L('You are playing as a <b>guest</b>. Progress stays on this device and your teacher cannot see it.','你正以<b>訪客</b>身分遊玩。進度只儲存在此裝置，老師看不到。')+'</p>'+(cloudOn()?'<button class="btn green" id="aIn">🎓 '+L('Sign in to my class','登入我的班級')+'</button>':'');
+ modal(h);$('#xClose').onclick=closeModal;
+ if($('#gbtn2'))renderGBtn('gbtn2');
+ if($('#aSync'))$('#aSync').onclick=function(){cloudSave();flushQueue();toast('☁️ '+L('Syncing…','同步中…'));};
+ if($('#aOut'))$('#aOut').onclick=function(){confirmBox(L('Sign out?','登出？'),L('Your progress is saved to your class account.','你的進度已儲存到班級帳戶。'),L('Sign out','登出'),signOut);};
+ if($('#aIn'))$('#aIn').onclick=function(){save();var lang=S.lang;S=defaultState();S.lang=lang;$('#ovroot').innerHTML='';render();};}
+
+/* ---- teacher dashboard ---- */
+var TD={data:null,loading:false,err:'',cls:'all',period:'30',sort:'no',dir:1};
+var MODE_NAMES={quiz:['Quiz','測驗'],practice:['Mistake practice','錯題練習'],study:['Study notes','溫習筆記'],vocab:['Vocab','詞彙跟讀'],match:['Term Match','詞彙配對']};
+function modeName(k){var m=MODE_NAMES[k];return m?L(m[0],m[1]):k;}
+function loadStats(){TD.loading=true;TD.err='';api('stats',{}).then(function(j){TD.loading=false;if(j.ok){TD.data=j;TD.at=Date.now();}else TD.err=errText(j.error);if(curScreen==='teacher')render();});}
+function pct(c,a){return a?Math.round(c/a*100):null;}
+function accChip(p){if(p==null)return '<span class="muted">–</span>';var col=p>=80?'#E6F5EA':p>=60?'#FFF1C5':'#FDECEF';return '<span class="acc" style="background:'+col+'">'+p+'%</span>';}
+function fmtT(t){if(!t)return '–';var d=new Date(t);if(isNaN(d))return '–';return (d.getMonth()+1)+'/'+d.getDate()+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+function computeStats(){var D=TD.data,since=TD.period==='all'?0:Date.now()-(+TD.period)*864e5;
+ var studs=D.students.filter(function(s){return TD.cls==='all'||s.cls===TD.cls;}).sort(function(a,b){return a.cls<b.cls?-1:a.cls>b.cls?1:(+a.no||0)-(+b.no||0);});
+ var by={};studs.forEach(function(s){by[s.email]={s:s,sess:0,quiz:0,ans:0,cor:0,secs:0,last:'',secs2:{},wrong:{},recs:[]};});
+ var sec={};ALLSECS.forEach(function(x){sec[x.id]={att:0,studs:{},ans:0,cor:0};});var asked={},missed={},recs=[];
+ D.records.forEach(function(r){var st=by[r.email];if(!st)return;var tm=Date.parse(r.t);if(tm<since)return;recs.push(r);st.recs.push(r);if(!st.last||r.t>st.last)st.last=r.t;st.secs+=+r.secs||0;
+  if(r.mode==='quiz'||r.mode==='practice'){st.sess++;st.ans+=+r.ans||0;st.cor+=+r.cor||0;
+   String(r.ids||'').split(' ').filter(String).forEach(function(id){asked[id]=(asked[id]||0)+1;var sid=id.split('#')[0];var m=st.secs2[sid]||(st.secs2[sid]={ans:0,cor:0,best:0,att:0});m.ans++;if(sec[sid]){sec[sid].ans++;}});
+   String(r.wrong||'').split(' ').filter(String).forEach(function(id){missed[id]=(missed[id]||0)+1;st.wrong[id]=(st.wrong[id]||0)+1;var sid=id.split('#')[0];if(sec[sid])sec[sid].ans+=0;});}
+  if(r.mode==='quiz'){st.quiz++;var sid=String(r.sec);var m=st.secs2[sid]||(st.secs2[sid]={ans:0,cor:0,best:0,att:0});m.att++;m.best=Math.max(m.best,+r.stars||0);if(sec[sid]){sec[sid].att++;sec[sid].studs[r.email]=1;}}});
+ // correct per sub-topic = asked - wrong
+ for(var e in by){var st=by[e];for(var sid in st.secs2){var w=0;for(var id in st.wrong)if(id.split('#')[0]===sid)w+=st.wrong[id];st.secs2[sid].cor=Math.max(0,st.secs2[sid].ans-w);}
+  var weak=null;for(var sid2 in st.secs2){var m=st.secs2[sid2];if(m.ans>=5){var p=m.cor/m.ans;if(!weak||p<weak.p)weak={id:sid2,p:p};}}st.weak=weak;st.acc=pct(st.cor,st.ans);st.prog=D.progress[e]||{};}
+ for(var sid3 in sec){var w2=0;for(var id2 in missed)if(id2.split('#')[0]===sid3)w2+=missed[id2];sec[sid3].cor=Math.max(0,sec[sid3].ans-w2);sec[sid3].n=Object.keys(sec[sid3].studs).length;}
+ var rows=studs.map(function(s){return by[s.email];}),active=rows.filter(function(r){return r.recs.length;}).length,A=0,C=0,M=0,strk=0;rows.forEach(function(r){A+=r.ans;C+=r.cor;M+=r.secs;strk+=+(r.prog.streak||0);});
+ var mm=Object.keys(missed).filter(function(id){return qById(id);}).map(function(id){return {id:id,asked:asked[id]||missed[id],miss:missed[id]};}).sort(function(a,b){return b.miss/b.asked-a.miss/a.asked||b.miss-a.miss;}).slice(0,12);
+ return {rows:rows,sec:sec,recs:recs,tot:studs.length,active:active,ans:A,cor:C,mins:Math.round(M/60),avgStreak:studs.length?(strk/studs.length).toFixed(1):'0',missed:mm};}
+function teacherHTML(){var h='<h1 class="h-sec">📊 '+L('Teacher dashboard','老師數據中心')+'</h1>';
+ if(!TD.data&&!TD.loading&&!TD.err)loadStats();
+ if(TD.loading&&!TD.data)return h+'<div class="card empty">⏳ '+L('Loading class records…','正在載入班級記錄…')+'</div>';
+ if(TD.err&&!TD.data)return h+'<div class="card empty"><p>⚠️ '+esc(TD.err)+'</p><button class="btn" id="tdRe">🔄 '+L('Try again','再試一次')+'</button></div>';
+ var D=TD.data,classes={};D.students.forEach(function(s){if(s.cls)classes[s.cls]=1;});var X=computeStats();TD.X=X;
+ h+='<div class="card row" style="gap:8px"><label class="tdl">'+L('Class','班別')+' <select id="tdCls">'+['all'].concat(Object.keys(classes).sort()).map(function(c){return '<option value="'+esc(c)+'"'+(TD.cls===c?' selected':'')+'>'+(c==='all'?L('All classes','全部班別'):esc(c))+'</option>';}).join('')+'</select></label>'+
+  '<label class="tdl">'+L('Period','時段')+' <select id="tdPer">'+[['7',L('Last 7 days','最近 7 日')],['30',L('Last 30 days','最近 30 日')],['all',L('All time','全部')]].map(function(o){return '<option value="'+o[0]+'"'+(TD.period===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select></label>'+
+  '<button class="btn small white" id="tdRe">🔄 '+L('Refresh','更新')+'</button><button class="btn small green" id="tdXl">⬇️ '+L('Download Excel','下載 Excel')+'</button><span class="muted" style="font-size:12px">'+L('Updated ','更新於 ')+fmtT(TD.at)+'</span></div>';
+ var tiles=[[X.active+' / '+X.tot,L('Active students','活躍學生')],[X.ans,L('Questions answered','已答題數')],[X.ans?pct(X.cor,X.ans)+'%':'–',L('Accuracy','準確率')],[X.mins,L('Minutes studied','溫習分鐘')],[X.avgStreak,L('Avg streak (days)','平均連續日數')]];
+ h+='<div class="tiles">'+tiles.map(function(t){return '<div class="tile"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';}).join('')+'</div>';
+ var cols=[['no',L('Class/No.','班別/號')],['name',L('Name','姓名')],['last',L('Last active','最近活動')],['sess',L('Sessions','次數')],['ans',L('Answered','答題')],['acc',L('Accuracy','準確率')],['stars','★'],['streak','🔥'],['weak',L('Weakest','最弱小節')]];
+ var rows=X.rows.slice();var key=TD.sort,dir=TD.dir;var val=function(r){return key==='no'?r.s.cls+String(r.s.no).padStart(3,'0'):key==='name'?(r.s.en||r.s.zh):key==='last'?r.last:key==='sess'?r.sess:key==='ans'?r.ans:key==='acc'?(r.acc==null?-1:r.acc):key==='stars'?+(r.prog.stars||0):key==='streak'?+(r.prog.streak||0):(r.weak?r.weak.p:2);};
+ rows.sort(function(a,b){var x=val(a),y=val(b);return (x<y?-1:x>y?1:0)*dir;});
+ h+='<h2 class="h-sec">👩‍🎓 '+L('Students','學生')+' <span class="muted" style="font-size:13px">'+L('tap a name for details · tap a heading to sort','點姓名看詳情 · 點標題排序')+'</span></h2><div class="tbl"><table><thead><tr>'+cols.map(function(c){return '<th><button data-sort="'+c[0]+'">'+c[1]+(TD.sort===c[0]?(TD.dir>0?' ▲':' ▼'):'')+'</button></th>';}).join('')+'</tr></thead><tbody>'+
+  rows.map(function(r){var s=r.s;return '<tr><td>'+esc(s.cls)+(s.no!==''?'-'+esc(s.no):'')+'</td><td><button class="lnk" data-stu="'+esc(s.email)+'">'+esc(s.zh||'')+' <span class="muted">'+esc(s.en||'')+'</span></button></td><td>'+fmtT(r.last)+'</td><td class="n">'+r.sess+'</td><td class="n">'+r.ans+'</td><td>'+accChip(r.acc)+'</td><td class="n">'+(r.prog.stars||0)+'</td><td class="n">'+(r.prog.streak||0)+'</td><td>'+(r.weak?esc(r.weak.id)+' '+accChip(Math.round(r.weak.p*100)):'<span class="muted">–</span>')+'</td></tr>';}).join('')+'</tbody></table></div>';
+ h+='<h2 class="h-sec">📚 '+L('Sub-topics','小節表現')+'</h2><div class="tbl"><table><thead><tr><th>'+L('Sub-topic','小節')+'</th><th>'+L('Students','學生')+'</th><th>'+L('Quizzes','測驗')+'</th><th>'+L('Answered','答題')+'</th><th>'+L('Accuracy','準確率')+'</th></tr></thead><tbody>'+
+  ALLSECS.map(function(s){var m=X.sec[s.id],p=pct(m.cor,m.ans);return '<tr><td><b>'+s.id+'</b> '+esc(LL(s))+'</td><td class="n">'+m.n+'/'+X.tot+'</td><td class="n">'+m.att+'</td><td class="n">'+m.ans+'</td><td><div class="minibar"><i style="width:'+(p||0)+'%;background:'+(p==null?'#eee':p>=80?'var(--good)':p>=60?'var(--gold)':'var(--bad)')+'"></i></div> '+accChip(p)+'</td></tr>';}).join('')+'</tbody></table></div>';
+ h+='<h2 class="h-sec">❗ '+L('Most-missed questions','最常答錯的題目')+'</h2>'+(X.missed.length?'<div class="grid" style="gap:8px">'+X.missed.map(function(m){var q=qById(m.id);return '<div class="mistake"><div style="min-width:0"><span class="tag">'+m.id.split('#')[0]+'</span> '+esc(LL(q))+'</div><span class="acc" style="background:#FDECEF">'+Math.round(m.miss/m.asked*100)+'% · '+m.miss+'/'+m.asked+'</span></div>';}).join('')+'</div>':'<p class="muted">'+L('No wrong answers recorded in this period.','此時段沒有答錯記錄。')+'</p>');
+ return h;}
+function bindTeacher(){var c=$('#tdCls');if(c)c.onchange=function(){TD.cls=c.value;render();};var p=$('#tdPer');if(p)p.onchange=function(){TD.period=p.value;render();};
+ var re=$('#tdRe');if(re)re.onclick=function(){TD.data=null;TD.err='';loadStats();render();};
+ var xl=$('#tdXl');if(xl)xl.onclick=downloadExcel;
+ document.querySelectorAll('[data-sort]').forEach(function(b){b.onclick=function(){if(TD.sort===b.dataset.sort)TD.dir=-TD.dir;else{TD.sort=b.dataset.sort;TD.dir=b.dataset.sort==='no'||b.dataset.sort==='name'?1:-1;}render();};});
+ document.querySelectorAll('[data-stu]').forEach(function(b){b.onclick=function(){openStudent(b.dataset.stu);};});}
+function openStudent(email){var r=TD.X.rows.filter(function(x){return x.s.email===email;})[0];if(!r)return;var s=r.s,pg=r.prog;
+ var h='<div class="sheet-h"><h2>'+esc(s.zh||'')+' '+esc(s.en||'')+' <span class="muted" style="font-size:14px">'+esc(s.cls)+(s.no!==''?'-'+esc(s.no):'')+'</span></h2><button class="x" id="xClose" aria-label="Close">✕</button></div>';
+ var tiles=[[r.sess,L('Sessions','次數')],[r.ans,L('Answered','答題')],[r.acc==null?'–':r.acc+'%',L('Accuracy','準確率')],[(pg.stars||0)+'/'+ALLSECS.length*3,L('Stars','星星')],[(pg.streak||0)+' / '+(pg.best||0),L('Streak / best','連續 / 最佳')],[pg.mistakes!=null?pg.mistakes:'–',L('Mistakes to clear','待清除錯題')],[Math.round(r.secs/60),L('Minutes','分鐘')],[pg.level?'Lv '+pg.level:'–',L('Pet level','寵物等級')]];
+ h+='<div class="tiles">'+tiles.map(function(t){return '<div class="tile"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';}).join('')+'</div>';
+ h+='<h3 class="vh">'+L('By sub-topic','各小節')+'</h3><div class="tbl"><table><thead><tr><th>'+L('Sub-topic','小節')+'</th><th>'+L('Quizzes','測驗')+'</th><th>'+L('Best','最佳')+'</th><th>'+L('Answered','答題')+'</th><th>'+L('Accuracy','準確率')+'</th></tr></thead><tbody>'+
+  ALLSECS.map(function(x){var m=r.secs2[x.id];if(!m)return '';return '<tr><td><b>'+x.id+'</b> '+esc(LL(x))+'</td><td class="n">'+m.att+'</td><td>'+stars(m.best)+'</td><td class="n">'+m.ans+'</td><td>'+accChip(pct(m.cor,m.ans))+'</td></tr>';}).join('')+'</tbody></table></div>';
+ var wr=Object.keys(r.wrong).filter(function(id){return qById(id);}).sort(function(a,b){return r.wrong[b]-r.wrong[a];}).slice(0,8);
+ h+='<h3 class="vh">'+L('Often wrong','經常答錯')+'</h3>'+(wr.length?'<div class="grid" style="gap:6px">'+wr.map(function(id){return '<div class="mistake"><div style="min-width:0"><span class="tag">'+id.split('#')[0]+'</span> '+esc(LL(qById(id)))+'</div><span class="acc" style="background:#FDECEF">×'+r.wrong[id]+'</span></div>';}).join('')+'</div>':'<p class="muted">–</p>');
+ h+='<h3 class="vh">'+L('Recent activity','最近活動')+'</h3><div class="tbl"><table><tbody>'+r.recs.slice().sort(function(a,b){return a.t<b.t?1:-1;}).slice(0,12).map(function(x){return '<tr><td>'+fmtT(x.t)+'</td><td>'+modeName(x.mode)+'</td><td>'+esc(x.sec||x.unit||'')+'</td><td class="n">'+(x.ans?x.cor+'/'+x.ans:'')+'</td><td>'+(x.status==='quit'?'<span class="muted">'+L('left early','中途離開')+'</span>':'')+'</td></tr>';}).join('')+'</tbody></table></div>';
+ modal(h);$('#xClose').onclick=closeModal;}
+function loadXLSX(cb){if(window.XLSX){cb();return;}var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=cb;s.onerror=function(){toast(L('Could not load the Excel tool. Check your internet.','無法載入 Excel 工具，請檢查網絡。'));};document.head.appendChild(s);}
+function downloadExcel(){loadXLSX(function(){var X=TD.X,wb=XLSX.utils.book_new(),per={'7':'Last 7 days 最近7日','30':'Last 30 days 最近30日','all':'All time 全部'}[TD.period];
+ function add(name,aoa,w){var ws=XLSX.utils.aoa_to_sheet(aoa);ws['!cols']=w.map(function(x){return {wch:x};});XLSX.utils.book_append_sheet(wb,ws,name);}
+ add('Summary 總覽',[['Mochi Science Pals – S1 Science 中一科學'],['Class 班別',TD.cls==='all'?'All 全部':TD.cls],['Period 時段',per],['Generated 產生時間',new Date().toLocaleString()],[],['Students 學生人數',X.tot],['Active students 活躍學生',X.active],['Questions answered 已答題數',X.ans],['Correct 答對',X.cor],['Accuracy % 準確率',X.ans?pct(X.cor,X.ans):''],['Minutes studied 溫習分鐘',X.mins],['Average streak 平均連續日數',+X.avgStreak]],[30,28]);
+ add('Students 學生',[['Class 班別','No. 班號','Chinese Name 中文姓名','English Name 英文姓名','Email 電郵','Sessions 次數','Quizzes 測驗','Answered 答題','Correct 答對','Accuracy % 準確率','Stars 星星','Streak 連續','Best streak 最佳連續','Mistakes to clear 待清除錯題','Minutes 分鐘','Last active 最近活動','Weakest sub-topic 最弱小節','Weakest accuracy % 最弱準確率']].concat(X.rows.map(function(r){var s=r.s,p=r.prog;return [s.cls,s.no===''?'':+s.no||s.no,s.zh,s.en,s.email,r.sess,r.quiz,r.ans,r.cor,r.acc==null?'':r.acc,+(p.stars||0),+(p.streak||0),+(p.best||0),p.mistakes==null?'':+p.mistakes,Math.round(r.secs/60),r.last?new Date(r.last):'',r.weak?r.weak.id:'',r.weak?Math.round(r.weak.p*100):''];})),[8,6,12,22,26,9,9,9,9,11,7,7,10,12,9,16,12,12]);
+ add('Sub-topics 小節',[['Sub-topic 小節','Title 標題','題目 (中文)','Students attempted 參與學生','Quizzes 測驗次數','Answered 答題','Correct 答對','Accuracy % 準確率']].concat(ALLSECS.map(function(s){var m=X.sec[s.id];return [s.id,s.en,s.zh,m.n,m.att,m.ans,m.cor,m.ans?pct(m.cor,m.ans):''];})),[10,36,24,12,12,10,10,12]);
+ add('Matrix 學生×小節',[['Class 班別','No. 班號','Name 姓名'].concat(ALLSECS.map(function(s){return s.id;}))].concat(X.rows.map(function(r){return [r.s.cls,r.s.no===''?'':+r.s.no||r.s.no,(r.s.zh||'')+' '+(r.s.en||'')].concat(ALLSECS.map(function(s){var m=r.secs2[s.id];return m&&m.ans?pct(m.cor,m.ans):'';}));})),[8,6,24].concat(ALLSECS.map(function(){return 6;})));
+ add('Most missed 常錯題',[['Question ID 題號','Question (English)','題目 (中文)','Times asked 出現次數','Times wrong 答錯次數','Miss rate % 答錯率']].concat(X.missed.map(function(m){var q=qById(m.id);return [m.id,q.en,q.zh,m.asked,m.miss,Math.round(m.miss/m.asked*100)];})),[10,60,40,10,10,10]);
+ var em={};X.rows.forEach(function(r){em[r.s.email]=r.s;});
+ add('Records 記錄',[['Time 時間','Class 班別','No. 班號','Name 姓名','Mode 模式','Unit 單元','Sub-topic 小節','Answered 答題','Correct 答對','Stars 星星','Seconds 秒','Status 狀態','Language 語言']].concat(X.recs.slice().sort(function(a,b){return a.t<b.t?-1:1;}).map(function(r){var s=em[r.email]||{};return [new Date(r.t),s.cls,s.no===''?'':+s.no||s.no,(s.zh||'')+' '+(s.en||''),(MODE_NAMES[r.mode]?MODE_NAMES[r.mode][1]+' '+MODE_NAMES[r.mode][0]:r.mode),r.unit,r.sec,+r.ans||0,+r.cor||0,+r.stars||0,+r.secs||0,r.status==='quit'?'中途結束 Left early':'完成 Done',r.lang];})),[18,8,6,22,14,6,10,9,9,7,8,14,9]);
+ XLSX.writeFile(wb,'S1Science_'+(TD.cls==='all'?'AllClasses':TD.cls)+'_'+today()+'.xlsx');toast('⬇️ '+L('Excel downloaded','已下載 Excel'));});}
+
 /* ---------- boot ---------- */
 S=load()||defaultState();
 var fresh=S;if(S.started){S=defaultState();S.lang=fresh.lang;} // show welcome/resume first
@@ -1602,7 +1933,7 @@ var hash=location.hash.replace('#','');
 render();
 if(hash&&hash.length>20){var det=document.querySelector('details');if(det){det.open=true;$('#inCode').value=hash;previewCode(hash);}}
 setInterval(function(){if(S.started&&curScreen==='home'&&!$('#ov')){render();}else if(S.started)decay();},60000);
-window.__game={get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;}};
+window.__game={quiz:function(ids){startQuiz(null,'practice',ids);},AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;}};
 })();
 
 </script>
