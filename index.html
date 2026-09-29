@@ -270,6 +270,11 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 .dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;max-height:300px;overflow:auto;padding-bottom:6px}
 .dli{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;align-items:center;font-size:14px}
 .dli .zh{font-size:12px;color:var(--ink2);font-weight:700}
+.card.chat{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:start;background:linear-gradient(135deg,#FFF8FB,#FFFFFF)}
+.chatpet{width:72px}
+#chatText{margin:4px 0 10px;font-size:15px;line-height:1.55}
+#chatText.chatin{animation:popin .35s cubic-bezier(.3,1.6,.5,1)}
+.factline{background:var(--sky);border-radius:14px;padding:10px 12px;font-size:14px;font-weight:700;margin:0 0 12px}
 /* pop-ups */
 .pop-ov{position:fixed;inset:0;z-index:85;background:rgba(91,75,73,.3);display:grid;place-items:center;padding:16px}
 .pop-card{position:relative;overflow:hidden;background:var(--cream);border-radius:32px;padding:22px 18px 18px;max-width:380px;width:100%;text-align:center;box-shadow:0 18px 40px rgba(91,75,73,.25);border:4px solid #fff;animation:jelly .75s cubic-bezier(.3,1.6,.5,1)}
@@ -1373,9 +1378,9 @@ var DPIC={
  'atom':['atom'],'molecule':['molecule'],'solid state':['particles','P'],'liquid state':['particles','Q'],'gas state':['particles','R'],'bimetallic strip':['bimetal',null]
 };
 
-/* ===== Photos from the school revision notes (img/*.jpg) ===== */
-var PHOTO_SIZE={"eq_tap_sink": [434, 304], "eq_gas_tap": [434, 304], "eq_socket": [434, 304], "eq_spectacles": [434, 304], "eq_gloves": [434, 304], "eq_labcoat": [434, 304], "eq_extinguisher": [434, 304], "eq_sandbucket": [434, 304], "eq_fireblanket": [434, 304], "eq_firstaid": [434, 304], "eq_eyewash": [434, 304], "eq_fumecup": [434, 304], "haz_flammable": [222, 220], "haz_oxidizing": [208, 207], "haz_corrosive": [220, 194], "fire_triangle": [420, 187], "scale_reading": [900, 214], "bunsen_parts": [640, 456], "apparatus_ae": [700, 421], "apparatus_fi": [700, 396], "sec_testtube": [147, 240], "sec_beaker": [240, 227], "sec_flask": [249, 264], "sec_dropper": [114, 246], "sec_glassrod": [165, 240], "sec_funnel": [499, 337], "sec_heating": [520, 302], "sec_stand": [328, 355], "ruler": [381, 100], "measuring_tape": [224, 160], "measuring_cylinder": [239, 239], "balance": [301, 232], "thermometer": [326, 263], "stopwatch": [299, 300], "haz_corrosive_q": [220, 194]};
-function photoImg(id,alt,cls){var s=PHOTO_SIZE[id]||[400,300];return '<img class="'+(cls||'photo')+'" src="img/'+id+'.jpg" width="'+s[0]+'" height="'+s[1]+'" alt="'+(alt||'')+'" loading="lazy">';}
+/* ===== Original illustrations drawn in the style of the school revision notes (img/*.svg) ===== */
+var PHOTO_SIZE={"apparatus_ae": [520, 310], "apparatus_fi": [520, 300], "balance": [380, 260], "bunsen_parts": [520, 420], "eq_extinguisher": [400, 280], "eq_eyewash": [400, 280], "eq_fireblanket": [400, 280], "eq_firstaid": [400, 280], "eq_fumecup": [400, 280], "eq_gas_tap": [400, 280], "eq_gloves": [400, 280], "eq_labcoat": [400, 280], "eq_sandbucket": [400, 280], "eq_socket": [400, 280], "eq_spectacles": [400, 280], "eq_tap_sink": [400, 280], "fire_triangle": [460, 220], "haz_corrosive": [220, 220], "haz_corrosive_q": [220, 220], "haz_flammable": [220, 220], "haz_oxidizing": [220, 220], "measuring_cylinder": [160, 300], "measuring_tape": [360, 260], "ruler": [420, 110], "scale_reading": [900, 230], "sec_beaker": [160, 200], "sec_dropper": [90, 200], "sec_flask": [160, 200], "sec_funnel": [260, 220], "sec_glassrod": [120, 200], "sec_heating": [300, 220], "sec_stand": [220, 240], "sec_testtube": [120, 200], "stopwatch": [300, 300], "thermometer": [360, 160]};
+function photoImg(id,alt,cls){var s=PHOTO_SIZE[id]||[400,300];return '<img class="'+(cls||'photo')+'" src="img/'+id+'.svg" width="'+s[0]+'" height="'+s[1]+'" alt="'+(alt||'')+'" loading="lazy">';}
 Object.keys(PHOTO_SIZE).forEach(function(id){FIGS['ph_'+id]=function(){return photoImg(id,'photo');};});
 /* gallery shown in study notes */
 var GALLERY={
@@ -1395,6 +1400,68 @@ var GALLERY={
   'hazard warning symbol':['ph:haz_flammable'],'fire triangle':['ph:fire_triangle'],'test tube':['ph:apparatus_ae','a'],'boiling tube':['ph:apparatus_ae','b'],'beaker':['ph:apparatus_ae','c'],'conical flask':['ph:apparatus_ae','d'],'reagent bottle':['ph:apparatus_ae','e'],
   'bunsen burner':['ph:apparatus_fi','f'],'insulating mat':['ph:apparatus_fi','g'],'wire gauze':['ph:apparatus_fi','h'],'tripod':['ph:apparatus_fi','i'],'measuring cylinder':['ph:measuring_cylinder'],'balance':['ph:balance'],'thermometer':['ph:thermometer'],'stopwatch':['ph:stopwatch'],'measuring tape':['ph:measuring_tape'],
   'dropper':['ph:sec_dropper'],'glass rod':['ph:sec_glassrod'],'filter funnel':['ph:sec_funnel','Q'],'filter paper':['ph:sec_funnel','P']};for(var p in pic)DPIC[p]=pic[p];})();
+
+/* ===== Pet chat: fun science facts (by unit) and cheers ===== */
+var FACTS=[
+[1,'Tu Youyou won the 2015 Nobel Prize for discovering artemisinin, a malaria medicine, using clues from an ancient Chinese medicine book.','屠呦呦從古代中醫藥典籍得到啟發，發現治療瘧疾的青蒿素，於 2015 年獲得諾貝爾獎。'],
+[1,'Charles Kao, who went to school in Hong Kong, won the 2009 Nobel Prize for optical fibres – the glass threads that carry the internet.','曾在香港讀書的高錕，因光纖研究獲得 2009 年諾貝爾獎——光纖正是傳送互聯網資料的玻璃絲。'],
+[1,'Dennis Lo in Hong Kong found that a baby\'s DNA can be detected in the mother\'s blood. This led to safer tests before birth.','香港的盧煜明發現可以在母親血液中找到胎兒的 DNA，令產前檢查更安全。'],
+[1,'Marie Curie is the only person to win Nobel Prizes in two different sciences: Physics and Chemistry.','居里夫人是唯一在兩個不同科學範疇（物理和化學）都獲得諾貝爾獎的人。'],
+[1,'People once believed the Sun moved around the Earth. New evidence changed that idea – science is subject to change!','古人相信太陽圍繞地球轉，後來新證據改變了這個想法——科學知識會隨時間改變！'],
+[1,'The hottest part of a blue Bunsen flame is over 1000 °C. That is why we never touch the chimney after heating.','藍色本生燈火焰最熱的部分超過 1000 °C，所以加熱後切勿觸摸燈管。'],
+[1,'A fire blanket works because of the fire triangle: take away the oxygen and the fire goes out.','滅火氈能滅火是因為火三角：移走氧氣，火就會熄滅。'],
+[1,'A fair test changes only ONE variable. Scientists call that a fair way to find the real cause.','公平測試每次只改變一個變量，這樣才能找出真正的原因。'],
+[2,'About 97% of the Earth\'s water is salty sea water. Only a tiny part is fresh water we can drink.','地球上約 97% 的水是鹹海水，只有很少部分是可以飲用的淡水。'],
+[2,'About 70–80% of Hong Kong\'s fresh water comes from the Dongjiang (East River) in Guangdong.','香港約 70–80% 的食水來自廣東的東江。'],
+[2,'Hong Kong has used sea water to flush toilets since the 1950s. It saves a lot of fresh water!','香港自 1950 年代起用海水沖廁，節省了大量淡水！'],
+[2,'Plover Cove Reservoir was the world\'s first reservoir built in the sea.','船灣淡水湖是世界上第一個在海中建成的水塘。'],
+[2,'Water expands when it freezes. That is why ice floats and frozen bottles can crack.','水結冰時會膨脹，所以冰會浮起，冷凍的水樽也可能爆裂。'],
+[2,'Sweating cools you down because evaporation takes heat away from your skin.','流汗能降溫，是因為蒸發時會從皮膚帶走熱。'],
+[2,'The water you drink today has been moving around the water cycle for millions of years.','你今天喝的水，已在水循環中轉了數以百萬年。'],
+[3,'Romer\'s Tree Frog lives only in Hong Kong – nowhere else in the world!','盧氏小樹蛙只在香港生活，世界上其他地方都找不到！'],
+[3,'Hong Kong has more than 240 kinds of butterflies – about one fifth of all the butterfly species in China.','香港有超過 240 種蝴蝶，約佔全國蝴蝶品種的五分之一。'],
+[3,'Chinese White Dolphins are born dark grey and turn pink as they grow up.','中華白海豚出生時是深灰色的，長大後才變成粉紅色。'],
+[3,'Bats are the only mammals that can truly fly.','蝙蝠是唯一真正會飛的哺乳類動物。'],
+[3,'Whales are mammals: they breathe air with lungs and feed their babies milk.','鯨是哺乳類：牠們用肺呼吸空氣，並以乳汁餵哺幼兒。'],
+[3,'Black-faced Spoonbills spend the winter at Mai Po in Hong Kong, one of their most important homes.','黑臉琵鷺會到香港米埔過冬，那裏是牠們最重要的家園之一。'],
+[3,'Ferns were growing on Earth long before the dinosaurs appeared.','早在恐龍出現之前，蕨類植物已在地球上生長。'],
+[3,'Tardigrades (water bears) are tiny invertebrates that can survive being dried out for years.','水熊蟲是細小的無脊椎動物，即使被乾燥多年也能生存。'],
+[4,'Your body is made of about 37 trillion cells.','你的身體由大約 37 萬億個細胞組成。'],
+[4,'The DNA in just one of your cells would be about 2 metres long if you stretched it out.','把一個細胞內的 DNA 拉直，長度大約有 2 米。'],
+[4,'Robert Hooke named "cells" in 1665 because cork cells reminded him of small rooms.','羅伯特．胡克在 1665 年把軟木的小格子命名為「細胞」，因為它們像一個個小房間。'],
+[4,'Red blood cells have no nucleus, which leaves more room to carry oxygen.','紅血球沒有細胞核，因此有更多空間運送氧。'],
+[4,'The ovum is the largest cell in the human body – it is just big enough to see without a microscope.','卵是人體最大的細胞，大得差不多可以用肉眼看見。'],
+[4,'Identical twins have the same DNA, but their fingerprints are still different.','單卵雙生的 DNA 相同，但他們的指紋仍然不同。'],
+[4,'Onion skin cells are large enough to see clearly with a school light microscope.','洋葱表皮細胞夠大，用學校的光學顯微鏡便能清楚看見。'],
+[5,'Sunlight takes about 8 minutes to travel from the Sun to the Earth.','陽光由太陽到達地球大約需要 8 分鐘。'],
+[5,'An LED bulb uses much less electricity than a filament bulb for the same brightness.','亮度相同時，LED 燈泡比鎢絲燈泡耗電少得多。'],
+[5,'Hong Kong\'s energy-saving tip: set the air-conditioner to 25.5 °C.','香港的節能小貼士：把冷氣設定在 25.5 °C。'],
+[5,'Lamma Winds on Lamma Island was Hong Kong\'s first commercial-scale wind turbine.','南丫島的「南丫風采發電站」是香港第一部商業規模的風力發電機。'],
+[5,'Food labels show energy in kJ and kcal. 1 kcal is about 4.2 kJ.','食物標籤以 kJ 和 kcal 表示能量，1 kcal 約等於 4.2 kJ。'],
+[5,'A vacuum flask keeps drinks hot because a vacuum stops conduction and convection.','真空瓶能保溫，是因為真空阻止了傳導和對流。'],
+[5,'Fossil fuels formed from plants and animals that lived millions of years ago.','化石燃料是由數以百萬年前的植物和動物形成的。'],
+[5,'A polar bear\'s thick fur and fat are excellent insulators that keep heat in.','北極熊厚厚的毛和脂肪是極佳的絕緣體，能保持體溫。'],
+[6,'Atoms are so tiny that about 10 million of them could line up across 1 mm.','原子非常細小，大約 1 千萬個原子排成一行才有 1 mm 長。'],
+[6,'Hot-air balloons rise because hot air is less dense than the cooler air around them.','熱氣球會上升，是因為熱空氣的密度比周圍較冷的空氣小。'],
+[6,'Gaps are left in railway tracks and bridges because metal expands on hot days.','鐵路路軌和橋樑留有空隙，因為金屬在炎熱天氣會膨脹。'],
+[6,'The Eiffel Tower can grow about 15 cm taller on hot summer days because of thermal expansion.','由於熱脹冷縮，艾菲爾鐵塔在炎熱的夏天可以長高約 15 cm。'],
+[6,'A drinking straw works because atmospheric pressure pushes the drink up.','飲管能吸到飲品，是因為大氣壓強把飲品推上來。'],
+[6,'Ice floats on water because it is less dense than liquid water.','冰會浮在水面，是因為冰的密度比液態水小。'],
+[6,'You can smell cooking from another room because smell particles spread out and mix with air.','你在另一個房間也能嗅到煮食的氣味，因為氣味粒子會擴散並與空氣混合。'],
+[6,'On a high mountain the air pressure is lower, so sealed snack bags puff up.','高山上氣壓較低，所以密封的零食包會脹起。']
+];
+var CHEERS=[
+['One quiz a day keeps exam stress away!','每日一個測驗，考試壓力走得遠！'],
+['Mistakes are just experiments that taught you something new.','錯誤只是教會你新知識的實驗。'],
+['Scientists ask questions every day. What are you curious about today?','科學家每天都在發問。你今天對甚麼感到好奇？'],
+['Five minutes of revision now saves an hour of panic later.','現在溫習五分鐘，將來少慌一小時。'],
+['Your brain grows stronger every time you get something wrong and try again.','每次答錯再嘗試，你的腦袋都會變得更強。'],
+['Say the key words out loud – your ears help you remember too!','把關鍵詞讀出來——耳朵也能幫你記憶！'],
+['Small steps every day beat one big cram before the test.','每日一小步，勝過考試前臨急抱佛腳。'],
+['I believe in you! Let\'s beat one sub-topic together.','我相信你！一齊攻克一個小節吧。'],
+['Science is everywhere – even in your bubble tea!','科學無處不在——連你的珍珠奶茶都有！'],
+['Try a dictation round: 10 words, 3 minutes, big brain.','試一輪默書：10 個詞彙、3 分鐘，腦袋升級。']
+];
 
 </script>
 <script>
@@ -1621,8 +1688,15 @@ var SW3='stroke="#O" stroke-width="3"';
  QI('i_dragon','wear','hand','Dragon plush','小龍公仔','legendary',{en:'Clear 100 mistakes in 錯題本',zh:'在錯題本清除 100 條錯題',f:function(){return [S.cleared,100];}},'<path d="M150 150 C140 120 160 104 180 110 C196 116 196 140 184 152Z" fill="#9BCB8E" '+SW3+'/><path d="M170 106 L166 94 L176 102 M184 110 L186 96 L192 108" fill="#FBD46D" stroke="#O" stroke-width="2"/><path d="M150 128 C134 112 132 138 146 140Z" fill="#B7DDA8" stroke="#O" stroke-width="2"/><circle cx="178" cy="124" r="3" fill="#O"/><ellipse cx="184" cy="132" rx="4" ry="2.5" fill="#FFB3C1"/><path d="M160 146 l4 -4 l4 4 l4 -4" stroke="#FBD46D" stroke-width="2.5" fill="none"/>'),
  QI('p_crystalscope','room','prop','Crystal microscope','水晶顯微鏡','legendary',{en:'Spell 300 words correctly in dictation',zh:'默書中正確拼寫 300 個詞彙',f:function(){return [(S.dict||{}).n||0,300];}},'<svg viewBox="0 0 100 100"><rect x="18" y="84" width="60" height="10" rx="5" fill="#C9B6EA" stroke="#O" stroke-width="3"/><path d="M60 84 L60 40" stroke="#B9A6E8" stroke-width="9" stroke-linecap="round"/><rect x="26" y="62" width="40" height="7" rx="3" fill="#E4D6F3" stroke="#O" stroke-width="3"/><rect x="30" y="14" width="16" height="44" rx="6" fill="rgba(228,214,243,.8)" stroke="#O" stroke-width="3" transform="rotate(-20 38 37)"/><path d="M78 20 l3 7 l7 3 l-7 3 l-3 7 l-3 -7 l-7 -3 l7 -3Z M14 30 l2 4 l4 2 l-4 2 l-2 4 l-2 -4 l-4 -2 l4 -2Z" fill="#FBD46D"/></svg>'),
  QI('g_golden','wear','glasses','Golden goggles','黃金護目鏡','legendary',{en:'Get 20 perfect dictation rounds',zh:'默書全對 20 次',f:function(){return [(S.dict||{}).perf||0,20];}},'<path d="M38 112 L162 112" stroke="#E0B23A" stroke-width="6"/><rect x="62" y="100" width="32" height="26" rx="12" fill="rgba(251,212,109,.55)" stroke="#B8861F" stroke-width="3"/><rect x="106" y="100" width="32" height="26" rx="12" fill="rgba(251,212,109,.55)" stroke="#B8861F" stroke-width="3"/><path d="M68 106 L76 104 M112 106 L120 104" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M94 112 L106 112" stroke="#B8861F" stroke-width="3"/>'),
- QI('s_halloffame','room','sticker','Hall-of-fame trophy','名人堂獎盃','legendary',{en:'Unlock 20 trophies',zh:'解鎖 20 個獎盃',f:function(){return [Object.keys(S.trophies).length,20];}},'<svg viewBox="0 0 60 60"><path d="M16 8 L44 8 L42 30 Q30 40 18 30Z" fill="#FBD46D" stroke="#O" stroke-width="3"/><path d="M16 12 Q6 12 8 22 Q10 28 18 28 M44 12 Q54 12 52 22 Q50 28 42 28" fill="none" stroke="#O" stroke-width="3"/><rect x="26" y="36" width="8" height="8" fill="#FBD46D" stroke="#O" stroke-width="2.5"/><rect x="18" y="44" width="24" height="10" rx="3" fill="#E0B23A" stroke="#O" stroke-width="3"/><path d="M30 14 l2.5 5 l5.5 1 l-4 4 l1 5.5 l-5 -2.6 l-5 2.6 l1 -5.5 l-4 -4 l5.5 -1Z" fill="#fff"/></svg>')
+ QI('s_halloffame','room','sticker','Hall-of-fame trophy','名人堂獎盃','legendary',{en:'Unlock 20 trophies',zh:'解鎖 20 個獎盃',f:function(){return [Object.keys(S.trophies).length,20];}},'<svg viewBox="0 0 60 60"><path d="M16 8 L44 8 L42 30 Q30 40 18 30Z" fill="#FBD46D" stroke="#O" stroke-width="3"/><path d="M16 12 Q6 12 8 22 Q10 28 18 28 M44 12 Q54 12 52 22 Q50 28 42 28" fill="none" stroke="#O" stroke-width="3"/><rect x="26" y="36" width="8" height="8" fill="#FBD46D" stroke="#O" stroke-width="2.5"/><rect x="18" y="44" width="24" height="10" rx="3" fill="#E0B23A" stroke="#O" stroke-width="3"/><path d="M30 14 l2.5 5 l5.5 1 l-4 4 l1 5.5 l-5 -2.6 l-5 2.6 l1 -5.5 l-4 -4 l5.5 -1Z" fill="#fff"/></svg>'),
+ /* Hong Kong · Gen Z */
+ TI('h_pineapplebun','wear','hat','Pineapple bun hat','菠蘿包帽','rare',240,'<path d="M60 70 Q58 30 100 26 Q142 30 140 70Z" fill="#F2B544" '+SW3+'/><path d="M66 58 L96 32 M80 66 L120 30 M98 68 L134 40 M76 36 L126 68 M64 48 L108 70 M90 30 L136 56" stroke="#D18A1E" stroke-width="3"/><path d="M60 70 Q100 78 140 70" stroke="#E9A23B" stroke-width="5" fill="none"/><rect x="88" y="14" width="24" height="14" rx="3" fill="#FFF3C4" '+SW3.replace('3','2')+'/>'),
+ TI('i_eggwaffle','wear','hand','Egg waffle ice-cream cone','雞蛋仔雪糕筒','rare',260,'<path d="M150 150 L176 104 L198 118Z" fill="#E9A23B" '+SW3+' stroke-linejoin="round"/>'+(function(){var s='';[[164,98],[176,94],[188,100],[158,110],[170,108],[182,112],[194,112]].forEach(function(p){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="7" fill="#F6C766" stroke="#O" stroke-width="2"/>';});return s;})()+'<path d="M160 92 Q162 70 178 72 Q196 70 196 92Z" fill="#FFE5EC" '+SW3+'/><circle cx="178" cy="66" r="5" fill="#E23A34" stroke="#O" stroke-width="2"/>'),
+ TI('p_dingding','room','prop','Ding-ding tram model','叮叮電車模型','epic',800,'<svg viewBox="0 0 100 100"><path d="M50 10 L50 20" stroke="#O" stroke-width="3"/><path d="M40 10 L60 10" stroke="#O" stroke-width="3"/><rect x="12" y="20" width="76" height="66" rx="10" fill="#2F8F5B" stroke="#O" stroke-width="3"/><rect x="12" y="50" width="76" height="4" fill="#F2F0E6"/><rect x="18" y="26" width="14" height="18" rx="3" fill="#EAF6FB" stroke="#O" stroke-width="2"/><rect x="36" y="26" width="14" height="18" rx="3" fill="#EAF6FB" stroke="#O" stroke-width="2"/><rect x="54" y="26" width="14" height="18" rx="3" fill="#EAF6FB" stroke="#O" stroke-width="2"/><rect x="72" y="26" width="10" height="18" rx="3" fill="#EAF6FB" stroke="#O" stroke-width="2"/><rect x="18" y="58" width="14" height="16" rx="3" fill="#EAF6FB" stroke="#O" stroke-width="2"/><rect x="36" y="58" width="30" height="16" rx="3" fill="#FBD46D" stroke="#O" stroke-width="2"/><text x="51" y="70" font-size="8" text-anchor="middle" font-weight="700" fill="#2E2A29">科學</text><rect x="70" y="58" width="12" height="26" rx="2" fill="#EAF6FB" stroke="#O" stroke-width="2"/><circle cx="28" cy="90" r="5" fill="#555"/><circle cx="72" cy="90" r="5" fill="#555"/></svg>'),
+ TI('w_neon','room','wall','Neon street night','霓虹夜街','epic',750,null),
+ TI('s_genz','room','sticker','"Science 好正!" sticker','「科學好正！」貼紙','rare',150,'<svg viewBox="0 0 60 60"><path d="M6 10 Q6 4 12 4 L48 4 Q54 4 54 10 L54 34 Q54 40 48 40 L24 40 L12 52 L14 40 L12 40 Q6 40 6 34Z" fill="#FF7EB3" stroke="#O" stroke-width="3" stroke-linejoin="round"/><text x="30" y="21" font-size="11" text-anchor="middle" font-weight="700" fill="#fff">科學</text><text x="30" y="34" font-size="11" text-anchor="middle" font-weight="700" fill="#FFF36B">好正！</text></svg>')
 ].forEach(function(it){ITEMS.push(it);});
+WALLS.w_neon='url("data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="240" height="160"><rect width="240" height="160" fill="#1B1633"/><rect x="14" y="16" width="70" height="34" rx="6" fill="none" stroke="#FF5FA2" stroke-width="3"/><text x="49" y="40" font-size="18" text-anchor="middle" fill="#FF8FC0" font-family="sans-serif" font-weight="700">科學</text><rect x="120" y="30" width="96" height="30" rx="6" fill="none" stroke="#5FF0FF" stroke-width="3"/><text x="168" y="51" font-size="15" text-anchor="middle" fill="#9AF7FF" font-family="sans-serif" font-weight="700">加油 GO!</text><rect x="40" y="92" width="34" height="56" rx="5" fill="none" stroke="#FFD95F" stroke-width="3"/><text x="57" y="116" font-size="14" text-anchor="middle" fill="#FFE68F" font-family="sans-serif" font-weight="700">溫</text><text x="57" y="138" font-size="14" text-anchor="middle" fill="#FFE68F" font-family="sans-serif" font-weight="700">書</text><circle cx="170" cy="120" r="18" fill="none" stroke="#9D7BFF" stroke-width="3"/><path d="M160 120 h20 M170 110 v20" stroke="#C4B0FF" stroke-width="3"/></svg>')+'") 0 0/240px 160px';
 WALLS.w6='radial-gradient(circle at 20% 30%,#FFD1DC 3px,transparent 3.5px) 0 0/46px 46px,radial-gradient(circle at 70% 70%,#FFE5EC 2.5px,transparent 3px) 0 0/60px 60px,linear-gradient(#5B4E86,#C08AB8)';
 WALLS.w_galaxy='radial-gradient(circle at 15% 25%,#fff 1.5px,transparent 2px) 0 0/40px 40px,radial-gradient(circle at 60% 70%,#FFF1C5 2px,transparent 2.5px) 0 0/70px 70px,radial-gradient(ellipse at 70% 30%,rgba(247,169,181,.55),transparent 55%),radial-gradient(ellipse at 25% 75%,rgba(143,199,232,.5),transparent 55%),linear-gradient(135deg,#1E1B4B,#3B2A6B 60%,#1A3A5C)';
 function questItems(){return ITEMS.filter(function(i){return i.quest;});}
@@ -1797,6 +1871,23 @@ function openVocab(cid){var c=CHAPTERS.filter(function(x){return x.id==cid;})[0]
    say(w,false,function(){if(run!==seqRun)return;var st=$('#vStat');if(st)st.textContent='🗣️ '+L('Your turn!','輪到你！');setTimeout(function(){i++;step();},Math.min(4000,1600+w.length*70));});}
   step();};}
 
+
+/* ---------- pet chat: fun facts + encouragement ---------- */
+var chatMsg=null,chatN=0,chatTimer=null;
+function unitFacts(u){var f=FACTS.filter(function(x){return !u||x[0]==u;});return f.length?f:FACTS;}
+function factLine(u){var f=pick(unitFacts(u));return '💡 '+L(f[1],f[2]);}
+function cheerLine(){var p=[],P=LL(petDef(S.active));
+ if(S.streak>1)p.push(L('We are on a '+S.streak+'-day streak! Let\'s keep the flame going 🔥','我哋已經連續溫習 '+S.streak+' 日！繼續保持火焰 🔥'));
+ var mc=Object.keys(S.mistakes).length;if(mc)p.push(L('You have '+mc+' mistakes waiting in 錯題本. Crushing one = +6 🪙!','錯題本有 '+mc+' 條錯題等你，清除一條＝+6 🪙！'));
+ var dm=Object.keys((S.dict||{}).miss||{}).length;if(dm)p.push(L(dm+' words in "My missed words". A quick dictation will fix them!','「我的錯字」有 '+dm+' 個詞彙，做一輪默書就能搞定！'));
+ for(var i=0;i<ALLSECS.length;i++){var st=(S.secs[ALLSECS[i].id]||{}).stars||0;if(st<3){p.push(L('How about '+ALLSECS[i].id+' '+ALLSECS[i].en+'? You have '+st+'★ so far.','試試 '+ALLSECS[i].id+' '+ALLSECS[i].zh+'？你現在有 '+st+'★。'));break;}}
+ var c=pick(CHEERS);p.push(L(c[0],c[1]));return '💪 '+pick(p);}
+function nextChat(kind){chatN++;chatMsg=kind==='fact'||(!kind&&chatN%3!==1)?factLine(S.lastUnit):cheerLine();return chatMsg;}
+function chatHTML(){if(!chatMsg)nextChat('cheer');var P=petDef(S.active);
+ return '<div class="card chat"><div class="chatpet">'+petSVG(S.active,moodOf(S.active)==='joy'?'joy':'happy')+'</div><div style="min-width:0"><b>'+esc(LL(P))+' '+L('says…','話你知……')+'</b><p id="chatText" aria-live="polite">'+esc(chatMsg)+'</p><div class="row" style="gap:8px"><button class="btn small" id="bFact">💡 '+L('Fun fact','科學趣聞')+'</button><button class="btn small white" id="bCheer">💪 '+L('Cheer me on','幫我打氣')+'</button></div></div></div>';}
+function showChat(kind){var el=$('#chatText');nextChat(kind);if(el){el.classList.remove('chatin');void el.offsetWidth;el.textContent=chatMsg;el.classList.add('chatin');}sfx('tap');}
+setInterval(function(){if(S&&S.started&&curScreen==='home'&&!$('#ov')&&!$('#pop')&&!document.hidden&&$('#chatText'))showChat();},22000);
+
 /* ---------- cute pop-ups (streak + special items) ---------- */
 var popQ=[];
 function floaters(){var s='',sh=['<path d="M10 17 C0 10 2 2 7 2 C9 2 10 4 10 4 C11 2 13 1 15 2 C20 5 18 12 10 17Z" fill="#F7A9B5"/>','<path d="M10 0 L12.5 7 L20 7.5 L14 12 L16 20 L10 15.5 L4 20 L6 12 L0 7.5 L7.5 7Z" fill="#FBD46D"/>','<circle cx="10" cy="10" r="7" fill="#A9D4EE"/>'];
@@ -1962,7 +2053,7 @@ function homeHTML(){var P=petDef(S.active),p=curPet(),lv=petLevel(p.xp),into=p.x
  '<button class="btn '+(gift?'pink':'white')+'" id="bGift"'+(gift?'':' disabled')+'><span class="e">🎁</span>'+(gift?L('Daily gift','每日禮物'):L('Come back tomorrow','明天再來'))+'</button></div></div>'+
  '<div class="card"><div class="streak"><span class="flame" aria-hidden="true">'+(S.streak>=7?'☄️':'🔥')+'</span><div style="min-width:0"><b style="font-size:18px">'+S.streak+' '+L('day streak','日連續溫習')+'</b><div class="muted" style="font-size:13px">'+L('Reward ×','獎勵 ×')+streakMult().toFixed(1)+' · 🛡️ '+S.shields+' · '+L('Best ','最佳 ')+S.best+'</div></div></div><div class="days" style="margin-top:10px">'+last7+'</div>'+
  (S.lastDay!==t?'<p class="muted" style="font-size:13px;margin:10px 0 0">'+L('Finish one study session or quiz today to keep the flame alive 🌱','今日完成一次溫習或測驗，讓火焰繼續燃燒 🌱')+'</p>':'<p style="font-size:13px;margin:10px 0 0">✅ '+L('Today counted! Your future self says thanks.','今日已計算！未來的你會多謝你。')+'</p>')+'</div>'+
- nextStepCard()+'</div></div>';}
+ chatHTML()+nextStepCard()+'</div></div>';}
 function nextStepCard(){var mc=Object.keys(S.mistakes).length;var s=null;
  for(var i=0;i<ALLSECS.length;i++){var st=(S.secs[ALLSECS[i].id]||{}).stars||0;if(st<3){s=ALLSECS[i];break;}}
  var txt,btn;
@@ -1992,12 +2083,12 @@ function studyHTML(){var h='<h1 class="h-sec">📚 '+L('Study by topic','按課�
 /* STUDY SESSION */
 var studyTimer=null;
 function stopStudyTimer(){if(studyTimer)clearInterval(studyTimer);studyTimer=null;if(tempMood==='study')tempMood=null;}
-function openStudy(id){var s=secById(id);if(!s)return;var need=20,t=0;setTempMood('study');
+function openStudy(id){var s=secById(id);if(!s)return;S.lastUnit=s.chap.id;var need=20,t=0;setTempMood('study');
  var notes=s.notes.map(function(n){return '<li><span>'+(S.lang==='en'?n[0]:n[1])+'</span></li>';}).join('');
  var terms=s.terms.map(function(x){return termRow(x);}).join('');
  modal('<div class="sheet-h"><h2>📖 '+s.id+' '+esc(LL(s))+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
  '<div class="row" style="flex-wrap:nowrap;align-items:center;margin-bottom:12px"><div style="width:96px;flex:none">'+petSVG(S.active,'study')+'</div><div style="min-width:0"><b>'+esc(LL(petDef(S.active)))+L(' is studying with you!',' 正陪你溫習！')+'</b><div class="muted" style="font-size:13px">'+L('Read each point slowly. Say the key words out loud – it really helps memory.','慢慢讀每一點，把關鍵詞讀出聲，真的有助記憶。')+'</div></div></div>'+
- '<ul class="notes">'+notes+'</ul>'+(GALLERY[s.id]?'<h3 style="margin:16px 0 4px;font-size:16px">📷 '+L('Pictures from your revision notes','溫習筆記圖片')+'</h3><div class="gal">'+GALLERY[s.id].map(function(g){return '<figure class="'+(g[3]?'wide':'')+'">'+photoImg(g[0],g[1])+'<figcaption>'+esc(L(g[1],g[2]))+'</figcaption></figure>';}).join('')+'</div>':'')+'<h3 style="margin:16px 0 4px;font-size:16px">🔑 '+L('Key terms','關鍵詞彙')+'</h3><p class="muted" style="margin:0 0 8px;font-size:13px">🇬🇧 '+L('Tap 🔊 for British pronunciation, 🐢 for slow. Say each word out loud after it!','按 🔊 聽英式讀音，🐢 慢速。聽完跟着讀出來！')+'</p><div class="vlist two">'+terms+'</div>'+
+ '<p class="factline">'+esc(L('Did you know? ','你知道嗎？'))+esc(factLine(s.chap.id).slice(3))+'</p><ul class="notes">'+notes+'</ul>'+(GALLERY[s.id]?'<h3 style="margin:16px 0 4px;font-size:16px">📷 '+L('Pictures from your revision notes','溫習筆記圖片')+'</h3><div class="gal">'+GALLERY[s.id].map(function(g){return '<figure class="'+(g[3]?'wide':'')+'">'+photoImg(g[0],g[1])+'<figcaption>'+esc(L(g[1],g[2]))+'</figcaption></figure>';}).join('')+'</div>':'')+'<h3 style="margin:16px 0 4px;font-size:16px">🔑 '+L('Key terms','關鍵詞彙')+'</h3><p class="muted" style="margin:0 0 8px;font-size:13px">🇬🇧 '+L('Tap 🔊 for British pronunciation, 🐢 for slow. Say each word out loud after it!','按 🔊 聽英式讀音，🐢 慢速。聽完跟着讀出來！')+'</p><div class="vlist two">'+terms+'</div>'+
  '<div class="row" style="margin-top:18px;flex-wrap:nowrap"><div class="ring" id="ring" style="--p:0"><span id="ringT">'+need+'s</span></div><button class="btn green" id="bDone" disabled style="flex:1">'+L('I\'ve read it ✓','我讀完了 ✓')+'</button></div>');
  $('#xClose').onclick=closeModal;
  studyTimer=setInterval(function(){t++;var r=$('#ring');if(!r){stopStudyTimer();return;}r.style.setProperty('--p',Math.min(100,t/need*100));$('#ringT').textContent=t>=need?'✓':(need-t)+'s';if(t>=need){$('#bDone').disabled=false;clearInterval(studyTimer);studyTimer=null;}},1000);
@@ -2013,7 +2104,7 @@ function pickQs(sec){var n=sec.qs.length,seen=S.seen[sec.id]||[],skip=seen.slice
  pool=shuffle(pool).sort(function(a,b){return (S.q[sec.id+'#'+a]===1?1:0)-(S.q[sec.id+'#'+b]===1?1:0);});
  var chosen=pool.slice(0,5).sort(function(a,b){return sec.qs[a].b-sec.qs[b].b;});
  S.seen[sec.id]=seen.concat(chosen).slice(-12);return chosen.map(function(i){return sec.id+'#'+i;});}
-function startQuiz(id,mode,list){var ids;
+function startQuiz(id,mode,list){var ids;if(id&&secById(id))S.lastUnit=secById(id).chap.id;
  if(mode==='quiz')ids=pickQs(secById(id));else ids=list;
  if(!ids.length)return;
  Q={mode:mode,sec:id,ids:ids,i:0,res:[],shown:0,answered:false,fast:0,t0:Date.now()};showQ();}
@@ -2054,7 +2145,7 @@ function finishQuiz(){var n=Q.res.filter(Boolean).length,tot=Q.res.length,p=curP
   var mood=n>=4?'joy':n>=2?'happy':'sad';
   var cheer=n===5?L('PERFECT! Your pet is doing a happy dance!','滿分！寵物在跳開心舞！'):n>=3?L('Nice work! Mistakes went to your 錯題本 for later.','做得好！錯題已放入錯題本。'):L('Every mistake saved = a future right answer. Try the notes, then again!','每條記下的錯題＝將來答對的一題。先讀筆記再試！');
   html='<div class="empty"><div style="width:150px;margin:0 auto">'+petSVG(S.active,mood)+'</div><h2>'+n+' / '+tot+'</h2><div style="font-size:26px">'+stars(st)+'</div>'+(newStar?'<p><b>'+L('New best stars!','新的最佳星數！')+'</b></p>':'')+
-  '<p>+'+g.c+' 🪙 · +'+g.x+' XP'+(g.m>1?' <span class="tag">×'+g.m.toFixed(2)+'</span>':'')+'</p><p class="muted">'+cheer+'</p><div class="row" style="justify-content:center">'+
+  '<p>+'+g.c+' 🪙 · +'+g.x+' XP'+(g.m>1?' <span class="tag">×'+g.m.toFixed(2)+'</span>':'')+'</p><p class="muted">'+cheer+'</p><p class="factline" style="text-align:left">'+esc(LL(petDef(S.active)))+'：'+esc(L('Did you know? ','你知道嗎？'))+esc(factLine(sec.chap.id).slice(3))+'</p><div class="row" style="justify-content:center">'+
   '<button class="btn" id="again">🔁 '+L('Another round','再來一次')+'</button>'+(n<5?'<button class="btn green" id="notes">📖 '+L('Notes','筆記')+'</button>':'')+'<button class="btn white" id="home">🏠 '+L('Room','小窩')+'</button></div></div>';
   var sid=Q.sec;Q=null;modal(html);if(spi0&&!hadSp&&isOwned(spi0))setTimeout(function(){specialPopup(spi0);},900);sfx(n>=4?'fanfare':'coin');if(n===5)confetti();
   $('#again').onclick=function(){$('#ovroot').innerHTML='';startQuiz(sid,'quiz');};if($('#notes'))$('#notes').onclick=function(){$('#ovroot').innerHTML='';openStudy(sid);};
@@ -2133,7 +2224,7 @@ function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(f
 var B32='0123456789ABCDEFGHJKMNPQRSTVWXYZ',EPOCH=dayNum('2025-01-01');
 function wearIds(){return ITEMS.filter(function(i){return i.id!=='w0'&&!i.sec;}).map(function(i){return i.id;});}
 function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.round(v),Math.pow(2,n)-1));for(var i=n-1;i>=0;i--)bits.push((v>>i)&1);}
- w(4,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),4);
+ w(5,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),4);
  PETS.forEach(function(P){var p=S.pets[P.id];w(p?1:0,1);w(p?p.stage:0,2);w(p?p.xp/5:0,12);});
  var ids=wearIds();ids.forEach(function(id){w(S.owned[id]?1:0,1);});
  var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,7);});
@@ -2147,8 +2238,8 @@ function scramble(bits){var x=0x5EED1;for(var i=0;i<bits.length;i++){x=(x*110351
 function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1');var bits=[];
  for(var i=0;i<code.length;i++){var v=B32.indexOf(code[i]);if(v<0)return null;for(var k=4;k>=0;k--)bits.push((v>>k)&1);}
  scramble(bits);var pos=0;function r(n){var v=0;for(var i=0;i<n;i++){if(pos>=bits.length)throw 0;v=v*2+bits[pos++];}return v;}
- try{var o={};var ver=r(4);if(ver<1||ver>4)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:4);o.pets={};PETS.slice(0,v1?6:ver<4?12:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
-  o.owned={};wearIds().slice(0,ver<4?40:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
+ try{var o={};var ver=r(4);if(ver<1||ver>5)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:4);o.pets={};PETS.slice(0,v1?6:ver<4?12:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
+  o.owned={};wearIds().slice(0,ver<4?40:ver<5?59:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
   o.wall=ver<4?(['w0','w1','w2','w3','w4','w5'][r(3)]||'w0'):(eqItems[r(7)]||'w0');var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
   o.streak=r(9);o.best=r(9);o.shields=r(2);var ld=r(13);o.lastDay=ld?fromDayNum(ld+EPOCH):null;o.days=r(10);o.quizzes=r(11);o.perfect=r(9);o.cleared=r(10);o.studies=r(10);o.matchWins=r(8);
   o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:ver===3?22:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
@@ -2196,10 +2287,10 @@ function bindWelcome(){document.querySelectorAll('[data-lang]').forEach(function
 
 /* bind per screen */
 function bindScreen(){if(curScreen==='teacher')bindTeacher();
- var pt=$('#petTap');if(pt)pt.onclick=function(){var svg=pt.querySelector('.pet');svg.classList.remove('boing');void svg.getBoundingClientRect();svg.classList.add('boing');sfx('boing');var p=curPet();p.happy=clamp(p.happy+1,5,100);bubble=line(moodOf(S.active));var bb=$('.bubble');if(bb)bb.textContent=bubble;else render();};
+ var pt=$('#petTap');if(pt)pt.onclick=function(){var svg=pt.querySelector('.pet');svg.classList.remove('boing');void svg.getBoundingClientRect();svg.classList.add('boing');sfx('boing');var p=curPet();p.happy=clamp(p.happy+1,5,100);bubble=line(moodOf(S.active));if($('#chatText'))showChat('fact');var bb=$('.bubble');if(bb)bb.textContent=bubble;else render();};
  var m={bFeed:openFeed,bPlay:function(){var p=curPet();if(p.energy<12){bubble=L('Too tired to play… feed me first?','太攰玩唔到……可唔可以先餵我？');render();return;}openMatch();},bStudy:function(){curScreen='study';render();},bDress:openDress,bEvo:openEvolve,bSwitch:openSwitch,
   bGift:function(){S.gift=today();S.coins+=10;S.food.onigiri=(S.food.onigiri||0)+1;sfx('coin');confetti();toast('🎁 +10 🪙 · +1 🍙');save();render();},
-  bPractice:function(){startPractice(practiceFilter);}};
+  bPractice:function(){startPractice(practiceFilter);},bFact:function(){showChat('fact');},bCheer:function(){showChat('cheer');}};
  for(var k in m){var el=document.getElementById(k);if(el)el.onclick=m[k];}
  document.querySelectorAll('[data-studysec]').forEach(function(b){b.onclick=function(){openStudy(b.dataset.studysec);};});
  document.querySelectorAll('[data-dict]').forEach(function(b){b.onclick=function(){openDictSetup(b.dataset.dict||null);};});
