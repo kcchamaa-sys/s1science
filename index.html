@@ -161,7 +161,7 @@ h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance}
 .item .own{position:absolute;top:8px;right:8px;background:var(--good);color:#fff;border-radius:999px;font-size:11px;font-weight:800;padding:1px 8px}
 .trophy .pic{background:linear-gradient(var(--butter),#fff)}
 .toast{position:fixed;left:50%;top:calc(70px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:80;background:#fff;border-radius:18px;padding:10px 16px;box-shadow:var(--shadow);font-weight:800;border:2px solid var(--butter);animation:pop .35s cubic-bezier(.3,1.6,.5,1);max-width:calc(100% - 32px);text-align:center}
-.confetti{position:fixed;top:-12px;width:10px;height:14px;border-radius:3px;z-index:90;pointer-events:none;animation:fall 1.6s ease-in forwards}
+.confetti{position:fixed;top:-12px;width:10px;height:14px;border-radius:3px;z-index:84;pointer-events:none;animation:fall 1.6s ease-in forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.6}}
 .match{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 @media (min-width:560px){.match{grid-template-columns:repeat(4,1fr)}}
@@ -179,12 +179,42 @@ textarea,input[type=text]{width:100%;font:inherit;font-family:ui-monospace,Menlo
 .pips{display:flex;gap:4px}.pips i{width:12px;height:12px;border-radius:50%;background:#EEE5DC}.pips i.on{background:var(--good)}
 .empty{text-align:center;padding:24px}
 .empty svg{width:130px}
+.pet .spin{animation:spin 3s linear infinite;transform-origin:166px 108px}
+.pet .steam{animation:tw 2s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.item.special{background:linear-gradient(160deg,#FFF8E1,#FFFFFF 60%)}
+.item .spec{position:absolute;top:8px;left:8px;background:var(--butter);color:var(--ink);border-radius:999px;font-size:11px;font-weight:800;padding:1px 8px;z-index:1}
+.item.special.locked .pic{filter:grayscale(1) opacity(.35)}
+/* pop-ups */
+.pop-ov{position:fixed;inset:0;z-index:85;background:rgba(91,75,73,.3);display:grid;place-items:center;padding:16px}
+.pop-card{position:relative;overflow:hidden;background:var(--cream);border-radius:32px;padding:22px 18px 18px;max-width:380px;width:100%;text-align:center;box-shadow:0 18px 40px rgba(91,75,73,.25);border:4px solid #fff;animation:jelly .75s cubic-bezier(.3,1.6,.5,1)}
+.pop-in{position:relative;z-index:1}
+.pop-card h2{font-size:21px;margin-top:6px}
+.pop-card p{margin:8px 0 0}
+@keyframes jelly{0%{transform:scale(.3) rotate(-8deg);opacity:0}55%{transform:scale(1.07) rotate(2deg);opacity:1}75%{transform:scale(.96) rotate(-1deg)}100%{transform:scale(1) rotate(0)}}
+.pop-pet{width:120px;margin:0 auto;animation:hop 1.1s ease-in-out infinite}
+@keyframes hop{0%,100%{transform:translateY(0) scale(1,1)}35%{transform:translateY(-16px) scale(.97,1.04)}70%{transform:translateY(0) scale(1.06,.94)}}
+.pop-flame{position:relative;width:74px;margin:0 auto -6px}
+.pop-flame .flame{width:74px;display:block;transform-origin:50% 100%;animation:flick 1.2s ease-in-out infinite}
+@keyframes flick{0%,100%{transform:scale(1,1) rotate(-3deg)}50%{transform:scale(1.07,1.13) rotate(3deg)}}
+.pop-num{position:absolute;right:-26px;top:0;background:#fff;border:3px solid #F7A06B;color:#D9683A;font-weight:800;font-size:20px;min-width:40px;height:40px;border-radius:999px;display:grid;place-items:center;padding:0 6px;animation:popin .5s .3s both cubic-bezier(.3,1.6,.5,1)}
+.pop-meter{height:12px;border-radius:999px;background:#F3ECE6;overflow:hidden;margin-top:12px;border:2px solid #fff}
+.pop-meter i{display:block;height:100%;background:linear-gradient(90deg,#FBD46D,#F7A06B);border-radius:999px;animation:grow 1s .3s both cubic-bezier(.3,1.3,.5,1)}
+@keyframes grow{from{width:0}}
+.floater{position:absolute;bottom:-24px;opacity:0;animation:rise 3.3s ease-in infinite;pointer-events:none}
+@keyframes rise{0%{transform:translateY(0) scale(.6) rotate(0);opacity:0}15%{opacity:.9}100%{transform:translateY(-440px) scale(1.15) rotate(40deg);opacity:0}}
+.pop-prize{position:relative;width:170px;height:170px;margin:0 auto}
+.rays{position:absolute;inset:0;border-radius:50%;background:repeating-conic-gradient(#FFF1C5 0 12deg,transparent 12deg 24deg);animation:spin 9s linear infinite}
+.prize-pic{position:absolute;inset:18px;display:grid;place-items:center;animation:spinin 1s cubic-bezier(.3,1.6,.5,1)}
+.prize-pic svg{width:100%;height:100%}
+@keyframes spinin{0%{transform:scale(0) rotate(-200deg)}100%{transform:scale(1) rotate(0)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <div id="ovroot"></div>
+<div id="poproot"></div>
 <script>
 /* ===== CONTENT: S1 Science (HK junior science textbook, Units 1–4) =====
    M(bloom, qEN, qZH, [[correctEN,correctZH],[wrongEN,wrongZH],...], explainEN, explainZH)  – first option is correct; shuffled at runtime
@@ -618,7 +648,196 @@ M(4,'Boy-and-girl twins must be…','一男一女的雙胞胎一定是……',[[
 M(5,'"Height is determined only by genes." Evaluate this claim.','「身高只由基因決定。」評價這說法。',[['Partly wrong – genes set a range; diet, exercise and sleep also affect height','部分錯誤－基因設定範圍；飲食、運動和睡眠亦影響身高'],['Completely correct','完全正確'],['Height is determined only by food','身高只由食物決定'],['Height never varies','身高從不變異']],'Most variations = heredity + environment.','大部分變異＝遺傳＋環境。'),
 M(6,'Plan a class survey on tongue rolling. Which plan is BEST?','策劃一個關於捲舌能力的全班調查，哪個計劃最好？',[['Ask each student to try, count "can / cannot", and draw a bar chart','請每位同學嘗試，統計「能／不能」並畫棒形圖'],['Measure tongue length and draw a histogram','量度舌頭長度並畫直方圖'],['Guess results without testing','不測試只猜結果'],['Only ask one student','只問一位同學']],'Tongue rolling is discontinuous → bar chart.','捲舌屬不連續變異 → 棒形圖。')
 ]}
+]},
+{id:5,en:'Energy',zh:'能量',col:'#FFE8D6',ink:'#C07A45',icon:'bolt',sections:[
+{id:'5.1',en:'Energy changes',zh:'能量轉換',
+notes:[['Forms of energy: <b>light</b>, <b>thermal</b>, <b>sound</b>, <b>chemical</b>, <b>kinetic</b> (moving), <b>potential</b> (raised position / stretched), <b>electrical</b>.','能量的形式：<b>光能</b>、<b>熱能</b>、<b>聲能</b>、<b>化學能</b>、<b>動能</b>（移動）、<b>勢能</b>（位於高處／被拉伸）、<b>電能</b>。'],
+['Units: <b>joule (J)</b> and <b>kilocalorie (kcal)</b>. 1 kJ = 1000 J; 1 MJ = 1 000 000 J.','單位：<b>焦耳 (J)</b> 和<b>千卡 (kcal)</b>。1 kJ = 1000 J；1 MJ = 1 000 000 J。'],
+['<b>Law of conservation of energy</b>: energy can be converted from one form to another, but cannot be created or destroyed.','<b>能量守恆定律</b>：能量可以由一種形式轉換成另一種形式，但不能被創造或消滅。'],
+['A <b>Sankey diagram</b> shows an energy conversion; arrow widths are proportional to the amounts of energy.','<b>桑基圖</b>表示能量轉換；箭嘴的闊度與能量的多少成正比。'],
+['Total energy input = useful energy output + energy wasted. <b>Efficiency = useful energy output ÷ total energy input × 100%</b>.','總輸入能量＝有用的輸出能量＋浪費的能量。<b>效率＝有用的輸出能量 ÷ 總輸入能量 × 100%</b>。']],
+terms:[['energy','能量'],['light energy','光能'],['thermal energy','熱能'],['chemical energy','化學能'],['kinetic energy','動能'],['potential energy','勢能'],['electrical energy','電能'],['energy conversion','能量轉換'],['joule','焦耳'],['law of conservation of energy','能量守恆定律'],['Sankey diagram','桑基圖'],['efficiency','效率']],
+qs:[
+M(1,'What form of energy does a moving bus have?','行駛中的巴士具有甚麼形式的能量？',[['Kinetic energy','動能'],['Potential energy','勢能'],['Sound energy only','只有聲能'],['Chemical energy only','只有化學能']],'Moving objects have kinetic energy.','移動中的物體具有動能。'),
+M(1,'Food, fuels and batteries store…','食物、燃料和電池儲存了……',[['chemical energy','化學能'],['kinetic energy','動能'],['light energy','光能'],['sound energy','聲能']],'Chemical energy is stored in substances.','化學能儲存在物質之中。'),
+M(1,'What is the unit of energy?','能量的單位是甚麼？',[['joule (J)','焦耳 (J)'],['metre (m)','米 (m)'],['gram (g)','克 (g)'],['degree Celsius (°C)','攝氏度 (°C)']],'Energy is measured in joules; food labels often use kcal.','能量以焦耳量度；食物標籤常用千卡。'),
+M(1,'An apple hanging high on a tree has…','高高掛在樹上的蘋果具有……',[['potential energy','勢能'],['sound energy','聲能'],['electrical energy','電能'],['light energy','光能']],'Objects at a raised position have potential energy.','位於高處的物體具有勢能。'),
+T(2,'Energy can be created by a power station.','發電廠可以創造能量。',false,'Energy cannot be created or destroyed; the power station converts energy from one form to another.','能量不能被創造或消滅；發電廠只是把能量由一種形式轉換成另一種。'),
+T(2,'In a Sankey diagram, a wider arrow represents more energy.','在桑基圖中，較闊的箭嘴代表較多能量。',true,'Arrow widths are proportional to the amounts of energy.','箭嘴闊度與能量多少成正比。'),
+M(2,'How many joules are there in 1 kJ?','1 kJ 等於多少焦耳？',[['1000 J','1000 J'],['100 J','100 J'],['10 J','10 J'],['1 000 000 J','1 000 000 J']],'k = kilo = 1000.','k（千）＝1000。'),
+M(3,'Which energy conversion happens in a torch powered by dry cells?','以乾電池推動的電筒中，發生了哪種能量轉換？',[['Chemical → electrical → light + thermal','化學能 → 電能 → 光能＋熱能'],['Electrical → chemical → light','電能 → 化學能 → 光能'],['Thermal → electrical → light','熱能 → 電能 → 光能'],['Kinetic → light only','動能 → 只有光能']],'Cells store chemical energy; the bulb gives light and some heat.','電池儲存化學能；燈泡發出光和一些熱。'),
+M(3,'A girl goes down a slide. Which conversion mainly occurs?','女孩從滑梯滑下，主要發生了哪種能量轉換？',[['Potential energy → kinetic energy','勢能 → 動能'],['Kinetic energy → potential energy','動能 → 勢能'],['Chemical energy → light energy','化學能 → 光能'],['Sound energy → potential energy','聲能 → 勢能']],'She loses height and gains speed.','她的高度減少，速度增加。'),
+M(3,'A light bulb uses 100 J of electrical energy and gives out 20 J of light energy. What is its efficiency?','一個燈泡消耗 100 J 電能，發出 20 J 光能。它的效率是多少？',[['20%','20%'],['80%','80%'],['120%','120%'],['5%','5%']],'Efficiency = 20 ÷ 100 × 100% = 20%.','效率＝20 ÷ 100 × 100%＝20%。'),
+M(4,'A motor takes in 600 J and does 450 J of useful work. How much energy is wasted?','一個摩打輸入 600 J，有用的輸出為 450 J。浪費了多少能量？',[['150 J','150 J'],['450 J','450 J'],['1050 J','1050 J'],['0 J','0 J']],'Input = useful + wasted → wasted = 600 − 450 = 150 J.','輸入＝有用＋浪費 → 浪費＝600 − 450＝150 J。'),
+M(5,'A filament bulb and an LED bulb give out the same brightness. The LED uses far less electrical energy. Which conclusion is BEST?','鎢絲燈泡和 LED 燈泡亮度相同，但 LED 用少很多電能。哪個結論最好？',[['The LED bulb is more efficient – less energy is wasted as heat','LED 燈泡效率較高，較少能量以熱的形式浪費'],['The filament bulb creates extra energy','鎢絲燈泡創造了額外的能量'],['Both have the same efficiency','兩者效率相同'],['The LED bulb destroys energy','LED 燈泡消滅了能量']],'Same useful output with less input = higher efficiency.','有用輸出相同而輸入較少＝效率較高。'),
+M(6,'You design a toy car powered by a stretched rubber band. Which energy chain describes it?','你設計一輛以拉緊的橡筋推動的玩具車，哪條能量鏈可以描述它？',[['Potential energy (stretched band) → kinetic energy (+ some sound & thermal)','勢能（拉緊的橡筋）→ 動能（＋一些聲能和熱能）'],['Light → chemical','光能 → 化學能'],['Kinetic → electrical → potential only','動能 → 電能 → 只有勢能'],['Thermal → light','熱能 → 光能']],'A stretched object stores potential energy that becomes motion.','被拉伸的物體儲存勢能，並轉換成動能。')
+]},
+{id:'5.2',en:'Heat transfer',zh:'熱傳遞',
+notes:[['Heat always flows from a <b>hotter</b> place to a <b>colder</b> place by <b>conduction</b>, <b>convection</b> or <b>radiation</b>.','熱總是由<b>較熱</b>的地方傳到<b>較冷</b>的地方，方式有<b>傳導</b>、<b>對流</b>和<b>輻射</b>。'],
+['<b>Conduction</b>: through solids, liquids and gases; fast in <b>conductors</b> (metals), slow in <b>insulators</b> (wood, plastic, air).','<b>傳導</b>：可在固體、液體和氣體中發生；在<b>導體</b>（金屬）中快，在<b>絕緣體</b>（木、塑膠、空氣）中慢。'],
+['<b>Convection</b>: hot liquid or gas rises and carries heat upwards; only in liquids and gases. Faster if the heat source is at the <b>bottom</b>.','<b>對流</b>：受熱的液體或氣體上升，把熱向上帶；只在液體和氣體中發生。熱源在<b>底部</b>時較快。'],
+['<b>Radiation</b>: heat travels directly from the source, even through a <b>vacuum</b>. <b>Dull, dark</b> surfaces are better absorbers and emitters than <b>shiny, light</b> ones.','<b>輻射</b>：熱直接由熱源傳出，可穿過<b>真空</b>。<b>暗啞、深色</b>的表面比<b>光亮、淺色</b>的表面更能吸收和發射輻射。']],
+terms:[['heat transfer','熱傳遞'],['conduction','傳導'],['convection','對流'],['radiation','輻射'],['conductor','導體'],['insulator','絕緣體'],['vacuum','真空'],['absorber of radiation','輻射吸收體'],['emitter of radiation','輻射發射體']],
+qs:[
+M(1,'How does heat from the Sun reach the Earth through space?','太陽的熱怎樣穿過太空到達地球？',[['Radiation','輻射'],['Conduction','傳導'],['Convection','對流'],['Evaporation','蒸發']],'Space is a vacuum; only radiation can travel through it.','太空是真空，只有輻射能穿過。'),
+M(1,'Which is a good conductor of heat?','以下哪一項是熱的良導體？',[['Copper','銅'],['Wood','木'],['Plastic','塑膠'],['Air','空氣']],'Metals are good conductors.','金屬是良導體。'),
+M(1,'Convection can take place in…','對流可以在哪裏發生？',[['liquids and gases only','只在液體和氣體中'],['solids only','只在固體中'],['a vacuum','真空中'],['all solids, liquids and gases equally','固體、液體和氣體都同樣可以']],'Particles in solids cannot move around to carry heat.','固體中的粒子不能四處移動來傳熱。'),
+T(2,'Heat flows from a colder object to a hotter object.','熱由較冷的物體傳到較熱的物體。',false,'Heat flows from hotter to colder.','熱由較熱傳到較冷。'),
+T(2,'A dull black surface is a better absorber of radiation than a shiny white surface.','暗啞黑色表面比光亮白色表面更能吸收輻射。',true,'Dark, dull surfaces absorb and emit radiation better.','深色暗啞的表面較能吸收和發射輻射。'),
+M(2,'Why do pot handles often use plastic or wood?','為甚麼鍋柄常用塑膠或木製成？',[['They are insulators, so less heat reaches your hand','它們是絕緣體，較少熱傳到手上'],['They are good conductors','它們是良導體'],['They look nicer only','只是較好看'],['They make the food cook faster','令食物煮得較快']],'Insulators slow down conduction.','絕緣體減慢傳導。'),
+M(3,'An air-conditioner is usually installed high on a wall because…','冷氣機通常安裝在牆的高處，因為……',[['cool air sinks, setting up convection currents in the room','冷空氣下沉，在房間內形成對流'],['hot air sinks','熱空氣下沉'],['it works by conduction through the wall','它靠穿過牆壁的傳導運作'],['radiation only travels downwards','輻射只會向下傳']],'Cold air is denser and sinks; warm air rises to be cooled.','冷空氣較重會下沉；暖空氣上升再被冷卻。'),
+M(3,'Oven gloves protect your hands mainly by…','焗爐手套主要透過甚麼保護雙手？',[['reducing the thermal energy conducted from the pan to your hands','減少由鍋傳導到手的熱能'],['cooling down the food','令食物冷卻'],['making the pan hotter','令鍋更熱'],['reflecting sound','反射聲音']],'The gloves are insulators with trapped air.','手套是含有空氣的絕緣體。'),
+M(3,'Where should the heater in a water tank be placed for fastest heating?','水箱的加熱器應放在哪裏，水才熱得最快？',[['At the bottom','底部'],['At the top','頂部'],['Outside the tank','水箱外面'],['It does not matter','沒有分別']],'Hot water rises from the bottom, so convection heats all the water.','熱水由底部上升，對流令全部水變熱。'),
+M(4,'Why do people wear light-coloured clothes in summer?','為甚麼人們在夏天穿淺色衣服？',[['Light colours absorb less radiation from the Sun','淺色吸收較少太陽輻射'],['Light colours conduct heat into the body','淺色把熱傳導入身體'],['Light colours stop convection','淺色阻止對流'],['Light colours are heavier','淺色較重']],'Light, shiny surfaces are poor absorbers.','淺色光亮的表面吸收能力較差。'),
+M(4,'A vacuum flask has a vacuum between two glass walls. Which heat transfers does the vacuum reduce?','真空瓶兩層玻璃之間是真空。真空減少了哪些熱傳遞？',[['Conduction and convection','傳導和對流'],['Radiation only','只有輻射'],['None of them','全部都不能減少'],['Radiation and convection only','只有輻射和對流']],'No particles in a vacuum → no conduction or convection. Silvered walls reduce radiation.','真空沒有粒子 → 不能傳導或對流。鍍銀的壁減少輻射。'),
+M(5,'Two cans of water, one black and one silver, are left in the sun. Which prediction is BEST?','一黑一銀兩罐水放在陽光下，哪個預測最好？',[['The black can warms up faster','黑色罐較快變暖'],['The silver can warms up faster','銀色罐較快變暖'],['Both warm up at exactly the same rate','兩罐的升溫速度完全相同'],['Neither warms up','兩罐都不會變暖']],'Dark dull surfaces absorb radiation better.','深色暗啞表面較能吸收輻射。'),
+M(6,'Design a lunch box to keep soup hot. Which features are BEST?','設計一個保暖湯的飯盒，哪組特徵最好？',[['Double walls with a vacuum/air gap, shiny inner surface, tight lid','雙層壁中間有真空或空氣層、光亮內壁、密封蓋'],['Thin metal walls, no lid','薄金屬壁、沒有蓋'],['Dull black outside, open top','外面暗啞黑色、頂部開口'],['A hole at the bottom for air','底部開一個孔讓空氣流通']],'Reduce conduction, convection and radiation together.','同時減少傳導、對流和輻射。')
+]},
+{id:'5.3',en:'Energy sources',zh:'能源',
+notes:[['The world needs a huge and increasing amount of energy. Our major energy source is <b>fossil fuels</b> (coal, oil, natural gas).','世界需要大量而且不斷增加的能量。我們主要的能源是<b>化石燃料</b>（煤、石油、天然氣）。'],
+['Fossil fuels are <b>non-renewable</b>: they cannot be replaced in a short time and will be used up one day.','化石燃料是<b>不可再生能源</b>：用完後不能在短時間內補充，總有一天會用盡。'],
+['Burning fossil fuels gives <b>air pollutants</b>, causes <b>acid rain</b>, and enhances the greenhouse effect → <b>global warming</b>.','燃燒化石燃料會產生<b>空氣污染物</b>、造成<b>酸雨</b>，並加劇溫室效應 → <b>全球暖化</b>。'],
+['Alternative energy sources: <b>solar</b>, <b>wind</b>, <b>biomass</b>, <b>hydroelectric</b> (all <b>renewable</b>) and <b>nuclear power</b> (not renewable).','其他能源：<b>太陽能</b>、<b>風力發電</b>、<b>生物質能</b>、<b>水力發電</b>（全部<b>可再生</b>），以及<b>核電</b>（不可再生）。'],
+['Saving energy reduces the use of fossil fuels, e.g. switch off lights, set air-conditioners to 25.5 °C, use energy-efficient appliances.','節約能源可減少使用化石燃料，例如關燈、把冷氣設定在 25.5 °C、使用高能源效益電器。']],
+terms:[['energy source','能源'],['fossil fuel','化石燃料'],['non-renewable energy source','不可再生能源'],['renewable energy source','可再生能源'],['air pollutant','空氣污染物'],['acid rain','酸雨'],['global warming','全球暖化'],['solar energy','太陽能'],['wind power','風力發電'],['biomass energy','生物質能'],['hydroelectric power','水力發電'],['nuclear power','核電']],
+qs:[
+M(1,'Which is a fossil fuel?','以下哪一項是化石燃料？',[['Coal','煤'],['Sunlight','陽光'],['Wind','風'],['Wood pellets','木粒']],'Coal, oil and natural gas are fossil fuels.','煤、石油和天然氣都是化石燃料。'),
+M(1,'Making use of water flow to generate electricity is called…','利用水流發電稱為……',[['hydroelectric power','水力發電'],['wind power','風力發電'],['solar energy','太陽能'],['nuclear power','核電']],'Hydro = water.','水力發電利用水流。'),
+M(1,'Which alternative energy source is NOT renewable?','以下哪種其他能源不是可再生的？',[['Nuclear power','核電'],['Solar energy','太陽能'],['Wind power','風力發電'],['Biomass energy','生物質能']],'Nuclear fuel (e.g. uranium) is limited.','核燃料（例如鈾）的供應有限。'),
+T(2,'Fossil fuels can be replaced in a short period of time.','化石燃料可以在短時間內補充。',false,'They took millions of years to form – they are non-renewable.','它們需要數以百萬年形成，是不可再生能源。'),
+T(2,'Burning fossil fuels can cause acid rain.','燃燒化石燃料可導致酸雨。',true,'Gases such as sulphur dioxide dissolve in rainwater.','二氧化硫等氣體溶於雨水中。'),
+M(2,'Biomass energy makes use of…','生物質能利用……',[['plant or animal matter','植物或動物物質'],['moving air','流動的空氣'],['sunlight only','只有陽光'],['falling water','下落的水']],'E.g. burning wood pellets or food waste to make electricity or fuels.','例如燃燒木粒或廚餘來發電或製造燃料。'),
+M(2,'Which problem is linked to the enhanced greenhouse effect?','哪個問題與溫室效應加劇有關？',[['Global warming','全球暖化'],['Tooth decay','蛀牙'],['Strike back','回擊'],['Water hardness','水的硬度']],'More carbon dioxide traps more heat.','更多二氧化碳困住更多熱。'),
+M(3,'Which energy-saving habit is BEST at home?','以下哪個在家中節約能源的習慣最好？',[['Switch off lights and appliances when not in use','不用時關掉燈和電器'],['Set the air-conditioner to 18 °C','把冷氣調到 18 °C'],['Leave the fridge door open','讓雪櫃門打開'],['Keep the TV on standby all day','讓電視整天處於待機']],'Less electricity used = fewer fossil fuels burned.','用電越少＝燃燒的化石燃料越少。'),
+M(3,'Solar panels on a rooftop convert…','屋頂上的太陽能板把甚麼轉換成甚麼？',[['light energy into electrical energy','光能轉換成電能'],['electrical energy into light','電能轉換成光能'],['wind into light','風轉換成光'],['chemical energy into sound','化學能轉換成聲能']],'Solar cells produce electricity from sunlight.','太陽能電池利用陽光發電。'),
+M(4,'Why is it hard for Hong Kong to rely only on solar energy?','為甚麼香港難以只依賴太陽能？',[['Limited land/roof space and sunlight changes with weather and night','土地和屋頂空間有限，而且陽光受天氣和晚上影響'],['Hong Kong has no sunlight','香港完全沒有陽光'],['Solar panels create pollution when working','太陽能板運作時產生污染'],['Solar energy is non-renewable','太陽能是不可再生的']],'Renewable sources also have concerns like supply stability and space.','可再生能源亦有供應穩定性和空間等問題。'),
+M(4,'Compare coal and wind for making electricity. Which is TRUE?','比較用煤和用風發電，哪項正確？',[['Wind produces no air pollutants when generating, but supply is less stable','風力發電時不產生空氣污染物，但供應較不穩定'],['Coal is renewable','煤是可再生的'],['Wind causes acid rain','風力發電導致酸雨'],['Coal never runs out','煤永遠不會用完']],'Each source has pros and cons.','每種能源都有優點和缺點。'),
+M(5,'A town must choose a new power source. Which reason BEST supports wind turbines on a windy island?','一個小鎮要選擇新能源，哪個理由最支持在大風的島上建風力發電機？',[['Wind is renewable and there is strong, steady wind there','風是可再生的，而且那裏風力強而穩定'],['Wind turbines work without any wind','風力發電機沒有風也能運作'],['They burn fossil fuels efficiently','它們有效率地燃燒化石燃料'],['They make the island quieter than before','它們令島嶼比以前更寧靜']],'Match the energy source to local conditions.','按當地條件選擇能源。'),
+M(6,'Plan a "Low-carbon week" for your class. Which plan is MOST effective?','為你的班策劃「低碳週」，哪個計劃最有效？',[['Track daily electricity-saving actions (lights off, AC at 25.5 °C, walk/bus) and compare results','每日記錄節能行動（關燈、冷氣 25.5 °C、步行／乘巴士）並比較成果'],['Print posters on new paper every day','每天用新紙印海報'],['Keep all projectors on to save time','保持所有投影機開着以節省時間'],['Buy more single-use plastic','購買更多即棄塑膠']],'Measure actions to see real savings.','量度行動以看到真正的節約。')
 ]}
+]},
+{id:6,en:'Matter as particles',zh:'物質的粒子觀',col:'#DDEFFB',ink:'#4F86AE',icon:'atom',sections:[
+{id:'6.1',en:'Matter and particle theory',zh:'物質和粒子理論',
+notes:[['<b>Matter</b> is anything that has <b>mass</b> and takes up <b>space</b>. Air is matter too!','<b>物質</b>是任何有<b>質量</b>和佔有<b>空間</b>的東西。空氣也是物質！'],
+['<b>Particle theory</b>: all matter is made of tiny <b>particles</b>, which move <b>randomly</b> all the time, with <b>empty spaces</b> between them.','<b>粒子理論</b>：所有物質由微小的<b>粒子</b>組成，粒子不停地<b>隨機</b>運動，粒子之間有<b>空隙</b>。'],
+['Different substances are made of different particles, which have different sizes and masses.','不同物質由不同粒子組成，這些粒子的大小和質量各有不同。'],
+['Evidence: smoke particles move in a <b>zig-zag path</b> under a microscope; smells and colours spread out (diffusion).','證據：在顯微鏡下，煙粒以<b>之字形路徑</b>移動；氣味和顏色會擴散。'],
+['Particles can be <b>atoms</b> (basic unit of matter) or <b>molecules</b> (usually two or more atoms joined).','粒子可以是<b>原子</b>（物質的基本單位）或<b>分子</b>（通常由兩個或以上原子組成）。']],
+terms:[['matter','物質'],['mass','質量'],['particle','粒子'],['randomly','隨機地'],['zig-zag path','之字形路徑'],['particle theory','粒子理論'],['atom','原子'],['molecule','分子']],
+qs:[
+M(1,'What is matter?','甚麼是物質？',[['Anything that has mass and takes up space','任何有質量和佔有空間的東西'],['Only solids','只有固體'],['Only things we can see','只有我們看得見的東西'],['Light and sound','光和聲音']],'Solids, liquids and gases are all matter.','固體、液體和氣體都是物質。'),
+M(1,'What is the basic unit of matter?','物質的基本單位是甚麼？',[['Atom','原子'],['Cell','細胞'],['Molecule of water only','只有水分子'],['Gene','基因']],'Atoms join to form molecules.','原子結合形成分子。'),
+T(1,'Particles in matter are always moving.','物質中的粒子一直在運動。',true,'They move randomly all the time.','它們不停地隨機運動。'),
+T(2,'Air is not matter because we cannot see it.','空氣不是物質，因為我們看不見它。',false,'Air has mass and takes up space, so it is matter.','空氣有質量和佔有空間，所以是物質。'),
+M(2,'Jayden pumps air out of a closed container. Its mass decreases because…','Jayden 從密封容器中抽走空氣，容器質量減少，因為……',[['air has mass','空氣有質量'],['the container melted','容器熔化了'],['air has no mass','空氣沒有質量'],['the balance is broken','天秤壞了']],'Removing air removes mass.','抽走空氣即減少質量。'),
+M(2,'Under a microscope, smoke particles move in a…','在顯微鏡下，煙粒以甚麼方式移動？',[['zig-zag path','之字形路徑'],['perfect circle','完美的圓形'],['straight line only','只沿直線'],['they do not move','它們不會移動']],'They are hit randomly by moving air particles.','它們被移動的空氣粒子隨機撞擊。'),
+M(3,'You can smell perfume from across the room. This is evidence that particles…','你在房間另一邊也能嗅到香水味，這證明粒子……',[['move and spread out','會移動和擴散'],['are very large','十分巨大'],['do not move','不會移動'],['have no mass','沒有質量']],'Perfume particles mix with air particles and spread.','香水粒子與空氣粒子混合並擴散。'),
+M(3,'A drop of ink spreads through still water without stirring. This shows…','一滴墨水在靜止的水中不經攪拌也會擴散，這顯示……',[['water and ink particles move randomly','水和墨水粒子會隨機運動'],['ink is heavier than water','墨水比水重'],['water has no particles','水沒有粒子'],['particles are the same in all substances','所有物質的粒子都相同']],'Random motion mixes the particles.','隨機運動令粒子混合。'),
+M(4,'A water molecule (H₂O) contains…','一個水分子 (H₂O) 含有……',[['2 hydrogen atoms and 1 oxygen atom','2 個氫原子和 1 個氧原子'],['1 hydrogen atom and 2 oxygen atoms','1 個氫原子和 2 個氧原子'],['only oxygen atoms','只有氧原子'],['cells','細胞']],'H₂ = 2 hydrogen, O = 1 oxygen.','H₂＝2 個氫，O＝1 個氧。'),
+M(4,'Why does a smell spread faster on a hot day?','為甚麼氣味在炎熱的日子擴散得較快？',[['Particles move faster at higher temperature','溫度較高時粒子移動得較快'],['Particles become bigger','粒子變大'],['Air disappears','空氣消失'],['Particles stop moving','粒子停止移動']],'Higher temperature → faster particle movement.','溫度較高 → 粒子移動較快。'),
+M(5,'"Iron and aluminium are made of the same particles." Evaluate this.','「鐵和鋁由相同的粒子組成。」評價這說法。',[['Incorrect – different substances are made of different particles','不正確－不同物質由不同粒子組成'],['Correct – all metals are the same','正確－所有金屬都一樣'],['Correct – they are both solids','正確－它們都是固體'],['Incorrect – metals have no particles','不正確－金屬沒有粒子']],'Particle theory point: different substances, different particles.','粒子理論：不同物質由不同粒子組成。'),
+M(6,'Design a quick demo to show particles move. Which is BEST?','設計一個快速示範來顯示粒子會移動，哪個最好？',[['Drop food colouring into still water and watch it spread over time','把食用色素滴入靜止的水中，觀察它隨時間擴散'],['Weigh a stone twice','把石頭秤兩次'],['Look at a ruler','看一把尺'],['Freeze an empty cup','冷凍一個空杯']],'A visible spreading colour shows random particle movement.','看得見的顏色擴散顯示粒子隨機運動。')
+]},
+{id:'6.2',en:'Particle model',zh:'粒子模型',
+notes:[['<b>Solid</b>: particles closely packed in a <b>regular pattern</b>, small spaces, each <b>vibrates about a fixed position</b> → fixed shape and fixed volume.','<b>固體</b>：粒子以<b>規則排列</b>緊密地排在一起，空隙小，每粒子<b>在固定位置振動</b> → 有固定形狀和體積。'],
+['<b>Liquid</b>: closely packed, no regular pattern, particles <b>move around easily</b> → no fixed shape, fixed volume.','<b>液體</b>：粒子緊密但沒有規則排列，粒子<b>容易四處移動</b> → 沒有固定形狀，但有固定體積。'],
+['<b>Gas</b>: particles <b>far apart</b>, no pattern, <b>move freely in all directions</b> → no fixed shape, no fixed volume; easily compressed.','<b>氣體</b>：粒子<b>相距很遠</b>，沒有規則，<b>向四方八面自由移動</b> → 沒有固定形狀和體積；容易壓縮。']],
+terms:[['solid state','固態'],['liquid state','液態'],['gas state','氣態'],['particle model','粒子模型'],['vibrate','振動'],['compress','壓縮']],
+qs:[
+M(1,'In a solid, particles…','在固體中，粒子……',[['vibrate about fixed positions','在固定位置振動'],['move freely in all directions','向四方八面自由移動'],['are far apart','相距很遠'],['do not move at all','完全不動']],'They are held in a regular pattern.','它們以規則形式排列。'),
+M(1,'In which state are the spaces between particles LARGEST?','哪種物態的粒子間空隙最大？',[['Gas','氣體'],['Liquid','液體'],['Solid','固體'],['All the same','全部相同']],'Gas particles are far apart.','氣體粒子相距很遠。'),
+M(1,'Which state has a fixed volume but no fixed shape?','哪種物態有固定體積但沒有固定形狀？',[['Liquid','液體'],['Solid','固體'],['Gas','氣體'],['None','沒有']],'Liquids take the shape of their container.','液體會隨容器改變形狀。'),
+T(2,'Gases can be compressed easily.','氣體容易被壓縮。',true,'There are large spaces between gas particles.','氣體粒子之間有很大的空隙。'),
+T(2,'Particles in a liquid are arranged in a regular pattern.','液體中的粒子以規則形式排列。',false,'Only solids have a regular pattern.','只有固體的粒子有規則排列。'),
+M(2,'Why does a gas fill the whole container?','為甚麼氣體會充滿整個容器？',[['Its particles move freely in all directions','它的粒子向四方八面自由移動'],['Its particles are fixed','它的粒子是固定的'],['Its particles are closely packed','它的粒子緊密排列'],['Gases have no particles','氣體沒有粒子']],'Gas has no fixed volume.','氣體沒有固定體積。'),
+M(3,'Why is it very hard to compress a block of ice?','為甚麼冰塊很難被壓縮？',[['Its particles are closely packed with very small spaces','它的粒子緊密排列，空隙很小'],['Its particles move freely','它的粒子自由移動'],['Ice has no particles','冰沒有粒子'],['Ice is a gas','冰是氣體']],'No room to push particles closer.','粒子沒有空間可再靠近。'),
+M(3,'You pour juice from a tall glass into a wide bowl. What happens?','你把果汁由高杯倒進闊碗，會怎樣？',[['Its shape changes but its volume stays the same','形狀改變，但體積不變'],['Its volume increases','體積增加'],['Its volume decreases','體積減少'],['It becomes a solid','它變成固體']],'Liquids: fixed volume, no fixed shape.','液體：體積固定，形狀不固定。'),
+M(4,'A syringe of air can be pushed in, but a syringe of water cannot. Why?','裝滿空氣的針筒可以被推入，但裝滿水的不行，為甚麼？',[['Gas particles are far apart; liquid particles are closely packed','氣體粒子相距遠；液體粒子緊密排列'],['Water particles are bigger than the syringe','水粒子比針筒還大'],['Air has no mass','空氣沒有質量'],['Water particles do not move','水粒子不會移動']],'Compressibility depends on spaces between particles.','可壓縮性取決於粒子間的空隙。'),
+M(4,'When ice melts, what happens to its particles?','冰熔化時，它的粒子有甚麼變化？',[['They leave fixed positions and move around each other','離開固定位置並互相環繞移動'],['They disappear','消失'],['They become larger','變大'],['They stop vibrating','停止振動']],'Solid → liquid: particles gain energy and move around.','固體 → 液體：粒子獲得能量並四處移動。'),
+M(5,'Which particle diagram BEST represents steam?','哪個粒子圖最能代表蒸汽？',[['A few particles far apart, randomly placed','少量粒子相距很遠，隨意分佈'],['Particles tightly packed in rows','粒子整齊緊密地排成行'],['Particles closely packed but jumbled','粒子緊密但雜亂'],['No particles at all','完全沒有粒子']],'Steam is a gas.','蒸汽是氣體。'),
+M(6,'Create a class role-play of a SOLID. What should students do?','設計一個扮演固體的班級角色扮演，同學應怎樣做？',[['Stand close together in rows and wiggle on the spot','站成緊密的行列，在原地搖擺'],['Run anywhere around the room','在房間任意奔跑'],['Walk around each other loosely','鬆散地互相繞行'],['Leave the room','離開房間']],'Fixed positions + vibrating = solid.','固定位置＋振動＝固體。')
+]},
+{id:'6.3',en:'Dissolving (particle view)',zh:'溶解（粒子角度）',
+notes:[['During dissolving, solvent particles surround and collide with solute particles; the solute particles <b>move apart</b> and become <b>evenly distributed</b> among the solvent particles.','溶解時，溶劑粒子包圍並撞擊溶質粒子；溶質粒子<b>分散開來</b>，<b>均勻地分佈</b>在溶劑粒子之間。'],
+['Mass is <b>conserved</b>: mass of solute + mass of solvent = mass of solution.','質量<b>守恆</b>：溶質質量＋溶劑質量＝溶液質量。'],
+['The volume of the solution may be <b>different</b> from (often less than) the sum of the volumes, because small particles fit into the spaces between bigger ones.','溶液的體積可能與兩者體積之和<b>不同</b>（常常較少），因為細小粒子可以填入較大粒子之間的空隙。'],
+['A <b>concentrated</b> solution has more solute in the same amount of solvent than a <b>dilute</b> one.','在相同份量的溶劑中，<b>濃</b>溶液比<b>稀</b>溶液含較多溶質。']],
+terms:[['conserve','守恆'],['solute particle','溶質粒子'],['solvent particle','溶劑粒子'],['concentration','濃度'],['concentrated','濃的'],['dilute','稀的']],
+qs:[
+M(1,'When sugar dissolves, the sugar particles…','糖溶解時，糖粒子……',[['move apart and spread evenly among water particles','分散開來，均勻分佈在水粒子之間'],['disappear','消失'],['become bigger','變大'],['turn into water particles','變成水粒子']],'The particles still exist – just spread out.','粒子仍然存在，只是分散了。'),
+M(1,'20 g salt dissolves in 100 g water. What is the mass of the solution?','20 g 鹽溶於 100 g 水，溶液的質量是多少？',[['120 g','120 g'],['100 g','100 g'],['80 g','80 g'],['20 g','20 g']],'Mass is conserved: 20 + 100 = 120 g.','質量守恆：20 + 100 = 120 g。'),
+T(2,'Mass is lost when a solute dissolves.','溶質溶解時質量會減少。',false,'Mass is conserved in dissolving.','溶解時質量守恆。'),
+T(2,'Mixing 50 cm³ water with 50 cm³ alcohol can give less than 100 cm³ of liquid.','把 50 cm³ 水和 50 cm³ 酒精混合，所得液體可以少於 100 cm³。',true,'Smaller particles fill the spaces between larger ones.','較細的粒子填入較大粒子之間的空隙。'),
+M(2,'A solution with a lot of solute in a small amount of water is…','在少量水中含大量溶質的溶液是……',[['concentrated','濃的'],['dilute','稀的'],['insoluble','不可溶的'],['pure water','純水']],'Concentration = amount of solute in a given amount of solvent.','濃度＝一定份量溶劑中溶質的份量。'),
+M(3,'Why can we taste sugar in every part of a stirred cup of tea?','為甚麼在攪拌過的一杯茶中每一處都嚐到甜味？',[['Sugar particles are evenly distributed among water particles','糖粒子均勻地分佈在水粒子之間'],['Sugar floats on top','糖浮在頂部'],['Sugar sinks to the bottom','糖沉到底部'],['Sugar particles disappear','糖粒子消失']],'A solution is evenly mixed.','溶液是均勻混合的。'),
+M(3,'Adding more water to a cup of juice makes it…','在一杯果汁中加入更多水，會令它……',[['more dilute','更稀'],['more concentrated','更濃'],['heavier in solute','溶質更多'],['a solid','變成固體']],'Same solute, more solvent → more dilute.','溶質相同，溶劑更多 → 更稀。'),
+M(4,'Why does the total volume sometimes decrease when two liquids mix?','為甚麼兩種液體混合後總體積有時會減少？',[['Particles of one liquid fit into spaces between particles of the other','一種液體的粒子填入另一種液體粒子之間的空隙'],['Some particles are destroyed','部分粒子被消滅'],['Mass decreases','質量減少'],['The liquids evaporate instantly','液體立即蒸發']],'There are spaces between particles.','粒子之間有空隙。'),
+M(4,'Before dissolving: beaker + water + sugar = 250 g on a balance. After dissolving, the balance reads…','溶解前：燒杯＋水＋糖在天秤上共 250 g。溶解後，天秤讀數是……',[['250 g','250 g'],['less than 250 g','少於 250 g'],['more than 250 g','多於 250 g'],['0 g','0 g']],'No particles leave, so mass stays the same.','沒有粒子離開，質量不變。'),
+M(5,'Amy says "The salt vanished, so it is gone." Which is the BEST reply?','Amy 說「鹽消失了，所以沒有了。」哪個回應最好？',[['The salt particles are still there, spread among water particles – evaporate the water to get salt back','鹽粒子仍在，只是分散在水粒子之間——把水蒸發便可取回鹽'],['She is right – it is destroyed','她說得對——鹽被消滅了'],['The salt became water','鹽變成了水'],['The salt went into the air','鹽飄到空氣中']],'Dissolving is not disappearing.','溶解不是消失。'),
+M(6,'Plan an experiment to show mass is conserved in dissolving. Which plan is BEST?','策劃一個實驗證明溶解時質量守恆，哪個計劃最好？',[['Weigh water and solute together in a sealed flask before and after dissolving','把水和溶質放在密封燒瓶中，在溶解前後量度總質量'],['Weigh only the water after dissolving','只在溶解後秤水'],['Measure the colour of the solution','量度溶液的顏色'],['Heat the solution until dry first','先把溶液加熱至乾']],'Compare total mass before and after, nothing added or lost.','比較前後的總質量，不加入也不流失任何物質。')
+]},
+{id:'6.4',en:'Thermal expansion and contraction',zh:'熱脹冷縮',
+notes:[['Most substances <b>expand</b> when heated and <b>contract</b> when cooled – <b>thermal expansion and contraction</b>.','大部分物質受熱時<b>膨脹</b>，冷卻時<b>收縮</b>——這稱為<b>熱脹冷縮</b>。'],
+['Heating → particles move <b>faster</b> → spaces between particles <b>increase</b> → the substance expands. (Particles themselves do NOT get bigger.)','加熱 → 粒子移動得<b>較快</b> → 粒子間的空隙<b>增加</b> → 物質膨脹。（粒子本身並<b>不會</b>變大。）'],
+['Cooling → particles move slower → spaces decrease → the substance contracts.','冷卻 → 粒子移動較慢 → 空隙減少 → 物質收縮。'],
+['Applications: gaps in railway tracks and bridges, liquid-in-glass thermometers, <b>bimetallic strips</b> in <b>thermostats</b>, loosening a tight metal lid with hot water.','應用：鐵路路軌和橋樑的空隙、液體玻璃溫度計、<b>恆溫器</b>中的<b>雙層金屬片</b>、用熱水令緊閉的金屬蓋鬆開。']],
+terms:[['thermal expansion and contraction','熱脹冷縮'],['expand','膨脹'],['contract','收縮'],['thermostat','恆溫器'],['bimetallic strip','雙層金屬片']],
+qs:[
+M(1,'Most substances ___ when heated.','大部分物質受熱時會……',[['expand','膨脹'],['contract','收縮'],['disappear','消失'],['lose mass','失去質量']],'Thermal expansion.','熱脹。'),
+M(1,'Which device uses a bimetallic strip to control temperature?','哪種裝置利用雙層金屬片控制溫度？',[['Thermostat','恆溫器'],['Measuring cylinder','量筒'],['Microscope','顯微鏡'],['Filter funnel','漏斗']],'The strip bends when heated and switches the circuit.','金屬片受熱彎曲，開關電路。'),
+T(2,'When a metal expands, its particles become bigger.','金屬膨脹時，它的粒子會變大。',false,'The particles move faster and the SPACES between them increase.','粒子移動較快，粒子之間的空隙增加。'),
+T(2,'Gaps are left between sections of railway tracks to allow for expansion on hot days.','鐵路路軌之間留有空隙，讓它們在炎熱天氣時膨脹。',true,'Without gaps, tracks could bend.','如沒有空隙，路軌可能彎曲。'),
+M(2,'When a substance is cooled, its particles…','物質冷卻時，它的粒子……',[['move slower and get closer together','移動較慢並互相靠近'],['move faster','移動較快'],['get smaller','變小'],['disappear','消失']],'Cooling reduces the spaces between particles.','冷卻令粒子間的空隙減少。'),
+M(3,'A tight metal lid on a glass jar can be loosened by…','玻璃瓶上緊閉的金屬蓋可以怎樣鬆開？',[['running hot water over the lid','用熱水沖金屬蓋'],['putting the jar in the freezer','把瓶放入冰格'],['shaking the jar','搖動瓶子'],['adding salt','加鹽']],'The metal lid expands more than the glass.','金屬蓋比玻璃膨脹得多。'),
+M(3,'Boiled eggs are put in iced water so the shell peels easily. Why?','把熟雞蛋放入冰水，蛋殼便容易剝，為甚麼？',[['The egg contracts and pulls away from the shell','雞蛋收縮並與蛋殼分離'],['The egg expands and breaks the shell','雞蛋膨脹並撐破蛋殼'],['Iced water softens the shell','冰水令蛋殼變軟'],['Iced water dissolves the shell','冰水溶解蛋殼']],'Cooling → contraction.','冷卻 → 收縮。'),
+M(3,'Why does the liquid in a thermometer rise when it gets warmer?','為甚麼溫度計內的液體在變暖時會上升？',[['The liquid expands when heated','液體受熱膨脹'],['The glass contracts','玻璃收縮'],['More liquid is created','產生更多液體'],['The liquid evaporates','液體蒸發']],'Liquid expansion pushes it up the narrow tube.','液體膨脹，沿幼管上升。'),
+M(4,'Overhead power cables are hung loosely in summer. What would happen if they were tight?','架空電纜在夏天安裝時是鬆垂的。如果裝得很緊會怎樣？',[['They might snap when they contract in cold weather','天冷收縮時可能會斷裂'],['They would expand into the sky','會膨脹到天空'],['Nothing at all','甚麼也不會發生'],['They would melt','會熔化']],'Cooling makes them shorter and tighter.','冷卻令電纜變短變緊。'),
+M(4,'A bimetallic strip of brass and iron bends when heated because…','由黃銅和鐵組成的雙層金屬片受熱會彎曲，因為……',[['the two metals expand by different amounts','兩種金屬膨脹的程度不同'],['both metals contract','兩種金屬都收縮'],['the metals melt','金屬熔化'],['iron has no particles','鐵沒有粒子']],'The metal that expands more ends up on the outside of the curve.','膨脹較多的金屬會在彎曲的外側。'),
+M(5,'Which explanation of expansion is the MOST scientific?','哪個有關膨脹的解釋最科學？',[['Particles move faster and the spaces between them increase','粒子移動較快，粒子之間的空隙增加'],['Particles grow bigger','粒子變大'],['More particles are made','產生更多粒子'],['Heat is a substance that fills the object','熱是一種充滿物體的物質']],'Particle size and number do not change.','粒子的大小和數目不變。'),
+M(6,'Design a bridge joint for a hot and cold climate. What should it include?','為冷熱變化大的地方設計橋樑接縫，應包括甚麼？',[['An expansion gap (e.g. sliding teeth joint) so the deck can expand and contract','伸縮縫（例如滑動齒狀接縫），讓橋面可以膨脹和收縮'],['Welding everything tightly with no gaps','把所有部分緊緊焊接，不留空隙'],['Using only ice blocks','只用冰塊建造'],['Painting it black to stop expansion','塗成黑色以阻止膨脹']],'Allow room for expansion and contraction.','預留膨脹和收縮的空間。')
+]},
+{id:'6.5',en:'Gas pressure',zh:'氣壓',
+notes:[['Gas particles <b>bombard</b> (hit) surfaces; this exerts <b>gas pressure</b>.','氣體粒子<b>撞擊</b>表面，產生<b>氣壓</b>。'],
+['<b>Smaller volume</b> (compressing a closed container) → particles hit the walls more often → <b>higher pressure</b>.','<b>體積減少</b>（壓縮密封容器）→ 粒子更頻密地撞擊容器壁 → <b>氣壓上升</b>。'],
+['<b>Higher temperature</b> → particles move faster and hit the walls more often → <b>higher pressure</b>.','<b>溫度上升</b> → 粒子移動得較快，更頻密地撞擊容器壁 → <b>氣壓上升</b>。'],
+['<b>Atmospheric pressure</b> is the pressure exerted by air particles in the atmosphere. It helps suction cups stick and lets us drink through a straw.','<b>大氣壓強</b>是大氣中空氣粒子產生的壓強。它令吸盤黏住，也令我們可用飲管吸飲品。']],
+terms:[['gas pressure','氣壓'],['atmospheric pressure','大氣壓強'],['bombard','撞擊'],['compress','壓縮'],['suction cup','吸盤']],
+qs:[
+M(1,'Gas pressure is caused by…','氣壓是由甚麼造成的？',[['gas particles bombarding a surface','氣體粒子撞擊表面'],['gas particles standing still','氣體粒子靜止不動'],['light shining on gas','光照射氣體'],['particles getting bigger','粒子變大']],'Many tiny hits add up to a push.','無數次微小撞擊加起來形成推力。'),
+M(1,'The pressure exerted by the air around the Earth is called…','地球周圍空氣產生的壓強稱為……',[['atmospheric pressure','大氣壓強'],['water pressure','水壓'],['blood pressure','血壓'],['density','密度']],'Air particles in the atmosphere bombard everything.','大氣中的空氣粒子撞擊所有物體。'),
+T(2,'Decreasing the volume of a closed container of gas increases its pressure.','減少密封容器內氣體的體積會令氣壓增加。',true,'Particles hit the walls more often.','粒子更頻密地撞擊容器壁。'),
+T(2,'Cooling a sealed can of gas increases the gas pressure.','冷卻密封的氣體罐會令氣壓增加。',false,'Cooling slows the particles → fewer, weaker hits → lower pressure.','冷卻令粒子變慢 → 撞擊減少 → 氣壓下降。'),
+M(2,'Which change INCREASES the gas pressure in a closed container?','以下哪個改變會令密封容器內的氣壓增加？',[['Decrease the volume of the container','減少容器的體積'],['Decrease the temperature','降低溫度'],['Remove some gas particles','移走部分氣體粒子'],['Make the container bigger','令容器變大']],'Less space → more frequent collisions.','空間較少 → 撞擊更頻密。'),
+M(3,'Why should aerosol cans NOT be heated?','為甚麼噴霧罐不可以加熱？',[['Gas pressure rises and the can may explode','氣壓上升，罐可能爆炸'],['The can will shrink','罐會縮小'],['The gas will turn into a solid','氣體會變成固體'],['Pressure will drop to zero','氣壓會降至零']],'Higher temperature → higher gas pressure.','溫度較高 → 氣壓較高。'),
+M(3,'You push the plunger of a sealed syringe of air. It becomes harder to push because…','你推動密封且裝有空氣的針筒活塞，越推越難，因為……',[['the gas pressure inside increases','內裏的氣壓增加'],['air particles disappear','空氣粒子消失'],['the air turns into water','空氣變成水'],['the syringe expands','針筒膨脹']],'Smaller volume → higher pressure pushing back.','體積較小 → 氣壓較大，向外推回。'),
+M(3,'How can you drink juice through a straw?','你怎樣可以用飲管喝果汁？',[['Sucking lowers the pressure in the straw; atmospheric pressure pushes the juice up','吸啜令飲管內氣壓降低；大氣壓強把果汁推上來'],['The straw pulls the juice by magnetism','飲管用磁力拉起果汁'],['Juice floats up by itself','果汁自己浮上來'],['The straw heats the juice','飲管加熱果汁']],'Atmospheric pressure does the pushing.','是大氣壓強把果汁推上來。'),
+M(4,'A car tyre\'s pressure is higher after a long drive on a hot day. Why?','在炎熱天氣長途駕駛後，汽車輪胎的氣壓較高，為甚麼？',[['The air inside gets hotter so particles move faster and hit harder and more often','輪胎內空氣變熱，粒子移動較快，撞擊更頻密更有力'],['More air enters the tyre by itself','更多空氣自行進入輪胎'],['The tyre becomes smaller','輪胎變細'],['Air particles become bigger','空氣粒子變大']],'Temperature ↑ → pressure ↑.','溫度↑ → 氣壓↑。'),
+M(4,'A suction cup sticks to a window because…','吸盤能黏在窗上，因為……',[['air pressure inside the cup is lower than atmospheric pressure outside','吸盤內的氣壓低於外面的大氣壓強'],['it is sticky glue','它有黏膠'],['glass attracts plastic','玻璃會吸引塑膠'],['there is more air inside the cup','吸盤內有更多空氣']],'Pushing out air lowers inside pressure; outside air pushes it on.','擠出空氣令內部氣壓降低，外面的空氣把它壓住。'),
+M(5,'A sealed bag of crisps puffs up on a mountain top. Which explanation is BEST?','一包密封的薯片在山頂上脹起來，哪個解釋最好？',[['Atmospheric pressure outside is lower, so the gas inside pushes the bag outwards','外面的大氣壓強較低，袋內氣體把袋向外推'],['More crisps were made','薯片變多了'],['The bag cooled and contracted','袋冷卻收縮'],['Gas particles got bigger','氣體粒子變大']],'Inside pressure > outside pressure → bag expands.','內部氣壓 > 外部氣壓 → 袋膨脹。'),
+M(6,'Design a demo showing atmospheric pressure is strong. Which is BEST?','設計一個示範說明大氣壓強很大，哪個最好？',[['Heat a little water in a can, seal and cool it – the can is crushed','在罐中加熱少量水，封口再冷卻——罐被壓扁'],['Blow up a balloon and let go','吹脹氣球再放手'],['Weigh an empty cup','秤一個空杯'],['Shine a torch at the wall','用電筒照牆']],'Cooling lowers inside pressure; atmospheric pressure crushes the can.','冷卻令內部氣壓下降，大氣壓強把罐壓扁。')
+]},
+{id:'6.6',en:'Density',zh:'密度',
+notes:[['<b>Density</b> is the <b>mass per unit volume</b> of a substance. <b>Density = mass ÷ volume</b> (units: <b>g/cm³</b> or <b>kg/m³</b>).','<b>密度</b>是物質<b>每單位體積的質量</b>。<b>密度＝質量 ÷ 體積</b>（單位：<b>g/cm³</b> 或 <b>kg/m³</b>）。'],
+['Objects of the same volume can have different masses – they have different densities.','相同體積的物體可以有不同質量——它們的密度不同。'],
+['An object <b>denser</b> than its surroundings <b>sinks</b>; <b>less dense</b> → <b>floats</b>. (Water ≈ 1 g/cm³.)','物體比周圍物質<b>密度大</b>便會<b>下沉</b>；<b>密度小</b>便會<b>浮起</b>。（水約 1 g/cm³。）'],
+['Density changes with temperature: heating → particles further apart → volume ↑ → density ↓ (hot air rises).','密度隨溫度改變：加熱 → 粒子距離增加 → 體積↑ → 密度↓（熱空氣上升）。']],
+terms:[['density','密度'],['mass','質量'],['volume','體積'],['sink','下沉'],['float','浮起'],['medium','介質']],
+qs:[
+M(1,'Density is…','密度是……',[['mass per unit volume','每單位體積的質量'],['volume per unit mass','每單位質量的體積'],['mass × volume','質量 × 體積'],['weight only','只是重量']],'Density = mass ÷ volume.','密度＝質量 ÷ 體積。'),
+M(1,'A common unit of density is…','密度的常用單位是……',[['g/cm³','g/cm³'],['cm³','cm³'],['g','g'],['°C','°C']],'Mass unit ÷ volume unit.','質量單位 ÷ 體積單位。'),
+T(2,'An object less dense than water floats on water.','密度比水小的物體會浮在水面。',true,'Less dense than the surrounding medium → floats.','比周圍介質密度小 → 浮起。'),
+T(2,'A bigger object always has a greater density.','較大的物體密度總是較大。',false,'Density depends on mass AND volume, not size alone. A big log floats; a small coin sinks.','密度取決於質量和體積，而不只是大小。大木頭會浮，小硬幣會沉。'),
+M(2,'A block has mass 40 g and volume 20 cm³. What is its density?','一個方塊質量 40 g，體積 20 cm³，密度是多少？',[['2 g/cm³','2 g/cm³'],['800 g/cm³','800 g/cm³'],['0.5 g/cm³','0.5 g/cm³'],['60 g/cm³','60 g/cm³']],'40 ÷ 20 = 2 g/cm³.','40 ÷ 20 = 2 g/cm³。'),
+M(3,'A copper block has volume 500 cm³ and density 8.96 g/cm³. What is its mass?','一塊銅的體積為 500 cm³，密度為 8.96 g/cm³，質量是多少？',[['4480 g','4480 g'],['8.96 g','8.96 g'],['55.8 g','55.8 g'],['500 g','500 g']],'Mass = density × volume = 8.96 × 500 = 4480 g.','質量＝密度 × 體積＝8.96 × 500＝4480 g。'),
+M(3,'Solid P floats in liquid Q. Which quantity of P must be smaller than that of Q?','固體 P 浮在液體 Q 上，P 的哪個物理量一定比 Q 小？',[['Density','密度'],['Mass','質量'],['Volume','體積'],['Size of particles','粒子大小']],'Floating depends on density.','浮沉取決於密度。'),
+M(3,'Why does a hot-air balloon rise?','為甚麼熱氣球會上升？',[['Hot air inside is less dense than the cooler air outside','球內熱空氣的密度比外面較冷的空氣小'],['Hot air is heavier','熱空氣較重'],['The balloon has no mass','氣球沒有質量'],['Cold air pushes down on it','冷空氣把它向下推']],'Heating → volume ↑ → density ↓.','加熱 → 體積↑ → 密度↓。'),
+M(4,'Oil floats on water. What can you conclude?','油浮在水面上，你可以得出甚麼結論？',[['Oil is less dense than water','油的密度比水小'],['Oil has more mass than water in all cases','油在任何情況下都比水重'],['Water is less dense than oil','水的密度比油小'],['Oil has no particles','油沒有粒子']],'Less dense liquids float on denser ones.','密度較小的液體浮在密度較大的液體上。'),
+M(4,'Liquids W (top) and Y (bottom) are in a beaker. Solid X floats between them; solid Z sinks to the bottom. Arrange from LOWEST to HIGHEST density.','燒杯中有液體 W（上層）和 Y（下層）。固體 X 浮在兩層之間；固體 Z 沉到底。由密度最低至最高排列。',[['W, X, Y, Z','W、X、Y、Z'],['Z, Y, X, W','Z、Y、X、W'],['W, Y, X, Z','W、Y、X、Z'],['X, W, Z, Y','X、W、Z、Y']],'Top layer is least dense; X sinks in W but floats on Y; Z sinks in everything.','上層密度最小；X 在 W 中下沉但浮在 Y 上；Z 在所有液體中都下沉。'),
+M(5,'Two cubes have the SAME size. Cube A is 10 g, cube B is 30 g. Which statement is BEST?','兩個方塊大小相同，A 重 10 g，B 重 30 g。哪個說法最好？',[['B is 3 times as dense as A','B 的密度是 A 的 3 倍'],['A is denser','A 的密度較大'],['They have the same density','兩者密度相同'],['Density cannot be compared','不能比較密度']],'Same volume: density is proportional to mass.','體積相同時，密度與質量成正比。'),
+M(6,'Plan how to find the density of an irregular stone. Which method is BEST?','策劃如何找出不規則石頭的密度，哪個方法最好？',[['Weigh it; lower it into a measuring cylinder of water and read the rise in volume; divide mass by volume','秤它的質量；把它放入盛水的量筒，讀出上升的體積；質量除以體積'],['Measure its length with a ruler only','只用尺量度長度'],['Weigh it and guess the volume','秤它然後估計體積'],['Put it in a freezer','放入冰格']],'Displacement gives the volume of irregular objects.','排水法可量度不規則物體的體積。')
+]}
+]}
+
 ];
 
 </script>
@@ -664,7 +883,25 @@ var PETS=[
   cond:{k:'cleared',n:15,en:'Clear 15 mistakes',zh:'清除 15 條錯題'}},
  {id:'taro',en:'Taro',zh:'芋圓',body:'#E4D6F3',belly:'#F2EAFA',ears:'cat',price:600,
   desc:['A sleepy cat who dreams in DNA spirals.','在 DNA 螺旋中做夢的睏睏貓。'],
-  cond:{k:'three',n:10,en:'Get 3★ in 10 sub-topics',zh:'在 10 個小節取得 3★'}}
+  cond:{k:'three',n:10,en:'Get 3★ in 10 sub-topics',zh:'在 10 個小節取得 3★'}},
+ {id:'kinako',en:'Kinako',zh:'黃豆粉',body:'#F6D6A4',belly:'#FFF6E8',ears:'hamster',price:300,
+  desc:['A round hamster who stores facts in her cheeks.','把知識塞滿腮囊的圓滾滾倉鼠。'],
+  cond:{k:'studies',n:10,en:'Finish 10 study sessions',zh:'完成 10 次溫習'}},
+ {id:'goma',en:'Goma',zh:'芝麻',body:'#FFFFFF',belly:'#F6F2EF',ears:'panda',price:400,
+  desc:['A panda who naps on textbooks.','喜歡枕着課本午睡的熊貓。'],
+  cond:{k:'days',n:7,en:'Study on 7 different days',zh:'在 7 個不同日子溫習'}},
+ {id:'mikan',en:'Mikan',zh:'蜜柑',body:'#FFC894',belly:'#FFF4E8',ears:'fox',price:500,
+  desc:['A tangerine fox who loves Term Match.','最愛詞彙配對的蜜柑狐狸。'],
+  cond:{k:'matchWins',n:10,en:'Win 10 Term Match games',zh:'贏 10 次詞彙配對'}},
+ {id:'nori',en:'Nori',zh:'紫菜',body:'#8494B5',belly:'#FFFFFF',feet:'#F7B267',ears:'penguin',price:550,
+  desc:['A tiny penguin who studies density by sliding on ice.','在冰上滑行研究密度的小企鵝。'],
+  cond:{k:'best',n:7,en:'Reach a 7-day streak',zh:'連續溫習 7 日'}},
+ {id:'ume',en:'Ume',zh:'梅子',body:'#FFC9DA',belly:'#FFE8F0',ears:'axolotl',price:700,
+  desc:['A smiley axolotl who waves her frilly gills.','揮動花邊鰓的笑笑六角恐龍。'],
+  cond:{k:'three',n:20,en:'Get 3★ in 20 sub-topics',zh:'在 20 個小節取得 3★'}},
+ {id:'wata',en:'Wata',zh:'棉花糖',body:'#FFF7EA',belly:'#FFFDF8',ears:'sheep',price:800,
+  desc:['A fluffy lamb made of marshmallow clouds.','由棉花糖雲朵做成的軟綿綿小羊。'],
+  cond:{k:'cleared',n:30,en:'Clear 30 mistakes',zh:'清除 30 條錯題'}}
 ];
 function petDef(id){for(var i=0;i<PETS.length;i++)if(PETS[i].id===id)return PETS[i];return PETS[0];}
 function petLevel(xp){return Math.floor(Math.sqrt(xp/25))+1;}
@@ -724,6 +961,45 @@ var ITEMS=[
  I('s_star','room','sticker','Gold star sticker','金星貼紙',40,function(){return '<svg viewBox="0 0 60 60"><path d="M30 4 L37 21 L56 22 L41 34 L46 53 L30 42 L14 53 L19 34 L4 22 L23 21Z" fill="#FBD46D" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/></svg>';}),
  I('s_fire','room','sticker','Fire triangle sticker','火三角貼紙',40,function(){return '<svg viewBox="0 0 60 60"><path d="M30 6 L54 50 L6 50Z" fill="#FFE9A6" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M30 22 C38 32 38 40 30 44 C22 40 22 32 30 22Z" fill="#F28C9B"/></svg>';})
 ];
+
+/* special items: unlocked by completing a sub-topic quiz (3/5 or better) */
+function SP(id,cat,slot,en,zh,sec,svg){var it=I(id,cat,slot,en,zh,0,function(){return svg.replace(/#O/g,O);});it.sec=sec;return it;}
+function SW(o,w){return 'stroke="#O" stroke-width="'+(w||3)+'"';}
+[
+ SP('h_bulb','wear','hat','Bright-idea headband','靈感燈泡頭箍','1.1','<path d="M70 66 Q100 52 130 66" stroke="#F28C9B" stroke-width="5" fill="none"/><path d="M100 57 L100 50" '+SW()+'/><circle cx="100" cy="36" r="14" fill="#FFF1A8" '+SW()+'/><rect x="94" y="48" width="12" height="7" rx="2" fill="#C9C3BC" '+SW(0,2.5)+'/><path d="M95 37 Q100 30 105 37" stroke="#F2C14E" stroke-width="2.5" fill="none"/><path d="M78 24 L84 29 M122 24 L116 29 M100 12 L100 17" stroke="#F2C14E" stroke-width="3" stroke-linecap="round"/>'),
+ SP('i_clipboard','wear','hand','Hypothesis clipboard','假說記錄板','1.2','<g transform="rotate(12 166 132)"><rect x="148" y="106" width="34" height="44" rx="5" fill="#E6C49E" '+SW()+'/><rect x="153" y="114" width="24" height="31" rx="2" fill="#fff"/><rect x="158" y="101" width="14" height="8" rx="3" fill="#C9C3BC" '+SW(0,2.5)+'/><path d="M157 122 L173 122 M157 129 L169 129" stroke="#C9B6EA" stroke-width="2.5" stroke-linecap="round"/><path d="M162 137 l3 3 l7 -8" stroke="#6FB58A" stroke-width="3" fill="none" stroke-linecap="round"/></g>'),
+ SP('g_goggles','wear','glasses','Lab goggles','實驗護目鏡','1.3','<path d="M38 112 L162 112" stroke="#F2A65A" stroke-width="6"/><rect x="63" y="100" width="31" height="26" rx="12" fill="rgba(210,236,250,.75)" '+SW()+'/><rect x="106" y="100" width="31" height="26" rx="12" fill="rgba(210,236,250,.75)" '+SW()+'/><path d="M94 112 L106 112" '+SW()+'/><path d="M69 106 L76 104 M112 106 L119 104" stroke="#fff" stroke-width="3" stroke-linecap="round"/>'),
+ SP('i_bunsen','wear','hand','Mini Bunsen burner','迷你本生燈','1.4','<rect x="150" y="150" width="30" height="7" rx="3" fill="#C9C3BC" '+SW()+'/><rect x="160" y="112" width="10" height="40" rx="3" fill="#D9DEE6" '+SW()+'/><path d="M165 110 C155 98 159 86 165 76 C171 86 175 98 165 110Z" fill="#8FC7E8" stroke="#5E9FD0" stroke-width="2"/><path d="M165 106 C161 100 163 94 165 89 C167 94 169 100 165 106Z" fill="#fff"/>'),
+ SP('h_ice','wear','hat','Ice-cube buddy hat','冰粒寶寶帽','2.1','<g transform="rotate(-10 100 46)"><rect x="80" y="28" width="40" height="36" rx="9" fill="rgba(200,232,248,.95)" stroke="#6BA8CF" stroke-width="3"/><path d="M86 35 L96 33" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="93" cy="47" r="2.5" fill="#O"/><circle cx="107" cy="47" r="2.5" fill="#O"/><path d="M97 53 Q100 56 103 53" stroke="#O" stroke-width="2" fill="none"/></g>'),
+ SP('i_cloud','wear','hand','Rain-cloud wand','雨雲魔法棒','2.2','<path d="M164 152 L164 110" stroke="#B98B64" stroke-width="4"/><path d="M146 104 Q140 90 154 88 Q158 74 172 80 Q186 76 186 92 Q196 96 188 106Z" fill="#fff" '+SW()+'/><path d="M152 114 l-2 6 M166 114 l-2 6 M180 114 l-2 6" stroke="#8FC7E8" stroke-width="3" stroke-linecap="round"/>'),
+ SP('i_teacup','wear','hand','Sugar-cube teacup','方糖茶杯','2.3','<path d="M148 124 L182 124 L178 146 Q176 152 170 152 L160 152 Q154 152 152 146Z" fill="#FFE5EC" '+SW()+'/><path d="M182 128 Q192 130 188 140 Q184 144 179 142" '+SW()+' fill="none"/><rect x="158" y="108" width="12" height="12" rx="2" fill="#fff" '+SW(0,2.5)+' transform="rotate(15 164 114)"/><path d="M156 134 Q165 138 174 134" stroke="#F7A9B5" stroke-width="2" fill="none"/>'),
+ SP('s_funnel','room','sticker','Filter funnel sticker','漏斗貼紙','2.4','<svg viewBox="0 0 60 60"><path d="M8 10 L52 10 L34 32 L34 50 L26 50 L26 32Z" fill="#fff" '+SW()+' stroke-linejoin="round"/><path d="M14 15 L46 15 L34 29 L26 29Z" fill="#A9D4EE"/><path d="M30 52 C33 56 33 58 30 60 C27 58 27 56 30 52Z" fill="#A9D4EE"/></svg>'),
+ SP('s_tap','room','sticker','Sparkly tap sticker','閃亮水龍頭貼紙','2.5','<svg viewBox="0 0 60 60"><rect x="6" y="14" width="30" height="12" rx="5" fill="#D9DEE6" '+SW()+'/><rect x="26" y="20" width="10" height="16" rx="3" fill="#D9DEE6" '+SW()+'/><rect x="12" y="6" width="14" height="8" rx="3" fill="#8FC7E8" '+SW(0,2.5)+'/><path d="M31 40 C36 48 37 51 35 54 Q31 58 27 54 C25 51 26 48 31 40Z" fill="#A9D4EE" '+SW(0,2.5)+'/><path d="M46 34 l2 4 l4 2 l-4 2 l-2 4 l-2 -4 l-4 -2 l4 -2Z" fill="#FBD46D"/></svg>'),
+ SP('a_drop','wear','acc','Water-drop pendant','水滴吊墜','2.6','<path d="M60 150 Q100 170 140 150" stroke="#C9B6EA" stroke-width="3" fill="none"/><path d="M100 158 C108 168 110 175 106 180 Q100 186 94 180 C90 175 92 168 100 158Z" fill="#A9D4EE" '+SW(0,2.5)+'/><circle cx="97" cy="175" r="2" fill="#fff"/>'),
+ SP('h_mushroom','wear','hat','Mushroom cap','蘑菇帽','3.1','<path d="M60 68 Q62 30 100 28 Q138 30 140 68Z" fill="#F28C9B" '+SW()+'/><circle cx="82" cy="48" r="6" fill="#fff"/><circle cx="108" cy="38" r="5" fill="#fff"/><circle cx="124" cy="54" r="5" fill="#fff"/><circle cx="98" cy="58" r="4" fill="#fff"/>'),
+ SP('h_frog','wear','hat','Froggy hat','青蛙帽','3.2','<path d="M64 68 Q66 42 100 42 Q134 42 136 68Z" fill="#9BCB8E" '+SW()+'/><circle cx="80" cy="42" r="11" fill="#9BCB8E" '+SW()+'/><circle cx="120" cy="42" r="11" fill="#9BCB8E" '+SW()+'/><circle cx="80" cy="42" r="5" fill="#O"/><circle cx="120" cy="42" r="5" fill="#O"/><circle cx="82" cy="40" r="1.8" fill="#fff"/><circle cx="122" cy="40" r="1.8" fill="#fff"/><path d="M92 58 Q100 63 108 58" stroke="#O" stroke-width="2.5" fill="none"/>'),
+ SP('i_net','wear','hand','Butterfly net','捕蝶網','3.3','<path d="M150 160 L176 100" stroke="#B98B64" stroke-width="4" stroke-linecap="round"/><ellipse cx="182" cy="88" rx="16" ry="12" fill="rgba(255,255,255,.7)" '+SW()+' transform="rotate(-20 182 88)"/><path d="M196 58 C190 50 184 56 190 60 C184 64 190 70 196 62 C202 70 208 64 202 60 C208 56 202 50 196 58Z" fill="#FFB3C1" stroke="#O" stroke-width="1.5"/>'),
+ SP('i_dolphin','wear','hand','Pink dolphin plush','粉紅海豚公仔','3.4','<path d="M144 138 C148 116 172 106 192 118 C186 121 184 125 188 129 C178 126 172 132 172 144 C164 152 148 152 144 138Z" fill="#F7B8C8" '+SW()+' stroke-linejoin="round"/><path d="M164 112 L168 101 L175 113" fill="#F7B8C8" '+SW(0,2.5)+'/><circle cx="178" cy="121" r="2" fill="#O"/><ellipse cx="170" cy="128" rx="3.5" ry="2" fill="#F28C9B"/>'),
+ SP('i_cell','wear','hand','Cell plushie','細胞公仔','4.1','<ellipse cx="166" cy="130" rx="21" ry="16" fill="#D5E8C8" '+SW()+'/><circle cx="174" cy="125" r="6" fill="#C9B6EA" '+SW(0,2)+'/><circle cx="157" cy="131" r="2" fill="#O"/><circle cx="166" cy="133" r="2" fill="#O"/><path d="M159 138 Q162 141 165 138" stroke="#O" stroke-width="1.5" fill="none"/>'),
+ SP('a_dna','wear','acc','DNA scarf','DNA 頸巾','4.2','<path d="M44 150 Q100 170 156 150 L158 162 Q100 184 42 162Z" fill="#C9B6EA" '+SW()+'/><path d="M58 158 Q68 150 78 164 Q88 176 100 164 Q112 152 122 166 Q132 176 142 158" stroke="#fff" stroke-width="2.5" fill="none"/><path d="M128 164 l6 22 l12 -2 l-4 -24Z" fill="#E4D6F3" '+SW()+'/>'),
+ SP('s_hearts','room','sticker','Twin hearts sticker','雙心貼紙','4.3','<svg viewBox="0 0 60 60"><path d="M22 50 C4 38 6 20 16 20 C20 20 22 24 22 24 C24 19 28 18 32 21 C40 27 36 40 22 50Z" fill="#F7A9B5" '+SW()+'/><path d="M42 30 C32 24 34 12 40 12 C42 12 43 15 43 15 C44 12 47 11 50 13 C55 17 52 26 42 30Z" fill="#FFD1DA" '+SW(0,2.5)+'/></svg>'),
+ SP('i_rattle','wear','hand','Baby rattle','嬰兒搖鈴','4.4','<path d="M160 156 L168 128" stroke="#F7A9B5" stroke-width="6" stroke-linecap="round"/><circle cx="170" cy="116" r="15" fill="#FFF1A8" '+SW()+'/><circle cx="164" cy="112" r="3" fill="#F7A9B5"/><circle cx="175" cy="120" r="3" fill="#A9D4EE"/><circle cx="174" cy="108" r="2.5" fill="#9BCB8E"/>'),
+ SP('p_frame','room','prop','Family photo frame','全家福相架','4.5','<svg viewBox="0 0 100 100"><path d="M50 78 L40 94 M50 78 L60 94" '+SW()+'/><rect x="14" y="16" width="72" height="62" rx="10" fill="#E6C49E" '+SW()+'/><rect x="22" y="24" width="56" height="46" rx="6" fill="#FFF8EC"/><circle cx="38" cy="52" r="11" fill="#fff" '+SW(0,2.5)+'/><circle cx="62" cy="52" r="11" fill="#FFD9E2" '+SW(0,2.5)+'/><circle cx="50" cy="62" r="7" fill="#FFE9A6" '+SW(0,2.5)+'/><circle cx="35" cy="51" r="1.5" fill="#O"/><circle cx="41" cy="51" r="1.5" fill="#O"/><circle cx="59" cy="51" r="1.5" fill="#O"/><circle cx="65" cy="51" r="1.5" fill="#O"/><path d="M46 34 C42 30 38 34 46 40 C54 34 50 30 46 34Z" fill="#F28C9B"/></svg>'),
+ SP('a_cherries','wear','acc','Twin cherry clip','雙生櫻桃髮夾','4.6','<path d="M134 62 Q140 72 134 82 M134 62 Q144 68 148 80" stroke="#6FA06A" stroke-width="2.5" fill="none"/><circle cx="134" cy="84" r="7" fill="#F2667E" '+SW(0,2.5)+'/><circle cx="148" cy="82" r="7" fill="#F2667E" '+SW(0,2.5)+'/><circle cx="132" cy="82" r="1.8" fill="#fff"/><circle cx="146" cy="80" r="1.8" fill="#fff"/><path d="M128 60 Q134 54 140 60 Q134 64 128 60Z" fill="#9BCB8E"/>'),
+ SP('i_pinwheel','wear','hand','Energy pinwheel','能量風車','5.1','<path d="M166 158 L166 110" stroke="#B98B64" stroke-width="4"/><g class="spin"><path d="M166 108 L166 84 L184 96Z" fill="#F7A9B5" '+SW(0,2.5)+'/><path d="M166 108 L190 108 L178 126Z" fill="#A9D4EE" '+SW(0,2.5)+'/><path d="M166 108 L166 132 L148 120Z" fill="#FFF1A8" '+SW(0,2.5)+'/><path d="M166 108 L142 108 L154 90Z" fill="#9BCB8E" '+SW(0,2.5)+'/></g><circle cx="166" cy="108" r="3" fill="#O"/>'),
+ SP('i_cocoa','wear','hand','Hot cocoa mug','熱朱古力杯','5.2','<path class="steam" d="M158 110 Q154 104 158 98 M168 110 Q164 104 168 98" stroke="#D9CFC6" stroke-width="2.5" fill="none" stroke-linecap="round"/><rect x="150" y="116" width="28" height="34" rx="7" fill="#F7A9B5" '+SW()+'/><path d="M178 124 Q190 126 186 138 Q182 142 177 140" '+SW()+' fill="none"/><ellipse cx="164" cy="119" rx="11" ry="3" fill="#B98B64"/><circle cx="160" cy="118" r="3" fill="#fff"/><circle cx="167" cy="117" r="3" fill="#fff"/><path d="M158 134 C156 130 160 128 162 131 C164 128 168 130 166 134 L162 138Z" fill="#fff"/>'),
+ SP('h_sunflower','wear','hat','Solar sunflower','太陽能向日葵','5.3',(function(){var s='';for(var i=0;i<8;i++){s+='<ellipse cx="132" cy="50" rx="6" ry="12" fill="#FBD46D" '+SW(0,2)+' transform="rotate('+(i*45)+' 132 62)"/>';}return s+'<circle cx="132" cy="62" r="9" fill="#B98B64" '+SW(0,2.5)+'/><circle cx="129" cy="60" r="1.5" fill="#O"/><circle cx="135" cy="60" r="1.5" fill="#O"/><path d="M129 65 Q132 67 135 65" stroke="#O" stroke-width="1.5" fill="none"/>';})()),
+ SP('s_atom','room','sticker','Atom sticker','原子貼紙','6.1','<svg viewBox="0 0 60 60"><ellipse cx="30" cy="30" rx="25" ry="9" fill="none" stroke="#8FC7E8" stroke-width="3"/><ellipse cx="30" cy="30" rx="25" ry="9" fill="none" stroke="#F7A9B5" stroke-width="3" transform="rotate(60 30 30)"/><ellipse cx="30" cy="30" rx="25" ry="9" fill="none" stroke="#9BCB8E" stroke-width="3" transform="rotate(-60 30 30)"/><circle cx="30" cy="30" r="6" fill="#FBD46D" '+SW(0,2.5)+'/></svg>'),
+ SP('p_crystal','room','prop','Solid crystal','固體水晶','6.2','<svg viewBox="0 0 100 100"><path d="M30 92 L70 92 L64 80 L36 80Z" fill="#C9B6EA" '+SW()+'/><path d="M40 80 L34 44 L50 18 L66 44 L60 80Z" fill="#E4D6F3" '+SW()+' stroke-linejoin="round"/><path d="M50 18 L50 80 M34 44 L66 44" stroke="#fff" stroke-width="2"/><path d="M78 28 l3 6 l6 3 l-6 3 l-3 6 l-3 -6 l-6 -3 l6 -3Z" fill="#FBD46D"/></svg>'),
+ SP('p_lemontea','room','prop','Lemon tea glass','檸檬茶','6.3','<svg viewBox="0 0 100 100"><path d="M40 12 L46 60" stroke="#F7A9B5" stroke-width="5" stroke-linecap="round"/><path d="M26 30 L74 30 L68 92 L32 92Z" fill="rgba(255,248,230,.9)" '+SW()+'/><path d="M29 46 L71 46 L68 89 L32 89Z" fill="#F2C88A"/><rect x="36" y="60" width="10" height="10" rx="2" fill="rgba(255,255,255,.85)"/><circle cx="62" cy="30" r="13" fill="#FFF1A8" '+SW()+'/><path d="M62 20 L62 40 M52 30 L72 30 M55 23 L69 37 M69 23 L55 37" stroke="#F2C14E" stroke-width="1.5"/></svg>'),
+ SP('i_thermo','wear','hand','Thermometer wand','溫度計魔杖','6.4','<g transform="rotate(20 166 128)"><rect x="160" y="90" width="12" height="52" rx="6" fill="#fff" '+SW()+'/><circle cx="166" cy="146" r="9" fill="#F2667E" '+SW()+'/><rect x="163.5" y="108" width="5" height="34" fill="#F2667E"/><path d="M172 100 L176 100 M172 110 L176 110 M172 120 L176 120" stroke="#O" stroke-width="2"/><path d="M158 84 l2 4 l4 1 l-4 2 l-2 4 l-2 -4 l-4 -2 l4 -1Z" fill="#FBD46D"/></g>'),
+ SP('i_bubbles','wear','hand','Bubble wand','泡泡棒','6.5','<path d="M156 158 L172 118" stroke="#C9B6EA" stroke-width="4" stroke-linecap="round"/><circle cx="176" cy="108" r="10" fill="rgba(255,255,255,.3)" stroke="#C9B6EA" stroke-width="4"/><circle class="spark" cx="190" cy="84" r="9" fill="rgba(169,212,238,.35)" stroke="#8FC7E8" stroke-width="2"/><circle cx="172" cy="72" r="6" fill="rgba(255,179,193,.35)" stroke="#F7A9B5" stroke-width="2"/><circle cx="196" cy="60" r="5" fill="rgba(251,212,109,.35)" stroke="#F2C14E" stroke-width="2"/>'),
+ SP('p_duck','room','prop','Floating rubber duck','浮浮橡皮鴨','6.6','<svg viewBox="0 0 100 100"><path d="M30 70 Q28 50 46 50 Q42 38 54 32 Q70 30 70 44 Q70 52 62 54 Q76 54 74 66 Q72 76 52 76 Q34 76 30 70Z" fill="#FBD46D" '+SW()+' stroke-linejoin="round"/><path d="M70 42 L82 44 L70 49Z" fill="#F2A65A" '+SW(0,2)+'/><circle cx="60" cy="40" r="2.5" fill="#O"/><ellipse cx="56" cy="47" rx="4" ry="2.5" fill="#FFB3C1"/><path d="M6 72 Q50 62 94 72 L88 94 L12 94Z" fill="rgba(169,212,238,.85)" '+SW()+'/><path d="M20 80 Q28 76 36 80 M58 82 Q66 78 74 82" stroke="#fff" stroke-width="2.5" fill="none"/></svg>')
+].forEach(function(it){ITEMS.push(it);});
+function isOwned(it){if(!it)return false;if(it.sec)return ((S.secs[it.sec]||{}).stars||0)>0;return !!S.owned[it.id];}
+function specialFor(sec){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].sec===sec)return ITEMS[i];return null;}
+function specialsOwned(){return ITEMS.filter(function(i){return i.sec&&isOwned(i);}).length;}
+function specialsTotal(){return ITEMS.filter(function(i){return i.sec;}).length;}
 function item(id){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id)return ITEMS[i];return null;}
 var SLOTS=['hat','glasses','acc','hand'];
 var FOODS=[
@@ -743,7 +1019,7 @@ var WALLS={
 };
 
 /* ---------- trophies ---------- */
-function ownedCount(cat){var n=0;ITEMS.forEach(function(it){if(it.cat===cat&&it.price>0&&S.owned[it.id])n++;});return n;}
+function ownedCount(cat){var n=0;ITEMS.forEach(function(it){if(it.cat===cat&&it.id!=='w0'&&isOwned(it))n++;});return n;}
 function petsCount(){return Object.keys(S.pets).length;}
 function maxStage(){var m=1;for(var k in S.pets)m=Math.max(m,S.pets[k].stage);return m;}
 function maxLevel(){var m=1;for(var k in S.pets)m=Math.max(m,petLevel(S.pets[k].xp));return m;}
@@ -762,12 +1038,15 @@ var TROPHIES=[
  {id:'fashion',e:'👒',en:'Fashionista',zh:'時尚達人',den:'Own 8 wardrobe items',dzh:'擁有 8 件衣飾',tier:2,f:function(){return [ownedCount('wear'),8];}},
  {id:'decor',e:'🏡',en:'Interior Designer',zh:'室內設計師',den:'Own 8 room decorations',dzh:'擁有 8 件房間裝飾',tier:2,f:function(){return [ownedCount('room'),8];}},
  {id:'pets3',e:'🐾',en:'Pet Pal',zh:'寵物好朋友',den:'Adopt 3 pets',dzh:'領養 3 隻寵物',tier:2,f:function(){return [petsCount(),3];}},
- {id:'pets6',e:'🏠',en:'Full Family',zh:'大家庭',den:'Adopt all 6 pets',dzh:'領養全部 6 隻寵物',tier:3,f:function(){return [petsCount(),6];}},
+ {id:'pets6',e:'🎉',en:'Pet Party',zh:'寵物派對',den:'Adopt 6 pets',dzh:'領養 6 隻寵物',tier:3,f:function(){return [petsCount(),6];}},
  {id:'evo',e:'✨',en:'Glow Up!',zh:'華麗進化！',den:'Evolve a pet',dzh:'令寵物進化',tier:2,f:function(){return [maxStage()-1,1];}},
  {id:'lv10',e:'🎓',en:'Science Scholar',zh:'科學學者',den:'Raise a pet to Level 10',dzh:'把寵物升到 10 級',tier:3,f:function(){return [maxLevel(),10];}},
  {id:'chap',e:'🏅',en:'Chapter Champion',zh:'單元冠軍',den:'Earn ★ in every part of a chapter',dzh:'在一個單元所有小節取得 ★',tier:2,f:function(){return [chapDone(),1];}},
- {id:'allstar',e:'🏆',en:'S1 Science Star',zh:'中一科學之星',den:'Get 3★ in all 20 sub-topics',dzh:'在全部 20 個小節取得 3★',tier:3,f:function(){return [threeStars(),20];}},
- {id:'match',e:'🃏',en:'Term Matcher',zh:'詞彙配對王',den:'Win 5 Term Match games',dzh:'贏 5 次詞彙配對',tier:1,f:function(){return [S.matchWins,5];}}
+ {id:'allstar',e:'🏆',en:'S1 Science Star',zh:'中一科學之星',den:'Get 3★ in every sub-topic',dzh:'在所有小節取得 3★',tier:3,f:function(){return [threeStars(),ALLSECS.length];}},
+ {id:'match',e:'🃏',en:'Term Matcher',zh:'詞彙配對王',den:'Win 5 Term Match games',dzh:'贏 5 次詞彙配對',tier:1,f:function(){return [S.matchWins,5];}},
+ {id:'pets12',e:'🏠',en:'Full Family',zh:'大家庭',den:'Adopt all 12 pets',dzh:'領養全部 12 隻寵物',tier:3,f:function(){return [petsCount(),PETS.length];}},
+ {id:'spec10',e:'🎀',en:'Treasure Hunter',zh:'尋寶獵人',den:'Unlock 10 special items',dzh:'解鎖 10 件特別物品',tier:2,f:function(){return [specialsOwned(),10];}},
+ {id:'specall',e:'👑',en:'Complete Collector',zh:'完美收藏家',den:'Unlock every special item',dzh:'解鎖所有特別物品',tier:3,f:function(){return [specialsOwned(),specialsTotal()];}}
 ];
 
 /* ---------- state ---------- */
@@ -794,11 +1073,11 @@ function fedBonus(){var p=curPet();return p.energy>=50&&p.happy>=50?1.2:1;}
 function markActive(){var t=today();if(S.lastDay===t)return;
  var gap=S.lastDay?dayNum(t)-dayNum(S.lastDay):99;var msg=null;
  if(gap===1)S.streak++;
- else if(gap>1&&gap<=1+S.shields&&S.streak>0){S.shields-=gap-1;S.streak++;msg=L('🛡️ Streak shield saved your streak!','🛡️ 連續護盾保住了你的連續紀錄！');}
+ else if(gap>1&&gap<=1+S.shields&&S.streak>0){S.shields-=gap-1;S.streak++;msg=L('🛡️ Your streak shield protected your streak!','🛡️ 連續護盾保住了你的連續紀錄！');}
  else S.streak=1;
- if(S.streak%7===0&&S.shields<2){S.shields++;msg=L('🛡️ +1 streak shield!','🛡️ 獲得 1 個連續護盾！');}
+ if(S.streak%7===0&&S.shields<2){S.shields++;msg=(msg?msg+'<br>':'')+L('🛡️ +1 streak shield earned!','🛡️ 獲得 1 個連續護盾！');}
  S.best=Math.max(S.best,S.streak);S.lastDay=t;S.days++;S.hist.push(t);if(S.hist.length>14)S.hist=S.hist.slice(-14);
- if(msg)setTimeout(function(){toast(msg);},900);
+ setTimeout(function(){streakPopup('up',msg);},1100);
  checkPetUnlocks();}
 
 /* ---------- rewards ---------- */
@@ -846,6 +1125,41 @@ function closeModal(){$('#ovroot').innerHTML='';stopStudyTimer();if(modal.onClos
 function confirmBox(title,body,yes,cb){modal('<div class="sheet-h"><h2>'+title+'</h2></div><p>'+body+'</p><div class="row" style="justify-content:flex-end"><button class="btn white" id="cNo">'+L('Cancel','取消')+'</button><button class="btn pink" id="cYes">'+yes+'</button></div>');
  $('#cNo').onclick=closeModal;$('#cYes').onclick=function(){$('#ovroot').innerHTML='';cb();render();};}
 
+
+/* ---------- cute pop-ups (streak + special items) ---------- */
+var popQ=[];
+function floaters(){var s='',sh=['<path d="M10 17 C0 10 2 2 7 2 C9 2 10 4 10 4 C11 2 13 1 15 2 C20 5 18 12 10 17Z" fill="#F7A9B5"/>','<path d="M10 0 L12.5 7 L20 7.5 L14 12 L16 20 L10 15.5 L4 20 L6 12 L0 7.5 L7.5 7Z" fill="#FBD46D"/>','<circle cx="10" cy="10" r="7" fill="#A9D4EE"/>'];
+ for(var i=0;i<10;i++)s+='<svg class="floater" viewBox="0 0 20 20" style="left:'+(5+i*9.5)+'%;width:'+(12+(i%3)*5)+'px;animation-delay:'+(i*0.33).toFixed(2)+'s">'+sh[i%3]+'</svg>';return s;}
+function popup(html,btn,onOk){popQ.push({h:html,b:btn,f:onOk});if(!$('#pop'))nextPop();}
+function nextPop(){var p=popQ.shift();if(!p)return;var r=$('#poproot');
+ r.innerHTML='<div class="pop-ov" id="pop"><div class="pop-card" role="alertdialog" aria-modal="true">'+floaters()+'<div class="pop-in">'+p.h+'<div class="row" style="justify-content:center;margin-top:14px"><button class="btn pink" id="popOk">'+(p.b||L('Yay!','好耶！'))+'</button></div></div></div></div>';
+ sfx('fanfare');$('#popOk').focus();
+ $('#popOk').onclick=function(){closePop();if(p.f){if(!popQ.length){$('#ovroot').innerHTML='';Q=null;stopStudyTimer();}p.f();}};$('#pop').onclick=function(e){if(e.target.id==='pop')closePop();};}
+function closePop(){$('#poproot').innerHTML='';setTimeout(nextPop,250);}
+function flameSVG(n){var big=n>=7;return '<svg class="flame" viewBox="0 0 80 96" aria-hidden="true"><path d="M40 4 C54 24 70 36 70 60 C70 80 56 92 40 92 C24 92 10 80 10 60 C10 44 20 36 26 24 C30 34 34 38 38 38 C36 26 36 14 40 4Z" fill="'+(big?'#F7A06B':'#FFB77A')+'" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M40 40 C48 52 56 58 56 70 C56 82 48 88 40 88 C32 88 24 82 24 70 C24 60 32 54 40 40Z" fill="#FFE9A6"/><circle cx="33" cy="68" r="3.5" fill="'+O+'"/><circle cx="47" cy="68" r="3.5" fill="'+O+'"/><path d="M35 76 Q40 81 45 76" stroke="'+O+'" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="27" cy="74" rx="4" ry="2.5" fill="#FFB3C1"/><ellipse cx="53" cy="74" rx="4" ry="2.5" fill="#FFB3C1"/></svg>';}
+var MILESTONES=[3,7,14,21,30,50,100];
+var STREAK_LINES=[['Tiny steps every day grow a big brain!','每日一小步，腦袋長大一大步！'],['Consistency beats cramming. You are proof!','持之以恆勝過臨急抱佛腳，你就是證明！'],['Your pet is doing a happy wiggle for you!','你的寵物正為你扭扭跳！'],['Same time tomorrow? I will be waiting 💕','明天同一時間見？我會等你 💕'],['Future-you just said thank you!','未來的你剛剛說了聲多謝！'],['Your flame is getting warmer and warmer!','你的小火焰越來越溫暖了！']];
+function streakPopup(kind,extra){var P=petDef(S.active),n=S.streak,pet='<div class="pop-pet">'+petSVG(S.active,kind==='broken'?'sad':'joy')+'</div>',h='';
+ if(kind==='up'){var next=MILESTONES.filter(function(m){return m>n;})[0]||n+1,prevM=0;MILESTONES.forEach(function(m){if(m<=n)prevM=m;});
+  var hit=MILESTONES.indexOf(n)>=0;var ln=pick(STREAK_LINES);
+  h='<div class="pop-flame">'+flameSVG(n)+'<span class="pop-num">'+n+'</span></div>'+pet+
+   '<h2>'+(n===1?L('Day 1 – a new streak begins! 🌱','第 1 日——新的連續紀錄開始了！🌱'):hit?L('WOW! '+n+'-day milestone! 🎉','嘩！達成 '+n+' 日里程碑！🎉'):L(n+'-day streak! 🔥',n+' 日連續溫習！🔥'))+'</h2>'+
+   '<p>'+esc(L(ln[0],ln[1]))+'</p>'+(extra?'<p><b>'+extra+'</b></p>':'')+
+   '<div class="pop-meter"><i style="width:'+Math.round((n-prevM)/(next-prevM)*100)+'%"></i></div><p class="muted" style="font-size:13px;margin:6px 0 0">'+L('Next milestone: ','下一個里程碑：')+next+L(' days',' 日')+' · '+L('rewards ×','獎勵 ×')+streakMult().toFixed(1)+'</p>';
+  if(hit)confetti();popup(h,L('Keep glowing ✨','繼續發光 ✨'));}
+ else if(kind==='remind'){var hrs=24-new Date().getHours();
+  h='<div class="pop-flame">'+flameSVG(n)+'<span class="pop-num">'+n+'</span></div>'+pet+'<h2>'+esc(LL(P))+L(' is guarding your streak!',' 正在守護你的連續紀錄！')+'</h2><p>'+L('Your <b>'+n+'-day</b> flame is waiting. Just <b>1 quiz or 1 study session</b> keeps it glowing today.','你的 <b>'+n+' 日</b>小火焰在等你。今日只要完成 <b>1 次測驗或 1 次溫習</b>就能讓它繼續發光。')+'</p>'+(hrs<=5?'<p><b>⏰ '+L('Only about '+hrs+' hours left today!','今日只剩大約 '+hrs+' 小時！')+'</b></p>':'');
+  popup(h,'📖 '+L('Let\'s study!','開始溫習！'),function(){curScreen='study';render();});}
+ else if(kind==='shield'){h='<div class="pop-flame">'+flameSVG(n)+'<span class="pop-num">🛡️</span></div>'+pet+'<h2>'+L('Your shield is ready!','你的護盾準備好了！')+'</h2><p>'+L('You missed a day, but a streak shield will protect your <b>'+n+'-day</b> streak if you study today.','你錯過了一天，但只要今日溫習，連續護盾就會保護你的 <b>'+n+' 日</b>紀錄。')+'</p>';
+  popup(h,'📖 '+L('Protect it!','保護它！'),function(){curScreen='study';render();});}
+ else if(kind==='broken'){h=pet+'<h2>'+L('Welcome back! I missed you 🥺','歡迎回來！我好掛住你 🥺')+'</h2><p>'+L('Every expert was once a beginner. Let\'s start a brand-new streak today – your best was <b>'+S.best+' days</b>. We can beat it!','每個專家都曾是初學者。今日開始新的連續紀錄吧——你的最佳紀錄是 <b>'+S.best+' 日</b>，我們可以打破它！')+'</p>';
+  popup(h,'🌱 '+L('Start again','重新出發'),function(){curScreen='study';render();});}}
+function openingPopup(){var t=today();if(!S.lastDay||S.lastDay===t||S.streak<1)return;var gap=dayNum(t)-dayNum(S.lastDay);
+ setTimeout(function(){if(gap===1)streakPopup('remind');else if(gap<=1+S.shields)streakPopup('shield');else streakPopup('broken');},700);}
+function specialPopup(it){var eq=null;if(it.cat==='wear'){eq={hat:null,glasses:null,acc:null,hand:null};eq[it.slot]=it.id;}
+ var h='<div class="pop-prize"><div class="rays"></div><div class="prize-pic">'+(eq?petSVG(S.active,'joy',{eq:eq}):itemPic(it))+'</div></div><div class="tag" style="background:var(--butter)">✿ '+L('Special item','特別物品')+' · '+it.sec+'</div><h2 style="margin-top:8px">'+esc(LL(it))+'</h2><p>'+L('You completed <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b>! This cute reward is yours forever.','你完成了 <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b>！這份可愛獎勵永遠屬於你。')+'</p>';
+ confetti();popup(h,it.slot==='sticker'?L('Stick it up!','貼上去！'):L('Use it now!','立即使用！'),function(){if(it.slot!=='sticker'){equip(it.id);}curScreen='home';render();});checkTrophies();}
+
 /* ---------- pet SVG ---------- */
 function moodOf(id){var p=S.pets[id];if(tempMood&&id===S.active)return tempMood;if(p.energy<25)return 'hungry';if(p.happy<25)return 'sad';if(p.energy<42)return 'sleepy';if(p.happy>=75&&p.energy>=60)return 'joy';return 'happy';}
 var tempMood=null,tempTimer=null;
@@ -855,20 +1169,32 @@ function ears(t,b){var s='';var st=' stroke="'+O+'" stroke-width="3.5"';
  else if(t==='bunny')s='<ellipse cx="76" cy="44" rx="13" ry="32" fill="'+b+'"'+st+' transform="rotate(-12 76 44)"/><ellipse cx="124" cy="44" rx="13" ry="32" fill="'+b+'"'+st+' transform="rotate(12 124 44)"/><ellipse cx="76" cy="46" rx="6" ry="22" fill="#FFB9C8" transform="rotate(-12 76 46)"/><ellipse cx="124" cy="46" rx="6" ry="22" fill="#FFB9C8" transform="rotate(12 124 46)"/>';
  else if(t==='cat')s='<path d="M50 96 L56 50 L90 70Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M150 96 L144 50 L110 70Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M58 84 L61 60 L80 72Z M142 84 L139 60 L120 72Z" fill="#F7C6D4"/>';
  else if(t==='frog')s='<circle cx="70" cy="70" r="17" fill="'+b+'"'+st+'/><circle cx="130" cy="70" r="17" fill="'+b+'"'+st+'/>';
+ else if(t==='hamster')s='<circle cx="64" cy="74" r="11" fill="'+b+'"'+st+'/><circle cx="136" cy="74" r="11" fill="'+b+'"'+st+'/><circle cx="64" cy="74" r="5" fill="#FFC6D2"/><circle cx="136" cy="74" r="5" fill="#FFC6D2"/>';
+ else if(t==='panda')s='<circle cx="60" cy="76" r="15" fill="#6E6362"'+st+'/><circle cx="140" cy="76" r="15" fill="#6E6362"'+st+'/>';
+ else if(t==='fox')s='<path d="M150 162 C196 164 204 118 182 96 C176 118 164 136 144 146Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M182 96 C196 110 198 128 192 140 C186 126 184 112 182 96Z" fill="#FFF4E8"/><path d="M52 98 L50 44 L92 68Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M148 98 L150 44 L108 68Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M60 86 L58 58 L80 72Z M140 86 L142 58 L120 72Z" fill="#FFF4E8"/>';
+ else if(t==='axolotl'){[[-30,34,90],[0,26,108],[30,34,126]].forEach(function(g){s+='<ellipse cx="'+g[1]+'" cy="'+g[2]+'" rx="15" ry="6" fill="#F58FB1"'+st+' transform="rotate('+g[0]+' '+g[1]+' '+g[2]+')"/><ellipse cx="'+(200-g[1])+'" cy="'+g[2]+'" rx="15" ry="6" fill="#F58FB1"'+st+' transform="rotate('+(-g[0])+' '+(200-g[1])+' '+g[2]+')"/>';});}
+ else if(t==='sheep')s='<ellipse cx="36" cy="104" rx="17" ry="8" fill="#F1DCC0"'+st+' transform="rotate(20 36 104)"/><ellipse cx="164" cy="104" rx="17" ry="8" fill="#F1DCC0"'+st+' transform="rotate(-20 164 104)"/>';
  else if(t==='tuft')s='<path d="M100 64 C94 48 98 40 104 38 C102 46 104 54 100 64Z M100 64 C108 50 116 48 120 50 C112 54 106 60 100 64Z" fill="#F7D476"'+st+' stroke-linejoin="round"/>';
+ return s;}
+function frontFeat(t){var s='';
+ if(t==='hamster')s='<ellipse cx="100" cy="76" rx="9" ry="10" fill="#E3AE6C" opacity=".8"/>';
+ else if(t==='panda')s='<ellipse cx="80" cy="118" rx="13" ry="14" fill="#8A7E7C" transform="rotate(-20 80 118)"/><ellipse cx="120" cy="118" rx="13" ry="14" fill="#8A7E7C" transform="rotate(20 120 118)"/>';
+ else if(t==='penguin')s='<ellipse cx="100" cy="126" rx="54" ry="46" fill="#fff"/>';
+ else if(t==='sheep'){[60,74,88,100,112,126,140].forEach(function(x,i){s+='<circle cx="'+x+'" cy="'+(i%2?70:76)+'" r="14" fill="#fff" stroke="'+O+'" stroke-width="3"/>';});}
  return s;}
 function petSVG(id,mood,opts){opts=opts||{};var P=petDef(id),p=S.pets[id]||newPet(),b=P.body,st=opts.stage||p.stage,eq=opts.eq||p.eq;
  var s='<svg class="pet" viewBox="-10 0 220 200" role="img" aria-label="'+esc(LL(P))+'"><g class="bob">';
  if(st>=3){s+='<circle cx="100" cy="118" r="86" fill="#FFF1C5" opacity=".75"/><circle cx="100" cy="118" r="86" fill="none" stroke="#FBD46D" stroke-width="3" stroke-dasharray="4 10"/>';}
  s+='<ellipse cx="100" cy="182" rx="56" ry="8" fill="rgba(91,75,73,.12)"/>';
  s+=ears(P.ears,b);
- s+='<ellipse cx="76" cy="176" rx="14" ry="8" fill="'+b+'" stroke="'+O+'" stroke-width="3.5"/><ellipse cx="124" cy="176" rx="14" ry="8" fill="'+b+'" stroke="'+O+'" stroke-width="3.5"/>';
+ var ft=P.feet||b;s+='<ellipse cx="76" cy="176" rx="14" ry="8" fill="'+ft+'" stroke="'+O+'" stroke-width="3.5"/><ellipse cx="124" cy="176" rx="14" ry="8" fill="'+ft+'" stroke="'+O+'" stroke-width="3.5"/>';
  var sc=st===1?1:st===2?1.04:1.08;
  s+='<g transform="translate(100 176) scale('+sc+') translate(-100 -176)">';
  s+='<path d="M100 62 C148 62 170 98 170 130 C170 164 140 178 100 178 C60 178 30 164 30 130 C30 98 52 62 100 62Z" fill="'+b+'" stroke="'+O+'" stroke-width="3.5"/>';
  s+='<ellipse cx="100" cy="152" rx="36" ry="20" fill="'+P.belly+'"/>';
  if(P.ears==='frog')s+='<circle cx="70" cy="70" r="7" fill="#fff"/><circle cx="130" cy="70" r="7" fill="#fff"/>';
- if(P.ears==='seal')s+='<path d="M34 148 Q18 160 22 170 Q34 168 44 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/><path d="M166 148 Q182 160 178 170 Q166 168 156 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/>';
+ s+=frontFeat(P.ears);
+ if(P.ears==='seal'||P.ears==='penguin')s+='<path d="M34 148 Q18 160 22 170 Q34 168 44 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/><path d="M166 148 Q182 160 178 170 Q166 168 156 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/>';
  else s+='<ellipse cx="40" cy="140" rx="9" ry="13" fill="'+b+'" stroke="'+O+'" stroke-width="3" transform="rotate(25 40 140)"/><ellipse cx="160" cy="140" rx="9" ry="13" fill="'+b+'" stroke="'+O+'" stroke-width="3" transform="rotate(-25 160 140)"/>';
  // cheeks
  s+='<ellipse cx="64" cy="132" rx="11" ry="6.5" fill="#FFB3C1" opacity=".75"/><ellipse cx="136" cy="132" rx="11" ry="6.5" fill="#FFB3C1" opacity=".75"/>';
@@ -912,7 +1238,7 @@ var LINES={
 function line(m){var l=pick(LINES[m]||LINES.happy);return L(l[0],l[1]);}
 
 /* ---------- screens ---------- */
-var curScreen='home',shopTab='food',colTab='pets',bubble=null;
+var curScreen='home',shopTab='food',colTab='pets',bubble=null,bubblePet='mochi';
 function render(){var a=$('#app');if(!S.started){a.innerHTML=welcomeHTML();bindWelcome();return;}
  decay();
  var mCount=Object.keys(S.mistakes).length;
@@ -937,8 +1263,8 @@ function bindCommon(){
  document.querySelectorAll('[data-nav]').forEach(function(b){b.onclick=function(){curScreen=b.dataset.nav;sfx('tap');render();window.scrollTo(0,0);};});}
 
 /* HOME */
-function roomHTML(){var p=curPet(),m=moodOf(S.active);var sk=ITEMS.filter(function(i){return i.slot==='sticker'&&S.owned[i.id];});
- var pos=[[6,8],[36,6],[8,34],[62,32],[40,30],[20,20],[52,16],[70,50]];
+function roomHTML(){if(bubblePet!==S.active){bubble=null;bubblePet=S.active;}var p=curPet(),m=moodOf(S.active);var sk=ITEMS.filter(function(i){return i.slot==='sticker'&&isOwned(i);});
+ var pos=[[6,8],[36,6],[8,34],[62,32],[40,30],[20,20],[52,16],[70,50],[4,52],[26,44],[48,4],[86,54],[14,2],[60,50]];
  var sh='';sk.forEach(function(it,i){if(i<pos.length)sh+='<div class="stk" style="left:'+pos[i][0]+'%;top:'+pos[i][1]+'%">'+it.svg()+'</div>';});
  var prop=S.room.prop?item(S.room.prop):null;
  return '<div class="room"><div class="wall" style="background:'+WALLS[S.room.wall||'w0']+'"></div><div class="window">'+winSVG()+'</div>'+sh+'<div class="floor"></div>'+(prop?'<div class="prop">'+prop.svg()+'</div>':'')+
@@ -971,7 +1297,9 @@ function nextStepCard(){var mc=Object.keys(S.mistakes).length;var s=null;
 function chapIcon(k){var m={flask:'<path d="M22 6 L34 6 L34 18 L46 42 Q48 48 42 48 L14 48 Q8 48 10 42 L22 18Z" fill="#FFE5EC" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M13 36 L43 36 L46 44 L10 44Z" fill="#F7A9B5"/>',
  drop:'<path d="M28 6 C40 22 46 30 42 40 Q28 54 14 40 C10 30 16 22 28 6Z" fill="#A9D4EE" stroke="'+O+'" stroke-width="3"/>',
  leaf:'<path d="M8 46 C6 18 28 6 48 6 C48 32 34 48 8 46Z" fill="#9BCB8E" stroke="'+O+'" stroke-width="3"/><path d="M10 44 L36 18" stroke="'+O+'" stroke-width="2.5"/>',
- cell:'<ellipse cx="28" cy="28" rx="22" ry="18" fill="#E4D6F3" stroke="'+O+'" stroke-width="3"/><circle cx="32" cy="26" r="7" fill="#C9B6EA" stroke="'+O+'" stroke-width="2.5"/>'};
+ cell:'<ellipse cx="28" cy="28" rx="22" ry="18" fill="#E4D6F3" stroke="'+O+'" stroke-width="3"/><circle cx="32" cy="26" r="7" fill="#C9B6EA" stroke="'+O+'" stroke-width="2.5"/>',
+ bolt:'<path d="M32 4 L12 32 L26 32 L22 52 L44 22 L30 22Z" fill="#FFF1A8" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/>',
+ atom:'<ellipse cx="28" cy="28" rx="23" ry="8" fill="none" stroke="#8FC7E8" stroke-width="3"/><ellipse cx="28" cy="28" rx="23" ry="8" fill="none" stroke="#F7A9B5" stroke-width="3" transform="rotate(60 28 28)"/><ellipse cx="28" cy="28" rx="23" ry="8" fill="none" stroke="#9BCB8E" stroke-width="3" transform="rotate(-60 28 28)"/><circle cx="28" cy="28" r="5" fill="#FBD46D" stroke="'+O+'" stroke-width="2.5"/>'};
  return '<svg viewBox="0 0 56 56" width="40" height="40" aria-hidden="true">'+m[k]+'</svg>';}
 function mastered(sec){var n=0;sec.qs.forEach(function(q,i){if(S.q[sec.id+'#'+i]===1)n++;});return n;}
 function studyHTML(){var h='<h1 class="h-sec">📚 '+L('Study by topic','按課題溫習')+'</h1><p class="muted" style="margin-top:-4px">'+L('Each sub-topic: read the notes 📖 (your pet studies with you), then take a 5-question quiz ✏️ that climbs from Remember to Create.','每個小節：先讀筆記 📖（寵物陪你溫），再做 5 題由「記憶」到「創造」的測驗 ✏️。')+'</p><div class="grid">';
@@ -1040,7 +1368,7 @@ function answer(i){if(Q.answered)return;Q.answered=true;var qid=Q.ids[Q.i],q=qBy
  nb.scrollIntoView({block:'nearest',behavior:'smooth'});save();}
 function finishQuiz(){var n=Q.res.filter(Boolean).length,tot=Q.res.length,p=curPet(),html;
  if(Q.mode==='quiz'){var sec=secById(Q.sec),r=S.secs[Q.sec]||{stars:0,best:0,plays:0},st=n===5?3:n===4?2:n===3?1:0;
-  r.plays++;r.best=Math.max(r.best,n);var newStar=st>r.stars;r.stars=Math.max(r.stars,st);S.secs[Q.sec]=r;S.quizzes++;if(n===5)S.perfect++;
+  var wasNone=!(r.stars>0);r.plays++;r.best=Math.max(r.best,n);var newStar=st>r.stars;r.stars=Math.max(r.stars,st);S.secs[Q.sec]=r;S.quizzes++;if(n===5)S.perfect++;
   p.energy=clamp(p.energy-8,5,100);p.happy=clamp(p.happy+(n>=3?6:-2),5,100);markActive();checkPetUnlocks();
   var g=gain(n*5+(n===5?10:0),n*10);
   var mood=n>=4?'joy':n>=2?'happy':'sad';
@@ -1048,7 +1376,7 @@ function finishQuiz(){var n=Q.res.filter(Boolean).length,tot=Q.res.length,p=curP
   html='<div class="empty"><div style="width:150px;margin:0 auto">'+petSVG(S.active,mood)+'</div><h2>'+n+' / '+tot+'</h2><div style="font-size:26px">'+stars(st)+'</div>'+(newStar?'<p><b>'+L('New best stars!','新的最佳星數！')+'</b></p>':'')+
   '<p>+'+g.c+' 🪙 · +'+g.x+' XP'+(g.m>1?' <span class="tag">×'+g.m.toFixed(2)+'</span>':'')+'</p><p class="muted">'+cheer+'</p><div class="row" style="justify-content:center">'+
   '<button class="btn" id="again">🔁 '+L('Another round','再來一次')+'</button>'+(n<5?'<button class="btn green" id="notes">📖 '+L('Notes','筆記')+'</button>':'')+'<button class="btn white" id="home">🏠 '+L('Room','小窩')+'</button></div></div>';
-  var sid=Q.sec;Q=null;modal(html);sfx(n>=4?'fanfare':'coin');if(n===5)confetti();
+  var sid=Q.sec;Q=null;modal(html);if(wasNone&&st>0){var spi=specialFor(sid);if(spi)setTimeout(function(){specialPopup(spi);},900);}sfx(n>=4?'fanfare':'coin');if(n===5)confetti();
   $('#again').onclick=function(){$('#ovroot').innerHTML='';startQuiz(sid,'quiz');};if($('#notes'))$('#notes').onclick=function(){$('#ovroot').innerHTML='';openStudy(sid);};
   $('#home').onclick=function(){curScreen='home';closeModal();};}
  else{S.quizzes+=0;markActive();var left=Object.keys(S.mistakes).length;p.happy=clamp(p.happy+4,5,100);checkTrophies();checkPetUnlocks();
@@ -1076,8 +1404,9 @@ function shopHTML(){var tabs=[['food','🍙 '+L('Snacks','小食')],['wear','�
  if(shopTab==='food')FOODS.forEach(function(f){h+='<div class="item"><div class="pic" style="font-size:54px">'+f.e+'</div><div class="nm">'+esc(LL(f))+'</div><div class="sub">⚡+'+f.en2+(f.hp?' 💗+'+f.hp:'')+' · '+L('Have ','持有 ')+(S.food[f.id]||0)+'</div><button class="btn small" data-buyfood="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>🪙 '+f.price+'</button></div>';});
  else if(shopTab==='pets')PETS.forEach(function(P){var has=!!S.pets[P.id];h+='<div class="item">'+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">'+esc(L(P.desc[0],P.desc[1]))+'</div>'+
   (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')</div><button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>')+'</div>';});
- else ITEMS.filter(function(it){return it.cat===shopTab&&it.price>0;}).forEach(function(it){var has=!!S.owned[it.id];h+='<div class="item">'+(has?'<span class="own">✓</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+esc(LL(it))+'</div><div class="sub">'+slotName(it.slot)+'</div>'+
-  (has?equipBtn(it):'<button class="btn small" data-buy="'+it.id+'"'+(S.coins<it.price?' disabled':'')+'>🪙 '+it.price+'</button>')+'</div>';});
+ else ITEMS.filter(function(it){return it.cat===shopTab&&it.id!=='w0';}).sort(function(a,b){return (a.sec?1:0)-(b.sec?1:0);}).forEach(function(it){var has=isOwned(it);h+='<div class="item'+(it.sec?' special':'')+(it.sec&&!has?' locked':'')+'">'+(has?'<span class="own">✓</span>':'')+(it.sec?'<span class="spec">✿ '+it.sec+'</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+esc(LL(it))+'</div><div class="sub">'+slotName(it.slot)+'</div>'+
+  (has?equipBtn(it):it.sec?'<div class="sub">🔒 '+L('Score 3/5+ in the ','在 ')+it.sec+L(' quiz',' 測驗取得 3/5 或以上')+'</div>':'<button class="btn small" data-buy="'+it.id+'"'+(S.coins<it.price?' disabled':'')+'>🪙 '+it.price+'</button>')+'</div>';});
+ if(shopTab==='wear'||shopTab==='room')h='<p class="muted" style="margin:10px 0 0">✿ '+L('Special items unlock free when you complete each sub-topic quiz.','完成每個小節的測驗，即可免費解鎖特別物品。')+' ('+specialsOwned()+'/'+specialsTotal()+')</p>'+h;
  return h+'</div>';}
 function slotName(s){return {hat:L('Hat','帽子'),glasses:L('Glasses','眼鏡'),acc:L('Accessory','配飾'),hand:L('Handheld','手持物'),wall:L('Wallpaper','牆紙'),prop:L('Desk prop','桌面擺設'),sticker:L('Sticker','貼紙')}[s];}
 function itemPic(it){if(it.slot==='wall')return '<div style="width:100%;height:100%;background:'+WALLS[it.id]+'"></div>';
@@ -1085,16 +1414,16 @@ function itemPic(it){if(it.slot==='wall')return '<div style="width:100%;height:1
  var eq={hat:null,glasses:null,acc:null,hand:null};eq[it.slot]=it.id;return petSVG('mochi','happy',{stage:1,eq:eq});}
 function equipBtn(it){var on;if(it.cat==='wear')on=curPet().eq[it.slot]===it.id;else if(it.slot==='wall')on=S.room.wall===it.id;else if(it.slot==='prop')on=S.room.prop===it.id;else return '<span class="tag">'+L('On the wall','已貼上')+'</span>';
  return '<button class="btn small '+(on?'green':'white')+'" data-equip="'+it.id+'">'+(on?L('Wearing ✓','使用中 ✓'):L('Use','使用'))+'</button>';}
-function equip(id){var it=item(id);if(it.cat==='wear'){var p=curPet();p.eq[it.slot]=p.eq[it.slot]===id?null:id;}else if(it.slot==='wall')S.room.wall=id;else if(it.slot==='prop')S.room.prop=S.room.prop===id?null:id;sfx('boing');save();}
+function equip(id){var it=item(id);if(!isOwned(it))return;if(it.cat==='wear'){var p=curPet();p.eq[it.slot]=p.eq[it.slot]===id?null:id;}else if(it.slot==='wall')S.room.wall=id;else if(it.slot==='prop')S.room.prop=S.room.prop===id?null:id;sfx('boing');save();}
 
 /* COLLECTION */
 function colHTML(){var tabs=[['pets','🐾 '+L('Pets','寵物')],['trophies','🏆 '+L('Trophies','獎盃')],['closet','👗 '+L('Closet','衣櫥')],['decor','🖼️ '+L('Decor','裝飾')]];
  var got=Object.keys(S.trophies).length;
- var h='<h1 class="h-sec">🏆 '+L('Collection','收藏館')+'</h1><div class="card row" style="justify-content:space-around;text-align:center"><div><b style="font-size:22px">'+petsCount()+'/6</b><div class="muted" style="font-size:12px">'+L('Pets','寵物')+'</div></div><div><b style="font-size:22px">'+got+'/'+TROPHIES.length+'</b><div class="muted" style="font-size:12px">'+L('Trophies','獎盃')+'</div></div><div><b style="font-size:22px">'+(ownedCount('wear')+ownedCount('room'))+'/'+ITEMS.filter(function(i){return i.price>0;}).length+'</b><div class="muted" style="font-size:12px">'+L('Items','物品')+'</div></div><div><b style="font-size:22px">'+threeStars()+'/20</b><div class="muted" style="font-size:12px">3★</div></div></div>'+
+ var h='<h1 class="h-sec">🏆 '+L('Collection','收藏館')+'</h1><div class="card row" style="justify-content:space-around;text-align:center"><div><b style="font-size:22px">'+petsCount()+'/'+PETS.length+'</b><div class="muted" style="font-size:12px">'+L('Pets','寵物')+'</div></div><div><b style="font-size:22px">'+got+'/'+TROPHIES.length+'</b><div class="muted" style="font-size:12px">'+L('Trophies','獎盃')+'</div></div><div><b style="font-size:22px">'+(ownedCount('wear')+ownedCount('room'))+'/'+ITEMS.filter(function(i){return i.id!=='w0';}).length+'</b><div class="muted" style="font-size:12px">'+L('Items','物品')+'</div></div><div><b style="font-size:22px">'+threeStars()+'/'+ALLSECS.length+'</b><div class="muted" style="font-size:12px">3★</div></div></div>'+
  '<div class="tabs" role="tablist" style="margin-top:14px">'+tabs.map(function(t){return '<button role="tab" data-col="'+t[0]+'" aria-selected="'+(colTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div><div class="items">';
  if(colTab==='pets')PETS.forEach(function(P){var p=S.pets[P.id];h+='<div class="item'+(p?'':' locked')+'"><div class="pic">'+petSVG(P.id,p?'joy':'sleepy',p?{}:{stage:1,eq:{}})+'</div><div class="nm">'+(p?esc(LL(P)):'???')+'</div><div class="sub">'+(p?'Lv '+petLevel(p.xp)+' · '+L(STAGE[p.stage][0],STAGE[p.stage][1]):'🔒')+'</div></div>';});
  else if(colTab==='trophies')TROPHIES.forEach(function(t){var v=t.f(),has=!!S.trophies[t.id],pc=Math.min(100,v[0]/v[1]*100);h+='<div class="item trophy'+(has?'':' locked')+'"><div class="pic">'+cupSVG(t)+'</div><div class="nm">'+esc(LL(t))+'</div><div class="sub">'+esc(L(t.den,t.dzh))+'</div><div class="prog" style="width:100%"><i style="width:'+pc+'%;background:'+(has?'var(--gold)':'var(--good)')+'"></i></div><div class="sub">'+(has?'✓ '+S.trophies[t.id]:Math.min(v[0],v[1])+'/'+v[1])+'</div></div>';});
- else ITEMS.filter(function(i){return (colTab==='closet'?i.cat==='wear':i.cat==='room')&&i.price>0;}).forEach(function(it){var has=!!S.owned[it.id];h+='<div class="item'+(has?'':' locked')+'"><div class="pic">'+itemPic(it)+'</div><div class="nm">'+(has?esc(LL(it)):'???')+'</div><div class="sub">'+slotName(it.slot)+'</div></div>';});
+ else ITEMS.filter(function(i){return (colTab==='closet'?i.cat==='wear':i.cat==='room')&&i.id!=='w0';}).forEach(function(it){var has=isOwned(it);h+='<div class="item'+(it.sec?' special':'')+(has?'':' locked')+'">'+(it.sec?'<span class="spec">✿ '+it.sec+'</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+(has?esc(LL(it)):'???')+'</div><div class="sub">'+slotName(it.slot)+'</div></div>';});
  return h+'</div>';}
 function cupSVG(t){var col=t.tier===3?'#FBD46D':t.tier===2?'#D9DEE6':'#E8B98C';
  return '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M30 18 L70 18 L66 50 Q50 64 34 50Z" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><path d="M30 24 Q14 24 18 38 Q22 46 32 44 M70 24 Q86 24 82 38 Q78 46 68 44" fill="none" stroke="'+O+'" stroke-width="3"/><rect x="44" y="58" width="12" height="12" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><rect x="32" y="70" width="36" height="12" rx="4" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><text x="50" y="44" text-anchor="middle" font-size="18">'+t.e+'</text></svg>';}
@@ -1108,9 +1437,9 @@ function openFeed(){var p=curPet();var h='<div class="sheet-h"><h2>🍙 '+L('Fee
   if(p.energy>=100&&!f.hp){toast(L('Too full! Maybe later 😊','太飽了！遲啲再食 😊'));if(b.dataset.eat)S.food[id]++;else S.coins+=f.price;return;}
   p.energy=clamp(p.energy+f.en2,5,100);p.happy=clamp(p.happy+f.hp+2,5,100);sfx('eat');setTempMood('joy',2500);bubble=pick([L('Yum yum! Thank you!','好好味！多謝你！'),L('Energy recharged ⚡','能量充滿 ⚡'),L('Now I can study more!','而家可以溫更多書！')]);save();closeModal();};});}
 function openDress(){var p=curPet();var h='<div class="sheet-h"><h2>👒 '+L('Dress up','換裝')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><div style="width:170px;margin:0 auto">'+petSVG(S.active,'joy')+'</div>';
- SLOTS.forEach(function(sl){var own=ITEMS.filter(function(i){return i.slot===sl&&S.owned[i.id];});h+='<h3 style="font-size:15px;margin:12px 0 6px">'+slotName(sl)+'</h3><div class="row">';
+ SLOTS.forEach(function(sl){var own=ITEMS.filter(function(i){return i.slot===sl&&isOwned(i);});h+='<h3 style="font-size:15px;margin:12px 0 6px">'+slotName(sl)+'</h3><div class="row">';
   h+='<button class="btn small '+(!p.eq[sl]?'green':'white')+'" data-unq="'+sl+'">'+L('None','無')+'</button>';
-  own.forEach(function(it){h+='<button class="btn small '+(p.eq[sl]===it.id?'green':'white')+'" data-wear="'+it.id+'">'+esc(LL(it))+'</button>';});
+  own.forEach(function(it){h+='<button class="btn small '+(p.eq[sl]===it.id?'green':'white')+'" data-wear="'+it.id+'">'+(it.sec?'✿ ':'')+esc(LL(it))+'</button>';});
   if(!own.length)h+='<span class="muted" style="font-size:13px">'+L('Buy items in the Shop','到商店購買')+'</span>';h+='</div>';});
  modal(h+'<div class="row" style="margin-top:16px"><button class="btn" id="goShop">🛍️ '+L('Wardrobe shop','衣櫃商店')+'</button></div>');$('#xClose').onclick=closeModal;
  document.querySelectorAll('[data-wear]').forEach(function(b){b.onclick=function(){equip(b.dataset.wear);openDress();};});
@@ -1141,11 +1470,11 @@ function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(f
 var B32='0123456789ABCDEFGHJKMNPQRSTVWXYZ',EPOCH=dayNum('2025-01-01');
 function wearIds(){return ITEMS.filter(function(i){return i.price>0;}).map(function(i){return i.id;});}
 function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.round(v),Math.pow(2,n)-1));for(var i=n-1;i>=0;i--)bits.push((v>>i)&1);}
- w(1,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),3);
+ w(2,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),4);
  PETS.forEach(function(P){var p=S.pets[P.id];w(p?1:0,1);w(p?p.stage:0,2);w(p?p.xp/5:0,12);});
  var ids=wearIds();ids.forEach(function(id){w(S.owned[id]?1:0,1);});
- var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,6);});
- w(['w0','w1','w2','w3','w4','w5'].indexOf(S.room.wall),3);w(S.room.prop?eqItems.indexOf(S.room.prop)+1:0,6);
+ var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,7);});
+ w(['w0','w1','w2','w3','w4','w5'].indexOf(S.room.wall),3);w(S.room.prop?eqItems.indexOf(S.room.prop)+1:0,7);
  w(S.streak,9);w(S.best,9);w(S.shields,2);w(S.lastDay?dayNum(S.lastDay)-EPOCH:0,13);w(S.days,10);w(S.quizzes,11);w(S.perfect,9);w(S.cleared,10);w(S.studies,10);w(S.matchWins,8);
  ALLSECS.forEach(function(s){w((S.secs[s.id]||{}).stars||0,2);});
  TROPHIES.forEach(function(t){w(S.trophies[t.id]?1:0,1);});
@@ -1155,17 +1484,17 @@ function scramble(bits){var x=0x5EED1;for(var i=0;i<bits.length;i++){x=(x*110351
 function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1');var bits=[];
  for(var i=0;i<code.length;i++){var v=B32.indexOf(code[i]);if(v<0)return null;for(var k=4;k>=0;k--)bits.push((v>>k)&1);}
  scramble(bits);var pos=0;function r(n){var v=0;for(var i=0;i<n;i++){if(pos>=bits.length)throw 0;v=v*2+bits[pos++];}return v;}
- try{var o={};if(r(4)!==1)return null;o.coins=r(16);o.active=r(3);o.pets={};PETS.forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
-  o.owned={};wearIds().forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(6);o.eq[sl]=v?eqItems[v-1]:null;});
-  o.wall=['w0','w1','w2','w3','w4','w5'][r(3)]||'w0';var pv=r(6);o.prop=pv?eqItems[pv-1]:null;
+ try{var o={};var ver=r(4);if(ver!==1&&ver!==2)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:4);o.pets={};PETS.slice(0,v1?6:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
+  o.owned={};wearIds().forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
+  o.wall=['w0','w1','w2','w3','w4','w5'][r(3)]||'w0';var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
   o.streak=r(9);o.best=r(9);o.shields=r(2);var ld=r(13);o.lastDay=ld?fromDayNum(ld+EPOCH):null;o.days=r(10);o.quizzes=r(11);o.perfect=r(9);o.cleared=r(10);o.studies=r(10);o.matchWins=r(8);
-  o.stars={};ALLSECS.forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.forEach(function(t){if(r(1))o.tro[t.id]=1;});
+  o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
   var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
   if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
 function applyCode(o){var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
  S.coins=o.coins;S.pets={};PETS.forEach(function(P,i){if(o.pets[P.id]){var p=newPet();p.stage=o.pets[P.id].st;p.xp=o.pets[P.id].xp;S.pets[P.id]=p;}});
  S.active=PETS[o.active]&&S.pets[PETS[o.active].id]?PETS[o.active].id:Object.keys(S.pets)[0];S.pets[S.active].eq=o.eq;
- S.owned=o.owned;S.owned.w0=1;S.room={wall:o.wall,prop:o.prop};['streak','best','shields','lastDay','days','quizzes','perfect','cleared','studies','matchWins'].forEach(function(k){S[k]=o[k];});
+ S.owned=o.owned;S.owned.w0=1;if(!S.pets[S.active])S.active=Object.keys(S.pets)[0];S.room={wall:o.wall,prop:o.prop};['streak','best','shields','lastDay','days','quizzes','perfect','cleared','studies','matchWins'].forEach(function(k){S[k]=o[k];});
  ALLSECS.forEach(function(s){if(o.stars[s.id])S.secs[s.id]={stars:o.stars[s.id],best:o.stars[s.id]+2,plays:1};});
  for(var t in o.tro)S.trophies[t]=today();if(S.lastDay)S.hist=[S.lastDay];save();}
 function openSave(){var code=packState();var grouped=code.match(/.{1,5}/g).join('-');var link=location.href.split('#')[0]+'#'+code;
@@ -1182,7 +1511,7 @@ function openSave(){var code=packState();var grouped=code.match(/.{1,5}/g).join(
 function previewCode(v){var o=unpack(v);var pv=$('#prev');if(!pv)return;
  if(!o){pv.innerHTML='<p style="color:#B4475A;font-weight:700">⚠️ '+L('That code doesn\'t look right. Check for missing letters and try again.','存檔碼好像不正確，請檢查有否漏字再試。')+'</p>';sfx('wrong');return;}
  var st=0;for(var k in o.stars)st+=o.stars[k];
- pv.innerHTML='<div class="card" style="margin-top:10px"><b>'+L('This code contains:','此存檔碼包含：')+'</b><ul style="margin:6px 0;padding-left:20px"><li>🐾 '+Object.keys(o.pets).map(function(id){return LL(petDef(id))+' Lv'+petLevel(o.pets[id].xp);}).join(', ')+'</li><li>🪙 '+o.coins+' · 🔥 '+o.streak+' ('+L('best ','最佳 ')+o.best+')</li><li>★ '+st+'/60 · 🏆 '+Object.keys(o.tro).length+' · 🎁 '+Object.keys(o.owned).length+' '+L('items','件物品')+'</li></ul><p class="muted" style="font-size:13px">'+L('Loading replaces the progress on this device.','載入後會取代此裝置上的進度。')+'</p><button class="btn pink" id="doLoad">📥 '+L('Load this save','載入此存檔')+'</button></div>';
+ var totS=Object.keys(o.stars).length*3;pv.innerHTML='<div class="card" style="margin-top:10px"><b>'+L('This code contains:','此存檔碼包含：')+'</b><ul style="margin:6px 0;padding-left:20px"><li>🐾 '+Object.keys(o.pets).map(function(id){return LL(petDef(id))+' Lv'+petLevel(o.pets[id].xp);}).join(', ')+'</li><li>🪙 '+o.coins+' · 🔥 '+o.streak+' ('+L('best ','最佳 ')+o.best+')</li><li>★ '+st+'/'+totS+' · 🏆 '+Object.keys(o.tro).length+' · 🎁 '+Object.keys(o.owned).length+' '+L('items','件物品')+'</li></ul><p class="muted" style="font-size:13px">'+L('Loading replaces the progress on this device.','載入後會取代此裝置上的進度。')+'</p><button class="btn pink" id="doLoad">📥 '+L('Load this save','載入此存檔')+'</button></div>';
  $('#doLoad').onclick=function(){applyCode(o);sfx('fanfare');toast(L('Save loaded! Welcome back ✿','已載入存檔！歡迎回來 ✿'));curScreen='home';closeModal();};}
 
 /* WELCOME */
@@ -1195,7 +1524,7 @@ function welcomeHTML(){var saved=load();
  '<p class="foot">'+L('Original characters inspired by cosy Japanese kawaii art. Not affiliated with any brand.','原創角色，靈感來自日系療癒可愛風，與任何品牌無關。')+'</p></div></div>';}
 function bindWelcome(){document.querySelectorAll('[data-lang]').forEach(function(b){b.onclick=function(){S.lang=b.dataset.lang;var sv=load();if(sv){sv.lang=S.lang;try{localStorage.setItem(KEY,JSON.stringify(sv));}catch(e){}}render();};});
  var st=$('#wStart');if(st)st.onclick=function(){S.started=true;S.lastTick=Date.now();ac();sfx('fanfare');bubble=L('Hi! I\'m Mochi. Let\'s study together!','你好！我係麻糬，一齊溫書啦！');save();render();};
- var rs=$('#wResume');if(rs)rs.onclick=function(){var lang=S.lang;S=load();S.lang=lang;ac();sfx('tap');if(S.music)startMusic();render();};
+ var rs=$('#wResume');if(rs)rs.onclick=function(){var lang=S.lang;S=load();S.lang=lang;ac();sfx('tap');if(S.music)startMusic();render();openingPopup();};
  var fr=$('#wFresh');if(fr)fr.onclick=function(){confirmBox(L('Start fresh?','重新開始？'),L('This erases all pets, coins and stars on this device. Copy your save code first if you want to keep them.','這會清除此裝置上所有寵物、金幣和星星。如想保留，請先複製存檔碼。'),L('Erase & start','清除並開始'),function(){var lang=S.lang;S=defaultState();S.lang=lang;S.started=true;save();bubble=L('Hi! I\'m Mochi!','你好！我係麻糬！');});};
  var ck=$('#chk');if(ck)ck.onclick=function(){previewCode($('#inCode').value);};}
 
@@ -1216,7 +1545,7 @@ function bindScreen(){
  document.querySelectorAll('[data-buy]').forEach(function(b){b.onclick=function(){var it=item(b.dataset.buy);if(S.coins<it.price||S.owned[it.id])return;S.coins-=it.price;S.owned[it.id]=1;if(it.slot!=='sticker')equip(it.id);sfx('coin');toast('✨ '+LL(it));checkTrophies();save();render();};});
  document.querySelectorAll('main [data-equip]').forEach(function(b){b.onclick=function(){equip(b.dataset.equip);render();};});
  document.querySelectorAll('main [data-active]').forEach(function(b){b.onclick=function(){S.active=b.dataset.active;sfx('boing');save();render();};});
- document.querySelectorAll('[data-buypet]').forEach(function(b){b.onclick=function(){var P=petDef(b.dataset.buypet);if(S.coins<P.price||S.pets[P.id])return;S.coins-=P.price;S.pets[P.id]=newPet();S.active=P.id;sfx('fanfare');confetti();bubble=L('Nice to meet you!','很高興認識你！');checkTrophies();save();curScreen='home';render();};});}
+ document.querySelectorAll('[data-buypet]').forEach(function(b){b.onclick=function(){var P=petDef(b.dataset.buypet);if(S.coins<P.price||S.pets[P.id])return;S.coins-=P.price;S.pets[P.id]=newPet();S.active=P.id;sfx('fanfare');confetti();bubble=L('Nice to meet you!','很高興認識你！');bubblePet=P.id;checkTrophies();save();curScreen='home';render();};});}
 
 /* ---------- boot ---------- */
 S=load()||defaultState();
