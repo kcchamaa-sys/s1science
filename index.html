@@ -201,7 +201,7 @@ textarea,input[type=text]{width:100%;font:inherit;font-family:ui-monospace,Menlo
 .ctx{background:var(--butter);border-radius:16px;padding:10px 12px;margin-bottom:10px;font-size:15px;line-height:1.5}
 .ctx b{font-size:13px}
 .fig{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px;margin-bottom:10px;display:flex;justify-content:center;overflow:hidden}
-.fig svg{width:100%;max-width:400px;height:auto;display:block}
+.fig svg{width:100%;max-width:400px;height:auto;max-height:210px;display:block}
 .keybox{display:grid;gap:4px;font-size:14px;width:100%;text-align:left}
 .chip.acct{max-width:40vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
 .chip.acct.warn{border-color:var(--bad);background:#FDECEF}
@@ -221,6 +221,27 @@ textarea,input[type=text]{width:100%;font:inherit;font-family:ui-monospace,Menlo
 .acc{display:inline-block;padding:1px 8px;border-radius:999px;font-weight:800;font-size:12px;font-variant-numeric:tabular-nums}
 .minibar{display:inline-block;width:70px;height:8px;border-radius:9px;background:#F3ECE6;overflow:hidden;vertical-align:middle}
 .minibar i{display:block;height:100%}
+.dictcard{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between;margin-bottom:14px;background:linear-gradient(135deg,#FFF1F5,#FFFFFF)}
+.dmodes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.dmodes{grid-template-columns:1fr}}
+.dmode{background:#fff;border:3px solid var(--line);border-radius:20px;padding:12px;display:grid;gap:4px;text-align:left;min-height:48px;transition:transform .18s cubic-bezier(.3,1.6,.5,1)}
+.dmode .e{font-size:28px;line-height:1}.dmode span:last-child{font-size:13px;color:var(--ink2)}
+.dmode.on{border-color:var(--rose);background:var(--pink)}
+.dcue{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.dbig{min-height:64px;font-size:20px;padding:10px 24px;border-radius:22px}
+.dask{text-align:center;font-weight:700;margin:8px 0 0}
+.ddef{background:var(--sky);border-radius:16px;padding:12px 14px;font-weight:700;font-size:16px;margin-top:6px}
+.dpat{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 4px}
+.dw{display:inline-flex;gap:3px}
+.dw i{width:14px;height:20px;border-bottom:3px solid var(--rose);display:inline-block}
+.dw i.dh{border:0;font-style:normal;font-weight:800;width:auto;line-height:20px}
+.dform{display:flex;gap:8px;margin-top:10px}
+.dform input{flex:1;min-width:0;font-family:var(--font);font-size:20px;font-weight:700;letter-spacing:.5px}
+.dform input.good{border-color:var(--good);background:#E6F5EA}
+.dform input.badin{border-color:var(--bad);background:#FDECEF;text-decoration:line-through}
+.dans{font-size:20px;letter-spacing:.5px}
+.dres{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:20px}
+.dres.ok{background:#E6F5EA;color:#3E8A5B}.dres.no{background:#FDECEF;color:#B4475A}
 /* pop-ups */
 .pop-ov{position:fixed;inset:0;z-index:85;background:rgba(91,75,73,.3);display:grid;place-items:center;padding:16px}
 .pop-card{position:relative;overflow:hidden;background:var(--cream);border-radius:32px;padding:22px 18px 18px;max-width:380px;width:100%;text-align:center;box-shadow:0 18px 40px rgba(91,75,73,.25);border:4px solid #fff;animation:jelly .75s cubic-bezier(.3,1.6,.5,1)}
@@ -1039,6 +1060,276 @@ var XQ={
 (function(){for(var k in CTX){var p=k.split('#');CHAPTERS.forEach(function(c){c.sections.forEach(function(s){if(s.id===p[0]){var q=s.qs[+p[1]];if(q){if(CTX[k][0]){q.ce=CTX[k][0];q.cz=CTX[k][1];}if(CTX[k][2])q.fig=CTX[k][2];}}});});}
  CHAPTERS.forEach(function(c){c.sections.forEach(function(s){if(XQ[s.id])XQ[s.id].forEach(function(q){s.qs.push(q);});});});})();
 
+/* ===== Dictation data: short English definitions + picture cues ===== */
+var DEF={
+'science':'The study of phenomena and events in Nature.',
+'experiment':'A test carried out to find out something or check an idea.',
+'discovery':'Finding something that already exists in Nature.',
+'invention':'Something new that people create, e.g. the smartphone.',
+'evidence':'Observations and results that support or reject an idea.',
+'technology':'Using scientific knowledge to make useful tools and machines.',
+'scientific investigation':'Finding answers by observing, asking, hypothesising, experimenting and concluding.',
+'hypothesis':'A possible explanation that can be tested.',
+'conclusion':'The final statement made from the results of an experiment.',
+'fair test':'An experiment where only ONE variable is changed.',
+'independent variable':'The variable that we CHANGE in a fair test.',
+'dependent variable':'The variable that we MEASURE in a fair test.',
+'controlled variable':'A variable that is KEPT THE SAME in a fair test.',
+'pattern seeking':'Looking for a relationship in data we cannot control.',
+'classifying':'Putting things into groups according to their features.',
+'laboratory':'A room where scientific experiments are done.',
+'safety spectacles':'Glasses worn to protect the eyes during experiments.',
+'fire extinguisher':'A container that sprays substances to put out fires.',
+'fire blanket':'A sheet used to cover a small fire and cut off oxygen.',
+'sand bucket':'A container of sand used to put out small fires.',
+'eye wash bottle':'A bottle of distilled water for washing chemicals out of the eyes.',
+'fume cupboard':'An enclosed space that removes toxic gases during experiments.',
+'hazard warning symbol':'A sign on a container that warns of danger from a chemical.',
+'fire triangle':'Fuel, high temperature and oxygen – all needed for a fire.',
+'beaker':'A wide glass container with a spout, used to hold and heat liquids.',
+'conical flask':'A glass container with a wide base and narrow neck.',
+'bunsen burner':'Laboratory apparatus that burns gas to heat things.',
+'tripod':'A three-legged stand that holds apparatus above a Bunsen burner.',
+'wire gauze':'A metal mesh placed on a tripod to spread heat evenly.',
+'measuring cylinder':'A tall glass tube with a scale for measuring volumes of liquids.',
+'meniscus':'The curved surface of a liquid in a narrow tube.',
+'error':'The uncertainty in a measurement, e.g. half of the smallest division.',
+'luminous flame':'The yellow Bunsen flame when the air hole is closed.',
+'non-luminous flame':'The blue, hotter Bunsen flame when the air hole is open.',
+'strike back':'When a Bunsen flame burns at the bottom of the chimney with a roar.',
+'physical state':'Solid, liquid or gas.',
+'melting':'The change from solid to liquid.',
+'melting point':'The temperature at which a solid melts (0 °C for ice).',
+'freezing':'The change from liquid to solid.',
+'boiling':'The fast change from liquid to gas at 100 °C for water.',
+'boiling point':'The temperature at which a liquid boils (100 °C for water).',
+'evaporation':'The change from liquid to gas at the surface, below the boiling point.',
+'condensation':'The change from gas to liquid.',
+'water vapour':'Water in the gas state.',
+'steam':'Water vapour produced by boiling water.',
+'water cycle':'The continuous movement of water between the sea, air and land.',
+'precipitation':'Water falling from clouds as rain, snow or hail.',
+'humidity':'The amount of water vapour in the air.',
+'rate of evaporation':'How fast a liquid evaporates.',
+'surface area':'The total area of the surface of an object.',
+'dissolve':'To mix completely into a liquid to form a solution.',
+'solvent':'The liquid that dissolves a substance, e.g. water.',
+'solute':'The substance that dissolves in a solvent, e.g. salt.',
+'solution':'A mixture formed when a solute dissolves in a solvent.',
+'soluble':'Able to dissolve.',
+'insoluble':'Not able to dissolve.',
+'rate of dissolving':'How fast a solute dissolves.',
+'saturated':'Describes a solution that cannot dissolve any more solute.',
+'solubility':'The amount of a substance that dissolves in a fixed amount of water at a given temperature.',
+'impurity':'An unwanted substance mixed in water.',
+'microorganism':'A living thing so small it can only be seen with a microscope.',
+'sedimentation':'Letting heavy insoluble particles settle to the bottom.',
+'filtration':'Separating insoluble solids by passing a mixture through a filter.',
+'distillation':'Boiling a liquid and condensing the vapour to get pure liquid.',
+'alum':'A chemical added to make tiny particles settle faster.',
+'filtrate':'The liquid that passes through the filter paper.',
+'residue':'The solid left on the filter paper.',
+'distillate':'The pure liquid collected from distillation.',
+'filter paper':'Paper with tiny holes used in filtration.',
+'chlorine':'A gas added to drinking water to kill microorganisms.',
+'ozone':'A gas used to kill microorganisms in water.',
+'ultraviolet light':'Invisible light that can kill microorganisms.',
+'fluoride':'A substance added to drinking water to help prevent tooth decay.',
+'fluoridation':'Adding fluoride to drinking water.',
+'water treatment works':'A place where natural water is made safe to drink.',
+'water conservation':'Saving water and using it wisely.',
+'water pollution':'Harmful substances getting into water.',
+'pollutant':'A harmful substance that pollutes the environment.',
+'microplastic':'A tiny piece of plastic that pollutes the sea.',
+'sewage treatment works':'A place where waste water is cleaned before going to the sea.',
+'living thing':'Something that carries out all seven vital functions.',
+'non-living thing':'Something that does not carry out all the vital functions.',
+'vital function':'An activity living things carry out to stay alive, e.g. growing.',
+'stimulus':'A change in the surroundings that a living thing can detect.',
+'excrete':'To remove waste made in the body.',
+'reproduce':'To produce new young of the same kind.',
+'biodiversity':'The wide variety of living things.',
+'classification':'Grouping living things according to their key features.',
+'key feature':'An important feature used to group living things.',
+'vertebrate':'An animal with a backbone.',
+'invertebrate':'An animal without a backbone.',
+'amphibian':'A vertebrate with moist skin; young live in water, adults on land.',
+'reptile':'A vertebrate with dry, hard scales that lays shelled eggs.',
+'mammal':'A vertebrate with fur or hair that feeds its young on milk.',
+'vascular plant':'A plant that has vascular tissues.',
+'flowering plant':'A seed plant that produces flowers.',
+'habitat':'The place where a living thing lives.',
+'key':'A tool that helps identify living things by their features.',
+'feature':'A characteristic that can be observed, e.g. having wings.',
+'tree diagram':'A branching drawing, e.g. used to show a key.',
+'identify':'To find out the name of something.',
+'sustainable development':'Meeting our needs without harming the future.',
+'extinct':'Describes a species that no longer exists.',
+'endangered species':'Living things in danger of dying out.',
+'overhunted':'Hunted so much that numbers fall sharply.',
+'foreign species':'A species brought into an area from another place.',
+'native species':'A species that naturally lives in an area.',
+'conservation':'Protecting wildlife and the natural environment.',
+'pollution':'Harmful substances released into the environment.',
+'cell':'The basic unit of living things.',
+'microscope':'An instrument that magnifies very small things.',
+'magnification':'How many times bigger an image is than the object.',
+'cell wall':'The plant cell part that gives support and a regular shape.',
+'cell membrane':'Controls the movement of substances into and out of the cell.',
+'cytoplasm':'The jelly-like part of the cell where many chemical reactions happen.',
+'nucleus':'Contains genetic material and controls the cell.',
+'vacuole':'Stores water and dissolved minerals in a cell.',
+'chloroplast':'Contains chlorophyll; where photosynthesis takes place.',
+'cell division':'One cell splitting into two new cells.',
+'cell differentiation':'Cells becoming specialised for particular functions.',
+'chromosome':'A thread-like structure in the nucleus containing a long coil of DNA.',
+'dna':'The genetic material that carries genetic information.',
+'double helix':'The shape of DNA: two twisted strands.',
+'base':'One of the four units A, T, C and G in DNA.',
+'gene':'A specific sequence of bases on DNA.',
+'tissue':'A group of the same type of cells working together.',
+'organ':'Different tissues working together, e.g. the heart.',
+'sperm':'The male sex cell.',
+'ovum':'The female sex cell.',
+'zygote':'The cell formed when a sperm and an ovum fuse.',
+'testis':'The male organ that produces sperms.',
+'sperm duct':'The tube that carries sperms from the testis.',
+'urethra':'The tube that carries urine (and semen in males) out of the body.',
+'ovary':'The female organ that releases ova.',
+'oviduct':'The tube where fertilization usually takes place.',
+'uterus':'The organ where an embryo develops.',
+'sex hormone':'A chemical that controls sexual development.',
+'puberty':'The stage when boys and girls become sexually mature.',
+'menstrual cycle':'The monthly cycle of about 28 days in females.',
+'menstruation':'The uterine lining and ovum passing out with some blood.',
+'ovulation':'The release of an ovum from an ovary.',
+'uterine lining':'The inner layer of the uterus that thickens each month.',
+'fertilization':'The fusion of a sperm and an ovum.',
+'implantation':'The embryo attaching to the uterine lining.',
+'embryo':'The early stage of a developing baby.',
+'foetus':'A developing baby after the embryo stage.',
+'placenta':'Passes nutrients and oxygen from the mother to the foetus.',
+'umbilical cord':'Joins the foetus to the placenta.',
+'amniotic fluid':'Liquid around the foetus that protects it from bumps.',
+'pregnancy':'The period when a baby develops inside the mother.',
+'parental care':'Parents looking after their young.',
+'family planning':'Deciding how many children to have and when.',
+'contraceptive pill':'A pill that prevents the release of ova.',
+'condom':'A sheath that stops sperms from reaching the ovum.',
+'rhythm method':'Avoiding sex around the time of ovulation.',
+'sterilization':'An operation that permanently prevents fertilization.',
+'intrauterine device (iud)':'A small device in the uterus that prevents embryo development.',
+'heredity':'The passing of genetic information from parents to offspring.',
+'variation':'Differences between individuals of the same species.',
+'continuous variation':'Variation over a range of values, e.g. height.',
+'discontinuous variation':'Variation in distinct groups, e.g. blood group.',
+'bar chart':'A graph with separated bars for data in groups.',
+'histogram':'A graph with touching bars for continuous data.',
+'identical twins':'Twins that develop from one zygote and have the same genes.',
+'non-identical twins':'Twins that develop from two different zygotes.',
+'energy':'What is needed to make things happen; measured in joules.',
+'light energy':'Energy given out by the Sun, lamps and screens.',
+'thermal energy':'The energy of hot objects; heat.',
+'chemical energy':'Energy stored in food, fuels and batteries.',
+'kinetic energy':'The energy of a moving object.',
+'potential energy':'Energy stored in a raised or stretched object.',
+'electrical energy':'Energy carried by an electric current.',
+'energy conversion':'The change of energy from one form to another.',
+'joule':'The unit of energy (J).',
+'law of conservation of energy':'Energy cannot be created or destroyed, only converted.',
+'sankey diagram':'A diagram with arrows whose widths show amounts of energy.',
+'efficiency':'Useful energy output ÷ total energy input × 100%.',
+'heat transfer':'The movement of thermal energy from hot to cold.',
+'conduction':'Heat transfer through a material, especially fast in metals.',
+'convection':'Heat transfer by the rising of hot liquids or gases.',
+'radiation':'Heat transfer directly from a source, even through a vacuum.',
+'conductor':'A material that lets heat pass through easily, e.g. copper.',
+'insulator':'A material that does not let heat pass through easily, e.g. wood.',
+'vacuum':'A space with no particles at all.',
+'absorber of radiation':'A surface that takes in radiation well, e.g. dull black.',
+'emitter of radiation':'A surface that gives out radiation well.',
+'energy source':'Where we get energy from, e.g. coal or sunlight.',
+'fossil fuel':'Coal, oil or natural gas formed over millions of years.',
+'non-renewable energy source':'An energy source that cannot be replaced in a short time.',
+'renewable energy source':'An energy source that can be replaced quickly or never runs out.',
+'air pollutant':'A harmful substance released into the air.',
+'acid rain':'Rain made acidic by gases from burning fossil fuels.',
+'global warming':'The rise in the Earth\'s average temperature.',
+'solar energy':'Energy from sunlight.',
+'wind power':'Making electricity from moving air.',
+'biomass energy':'Energy from plant or animal matter.',
+'hydroelectric power':'Making electricity from flowing water.',
+'nuclear power':'Making electricity from nuclear fuel such as uranium.',
+'matter':'Anything that has mass and takes up space.',
+'mass':'The amount of matter in an object, measured in grams.',
+'particle':'A tiny piece that makes up all matter.',
+'randomly':'In no fixed pattern or direction.',
+'zig-zag path':'The irregular path of smoke particles under a microscope.',
+'particle theory':'The idea that all matter is made of tiny moving particles.',
+'atom':'The basic unit of matter.',
+'molecule':'A particle made of two or more atoms joined together.',
+'solid state':'The state with a fixed shape and fixed volume.',
+'liquid state':'The state with a fixed volume but no fixed shape.',
+'gas state':'The state with no fixed shape and no fixed volume.',
+'particle model':'A model showing how particles are arranged and move.',
+'vibrate':'To move quickly back and forth about a fixed position.',
+'compress':'To squeeze into a smaller volume.',
+'conserve':'To keep the same in total, e.g. mass in dissolving.',
+'solute particle':'A particle of the substance that dissolves.',
+'solvent particle':'A particle of the liquid that does the dissolving.',
+'concentration':'The amount of solute in a given amount of solvent.',
+'concentrated':'Having a lot of solute in the solvent.',
+'dilute':'Having a small amount of solute in the solvent.',
+'thermal expansion and contraction':'Getting bigger when heated and smaller when cooled.',
+'expand':'To become bigger.',
+'contract':'To become smaller.',
+'thermostat':'A device that keeps temperature steady, often with a bimetallic strip.',
+'bimetallic strip':'Two metals joined together that bend when heated.',
+'gas pressure':'The push from gas particles hitting a surface.',
+'atmospheric pressure':'The pressure from air particles in the atmosphere.',
+'bombard':'To hit again and again.',
+'suction cup':'A rubber cup held onto a surface by atmospheric pressure.',
+'density':'Mass per unit volume.',
+'volume':'The amount of space something takes up.',
+'sink':'To go down in a liquid because it is denser.',
+'float':'To stay on the surface because it is less dense.',
+'medium':'The substance around an object, e.g. water or air.'
+};
+/* accepted alternative spellings: [answer, note-for-student] */
+var ALT={'water vapour':['water vapor'],'foetus':['fetus'],'dna':['deoxyribonucleic acid'],'intrauterine device (iud)':['iud','intrauterine device iud']};
+/* small picture icons for dictation */
+var ICO={
+ fire_tri:function(){return svgWrap('0 0 160 140','<path d="M80 14 L146 126 L14 126Z" fill="#FFE9A6" stroke="'+FO+'" stroke-width="4" stroke-linejoin="round"/><path d="M80 52 C94 70 96 84 80 96 C64 84 66 70 80 52Z" fill="#F7A06B"/><text x="40" y="68" font-size="12" text-anchor="middle" font-weight="700">?</text><text x="120" y="68" font-size="12" text-anchor="middle" font-weight="700">?</text><text x="80" y="138" font-size="12" text-anchor="middle" font-weight="700">?</text>','fire triangle');},
+ bunsen:function(){return svgWrap('0 0 120 150','<path d="M60 70 C50 58 54 44 60 30 C66 44 70 58 60 70Z" fill="#8FC7E8" stroke="#5E9FD0" stroke-width="2"/><rect x="52" y="72" width="16" height="56" rx="3" fill="#D9DEE6" stroke="'+FO+'" stroke-width="3"/><circle cx="60" cy="112" r="5" fill="#fff" stroke="'+FO+'" stroke-width="2"/><rect x="30" y="128" width="60" height="12" rx="5" fill="#C9C3BC" stroke="'+FO+'" stroke-width="3"/><path d="M90 134 L112 134" stroke="#F7A06B" stroke-width="5"/>','burner');},
+ tripod:function(){return svgWrap('0 0 140 140','<rect x="20" y="30" width="100" height="8" rx="3" fill="#8A9099" stroke="'+FO+'" stroke-width="3"/><path d="M34 38 L20 128 M70 38 L70 128 M106 38 L120 128" stroke="'+FO+'" stroke-width="6" stroke-linecap="round"/>','stand');},
+ gauze:function(){var s='<rect x="10" y="30" width="120" height="80" rx="4" fill="#E6E9EE" stroke="'+FO+'" stroke-width="3"/>';for(var i=18;i<130;i+=10)s+='<path d="M'+i+' 32 L'+i+' 108" stroke="#A7ADB6" stroke-width="1.5"/>';for(var j=38;j<110;j+=10)s+='<path d="M12 '+j+' L128 '+j+'" stroke="#A7ADB6" stroke-width="1.5"/>';return svgWrap('0 0 140 140',s+'<circle cx="70" cy="70" r="22" fill="#fff" opacity=".7"/>','mesh');},
+ helix:function(){var s='';for(var y=10;y<=130;y+=12){var t=(y-10)/120*Math.PI*2,x1=70+34*Math.sin(t),x2=70-34*Math.sin(t);s+='<path d="M'+x1.toFixed(1)+' '+y+' L'+x2.toFixed(1)+' '+y+'" stroke="#F7A9B5" stroke-width="3"/>';}
+  var p1='',p2='';for(var y2=10;y2<=130;y2+=4){var t2=(y2-10)/120*Math.PI*2;p1+=(y2===10?'M':'L')+(70+34*Math.sin(t2)).toFixed(1)+' '+y2+' ';p2+=(y2===10?'M':'L')+(70-34*Math.sin(t2)).toFixed(1)+' '+y2+' ';}
+  return svgWrap('0 0 140 140',s+'<path d="'+p1+'" stroke="#8A6BB5" stroke-width="5" fill="none"/><path d="'+p2+'" stroke="#5E9FD0" stroke-width="5" fill="none"/>','twisted strands');},
+ molecule:function(){return svgWrap('0 0 160 120','<circle cx="80" cy="60" r="30" fill="#F7A9B5" stroke="'+FO+'" stroke-width="3"/><circle cx="36" cy="88" r="18" fill="#fff" stroke="'+FO+'" stroke-width="3"/><circle cx="124" cy="88" r="18" fill="#fff" stroke="'+FO+'" stroke-width="3"/><text x="80" y="66" text-anchor="middle" font-weight="800" font-size="18">O</text><text x="36" y="94" text-anchor="middle" font-weight="800" font-size="14">H</text><text x="124" y="94" text-anchor="middle" font-weight="800" font-size="14">H</text>','water particle');},
+ atom:function(){return svgWrap('0 0 140 140','<ellipse cx="70" cy="70" rx="58" ry="20" fill="none" stroke="#8FC7E8" stroke-width="3"/><ellipse cx="70" cy="70" rx="58" ry="20" fill="none" stroke="#F7A9B5" stroke-width="3" transform="rotate(60 70 70)"/><ellipse cx="70" cy="70" rx="58" ry="20" fill="none" stroke="#9BCB8E" stroke-width="3" transform="rotate(-60 70 70)"/><circle cx="70" cy="70" r="12" fill="#FBD46D" stroke="'+FO+'" stroke-width="3"/>','basic unit of matter');},
+ solar:function(){return svgWrap('0 0 160 130','<circle cx="130" cy="26" r="16" fill="#FBD46D"/><path d="M20 110 L50 50 L130 50 L110 110Z" fill="#5E7FB0" stroke="'+FO+'" stroke-width="3"/><path d="M40 80 L120 80 M36 95 L116 95 M76 50 L66 110 M104 50 L90 110 M48 50 L42 110" stroke="#A9C4E8" stroke-width="2"/><path d="M60 110 L60 124 M100 110 L100 124" stroke="'+FO+'" stroke-width="4"/>','panel');},
+ wind:function(){return svgWrap('0 0 140 150','<path d="M66 60 L62 146 L78 146 L74 60Z" fill="#fff" stroke="'+FO+'" stroke-width="3"/><circle cx="70" cy="56" r="7" fill="#D9DEE6" stroke="'+FO+'" stroke-width="3"/><path d="M70 50 C66 30 68 14 74 6 C78 22 76 38 72 50Z M76 60 C94 66 108 76 114 84 C98 82 84 74 76 64Z M64 62 C50 74 36 80 26 82 C34 70 48 62 62 58Z" fill="#fff" stroke="'+FO+'" stroke-width="2.5"/>','turbine');},
+ sperm:function(){return svgWrap('0 0 180 90','<ellipse cx="40" cy="45" rx="20" ry="14" fill="#DDF0FB" stroke="'+FO+'" stroke-width="3"/><path d="M60 45 C80 30 96 60 116 45 C136 30 150 60 172 45" stroke="'+FO+'" stroke-width="3" fill="none"/>','cell with a tail');},
+ ovum:function(){return svgWrap('0 0 140 140','<circle cx="70" cy="70" r="56" fill="#FFE5EC" stroke="'+FO+'" stroke-width="3"/><circle cx="70" cy="70" r="50" fill="none" stroke="#F7A9B5" stroke-width="4" stroke-dasharray="3 5"/><circle cx="82" cy="60" r="14" fill="#C9B6EA" stroke="'+FO+'" stroke-width="2.5"/>','large round cell');},
+ flask:function(){return svgWrap('0 0 120 140','<path d="M48 10 L72 10 L72 44 L104 116 Q108 128 96 128 L24 128 Q12 128 16 116 L48 44Z" fill="#EAF6FB" stroke="'+FO+'" stroke-width="3" stroke-linejoin="round"/><path d="M22 104 L98 104 L104 118 Q106 124 98 124 L22 124 Q14 124 16 118Z" fill="#A9D4EE"/>','glassware');},
+ spectacles:function(){return svgWrap('0 0 180 80','<path d="M10 36 L170 36" stroke="#6BA8CF" stroke-width="4"/><rect x="24" y="22" width="132" height="40" rx="18" fill="rgba(170,215,240,.45)" stroke="#6BA8CF" stroke-width="4"/><path d="M40 32 L60 30" stroke="#fff" stroke-width="4" stroke-linecap="round"/>','eye protection');},
+ filterpaper:function(){return svgWrap('0 0 140 140','<circle cx="70" cy="70" r="56" fill="#fff" stroke="#C9A77E" stroke-width="3"/><path d="M70 14 L70 126 M14 70 L126 70" stroke="#E6D6C0" stroke-width="2" stroke-dasharray="4 4"/>','folded circle');}
+};
+/* term → picture cue: [iconOrFig, labelOrNull] */
+var DPIC={
+ 'beaker':['app4','A'],'conical flask':['flask'],'measuring cylinder':['app4','C'],'bunsen burner':['bunsen'],'tripod':['tripod'],'wire gauze':['gauze'],'meniscus':['cyl',null],
+ 'luminous flame':['F:bunsen','P'],'non-luminous flame':['F:bunsen','Q'],'fire triangle':['fire_tri'],'safety spectacles':['spectacles'],'hazard warning symbol':['F:haz_tox'],
+ 'evaporation':['watercycle','1'],'condensation':['watercycle','2'],'precipitation':['watercycle','4'],'water cycle':['watercycle',null],
+ 'filtrate':['filtration','Q'],'residue':['filtration','P'],'distillate':['distill','Y'],'filter paper':['filterpaper'],
+ 'mammal':['animals','S'],'amphibian':['animals','Q'],
+ 'cell wall':['plantcell','A'],'cell membrane':['plantcell','B'],'chloroplast':['plantcell','C'],'nucleus':['plantcell','D'],'vacuole':['plantcell','E'],'microscope':['microscope',null],
+ 'double helix':['helix'],'sperm':['sperm'],'ovum':['ovum'],'ovary':['female','A'],'oviduct':['female','B'],'uterus':['female','C'],
+ 'placenta':['foetus','P'],'umbilical cord':['foetus','Q'],'amniotic fluid':['foetus','R'],'bar chart':['charts','P'],'histogram':['charts','Q'],
+ 'sankey diagram':['sankey',null],'convection':['convection',null],'solar energy':['solar'],'wind power':['wind'],
+ 'atom':['atom'],'molecule':['molecule'],'solid state':['particles','P'],'liquid state':['particles','Q'],'gas state':['particles','R'],'bimetallic strip':['bimetal',null]
+};
+
 </script>
 <script>
 /* ===================== Mochi Science Pals – game engine ===================== */
@@ -1246,7 +1537,8 @@ var TROPHIES=[
  {id:'match',e:'🃏',en:'Term Matcher',zh:'詞彙配對王',den:'Win 5 Term Match games',dzh:'贏 5 次詞彙配對',tier:1,f:function(){return [S.matchWins,5];}},
  {id:'pets12',e:'🏠',en:'Full Family',zh:'大家庭',den:'Adopt all 12 pets',dzh:'領養全部 12 隻寵物',tier:3,f:function(){return [petsCount(),PETS.length];}},
  {id:'spec10',e:'🎀',en:'Treasure Hunter',zh:'尋寶獵人',den:'Unlock 10 special items',dzh:'解鎖 10 件特別物品',tier:2,f:function(){return [specialsOwned(),10];}},
- {id:'specall',e:'👑',en:'Complete Collector',zh:'完美收藏家',den:'Unlock every special item',dzh:'解鎖所有特別物品',tier:3,f:function(){return [specialsOwned(),specialsTotal()];}}
+ {id:'specall',e:'👑',en:'Complete Collector',zh:'完美收藏家',den:'Unlock every special item',dzh:'解鎖所有特別物品',tier:3,f:function(){return [specialsOwned(),specialsTotal()];}},
+ {id:'spell',e:'✍️',en:'Spelling Star',zh:'串字之星',den:'Spell 100 words correctly in dictation',dzh:'默書中正確拼寫 100 個詞彙',tier:2,f:function(){return [(S.dict||{}).n||0,100];}}
 ];
 
 /* ---------- state ---------- */
@@ -1255,7 +1547,7 @@ function newPet(){return {xp:0,stage:1,energy:80,happy:80,eq:{hat:null,glasses:n
 function defaultState(){return {v:1,lang:'zh',coins:40,xpTotal:0,pets:{mochi:newPet()},active:'mochi',owned:{w0:1},
  room:{wall:'w0',prop:null},food:{onigiri:2,apple:1},streak:0,best:0,lastDay:null,shields:0,days:0,hist:[],
  secs:{},q:{},seen:{},mistakes:{},cleared:0,quizzes:0,perfect:0,studies:0,studyDay:{},matchWins:0,matchDay:{d:'',n:0},
- trophies:{},gift:'',vocabDay:{},lastTick:Date.now(),sfx:true,music:false,started:false};}
+ trophies:{},gift:'',vocabDay:{},dict:{n:0,miss:{}},lastTick:Date.now(),sfx:true,music:false,started:false};}
 function load(k){try{var r=localStorage.getItem(k||KEY);if(r){var o=JSON.parse(r);var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];return o;}}catch(e){}return null;}
 function save(){try{S.lastTick=Date.now();S.upd=Date.now();localStorage.setItem(storeKey(),JSON.stringify(S));}catch(e){}cloudSaveSoon();}
 window.addEventListener('pagehide',function(){if(S&&S.started)save();});
@@ -1535,9 +1827,9 @@ function chapIcon(k){var m={flask:'<path d="M22 6 L34 6 L34 18 L46 42 Q48 48 42 
  atom:'<ellipse cx="28" cy="28" rx="23" ry="8" fill="none" stroke="#8FC7E8" stroke-width="3"/><ellipse cx="28" cy="28" rx="23" ry="8" fill="none" stroke="#F7A9B5" stroke-width="3" transform="rotate(60 28 28)"/><ellipse cx="28" cy="28" rx="23" ry="8" fill="none" stroke="#9BCB8E" stroke-width="3" transform="rotate(-60 28 28)"/><circle cx="28" cy="28" r="5" fill="#FBD46D" stroke="'+O+'" stroke-width="2.5"/>'};
  return '<svg viewBox="0 0 56 56" width="40" height="40" aria-hidden="true">'+m[k]+'</svg>';}
 function mastered(sec){var n=0;sec.qs.forEach(function(q,i){if(S.q[sec.id+'#'+i]===1)n++;});return n;}
-function studyHTML(){var h='<h1 class="h-sec">📚 '+L('Study by topic','按課題溫習')+'</h1><p class="muted" style="margin-top:-4px">'+L('Each sub-topic: read the notes 📖 (your pet studies with you), then take a 5-question quiz ✏️ that climbs from Remember to Create.','每個小節：先讀筆記 📖（寵物陪你溫），再做 5 題由「記憶」到「創造」的測驗 ✏️。')+'</p><div class="grid">';
+function studyHTML(){var h='<h1 class="h-sec">📚 '+L('Study by topic','按課題溫習')+'</h1><div class="card dictcard"><div style="min-width:0"><b>✍️ '+L('Dictation','默書')+'</b><div class="muted" style="font-size:13px">'+L('Listen & spell, or spell from a meaning / picture.','聽音默書，或看定義／圖片默書。')+((S.dict&&Object.keys(S.dict.miss).length)?' · 📝 '+Object.keys(S.dict.miss).length+L(' missed words',' 個錯字'):'')+'</div></div><button class="btn pink" data-dict="">✍️ '+L('Start dictation','開始默書')+'</button></div><p class="muted" style="margin-top:-4px">'+L('Each sub-topic: read the notes 📖 (your pet studies with you), then take a 5-question quiz ✏️ that climbs from Remember to Create.','每個小節：先讀筆記 📖（寵物陪你溫），再做 5 題由「記憶」到「創造」的測驗 ✏️。')+'</p><div class="grid">';
  CHAPTERS.forEach(function(c){var tot=0,got=0;c.sections.forEach(function(s){tot+=3;got+=(S.secs[s.id]||{}).stars||0;});
-  h+='<section class="chap" style="background:'+c.col+'"><div class="chap-h"><div class="ic">'+chapIcon(c.icon)+'</div><div style="min-width:0"><div class="muted" style="font-size:12px;font-weight:800">'+L('Unit ','第 ')+c.id+L('',' 單元')+'</div><h3>'+esc(LL(c))+'</h3></div><span class="chip" style="margin-left:auto">★ '+got+'/'+tot+'</span></div><button class="btn small white" data-vocab="'+c.id+'" style="margin-top:10px">🔊 '+L('Vocab: Listen & Repeat','詞彙：聆聽跟讀')+'</button>';
+  h+='<section class="chap" style="background:'+c.col+'"><div class="chap-h"><div class="ic">'+chapIcon(c.icon)+'</div><div style="min-width:0"><div class="muted" style="font-size:12px;font-weight:800">'+L('Unit ','第 ')+c.id+L('',' 單元')+'</div><h3>'+esc(LL(c))+'</h3></div><span class="chip" style="margin-left:auto">★ '+got+'/'+tot+'</span></div><div class="row" style="margin-top:10px;gap:8px"><button class="btn small white" data-vocab="'+c.id+'">🔊 '+L('Vocab: Listen & Repeat','詞彙：聆聽跟讀')+'</button><button class="btn small white" data-dict="'+c.id+'">✍️ '+L('Dictation','默書')+'</button></div>';
   c.sections.forEach(function(s){var r=S.secs[s.id]||{},mm=mastered(s),doneToday=S.studyDay[s.id]===today();
    h+='<div class="sec"><div style="min-width:0"><b>'+s.id+' '+esc(LL(s))+'</b><div class="meta">'+stars(r.stars||0)+'<span>'+L('Mastered ','已掌握 ')+mm+'/'+s.qs.length+'</span>'+(doneToday?'<span>📖✓</span>':'')+'</div><div class="prog"><i style="width:'+(mm/s.qs.length*100)+'%"></i></div></div>'+
    '<div class="acts"><button class="btn small green" data-studysec="'+s.id+'" aria-label="'+L('Notes','筆記')+' '+s.id+'">📖</button><button class="btn small" data-quizsec="'+s.id+'">✏️ '+L('Quiz','測驗')+'</button></div></div>';});
@@ -1705,7 +1997,7 @@ function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(f
 var B32='0123456789ABCDEFGHJKMNPQRSTVWXYZ',EPOCH=dayNum('2025-01-01');
 function wearIds(){return ITEMS.filter(function(i){return i.price>0;}).map(function(i){return i.id;});}
 function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.round(v),Math.pow(2,n)-1));for(var i=n-1;i>=0;i--)bits.push((v>>i)&1);}
- w(2,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),4);
+ w(3,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),4);
  PETS.forEach(function(P){var p=S.pets[P.id];w(p?1:0,1);w(p?p.stage:0,2);w(p?p.xp/5:0,12);});
  var ids=wearIds();ids.forEach(function(id){w(S.owned[id]?1:0,1);});
  var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,7);});
@@ -1719,11 +2011,11 @@ function scramble(bits){var x=0x5EED1;for(var i=0;i<bits.length;i++){x=(x*110351
 function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1');var bits=[];
  for(var i=0;i<code.length;i++){var v=B32.indexOf(code[i]);if(v<0)return null;for(var k=4;k>=0;k--)bits.push((v>>k)&1);}
  scramble(bits);var pos=0;function r(n){var v=0;for(var i=0;i<n;i++){if(pos>=bits.length)throw 0;v=v*2+bits[pos++];}return v;}
- try{var o={};var ver=r(4);if(ver!==1&&ver!==2)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:4);o.pets={};PETS.slice(0,v1?6:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
+ try{var o={};var ver=r(4);if(ver<1||ver>3)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:4);o.pets={};PETS.slice(0,v1?6:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
   o.owned={};wearIds().forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
   o.wall=['w0','w1','w2','w3','w4','w5'][r(3)]||'w0';var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
   o.streak=r(9);o.best=r(9);o.shields=r(2);var ld=r(13);o.lastDay=ld?fromDayNum(ld+EPOCH):null;o.days=r(10);o.quizzes=r(11);o.perfect=r(9);o.cleared=r(10);o.studies=r(10);o.matchWins=r(8);
-  o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
+  o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
   var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
   if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
 function applyCode(o){if(!AUTH.mode)AUTH.mode='guest';var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
@@ -1774,6 +2066,7 @@ function bindScreen(){if(curScreen==='teacher')bindTeacher();
   bPractice:function(){startPractice(practiceFilter);}};
  for(var k in m){var el=document.getElementById(k);if(el)el.onclick=m[k];}
  document.querySelectorAll('[data-studysec]').forEach(function(b){b.onclick=function(){openStudy(b.dataset.studysec);};});
+ document.querySelectorAll('[data-dict]').forEach(function(b){b.onclick=function(){openDictSetup(b.dataset.dict||null);};});
  document.querySelectorAll('[data-vocab]').forEach(function(b){b.onclick=function(){openVocab(b.dataset.vocab);};});
  document.querySelectorAll('[data-quizsec]').forEach(function(b){b.onclick=function(){startQuiz(b.dataset.quizsec,'quiz');};});
  document.querySelectorAll('[data-go]').forEach(function(b){b.onclick=function(){curScreen=b.dataset.go;render();};});
@@ -1786,6 +2079,76 @@ function bindScreen(){if(curScreen==='teacher')bindTeacher();
  document.querySelectorAll('main [data-active]').forEach(function(b){b.onclick=function(){S.active=b.dataset.active;sfx('boing');save();render();};});
  document.querySelectorAll('[data-buypet]').forEach(function(b){b.onclick=function(){var P=petDef(b.dataset.buypet);if(S.coins<P.price||S.pets[P.id])return;S.coins-=P.price;S.pets[P.id]=newPet();S.active=P.id;sfx('fanfare');confetti();bubble=L('Nice to meet you!','很高興認識你！');bubblePet=P.id;checkTrophies();save();curScreen='home';render();};});}
 
+
+
+/* ---------- Dictation 默書 ---------- */
+var DQ=null,dictCfg={kind:'listen',unit:1,sec:'all'};
+function dKey(t){return t.en.toLowerCase();}
+function dTerms(unit,sec){var seen={},out=[];CHAPTERS.forEach(function(c){c.sections.forEach(function(s){s.terms.forEach(function(t){var k=t[0].toLowerCase();if(seen[k])return;var o={en:t[0],zh:t[1],sec:s.id,unit:c.id};
+ if(unit==='missed'){if(!(S.dict.miss[k]>0))return;}else{if(c.id!=unit)return;if(sec!=='all'&&s.id!==sec)return;}seen[k]=1;out.push(o);});});});return out;}
+function dShown(en){return en.replace(/\s*\(.*?\)\s*/g,'').trim();}
+function dNorm(s){return String(s).toLowerCase().replace(/\(.*?\)/g,' ').replace(/[‐-―\-]/g,' ').replace(/[^a-z0-9 ]/g,'').replace(/isation/g,'ization').replace(/\s+/g,' ').trim();}
+function lev(a,b){var m=a.length,n=b.length,d=[];for(var i=0;i<=m;i++){d[i]=[i];}for(var j=0;j<=n;j++)d[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n];}
+function dCheck(ans,t){var a=dNorm(ans),g=dNorm(t.en);if(a===g)return {ok:true};var alt=(ALT[dKey(t)]||[]).map(dNorm);if(alt.indexOf(a)>=0)return {ok:true,note:true};return {ok:false,close:lev(a,g)<=2};}
+function dPattern(en){return '<div class="dpat" aria-hidden="true">'+dShown(en).split(' ').map(function(w){return '<span class="dw">'+w.split('').map(function(ch){return ch==='-'?'<i class="dh">-</i>':'<i></i>';}).join('')+'</span>';}).join('')+'</div>';}
+function dPic(t){var p=DPIC[dKey(t)];if(!p)return '';var name=p[0],f;if(name.indexOf('F:')===0){f=FIGS[name.slice(2)];}else f=ICO[name]||FIGS[name];if(!f)return '';
+ var ask=p[1]?L('What is the part labelled '+p[1]+'?','標示 '+p[1]+' 的是甚麼？'):L('What is this?','這是甚麼？');return '<div class="fig">'+f()+'</div><p class="dask">🖼️ '+ask+'</p>';}
+function openDictSetup(unit){var keep=!!document.querySelector('#ov .dmodes');if(unit)dictCfg.unit=+unit,dictCfg.sec='all';var missN=Object.keys(S.dict.miss).filter(function(k){return S.dict.miss[k]>0;}).length;
+ var c=dictCfg.unit==='missed'?null:CHAPTERS.filter(function(x){return x.id==dictCfg.unit;})[0];var n=dTerms(dictCfg.unit,dictCfg.sec).length;
+ var h='<div class="sheet-h"><h2>✍️ '+L('Dictation','默書')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
+ '<h3 class="vh">1 · '+L('Choose a way','選擇方式')+'</h3><div class="dmodes">'+
+ '<button class="dmode'+(dictCfg.kind==='listen'?' on':'')+'" data-dk="listen"><span class="e">🔊</span><b>'+L('Listen & spell','聽音默書')+'</b><span>'+L('Hear the British pronunciation, type the word.','聽英式讀音，拼出英文詞彙。')+'</span></button>'+
+ '<button class="dmode'+(dictCfg.kind==='meaning'?' on':'')+'" data-dk="meaning"><span class="e">🖼️</span><b>'+L('Meaning / picture','看義／看圖默書')+'</b><span>'+L('See a definition or diagram, type the term.','看定義或圖片，寫出英文詞彙。')+'</span></button></div>'+
+ '<h3 class="vh">2 · '+L('Choose words','選擇範圍')+'</h3><div class="row">'+CHAPTERS.map(function(x){return '<button class="btn small '+(dictCfg.unit==x.id?'pink':'white')+'" data-du="'+x.id+'">'+L('Unit ','單元 ')+x.id+'</button>';}).join('')+
+ '<button class="btn small '+(dictCfg.unit==='missed'?'pink':'white')+'" data-du="missed"'+(missN?'':' disabled')+'>📝 '+L('My missed words','我的錯字')+' ('+missN+')</button></div>'+
+ (c?'<div class="row" style="margin-top:8px"><button class="btn small '+(dictCfg.sec==='all'?'green':'white')+'" data-ds="all">'+L('Whole unit','整個單元')+'</button>'+c.sections.map(function(s){return '<button class="btn small '+(dictCfg.sec===s.id?'green':'white')+'" data-ds="'+s.id+'" title="'+esc(LL(s))+'">'+s.id+'</button>';}).join('')+'</div><p class="muted" style="font-size:13px;margin:6px 0 0">'+esc(LL(c))+(dictCfg.sec!=='all'?' · '+esc(LL(secById(dictCfg.sec))):'')+'</p>':'')+
+ '<div class="row" style="margin-top:16px"><button class="btn green" id="dGo"'+(n?'':' disabled')+'>▶ '+L('Start','開始')+' · '+Math.min(10,n)+L(' words',' 個詞彙')+'</button><span class="muted" style="font-size:13px">'+n+L(' words in this range',' 個詞彙在此範圍')+'</span></div>'+
+ '<p class="muted" style="font-size:13px">'+L('2 tries per word. First try without a hint = 2 🪙, otherwise 1 🪙. Words you miss are saved to "My missed words".','每個詞彙有 2 次機會。第一次答對且無提示＝2 🪙，否則 1 🪙。答錯的詞彙會存入「我的錯字」。')+'</p>';
+ if(keep){$('#ov .sheet').innerHTML=h;}else modal(h);$('#xClose').onclick=closeModal;
+ document.querySelectorAll('[data-dk]').forEach(function(b){b.onclick=function(){dictCfg.kind=b.dataset.dk;sfx('tap');openDictSetup();};});
+ document.querySelectorAll('[data-du]').forEach(function(b){b.onclick=function(){dictCfg.unit=b.dataset.du==='missed'?'missed':+b.dataset.du;dictCfg.sec='all';sfx('tap');openDictSetup();};});
+ document.querySelectorAll('[data-ds]').forEach(function(b){b.onclick=function(){dictCfg.sec=b.dataset.ds;sfx('tap');openDictSetup();};});
+ $('#dGo').onclick=startDict;}
+function startDict(){var list=shuffle(dTerms(dictCfg.unit,dictCfg.sec)).slice(0,10);if(!list.length)return;
+ DQ={kind:dictCfg.kind,list:list,i:0,tries:0,hint:false,res:[],pts:0,t0:Date.now(),scope:dictCfg.unit==='missed'?'missed':(dictCfg.sec==='all'?'U'+dictCfg.unit:dictCfg.sec),unit:dictCfg.unit==='missed'?'':String(dictCfg.unit),done:false};showD();}
+function dictRec(status){if(!DQ||!DQ.res.length)return;var cor=DQ.res.filter(function(r){return r.ok;}).length;
+ logRec({mode:'dict_'+DQ.kind,unit:DQ.unit,sec:DQ.scope,ans:DQ.res.length,cor:cor,stars:0,secs:Math.round((Date.now()-DQ.t0)/1000),status:status,start:new Date(DQ.t0).toISOString(),ids:'',wrong:DQ.res.filter(function(r){return !r.ok;}).map(function(r){return dShown(r.t.en);}).join(', ')});}
+function showD(){var t=DQ.list[DQ.i];DQ.tries=0;DQ.hint=false;DQ.done=false;
+ var dots=DQ.list.map(function(_,i){return '<span class="'+(i<DQ.res.length?(DQ.res[i].ok?'ok':'no'):(i===DQ.i?'cur':''))+'"></span>';}).join('');
+ var cue=DQ.kind==='listen'?'<div class="dcue"><button class="btn green dbig" id="dPlay">🔊 '+L('Play','播放')+'</button><button class="btn dbig" id="dSlow">🐢 '+L('Slow','慢速')+'</button></div><p class="dask">'+L('Listen, then type the English word.','聆聽後，輸入英文詞彙。')+'</p>':
+  dPic(t)+'<div class="ddef">📖 '+esc(DEF[dKey(t)]||'')+'</div>';
+ modal('<div class="sheet-h"><h2>✍️ '+(DQ.kind==='listen'?L('Listen & spell','聽音默書'):L('Meaning / picture','看義／看圖默書'))+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
+ '<div class="qtop"><div class="dots">'+dots+'</div><span class="bloom">'+(DQ.i+1)+' / '+DQ.list.length+'</span></div><div class="card qcard">'+cue+dPattern(t.en)+'<div id="dHintBox"></div>'+
+ '<form id="dForm" class="dform" autocomplete="off"><input id="dIn" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off" aria-label="'+L('Type the word','輸入詞彙')+'" placeholder="'+L('Type here…','在此輸入…')+'"><button class="btn pink" type="submit" id="dCheck">✓ '+L('Check','檢查')+'</button></form>'+
+ '<div class="row" style="margin-top:8px"><button class="btn small white" id="dHint">💡 '+L('Hint','提示')+'</button></div><div id="dFb" role="status" aria-live="polite"></div></div>',function(){DQ=null;});
+ $('#ov').dataset.lock='1';
+ $('#xClose').onclick=function(){if(DQ&&DQ.res.length&&!DQ.fin)dictRec('quit');DQ=null;closeModal();};
+ if($('#dPlay')){$('#dPlay').onclick=function(){say(t.en);};$('#dSlow').onclick=function(){say(t.en,true);};say(t.en);}
+ $('#dHint').onclick=function(){if(DQ.done)return;DQ.hint=true;$('#dHintBox').innerHTML='<div class="ctx" style="margin-top:8px">💡 '+esc(t.zh)+' · <b>'+dShown(t.en).split(' ').map(function(w){return w[0]+w.slice(1).replace(/[a-z]/gi,'_');}).join(' ')+'</b></div>';$('#dHint').disabled=true;};
+ $('#dForm').onsubmit=function(e){e.preventDefault();dSubmit();};
+ setTimeout(function(){var i=$('#dIn');if(i)i.focus();},200);}
+function dSubmit(){if(DQ.done)return;var t=DQ.list[DQ.i],inp=$('#dIn'),v=inp.value;if(!dNorm(v)){inp.focus();return;}var r=dCheck(v,t),k=dKey(t),fb=$('#dFb');
+ var ipa=ipaOf(t.en);
+ if(r.ok){var first=DQ.tries===0&&!DQ.hint;DQ.pts+=first?2:1;DQ.res.push({t:t,ok:true,first:first});DQ.done=true;S.dict.n++;if(S.dict.miss[k]){S.dict.miss[k]--;if(S.dict.miss[k]<=0)delete S.dict.miss[k];}
+  sfx('right');inp.disabled=true;inp.classList.add('good');say(t.en);
+  fb.innerHTML='<div class="fb ok"><div style="min-width:0"><b>'+pick([L('Correct!','正確！'),L('Perfect spelling!','拼得完美！'),L('Yaha! Well done!','呀哈！做得好！')])+'</b> <b>'+esc(dShown(t.en))+'</b> <span class="ipa">'+ipa+'</span><div>'+esc(t.zh)+(r.note?' · '+L('Textbook spelling: ','課本拼法：')+esc(dShown(t.en)):'')+'</div>'+dNextBtn()+'</div></div>';}
+ else{DQ.tries++;sfx('wrong');
+  if(DQ.tries<2){inp.select();fb.innerHTML='<div class="fb no"><div><b>'+(r.close?L('So close! Check the spelling and try once more.','好接近！檢查拼法，再試一次。'):L('Not quite – try once more.','未對，再試一次。'))+'</b></div></div>';if(DQ.kind==='listen')say(t.en,true);}
+  else{DQ.res.push({t:t,ok:false});DQ.done=true;S.dict.miss[k]=(S.dict.miss[k]||0)+1;inp.disabled=true;inp.classList.add('badin');say(t.en,true);
+   fb.innerHTML='<div class="fb no"><div style="min-width:0">'+L('Answer: ','答案：')+'<b class="dans">'+esc(dShown(t.en))+'</b> <span class="ipa">'+ipa+'</span><div>'+esc(t.zh)+' · '+L('Saved to "My missed words".','已存入「我的錯字」。')+'</div>'+dNextBtn()+'</div></div>';}}
+ var nb=$('#dNext');if(nb){nb.onclick=dNext;nb.focus();}save();}
+function dNextBtn(){return '<button class="btn" id="dNext" style="margin-top:10px">'+(DQ.i<DQ.list.length-1?L('Next →','下一個 →'):L('Finish','完成'))+'</button>';}
+function dNext(){if(DQ.i<DQ.list.length-1){DQ.i++;showD();}else dFinish();}
+function dFinish(){var n=DQ.res.filter(function(r){return r.ok;}).length,tot=DQ.res.length,perfect=DQ.res.every(function(r){return r.first;});DQ.fin=true;
+ dictRec('done');markActive();var p=curPet();p.happy=clamp(p.happy+(n>=tot/2?5:1),5,100);p.energy=clamp(p.energy-5,5,100);var g=gain(DQ.pts+(perfect?10:0),DQ.pts*2);
+ var missed=DQ.res.filter(function(r){return !r.ok;});
+ var h='<div class="empty"><div style="width:130px;margin:0 auto">'+petSVG(S.active,n===tot?'joy':n>=tot/2?'happy':'sad')+'</div><h2>'+n+' / '+tot+'</h2><p>+'+g.c+' 🪙 · +'+g.x+' XP'+(perfect?' · 🌟 '+L('Perfect!','全對！'):'')+'</p></div>'+
+ '<div class="vlist">'+DQ.res.map(function(r){return '<div class="vterm"><button class="say" data-say="'+esc(r.t.en)+'" aria-label="Play">🔊</button><span class="dres '+(r.ok?'ok':'no')+'">'+(r.ok?'✓':'✗')+'</span><div class="vt"><b>'+esc(dShown(r.t.en))+'</b> <span class="ipa">'+ipaOf(r.t.en)+'</span><div class="zh">'+esc(r.t.zh)+'</div></div></div>';}).join('')+'</div>'+
+ '<div class="row" style="justify-content:center;margin-top:14px"><button class="btn" id="dAgain">🔁 '+L('New round','再來一輪')+'</button>'+(missed.length?'<button class="btn pink" id="dMiss">📝 '+L('Practise missed words','練習錯字')+'</button>':'')+'<button class="btn white" id="dDone">'+L('Done','完成')+'</button></div>';
+ var kind=DQ.kind;DQ=null;modal(h);sfx(n===tot?'fanfare':'coin');if(n===tot)confetti();
+ $('#dAgain').onclick=function(){$('#ovroot').innerHTML='';startDict();};
+ if($('#dMiss'))$('#dMiss').onclick=function(){dictCfg.unit='missed';dictCfg.kind=kind;$('#ovroot').innerHTML='';startDict();};
+ $('#dDone').onclick=closeModal;save();}
 
 /* =====================================================================
    CLASS LOGIN (Google) · CLOUD SAVE · RECORDS · TEACHER DASHBOARD
@@ -1858,7 +2221,7 @@ function openAccount(){var u=AUTH.user,q=getQ().length,h='<div class="sheet-h"><
 
 /* ---- teacher dashboard ---- */
 var TD={data:null,loading:false,err:'',cls:'all',period:'30',sort:'no',dir:1};
-var MODE_NAMES={quiz:['Quiz','測驗'],practice:['Mistake practice','錯題練習'],study:['Study notes','溫習筆記'],vocab:['Vocab','詞彙跟讀'],match:['Term Match','詞彙配對']};
+var MODE_NAMES={quiz:['Quiz','測驗'],practice:['Mistake practice','錯題練習'],study:['Study notes','溫習筆記'],vocab:['Vocab','詞彙跟讀'],match:['Term Match','詞彙配對'],dict_listen:['Dictation (listen)','默書（聽音）'],dict_meaning:['Dictation (meaning/picture)','默書（看義／圖）']};
 function modeName(k){var m=MODE_NAMES[k];return m?L(m[0],m[1]):k;}
 function loadStats(){TD.loading=true;TD.err='';api('stats',{}).then(function(j){TD.loading=false;if(j.ok){TD.data=j;TD.at=Date.now();}else TD.err=errText(j.error);if(curScreen==='teacher')render();});}
 function pct(c,a){return a?Math.round(c/a*100):null;}
@@ -1866,9 +2229,10 @@ function accChip(p){if(p==null)return '<span class="muted">–</span>';var col=p
 function fmtT(t){if(!t)return '–';var d=new Date(t);if(isNaN(d))return '–';return (d.getMonth()+1)+'/'+d.getDate()+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
 function computeStats(){var D=TD.data,since=TD.period==='all'?0:Date.now()-(+TD.period)*864e5;
  var studs=D.students.filter(function(s){return TD.cls==='all'||s.cls===TD.cls;}).sort(function(a,b){return a.cls<b.cls?-1:a.cls>b.cls?1:(+a.no||0)-(+b.no||0);});
- var by={};studs.forEach(function(s){by[s.email]={s:s,sess:0,quiz:0,ans:0,cor:0,secs:0,last:'',secs2:{},wrong:{},recs:[]};});
- var sec={};ALLSECS.forEach(function(x){sec[x.id]={att:0,studs:{},ans:0,cor:0};});var asked={},missed={},recs=[];
+ var by={};studs.forEach(function(s){by[s.email]={s:s,sess:0,quiz:0,ans:0,cor:0,dans:0,dcor:0,secs:0,last:'',secs2:{},wrong:{},recs:[]};});
+ var sec={};ALLSECS.forEach(function(x){sec[x.id]={att:0,studs:{},ans:0,cor:0};});var asked={},missed={},recs=[],spell={},DA=0,DC=0;
  D.records.forEach(function(r){var st=by[r.email];if(!st)return;var tm=Date.parse(r.t);if(tm<since)return;recs.push(r);st.recs.push(r);if(!st.last||r.t>st.last)st.last=r.t;st.secs+=+r.secs||0;
+  if(String(r.mode).indexOf('dict')===0){st.dans+=+r.ans||0;st.dcor+=+r.cor||0;DA+=+r.ans||0;DC+=+r.cor||0;String(r.wrong||'').split(', ').filter(String).forEach(function(w){spell[w]=(spell[w]||0)+1;});}
   if(r.mode==='quiz'||r.mode==='practice'){st.sess++;st.ans+=+r.ans||0;st.cor+=+r.cor||0;
    String(r.ids||'').split(' ').filter(String).forEach(function(id){asked[id]=(asked[id]||0)+1;var sid=id.split('#')[0];var m=st.secs2[sid]||(st.secs2[sid]={ans:0,cor:0,best:0,att:0});m.ans++;if(sec[sid]){sec[sid].ans++;}});
    String(r.wrong||'').split(' ').filter(String).forEach(function(id){missed[id]=(missed[id]||0)+1;st.wrong[id]=(st.wrong[id]||0)+1;var sid=id.split('#')[0];if(sec[sid])sec[sid].ans+=0;});}
@@ -1879,7 +2243,8 @@ function computeStats(){var D=TD.data,since=TD.period==='all'?0:Date.now()-(+TD.
  for(var sid3 in sec){var w2=0;for(var id2 in missed)if(id2.split('#')[0]===sid3)w2+=missed[id2];sec[sid3].cor=Math.max(0,sec[sid3].ans-w2);sec[sid3].n=Object.keys(sec[sid3].studs).length;}
  var rows=studs.map(function(s){return by[s.email];}),active=rows.filter(function(r){return r.recs.length;}).length,A=0,C=0,M=0,strk=0;rows.forEach(function(r){A+=r.ans;C+=r.cor;M+=r.secs;strk+=+(r.prog.streak||0);});
  var mm=Object.keys(missed).filter(function(id){return qById(id);}).map(function(id){return {id:id,asked:asked[id]||missed[id],miss:missed[id]};}).sort(function(a,b){return b.miss/b.asked-a.miss/a.asked||b.miss-a.miss;}).slice(0,12);
- return {rows:rows,sec:sec,recs:recs,tot:studs.length,active:active,ans:A,cor:C,mins:Math.round(M/60),avgStreak:studs.length?(strk/studs.length).toFixed(1):'0',missed:mm};}
+ var sp=Object.keys(spell).map(function(w){return {w:w,n:spell[w]};}).sort(function(a,b){return b.n-a.n;}).slice(0,15);
+ return {spell:sp,dans:DA,dcor:DC,rows:rows,sec:sec,recs:recs,tot:studs.length,active:active,ans:A,cor:C,mins:Math.round(M/60),avgStreak:studs.length?(strk/studs.length).toFixed(1):'0',missed:mm};}
 function teacherHTML(){var h='<h1 class="h-sec">📊 '+L('Teacher dashboard','老師數據中心')+'</h1>';
  if(!TD.data&&!TD.loading&&!TD.err)loadStats();
  if(TD.loading&&!TD.data)return h+'<div class="card empty">⏳ '+L('Loading class records…','正在載入班級記錄…')+'</div>';
@@ -1888,16 +2253,17 @@ function teacherHTML(){var h='<h1 class="h-sec">📊 '+L('Teacher dashboard','�
  h+='<div class="card row" style="gap:8px"><label class="tdl">'+L('Class','班別')+' <select id="tdCls">'+['all'].concat(Object.keys(classes).sort()).map(function(c){return '<option value="'+esc(c)+'"'+(TD.cls===c?' selected':'')+'>'+(c==='all'?L('All classes','全部班別'):esc(c))+'</option>';}).join('')+'</select></label>'+
   '<label class="tdl">'+L('Period','時段')+' <select id="tdPer">'+[['7',L('Last 7 days','最近 7 日')],['30',L('Last 30 days','最近 30 日')],['all',L('All time','全部')]].map(function(o){return '<option value="'+o[0]+'"'+(TD.period===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select></label>'+
   '<button class="btn small white" id="tdRe">🔄 '+L('Refresh','更新')+'</button><button class="btn small green" id="tdXl">⬇️ '+L('Download Excel','下載 Excel')+'</button><span class="muted" style="font-size:12px">'+L('Updated ','更新於 ')+fmtT(TD.at)+'</span></div>';
- var tiles=[[X.active+' / '+X.tot,L('Active students','活躍學生')],[X.ans,L('Questions answered','已答題數')],[X.ans?pct(X.cor,X.ans)+'%':'–',L('Accuracy','準確率')],[X.mins,L('Minutes studied','溫習分鐘')],[X.avgStreak,L('Avg streak (days)','平均連續日數')]];
+ var tiles=[[X.active+' / '+X.tot,L('Active students','活躍學生')],[X.ans,L('Questions answered','已答題數')],[X.ans?pct(X.cor,X.ans)+'%':'–',L('Accuracy','準確率')],[X.dans?pct(X.dcor,X.dans)+'%':'–',L('Dictation accuracy','默書準確率')],[X.mins,L('Minutes studied','溫習分鐘')],[X.avgStreak,L('Avg streak (days)','平均連續日數')]];
  h+='<div class="tiles">'+tiles.map(function(t){return '<div class="tile"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';}).join('')+'</div>';
- var cols=[['no',L('Class/No.','班別/號')],['name',L('Name','姓名')],['last',L('Last active','最近活動')],['sess',L('Sessions','次數')],['ans',L('Answered','答題')],['acc',L('Accuracy','準確率')],['stars','★'],['streak','🔥'],['weak',L('Weakest','最弱小節')]];
- var rows=X.rows.slice();var key=TD.sort,dir=TD.dir;var val=function(r){return key==='no'?r.s.cls+String(r.s.no).padStart(3,'0'):key==='name'?(r.s.en||r.s.zh):key==='last'?r.last:key==='sess'?r.sess:key==='ans'?r.ans:key==='acc'?(r.acc==null?-1:r.acc):key==='stars'?+(r.prog.stars||0):key==='streak'?+(r.prog.streak||0):(r.weak?r.weak.p:2);};
+ var cols=[['no',L('Class/No.','班別/號')],['name',L('Name','姓名')],['last',L('Last active','最近活動')],['sess',L('Sessions','次數')],['ans',L('Answered','答題')],['acc',L('Accuracy','準確率')],['dict',L('Dictation','默書')],['stars','★'],['streak','🔥'],['weak',L('Weakest','最弱小節')]];
+ var rows=X.rows.slice();var key=TD.sort,dir=TD.dir;var val=function(r){return key==='no'?r.s.cls+String(r.s.no).padStart(3,'0'):key==='name'?(r.s.en||r.s.zh):key==='last'?r.last:key==='sess'?r.sess:key==='ans'?r.ans:key==='acc'?(r.acc==null?-1:r.acc):key==='dict'?(r.dans?r.dcor/r.dans:-1):key==='stars'?+(r.prog.stars||0):key==='streak'?+(r.prog.streak||0):(r.weak?r.weak.p:2);};
  rows.sort(function(a,b){var x=val(a),y=val(b);return (x<y?-1:x>y?1:0)*dir;});
  h+='<h2 class="h-sec">👩‍🎓 '+L('Students','學生')+' <span class="muted" style="font-size:13px">'+L('tap a name for details · tap a heading to sort','點姓名看詳情 · 點標題排序')+'</span></h2><div class="tbl"><table><thead><tr>'+cols.map(function(c){return '<th><button data-sort="'+c[0]+'">'+c[1]+(TD.sort===c[0]?(TD.dir>0?' ▲':' ▼'):'')+'</button></th>';}).join('')+'</tr></thead><tbody>'+
-  rows.map(function(r){var s=r.s;return '<tr><td>'+esc(s.cls)+(s.no!==''?'-'+esc(s.no):'')+'</td><td><button class="lnk" data-stu="'+esc(s.email)+'">'+esc(s.zh||'')+' <span class="muted">'+esc(s.en||'')+'</span></button></td><td>'+fmtT(r.last)+'</td><td class="n">'+r.sess+'</td><td class="n">'+r.ans+'</td><td>'+accChip(r.acc)+'</td><td class="n">'+(r.prog.stars||0)+'</td><td class="n">'+(r.prog.streak||0)+'</td><td>'+(r.weak?esc(r.weak.id)+' '+accChip(Math.round(r.weak.p*100)):'<span class="muted">–</span>')+'</td></tr>';}).join('')+'</tbody></table></div>';
+  rows.map(function(r){var s=r.s;return '<tr><td>'+esc(s.cls)+(s.no!==''?'-'+esc(s.no):'')+'</td><td><button class="lnk" data-stu="'+esc(s.email)+'">'+esc(s.zh||'')+' <span class="muted">'+esc(s.en||'')+'</span></button></td><td>'+fmtT(r.last)+'</td><td class="n">'+r.sess+'</td><td class="n">'+r.ans+'</td><td>'+accChip(r.acc)+'</td><td>'+accChip(pct(r.dcor,r.dans))+'</td><td class="n">'+(r.prog.stars||0)+'</td><td class="n">'+(r.prog.streak||0)+'</td><td>'+(r.weak?esc(r.weak.id)+' '+accChip(Math.round(r.weak.p*100)):'<span class="muted">–</span>')+'</td></tr>';}).join('')+'</tbody></table></div>';
  h+='<h2 class="h-sec">📚 '+L('Sub-topics','小節表現')+'</h2><div class="tbl"><table><thead><tr><th>'+L('Sub-topic','小節')+'</th><th>'+L('Students','學生')+'</th><th>'+L('Quizzes','測驗')+'</th><th>'+L('Answered','答題')+'</th><th>'+L('Accuracy','準確率')+'</th></tr></thead><tbody>'+
   ALLSECS.map(function(s){var m=X.sec[s.id],p=pct(m.cor,m.ans);return '<tr><td><b>'+s.id+'</b> '+esc(LL(s))+'</td><td class="n">'+m.n+'/'+X.tot+'</td><td class="n">'+m.att+'</td><td class="n">'+m.ans+'</td><td><div class="minibar"><i style="width:'+(p||0)+'%;background:'+(p==null?'#eee':p>=80?'var(--good)':p>=60?'var(--gold)':'var(--bad)')+'"></i></div> '+accChip(p)+'</td></tr>';}).join('')+'</tbody></table></div>';
  h+='<h2 class="h-sec">❗ '+L('Most-missed questions','最常答錯的題目')+'</h2>'+(X.missed.length?'<div class="grid" style="gap:8px">'+X.missed.map(function(m){var q=qById(m.id);return '<div class="mistake"><div style="min-width:0"><span class="tag">'+m.id.split('#')[0]+'</span> '+esc(LL(q))+'</div><span class="acc" style="background:#FDECEF">'+Math.round(m.miss/m.asked*100)+'% · '+m.miss+'/'+m.asked+'</span></div>';}).join('')+'</div>':'<p class="muted">'+L('No wrong answers recorded in this period.','此時段沒有答錯記錄。')+'</p>');
+ h+='<h2 class="h-sec">✍️ '+L('Most-misspelled words','最常拼錯的詞彙')+'</h2>'+(X.spell.length?'<div class="row" style="gap:8px">'+X.spell.map(function(x){return '<span class="term">'+esc(x.w)+' <span>×'+x.n+'</span></span>';}).join('')+'</div>':'<p class="muted">'+L('No dictation mistakes recorded in this period.','此時段沒有默書錯字記錄。')+'</p>');
  return h;}
 function bindTeacher(){var c=$('#tdCls');if(c)c.onchange=function(){TD.cls=c.value;render();};var p=$('#tdPer');if(p)p.onchange=function(){TD.period=p.value;render();};
  var re=$('#tdRe');if(re)re.onclick=function(){TD.data=null;TD.err='';loadStats();render();};
@@ -1906,7 +2272,7 @@ function bindTeacher(){var c=$('#tdCls');if(c)c.onchange=function(){TD.cls=c.val
  document.querySelectorAll('[data-stu]').forEach(function(b){b.onclick=function(){openStudent(b.dataset.stu);};});}
 function openStudent(email){var r=TD.X.rows.filter(function(x){return x.s.email===email;})[0];if(!r)return;var s=r.s,pg=r.prog;
  var h='<div class="sheet-h"><h2>'+esc(s.zh||'')+' '+esc(s.en||'')+' <span class="muted" style="font-size:14px">'+esc(s.cls)+(s.no!==''?'-'+esc(s.no):'')+'</span></h2><button class="x" id="xClose" aria-label="Close">✕</button></div>';
- var tiles=[[r.sess,L('Sessions','次數')],[r.ans,L('Answered','答題')],[r.acc==null?'–':r.acc+'%',L('Accuracy','準確率')],[(pg.stars||0)+'/'+ALLSECS.length*3,L('Stars','星星')],[(pg.streak||0)+' / '+(pg.best||0),L('Streak / best','連續 / 最佳')],[pg.mistakes!=null?pg.mistakes:'–',L('Mistakes to clear','待清除錯題')],[Math.round(r.secs/60),L('Minutes','分鐘')],[pg.level?'Lv '+pg.level:'–',L('Pet level','寵物等級')]];
+ var tiles=[[r.dans?pct(r.dcor,r.dans)+'% · '+r.dcor+'/'+r.dans:'–',L('Dictation','默書')],[r.sess,L('Sessions','次數')],[r.ans,L('Answered','答題')],[r.acc==null?'–':r.acc+'%',L('Accuracy','準確率')],[(pg.stars||0)+'/'+ALLSECS.length*3,L('Stars','星星')],[(pg.streak||0)+' / '+(pg.best||0),L('Streak / best','連續 / 最佳')],[pg.mistakes!=null?pg.mistakes:'–',L('Mistakes to clear','待清除錯題')],[Math.round(r.secs/60),L('Minutes','分鐘')],[pg.level?'Lv '+pg.level:'–',L('Pet level','寵物等級')]];
  h+='<div class="tiles">'+tiles.map(function(t){return '<div class="tile"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';}).join('')+'</div>';
  h+='<h3 class="vh">'+L('By sub-topic','各小節')+'</h3><div class="tbl"><table><thead><tr><th>'+L('Sub-topic','小節')+'</th><th>'+L('Quizzes','測驗')+'</th><th>'+L('Best','最佳')+'</th><th>'+L('Answered','答題')+'</th><th>'+L('Accuracy','準確率')+'</th></tr></thead><tbody>'+
   ALLSECS.map(function(x){var m=r.secs2[x.id];if(!m)return '';return '<tr><td><b>'+x.id+'</b> '+esc(LL(x))+'</td><td class="n">'+m.att+'</td><td>'+stars(m.best)+'</td><td class="n">'+m.ans+'</td><td>'+accChip(pct(m.cor,m.ans))+'</td></tr>';}).join('')+'</tbody></table></div>';
@@ -1917,8 +2283,10 @@ function openStudent(email){var r=TD.X.rows.filter(function(x){return x.s.email=
 function loadXLSX(cb){if(window.XLSX){cb();return;}var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=cb;s.onerror=function(){toast(L('Could not load the Excel tool. Check your internet.','無法載入 Excel 工具，請檢查網絡。'));};document.head.appendChild(s);}
 function downloadExcel(){loadXLSX(function(){var X=TD.X,wb=XLSX.utils.book_new(),per={'7':'Last 7 days 最近7日','30':'Last 30 days 最近30日','all':'All time 全部'}[TD.period];
  function add(name,aoa,w){var ws=XLSX.utils.aoa_to_sheet(aoa);ws['!cols']=w.map(function(x){return {wch:x};});XLSX.utils.book_append_sheet(wb,ws,name);}
- add('Summary 總覽',[['Mochi Science Pals – S1 Science 中一科學'],['Class 班別',TD.cls==='all'?'All 全部':TD.cls],['Period 時段',per],['Generated 產生時間',new Date().toLocaleString()],[],['Students 學生人數',X.tot],['Active students 活躍學生',X.active],['Questions answered 已答題數',X.ans],['Correct 答對',X.cor],['Accuracy % 準確率',X.ans?pct(X.cor,X.ans):''],['Minutes studied 溫習分鐘',X.mins],['Average streak 平均連續日數',+X.avgStreak]],[30,28]);
- add('Students 學生',[['Class 班別','No. 班號','Chinese Name 中文姓名','English Name 英文姓名','Email 電郵','Sessions 次數','Quizzes 測驗','Answered 答題','Correct 答對','Accuracy % 準確率','Stars 星星','Streak 連續','Best streak 最佳連續','Mistakes to clear 待清除錯題','Minutes 分鐘','Last active 最近活動','Weakest sub-topic 最弱小節','Weakest accuracy % 最弱準確率']].concat(X.rows.map(function(r){var s=r.s,p=r.prog;return [s.cls,s.no===''?'':+s.no||s.no,s.zh,s.en,s.email,r.sess,r.quiz,r.ans,r.cor,r.acc==null?'':r.acc,+(p.stars||0),+(p.streak||0),+(p.best||0),p.mistakes==null?'':+p.mistakes,Math.round(r.secs/60),r.last?new Date(r.last):'',r.weak?r.weak.id:'',r.weak?Math.round(r.weak.p*100):''];})),[8,6,12,22,26,9,9,9,9,11,7,7,10,12,9,16,12,12]);
+ add('Summary 總覽',[['Mochi Science Pals – S1 Science 中一科學'],['Class 班別',TD.cls==='all'?'All 全部':TD.cls],['Period 時段',per],['Generated 產生時間',new Date().toLocaleString()],[],['Students 學生人數',X.tot],['Active students 活躍學生',X.active],['Questions answered 已答題數',X.ans],['Correct 答對',X.cor],['Accuracy % 準確率',X.ans?pct(X.cor,X.ans):''],['Dictation accuracy % 默書準確率',X.dans?pct(X.dcor,X.dans):''],['Minutes studied 溫習分鐘',X.mins],['Average streak 平均連續日數',+X.avgStreak]],[30,28]);
+ add('Students 學生',[['Class 班別','No. 班號','Chinese Name 中文姓名','English Name 英文姓名','Email 電郵','Sessions 次數','Quizzes 測驗','Answered 答題','Correct 答對','Accuracy % 準確率','Stars 星星','Streak 連續','Best streak 最佳連續','Mistakes to clear 待清除錯題','Minutes 分鐘','Last active 最近活動','Weakest sub-topic 最弱小節','Weakest accuracy % 最弱準確率','Dictation words 默書字數','Dictation correct 默書答對','Dictation % 默書準確率']].concat(X.rows.map(function(r){var s=r.s,p=r.prog;return [s.cls,s.no===''?'':+s.no||s.no,s.zh,s.en,s.email,r.sess,r.quiz,r.ans,r.cor,r.acc==null?'':r.acc,+(p.stars||0),+(p.streak||0),+(p.best||0),p.mistakes==null?'':+p.mistakes,Math.round(r.secs/60),r.last?new Date(r.last):'',r.weak?r.weak.id:'',r.weak?Math.round(r.weak.p*100):'',r.dans,r.dcor,r.dans?pct(r.dcor,r.dans):''];})),[8,6,12,22,26,9,9,9,9,11,7,7,10,12,9,16,12,12,10,10,10]);
+ var zhOf={};CHAPTERS.forEach(function(c){c.sections.forEach(function(s){s.terms.forEach(function(t){zhOf[dShown(t[0]).toLowerCase()]=t[1];});});});
+ add('Misspelled 常錯拼寫',[['Word 詞彙','中文','Times wrong 拼錯次數']].concat(X.spell.map(function(x){return [x.w,zhOf[x.w.toLowerCase()]||'',x.n];})),[30,16,14]);
  add('Sub-topics 小節',[['Sub-topic 小節','Title 標題','題目 (中文)','Students attempted 參與學生','Quizzes 測驗次數','Answered 答題','Correct 答對','Accuracy % 準確率']].concat(ALLSECS.map(function(s){var m=X.sec[s.id];return [s.id,s.en,s.zh,m.n,m.att,m.ans,m.cor,m.ans?pct(m.cor,m.ans):''];})),[10,36,24,12,12,10,10,12]);
  add('Matrix 學生×小節',[['Class 班別','No. 班號','Name 姓名'].concat(ALLSECS.map(function(s){return s.id;}))].concat(X.rows.map(function(r){return [r.s.cls,r.s.no===''?'':+r.s.no||r.s.no,(r.s.zh||'')+' '+(r.s.en||'')].concat(ALLSECS.map(function(s){var m=r.secs2[s.id];return m&&m.ans?pct(m.cor,m.ans):'';}));})),[8,6,24].concat(ALLSECS.map(function(){return 6;})));
  add('Most missed 常錯題',[['Question ID 題號','Question (English)','題目 (中文)','Times asked 出現次數','Times wrong 答錯次數','Miss rate % 答錯率']].concat(X.missed.map(function(m){var q=qById(m.id);return [m.id,q.en,q.zh,m.asked,m.miss,Math.round(m.miss/m.asked*100)];})),[10,60,40,10,10,10]);
