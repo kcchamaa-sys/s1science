@@ -23,7 +23,8 @@ var REC_HEAD = ['記錄時間 Timestamp', '練習編號 Session ID', '電郵 Ema
 var PROG_HEAD = ['電郵 Email', '更新時間 Updated', '連續日數 Streak', '最佳連續 Best streak', '星星 Stars', '寵物等級 Pet level',
   '金幣 Coins', '寵物 Pet', '測驗次數 Quizzes', '待清除錯題 Mistakes', '已清除錯題 Cleared', '獎盃 Trophies',
   '最後溫習日 Last study day', '進度資料 Data (do not edit)'];
-var MODES = { quiz: '測驗 Quiz', practice: '錯題練習 Mistake practice', study: '溫習筆記 Study notes', vocab: '詞彙跟讀 Vocab', match: '詞彙配對 Term Match' };
+var MODES = { quiz: '測驗 Quiz', practice: '錯題練習 Mistake practice', study: '溫習筆記 Study notes', vocab: '詞彙跟讀 Vocab', match: '詞彙配對 Term Match',
+  dict_listen: '默書（聽音）Dictation – listen', dict_meaning: '默書（看義／圖）Dictation – meaning/picture' };
 var STATUS = { done: '完成', quit: '中途結束' };
 
 function doGet() {
