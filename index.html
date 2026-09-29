@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FFFDF6">
+<title>Mochi Science Pals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Noto+Sans+TC:wght@400;700&display=swap">
+<style>
+/* Layout: one cozy phone-width column (room scene on top, cards below); widens to a 2-column desk on tablets/desktop. Bottom tab bar. */
+:root{
+  --cream:#FFFDF6; --matcha:#D8E2DC; --pink:#FFE5EC; --rose:#E8AEB7; --butter:#FFF1C5; --sky:#D8F3DC;
+  --lav:#EDE4F7; --ink:#5B4B49; --ink2:#8A7773; --line:#EADFD6; --card:#FFFFFF; --good:#6FB58A; --bad:#E2828F; --gold:#F2C14E;
+  --shadow:0 6px 18px rgba(120,90,80,.12), 0 2px 4px rgba(120,90,80,.08);
+  --r:22px; --font:'M PLUS Rounded 1c','Noto Sans TC',ui-rounded,system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #9CC8E8;outline-offset:2px}
+h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance}
+.app{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:0 calc(96px + env(safe-area-inset-bottom,0px))}
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(255,253,246,.92);backdrop-filter:blur(8px);display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding-block:10px;margin-inline:-16px;padding-inline:16px;border-bottom:1px solid var(--line)}
+.brand{font-weight:800;font-size:18px;display:flex;align-items:center;gap:6px;margin-right:auto;min-width:0}
+.brand small{font-weight:700;color:var(--ink2);font-size:12px}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:4px 10px;font-weight:800;font-size:14px;font-variant-numeric:tabular-nums;min-height:36px}
+.iconbtn{min-width:44px;min-height:44px;border-radius:14px;background:var(--card);border:2px solid var(--line);font-weight:800;font-size:15px;display:inline-flex;align-items:center;justify-content:center;padding:0 10px;transition:transform .15s}
+.iconbtn:active,.btn:active,.tap:active{transform:scale(.94)}
+/* bottom nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.96);border-top:2px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav-in{display:grid;grid-template-columns:repeat(5,1fr);width:100%;max-width:620px}
+.nav button{min-height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;font-weight:700;color:var(--ink2);position:relative}
+.nav button .ni{font-size:22px;line-height:1;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.nav button[aria-current="page"]{color:var(--ink)}
+.nav button[aria-current="page"] .ni{transform:translateY(-3px) scale(1.15)}
+.nav button[aria-current="page"]::after{content:"";position:absolute;bottom:6px;width:6px;height:6px;border-radius:50%;background:var(--rose)}
+.badge{position:absolute;top:6px;right:calc(50% - 22px);background:var(--bad);color:#fff;font-size:10px;border-radius:999px;padding:0 5px;min-width:16px;line-height:16px}
+/* cards & buttons */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;border:2px solid #fff}
+.btn{min-height:48px;padding:10px 18px;border-radius:18px;font-weight:800;background:var(--butter);border:2px solid #EBD89A;box-shadow:0 3px 0 #EBD89A;transition:transform .18s cubic-bezier(.3,1.6,.5,1),box-shadow .15s;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-align:center}
+.btn:hover{transform:translateY(-2px)}
+.btn.pink{background:var(--pink);border-color:var(--rose);box-shadow:0 3px 0 var(--rose)}
+.btn.green{background:var(--sky);border-color:#A9D3B3;box-shadow:0 3px 0 #A9D3B3}
+.btn.lav{background:var(--lav);border-color:#CDBDE5;box-shadow:0 3px 0 #CDBDE5}
+.btn.white{background:#fff;border-color:var(--line);box-shadow:0 3px 0 var(--line)}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.btn.small{min-height:44px;padding:6px 12px;font-size:14px;border-radius:14px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.grid{display:grid;gap:14px}
+.muted{color:var(--ink2)}
+.h-sec{font-size:20px;font-weight:800;margin-block:18px 10px;display:flex;align-items:center;gap:8px}
+/* home */
+.home{display:grid;gap:16px;margin-top:14px}
+@media (min-width:880px){.home{grid-template-columns:1.15fr 1fr;align-items:start}}
+.room{position:relative;border-radius:28px;overflow:hidden;aspect-ratio:4/3.3;max-width:100%;box-shadow:var(--shadow);border:3px solid #fff}
+.room .wall{position:absolute;inset:0 0 24% 0}
+.room .floor{position:absolute;left:0;right:0;bottom:0;height:24%;background:linear-gradient(#EFD9C3,#E6CBB0);border-top:3px solid #D9BA9C}
+.room .floor::before{content:"";position:absolute;left:18%;right:18%;top:22%;height:44%;border-radius:50%;background:var(--pink);opacity:.8}
+.room .window{position:absolute;top:8%;right:6%;width:26%;aspect-ratio:1/1.05}
+.room .prop{position:absolute;left:4%;bottom:14%;width:25%}
+.room .stk{position:absolute;width:12%;aspect-ratio:1}
+.room .petwrap{position:absolute;left:50%;bottom:4%;width:52%;transform:translateX(-50%)}
+.room .bubble{position:absolute;left:50%;top:5%;transform:translateX(-50%);max-width:70%;background:#fff;border-radius:18px;padding:8px 14px;font-weight:700;font-size:14px;box-shadow:var(--shadow);text-align:center;animation:pop .35s cubic-bezier(.3,1.6,.5,1)}
+.room .bubble::after{content:"";position:absolute;left:50%;bottom:-8px;border:8px solid transparent;border-top-color:#fff;border-bottom:0;transform:translateX(-50%)}
+.pet{display:block;width:100%;height:auto;overflow:visible;cursor:pointer}
+.pet .bob{animation:bob 2.6s ease-in-out infinite;transform-origin:100px 176px}
+.pet.boing .bob{animation:boing .6s cubic-bezier(.3,1.6,.5,1)}
+.pet .zzz{animation:zz 2s ease-in-out infinite}
+.pet .spark{animation:tw 1.4s ease-in-out infinite}
+.pet .tear{animation:drip 1.6s ease-in infinite}
+@keyframes bob{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-4px) scale(1.02,.98)}}
+@keyframes boing{0%{transform:scale(1,1)}30%{transform:scale(1.15,.85)}60%{transform:scale(.92,1.1)}100%{transform:scale(1,1)}}
+@keyframes zz{0%{opacity:0;transform:translate(0,6px)}50%{opacity:1}100%{opacity:0;transform:translate(8px,-10px)}}
+@keyframes tw{0%,100%{opacity:.2;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
+@keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(12px);opacity:0}}
+@keyframes pop{0%{transform:translateX(-50%) scale(.6);opacity:0}100%{transform:translateX(-50%) scale(1);opacity:1}}
+@keyframes popin{0%{transform:scale(.7);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.stats{display:grid;gap:10px}
+.stat{display:grid;grid-template-columns:92px 1fr 44px;align-items:center;gap:8px;font-weight:700;font-size:14px}
+.bar{height:14px;border-radius:999px;background:#F3ECE6;overflow:hidden;border:2px solid #fff;box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
+.bar i{display:block;height:100%;border-radius:999px;transition:width .6s cubic-bezier(.3,1.3,.5,1)}
+.num{font-variant-numeric:tabular-nums;text-align:right}
+.petname{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.petname h2{font-size:22px}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:800;background:var(--lav)}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.actions .btn{flex-direction:column;gap:2px;min-height:72px;font-size:13px;padding:8px}
+.actions .btn .e{font-size:24px;line-height:1}
+.streak{display:flex;align-items:center;gap:12px}
+.flame{font-size:34px;line-height:1}
+.days{display:flex;gap:6px;flex-wrap:wrap}
+.days span{width:30px;height:30px;border-radius:50%;background:#F3ECE6;display:grid;place-items:center;font-size:12px;font-weight:800}
+.days span.on{background:var(--butter);box-shadow:inset 0 0 0 2px var(--gold)}
+/* study */
+.chap{border-radius:26px;padding:16px;box-shadow:var(--shadow);border:3px solid #fff}
+.chap-h{display:flex;align-items:center;gap:12px}
+.chap-h .ic{width:52px;height:52px;border-radius:18px;background:#fff;display:grid;place-items:center;flex:none}
+.chap-h h3{font-size:18px}
+.sec{background:#fff;border-radius:18px;padding:12px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:10px}
+.sec b{display:block;font-size:15px}
+.sec .meta{font-size:12px;color:var(--ink2);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.stars{letter-spacing:1px;color:var(--gold);font-size:15px}
+.stars .off{color:#E6DCD2}
+.sec .acts{display:flex;gap:6px}
+.prog{height:6px;border-radius:9px;background:#F3ECE6;overflow:hidden;margin-top:6px}
+.prog i{display:block;height:100%;background:var(--good)}
+/* overlay / modal */
+.ov{position:fixed;inset:0;z-index:50;background:rgba(91,75,73,.35);display:flex;align-items:flex-end;justify-content:center;padding:env(safe-area-inset-top,0px) 0 0}
+@media (min-width:700px){.ov{align-items:center;padding:24px}}
+.sheet{background:var(--cream);width:100%;max-width:680px;max-height:100%;overflow:auto;border-radius:28px 28px 0 0;padding:18px 16px calc(24px + env(safe-area-inset-bottom,0px));animation:up .35s cubic-bezier(.3,1.3,.5,1);position:relative}
+@media (min-width:700px){.sheet{border-radius:28px;max-height:92vh}}
+@keyframes up{0%{transform:translateY(40px);opacity:0}100%{transform:none;opacity:1}}
+.sheet-h{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sheet-h h2{font-size:19px;margin-right:auto;min-width:0}
+.x{min-width:44px;min-height:44px;border-radius:14px;background:#fff;border:2px solid var(--line);font-size:18px;font-weight:800}
+/* quiz */
+.qtop{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dots{display:flex;gap:6px}
+.dots span{width:14px;height:14px;border-radius:50%;background:#EDE3DA}
+.dots span.ok{background:var(--good)}.dots span.no{background:var(--bad)}.dots span.cur{background:var(--rose);transform:scale(1.2)}
+.bloom{font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;background:var(--matcha)}
+.qcard{margin-top:12px}
+.qtext{font-size:18px;font-weight:700;line-height:1.55}
+.opts{display:grid;gap:10px;margin-top:14px}
+@media (min-width:640px){.opts.two{grid-template-columns:1fr 1fr}}
+.opt{min-height:56px;text-align:left;padding:12px 14px;border-radius:18px;background:#fff;border:2px solid var(--line);box-shadow:0 3px 0 var(--line);font-weight:700;display:flex;gap:10px;align-items:center;transition:transform .18s cubic-bezier(.3,1.6,.5,1)}
+.opt:hover{transform:translateY(-2px)}
+.opt .k{flex:none;width:30px;height:30px;border-radius:10px;background:var(--butter);display:grid;place-items:center;font-size:14px}
+.opt.right{background:#E6F5EA;border-color:var(--good);box-shadow:0 3px 0 var(--good)}
+.opt.wrong{background:#FDECEF;border-color:var(--bad);box-shadow:0 3px 0 var(--bad);animation:shake .35s}
+.opt[disabled]{cursor:default}
+.fb{margin-top:14px;border-radius:18px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;animation:popin .3s}
+.fb.ok{background:#E6F5EA}.fb.no{background:#FDECEF}
+.fb .mini{width:64px;flex:none}
+.termchips{display:flex;flex-wrap:wrap;gap:8px}
+.term{background:#fff;border:2px solid var(--line);border-radius:14px;padding:6px 10px;font-weight:700;font-size:14px;min-height:44px;display:inline-flex;align-items:center;gap:6px}
+.term span{color:var(--ink2);font-weight:700}
+.notes{display:grid;gap:10px;padding:0;margin:0;list-style:none}
+.notes li{background:#fff;border-radius:16px;padding:10px 12px;display:grid;grid-template-columns:28px 1fr;gap:8px}
+.notes li::before{content:"✿";color:var(--rose);font-size:18px;line-height:1.4}
+.notes b{background:linear-gradient(transparent 60%,var(--butter) 60%)}
+.ring{--p:0;width:64px;height:64px;border-radius:50%;background:conic-gradient(var(--good) calc(var(--p)*1%),#EEE5DC 0);display:grid;place-items:center;flex:none}
+.ring span{width:48px;height:48px;border-radius:50%;background:var(--cream);display:grid;place-items:center;font-weight:800;font-size:14px}
+/* shop / collection */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.tabs button{flex:none;min-height:44px;padding:6px 14px;border-radius:999px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--pink);border-color:var(--rose)}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:12px}
+.item{background:#fff;border-radius:20px;padding:10px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;position:relative;min-width:0}
+.item .pic{width:100%;aspect-ratio:1;border-radius:16px;background:var(--cream);display:grid;place-items:center;overflow:hidden}
+.item .pic svg{width:86%;height:86%}
+.item .nm{font-weight:800;font-size:14px;line-height:1.3}
+.item .sub{font-size:12px;color:var(--ink2)}
+.item.locked .pic{filter:grayscale(1) opacity(.35)}
+.item .own{position:absolute;top:8px;right:8px;background:var(--good);color:#fff;border-radius:999px;font-size:11px;font-weight:800;padding:1px 8px}
+.trophy .pic{background:linear-gradient(var(--butter),#fff)}
+.toast{position:fixed;left:50%;top:calc(70px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:80;background:#fff;border-radius:18px;padding:10px 16px;box-shadow:var(--shadow);font-weight:800;border:2px solid var(--butter);animation:pop .35s cubic-bezier(.3,1.6,.5,1);max-width:calc(100% - 32px);text-align:center}
+.confetti{position:fixed;top:-12px;width:10px;height:14px;border-radius:3px;z-index:90;pointer-events:none;animation:fall 1.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.6}}
+.match{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (min-width:560px){.match{grid-template-columns:repeat(4,1fr)}}
+.mc{min-height:78px;border-radius:16px;background:var(--lav);border:2px solid #CDBDE5;font-weight:800;font-size:14px;padding:6px;transition:transform .25s}
+.mc.up{background:#fff}
+.mc.done{background:var(--sky);border-color:#A9D3B3;opacity:.75}
+.mc.bad{animation:shake .35s}
+.code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:17px;font-weight:700;letter-spacing:1px;background:#fff;border:2px dashed var(--rose);border-radius:14px;padding:10px;word-break:break-all;user-select:all}
+textarea,input[type=text]{width:100%;font:inherit;font-family:ui-monospace,Menlo,Consolas,monospace;border:2px solid var(--line);border-radius:14px;padding:10px;background:#fff;color:var(--ink);min-height:48px}
+.foot{font-size:12px;color:var(--ink2);text-align:center;margin-top:28px}
+.welcome{max-width:520px;margin:6vh auto 0;text-align:center;display:grid;gap:16px;justify-items:center}
+.welcome h1{font-size:30px;font-weight:800}
+.lang2{display:flex;gap:10px}
+.mistake{background:#fff;border-radius:16px;padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;font-size:14px}
+.pips{display:flex;gap:4px}.pips i{width:12px;height:12px;border-radius:50%;background:#EEE5DC}.pips i.on{background:var(--good)}
+.empty{text-align:center;padding:24px}
+.empty svg{width:130px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="ovroot"></div>
+<script>
+/* ===== CONTENT: S1 Science (HK junior science textbook, Units 1–4) =====
+   M(bloom, qEN, qZH, [[correctEN,correctZH],[wrongEN,wrongZH],...], explainEN, explainZH)  – first option is correct; shuffled at runtime
+   T(bloom, statementEN, statementZH, true/false, explainEN, explainZH)                      – true / false card               */
+function M(b,en,zh,o,xe,xz){return{b:b,t:'mc',en:en,zh:zh,o:o,xe:xe,xz:xz};}
+function T(b,en,zh,a,xe,xz){return{b:b,t:'tf',en:en,zh:zh,a:a,xe:xe,xz:xz};}
+var TF_EN=['True','False'],TF_ZH=['正確','錯誤'];
+
+var CHAPTERS=[
+{id:1,en:'Introducing science',zh:'科學入門',col:'#FFE5EC',ink:'#C9677A',icon:'flask',sections:[
+{id:'1.1',en:'Learning about science',zh:'認識科學',
+notes:[['Science is the study of phenomena and events in Nature.','科學是研究大自然中的現象和事件的學問。'],
+['Nature of science: it is based on <b>evidence</b>, it is <b>subject to change</b>, and it has <b>limitations</b>.','科學的本質：以<b>證據</b>為基礎、<b>會隨時間改變</b>，而且有<b>局限</b>。'],
+['A <b>discovery</b> finds something that already exists in Nature; an <b>invention</b> is something new that people create.','<b>發現</b>是找出大自然中本來已存在的事物；<b>發明</b>是人類創造的新東西。'],
+['Scientific knowledge helps us manage <b>natural resources</b> and develop <b>technology</b>.','科學知識幫助我們管理<b>天然資源</b>和發展<b>科技</b>。'],
+['To solve daily-life problems we often combine science, technology and mathematics (STEM).','解決日常生活問題時，我們常要結合科學、科技和數學（STEM）的知識和技能。'],
+['Applications of science bring benefits, but can be <b>harmful if misused</b>.','科學的應用為我們帶來好處，但如被<b>誤用</b>亦可能帶來害處。']],
+terms:[['science','科學'],['experiment','實驗'],['discovery','發現'],['invention','發明'],['evidence','證據'],['technology','科技']],
+qs:[
+M(1,'What is science?','科學是甚麼？',[['The study of phenomena and events in Nature','研究大自然中的現象和事件的學問'],['The study of famous people in history','研究歷史名人的學問'],['A list of facts that never change','一堆永不改變的事實'],['The study of languages','研究語言的學問']],'Science studies phenomena and events in Nature.','科學是研究大自然中的現象和事件的學問。'),
+M(1,'Which of these is a question that science can study?','以下哪一個是科學可以研究的問題？',[['Why is the sky blue?','為甚麼天空是藍色的？'],['Which song is the most beautiful?','哪首歌最動聽？'],['Which colour is the prettiest?','哪種顏色最漂亮？'],['Who is the best friend in class?','誰是班上最好的朋友？']],'Science studies things in Nature that we can observe and test. Opinions cannot be tested.','科學研究大自然中可觀察和測試的事物；個人喜好無法測試。'),
+T(1,'Science is based on evidence.','科學是以證據為基礎的。',true,'Scientists use observations and experimental results as evidence.','科學家以觀察和實驗結果作為證據。'),
+T(2,'Once scientists agree on an idea, it can never change.','科學家一旦認同某個想法，它就永遠不會改變。',false,'Scientific knowledge is subject to change when new evidence is found.','當有新證據出現時，科學知識會改變。'),
+T(2,'Science can explain everything in Nature.','科學可以解釋大自然中的一切。',false,'Scientific knowledge has limitations – e.g. we still cannot fully explain the cause of some diseases.','科學知識有局限，例如我們仍未完全了解某些疾病的成因。'),
+M(2,'People once believed the Sun moved around the Earth. Better telescopes later showed the Earth moves around the Sun. What does this show?','古人相信太陽圍繞地球運行，後來更好的望遠鏡顯示地球圍繞太陽運行。這說明了甚麼？',[['Scientific knowledge is subject to change','科學知識會隨時間改變'],['Science can explain everything','科學可以解釋一切'],['Telescopes are always wrong','望遠鏡總是出錯'],['Scientists never make mistakes','科學家從不犯錯']],'New evidence changed the old idea.','新證據改變了舊的想法。'),
+M(2,'Which one is an INVENTION rather than a discovery?','以下哪一項是發明，而不是發現？',[['The smartphone','智能手機'],['Gravity','萬有引力'],['A new species of frog in a forest','森林中的新品種青蛙'],['The shape of DNA','DNA 的形狀']],'An invention is something new made by people. The others already existed in Nature.','發明是人類創造的新東西，其他選項本來就存在於大自然。'),
+M(3,'A farmer uses weather data and soil tests to decide when to water crops. This mainly shows science helps us…','農夫用天氣數據和泥土測試來決定何時灌溉，這主要顯示科學幫助我們……',[['manage natural resources more effectively','更有效地管理天然資源'],['make science fiction films','製作科幻電影'],['avoid all mistakes','避免所有錯誤'],['stop the weather from changing','阻止天氣改變']],'Using scientific knowledge, water (a natural resource) is used more wisely.','運用科學知識可以更善用水這種天然資源。'),
+M(3,'Plastic is useful but plastic waste pollutes the sea. This shows that…','塑膠很有用，但塑膠廢物污染海洋。這說明……',[['applications of science can be harmful if misused','科學應用如被誤用可以帶來害處'],['science is always harmful','科學總是有害的'],['plastic is a discovery','塑膠是一項發現'],['science has no limitations','科學沒有局限']],'Science brings benefits, but misuse causes harm.','科學帶來好處，但誤用會帶來害處。'),
+M(4,'Designing a phone app that measures your heart rate with the camera mainly combines…','設計一個用鏡頭量度心跳的手機程式，主要結合了……',[['science, technology and mathematics','科學、科技和數學'],['music and art only','只有音樂和藝術'],['history and geography','歷史和地理'],['languages only','只有語言']],'This is a STEM task: science (heart), technology (phone), maths (calculation).','這是 STEM 任務：科學（心臟）、科技（手機）、數學（計算）。'),
+M(5,'Which statement about science is the BEST judgement?','以下哪一項對科學的評價最恰當？',[['Science brings many benefits, but we must use it responsibly','科學帶來很多好處，但我們必須負責任地使用'],['Science is useless in daily life','科學在日常生活中毫無用處'],['Science can solve every problem instantly','科學可以立即解決所有問題'],['Only scientists need to learn science','只有科學家才需要學科學']],'Balanced view: benefits + responsibility + limitations.','平衡的看法：有好處，但要負責任使用，亦有局限。'),
+M(6,'You want to find out whether bread grows mould faster in a warm place. What should you do FIRST as a scientist?','你想知道麵包在溫暖的地方是否較快發霉。作為科學家，你應首先做甚麼？',[['Ask a clear question and plan a fair test','提出清晰的問題並設計公平測試'],['Guess the answer and stop','猜一個答案就完成'],['Ask friends to vote','請朋友投票'],['Eat the bread','把麵包吃掉']],'Science starts from a testable question, then an experiment gives evidence.','科學由一個可測試的問題開始，再以實驗取得證據。')
+]},
+{id:'1.2',en:'Practice of science',zh:'科學實踐',
+notes:[['Basic steps of a scientific investigation: <b>making observations → asking a question → proposing a hypothesis → doing experiments → drawing a conclusion</b>.','科學探究的基本步驟：<b>觀察 → 提出問題 → 提出假說 → 進行實驗 → 作出結論</b>。'],
+['A <b>hypothesis</b> is a possible explanation that can be tested.','<b>假說</b>是一個可以被測試的可能解釋。'],
+['In a <b>fair test</b>: the <b>independent variable</b> is what we change; the <b>dependent variable</b> is what we measure; <b>controlled variables</b> are kept the same.','在<b>公平測試</b>中：<b>自變量</b>是我們改變的因素；<b>因變量</b>是我們量度的因素；<b>控制變量</b>是保持不變的因素。'],
+['Change only <b>ONE</b> variable at a time, and repeat experiments to get reliable results.','每次只改變<b>一個</b>變量，並重複實驗以得到可靠的結果。'],
+['Other kinds of investigation: <b>pattern seeking</b> and <b>classifying</b>.','其他探究方式：<b>尋找規律</b>和<b>分類</b>。']],
+terms:[['scientific investigation','科學探究'],['hypothesis','假說'],['conclusion','結論'],['fair test','公平測試'],['independent variable','自變量'],['dependent variable','因變量'],['controlled variable','控制變量'],['pattern seeking','尋找規律'],['classifying','分類']],
+qs:[
+M(1,'What is the FIRST step of a scientific investigation?','科學探究的第一個步驟是甚麼？',[['Making observations','觀察'],['Drawing a conclusion','作出結論'],['Doing experiments','進行實驗'],['Proposing a hypothesis','提出假說']],'Order: observe → question → hypothesis → experiment → conclusion.','次序：觀察 → 提問 → 假說 → 實驗 → 結論。'),
+M(1,'A possible explanation that can be tested is called a…','一個可以被測試的可能解釋稱為……',[['hypothesis','假說'],['conclusion','結論'],['variable','變量'],['observation','觀察']],'A hypothesis is tested by experiments.','假說要通過實驗來測試。'),
+M(1,'In a fair test, the variable that we CHANGE is the…','在公平測試中，我們改變的變量是……',[['independent variable','自變量'],['dependent variable','因變量'],['controlled variable','控制變量'],['conclusion','結論']],'Change = independent; measure = dependent; keep same = controlled.','改變＝自變量；量度＝因變量；保持不變＝控制變量。'),
+M(1,'In a fair test, the variable that we MEASURE is the…','在公平測試中，我們量度的變量是……',[['dependent variable','因變量'],['independent variable','自變量'],['controlled variable','控制變量'],['hypothesis','假說']],'The dependent variable depends on what we changed.','因變量會隨我們改變的因素而變化。'),
+T(2,'In a fair test we should change several variables at the same time to save time.','在公平測試中，應同時改變多個變量以節省時間。',false,'Only ONE variable (the independent variable) is changed, otherwise we cannot tell which one caused the result.','只可改變一個變量（自變量），否則無法知道結果是由哪個因素造成的。'),
+T(2,'Repeating an experiment makes the results more reliable.','重複實驗可令結果更可靠。',true,'Repeating helps spot mistakes and gives more reliable results.','重複實驗有助找出錯誤，令結果更可靠。'),
+M(3,'Mary tests if salt water freezes more slowly than tap water. What is the independent variable?','Mary 測試鹽水是否比自來水凝固得慢。自變量是甚麼？',[['Type of water (salt water or tap water)','水的種類（鹽水或自來水）'],['Time taken to freeze','凝固所需的時間'],['Volume of water','水的體積'],['Temperature of the freezer','冰格的溫度']],'She changes the type of water.','她改變的是水的種類。'),
+M(3,'In Mary\'s salt-water freezing test, which is a controlled variable?','在 Mary 的鹽水凝固測試中，以下哪一項是控制變量？',[['Volume of water in each cup','每杯水的體積'],['Type of water','水的種類'],['Time taken to freeze','凝固所需的時間'],['Whether the water is salty','水是否含鹽']],'Volume must be kept the same so the test is fair.','水的體積必須保持相同，測試才公平。'),
+M(3,'Tom studies how the height of a ramp affects how far a toy car travels. The dependent variable is…','Tom 研究斜台高度如何影響玩具車行走的距離。因變量是……',[['distance travelled by the car','玩具車行走的距離'],['height of the ramp','斜台的高度'],['mass of the car','玩具車的質量'],['surface of the floor','地面的物料']],'Distance is what he measures.','距離是他量度的東西。'),
+M(4,'A student puts plant A in sunlight with water and plant B in the dark without water. Why is this NOT a fair test?','學生把植物 A 放在陽光下並澆水，植物 B 放在暗處且不澆水。為甚麼這不是公平測試？',[['Two variables (light and water) were changed','改變了兩個變量（光和水）'],['Only one plant was used','只用了一棵植物'],['Plants cannot be tested','植物不能被測試'],['The plants were measured','植物有被量度']],'With two changes we cannot tell whether light or water caused the difference.','改變了兩個變量，便無法分辨結果是由光還是水造成。'),
+M(4,'Recording the heights of students to see if taller students have longer arm spans is an example of…','記錄學生的身高，看看較高的學生臂展是否較長，這是哪種探究？',[['pattern seeking','尋找規律'],['fair test','公平測試'],['classifying','分類'],['drawing a hypothesis only','只提出假說']],'We look for a relationship in data we cannot control – pattern seeking.','我們在無法控制的數據中尋找關係，這是尋找規律。'),
+M(5,'An experiment result does not support the hypothesis. What should the scientist do?','實驗結果不支持假說，科學家應怎樣做？',[['Accept the evidence and propose a new hypothesis to test','接受證據並提出新的假說再測試'],['Change the results to match','修改結果令它吻合'],['Stop doing science','停止做科學研究'],['Ignore the results','不理會結果']],'Science follows evidence; hypotheses can be rejected and revised.','科學以證據為依歸；假說可以被否定和修改。'),
+M(6,'Design: "Does sugar dissolve faster in hot water?" Which plan is BEST?','設計：「糖在熱水中是否溶解得較快？」哪個計劃最好？',[['Same mass of sugar, same volume of water, only change water temperature, time the dissolving','相同質量的糖和相同體積的水，只改變水溫，記錄溶解時間'],['Use more sugar in hot water','在熱水中放更多糖'],['Stir only the cold water','只攪拌冷水'],['Use a different cup and different sugar each time','每次用不同的杯和不同的糖']],'Change only temperature; keep everything else the same.','只改變溫度，其他全部保持不變。')
+]},
+{id:'1.3',en:'Safety in the laboratory',zh:'實驗室安全',
+notes:[['Follow <b>laboratory safety rules</b> to prevent accidents: wear <b>safety spectacles</b>, tie up long hair, no eating or drinking, never taste chemicals.','遵守<b>實驗室安全守則</b>以防止意外：佩戴<b>安全眼鏡</b>、束起長髮、不可飲食、絕不品嚐化學品。'],
+['Read the <b>hazard warning symbols</b> on chemical containers: flammable, oxidizing, toxic, harmful, corrosive, irritant… and take safety precautions.','閱讀化學品容器上的<b>危險警告標記</b>：易燃、氧化性、有毒、有害、腐蝕性、刺激性……並採取安全措施。'],
+['If there is an accident: <b>keep calm</b> and <b>report to the teacher at once</b>.','發生意外時：<b>保持冷靜</b>，並<b>立即報告老師</b>。'],
+['Chemicals splashed on skin: wash under slow-running water. Into eyes: wash with an <b>eye wash bottle</b>.','化學品濺到皮膚：用緩慢流動的清水沖洗。濺入眼睛：用<b>洗眼瓶</b>沖洗。'],
+['The <b>fire triangle</b>: fuel + high temperature + oxygen. Remove ANY ONE to put out a fire.','<b>火三角</b>：燃料＋高溫＋氧。移除任何一項即可滅火。']],
+terms:[['laboratory','實驗室'],['safety spectacles','安全眼鏡'],['fire extinguisher','滅火筒'],['fire blanket','滅火氈'],['sand bucket','滅火沙桶'],['eye wash bottle','洗眼瓶'],['fume cupboard','通風櫥'],['hazard warning symbol','危險警告標記'],['fire triangle','火三角']],
+qs:[
+M(1,'Which THREE conditions form the fire triangle?','火三角由哪三個條件組成？',[['Fuel, high temperature and oxygen','燃料、高溫和氧'],['Fuel, water and oxygen','燃料、水和氧'],['Heat, light and sound','熱、光和聲'],['Oxygen, carbon dioxide and water','氧、二氧化碳和水']],'All three are needed for a fire to occur.','三者缺一不可，火才能燃燒。'),
+M(1,'Which item protects your eyes during experiments?','做實驗時，哪一項保護你的眼睛？',[['Safety spectacles','安全眼鏡'],['Fire blanket','滅火氈'],['Fume cupboard','通風櫥'],['Sand bucket','滅火沙桶']],'Always wear safety spectacles in the lab.','在實驗室內必須佩戴安全眼鏡。'),
+M(1,'Where should experiments that give out toxic gases be carried out?','會產生有毒氣體的實驗應在哪裏進行？',[['In a fume cupboard','在通風櫥內'],['Near the window only','只需在窗邊'],['Under the bench','在實驗桌下'],['In the corridor','在走廊']],'A fume cupboard removes harmful gases.','通風櫥可以抽走有害氣體。'),
+T(1,'It is fine to drink water in the laboratory if you are careful.','只要小心，在實驗室內喝水是可以的。',false,'Never eat or drink in the laboratory – food may be contaminated by chemicals.','實驗室內絕不可飲食，食物可能被化學品污染。'),
+M(2,'A correction-pen label shows a flame symbol. The liquid is…','塗改液標籤上有火焰標記，這種液體是……',[['flammable','易燃的'],['corrosive','腐蝕性的'],['toxic','有毒的'],['harmful','有害的']],'The flame symbol means flammable – keep away from flames.','火焰標記表示易燃，要遠離火焰。'),
+M(2,'Betty breaks a glass beaker. What should she do FIRST?','Betty 打破了玻璃燒杯，她首先應怎樣做？',[['Report to the teacher at once','立即報告老師'],['Pick up the glass with her hands','用手拾起玻璃碎片'],['Hide the broken glass','把碎片藏起來'],['Continue the experiment','繼續做實驗']],'Keep calm and report any accident to the teacher at once.','保持冷靜，立即向老師報告任何意外。'),
+M(3,'Acid splashes onto your hand. What is the correct emergency action?','酸液濺到你的手上，正確的緊急處理是甚麼？',[['Wash the area under slow-running water and tell the teacher','用緩慢流動的清水沖洗並告訴老師'],['Wipe it with paper and ignore it','用紙抹掉便算'],['Cover it with a bandage immediately','立即用膠布包好'],['Put the hand near a flame to dry it','把手放近火焰弄乾']],'Dilute and wash away the chemical with plenty of slow-running water.','用大量緩慢流動的清水稀釋和沖走化學品。'),
+M(3,'A chemical splashes into Ken\'s eye. He should wash it with…','化學品濺入 Ken 的眼睛，他應用甚麼沖洗？',[['distilled water from an eye wash bottle','洗眼瓶中的蒸餾水'],['a tissue','紙巾'],['hot water','熱水'],['alcohol','酒精']],'An eye wash bottle is kept in the lab for this.','實驗室備有洗眼瓶作此用途。'),
+M(3,'Covering a small burning beaker with a fire blanket puts out the fire because it…','用滅火氈覆蓋着火的燒杯可以滅火，因為它……',[['cuts off the oxygen supply','隔絕氧氣供應'],['removes the fuel','移走燃料'],['adds more fuel','加入更多燃料'],['raises the temperature','提高溫度']],'No oxygen → the fire triangle is broken.','沒有氧，火三角便被破壞。'),
+M(4,'Spraying water on a burning wood fire mainly puts it out by…','向燃燒中的木柴噴水，主要是透過甚麼方法滅火？',[['lowering the temperature','降低溫度'],['adding oxygen','加入氧'],['adding fuel','加入燃料'],['making the wood lighter','令木柴變輕']],'Water cools the fuel below the temperature needed for burning.','水令燃料冷卻至不足以燃燒的溫度。'),
+M(5,'Which pupil behaves MOST safely?','哪位學生的行為最安全？',[['Amy ties up her long hair before lighting a Bunsen burner','Amy 在點燃本生燈前把長髮束起'],['Ben smells gases by putting his nose right over the test tube','Ben 把鼻子直接放在試管口嗅氣體'],['Cindy runs to fetch apparatus','Cindy 跑去拿儀器'],['Dan pours unused chemicals back into the reagent bottle','Dan 把用剩的化學品倒回試劑瓶']],'Long hair can catch fire easily.','長髮很容易着火。'),
+M(6,'You are making a safety poster for a class that will heat copper(II) sulphate (harmful, corrosive). Which rule is MOST important to include?','你要為一班將會加熱硫酸銅(II)（有害、腐蝕性）的學生設計安全海報，哪條規則最重要？',[['Wear safety spectacles and avoid skin contact','佩戴安全眼鏡並避免接觸皮膚'],['Play music while heating','加熱時播放音樂'],['Taste a little to check it','嚐一點以作檢查'],['Work alone without telling the teacher','獨自進行不告訴老師']],'Corrosive/harmful chemicals must not touch skin or eyes.','腐蝕性和有害的化學品不可接觸皮膚或眼睛。')
+]},
+{id:'1.4',en:'Laboratory apparatus & practical skills',zh:'實驗室儀器和基本實驗技巧',
+notes:[['Common apparatus: test tube, boiling tube, beaker, conical flask, Bunsen burner, tripod, wire gauze, measuring cylinder, dropper, spatula, filter funnel.','常用儀器：試管、大試管、燒杯、錐形瓶、本生燈、三腳架、鐵絲網、量筒、滴管、刮勺、漏斗。'],
+['Instruments & units: length – ruler (mm, cm, m); volume – measuring cylinder (cm³, mL, L); mass – electronic balance (mg, g, kg); temperature – thermometer (°C); time – stopwatch (s, min, h).','儀器與單位：長度－尺（mm, cm, m）；體積－量筒（cm³, mL, L）；質量－電子天平（mg, g, kg）；溫度－溫度計（°C）；時間－秒錶（s, min, h）。'],
+['Read a measuring cylinder at <b>eye level</b>, at the <b>bottom of the meniscus</b>.','讀取量筒時視線要與<b>彎液面底部</b>保持<b>水平</b>。'],
+['Every measurement has an <b>error</b> = half of the smallest division on the scale.','每個量度都有<b>誤差</b>＝刻度最小分度的一半。'],
+['Lighting a Bunsen burner: <b>close the air hole</b> → lighter above chimney → turn on gas → slowly open air hole.','點燃本生燈：<b>關上空氣孔</b> → 把點火器放在燈管上方 → 開氣 → 慢慢打開空氣孔。'],
+['<b>Luminous flame</b> (air hole closed): yellow, irregular, cooler, quiet. <b>Non-luminous flame</b> (air hole open): blue, regular, hotter, noisy – used for heating.','<b>光焰</b>（空氣孔關上）：黃色、形狀不規則、較冷、安靜。<b>無光焰</b>（空氣孔打開）：藍色、形狀規則、較熱、嘈吵－用來加熱。']],
+terms:[['beaker','燒杯'],['conical flask','錐形瓶'],['Bunsen burner','本生燈'],['tripod','三腳架'],['wire gauze','鐵絲網'],['measuring cylinder','量筒'],['meniscus','彎液面'],['error','誤差'],['luminous flame','光焰'],['non-luminous flame','無光焰'],['strike back','回擊']],
+qs:[
+M(1,'Which instrument measures the VOLUME of a liquid accurately?','哪種儀器可準確量度液體的體積？',[['Measuring cylinder','量筒'],['Beaker','燒杯'],['Thermometer','溫度計'],['Stopwatch','秒錶']],'Measuring cylinders have fine scales for volume.','量筒有精細的體積刻度。'),
+M(1,'Which is a unit of MASS?','以下哪一個是質量的單位？',[['kilogram (kg)','千克 (kg)'],['millilitre (mL)','毫升 (mL)'],['metre (m)','米 (m)'],['degree Celsius (°C)','攝氏度 (°C)']],'Mass: mg, g, kg.','質量單位：mg、g、kg。'),
+M(1,'Before lighting a Bunsen burner, the air hole should be…','點燃本生燈前，空氣孔應該……',[['closed','關上'],['fully open','完全打開'],['covered with tape','用膠紙封住'],['removed','拆除']],'A closed air hole prevents strike back and gives a visible luminous flame.','關上空氣孔可防止回擊，並產生容易看見的光焰。'),
+M(1,'What is the colour of a non-luminous flame?','無光焰是甚麼顏色的？',[['Blue','藍色'],['Yellow','黃色'],['Red','紅色'],['Green','綠色']],'Non-luminous = blue, hot, noisy.','無光焰：藍色、較熱、嘈吵。'),
+T(2,'A luminous flame is hotter than a non-luminous flame.','光焰比無光焰更熱。',false,'The non-luminous (blue) flame is hotter, so we use it for heating.','無光焰（藍色）較熱，所以用來加熱。'),
+T(2,'We should read a measuring cylinder with our eyes level with the bottom of the meniscus.','讀取量筒時，視線應與彎液面的底部保持水平。',true,'Reading from above or below gives a wrong value.','從上方或下方讀數會得出錯誤數值。'),
+M(2,'Which piece of apparatus holds a test tube while heating it?','加熱試管時，用哪件儀器夾住試管？',[['Test tube holder','試管夾'],['Test tube rack','試管架'],['Spatula','刮勺'],['Wire gauze','鐵絲網']],'A test tube holder keeps your fingers away from heat.','試管夾令手指遠離熱源。'),
+M(3,'A ruler has 1 mm divisions. What is the error of a reading?','尺的最小分度是 1 mm，讀數的誤差是多少？',[['0.5 mm','0.5 mm'],['1 mm','1 mm'],['0.1 mm','0.1 mm'],['2 mm','2 mm']],'Error = half of the smallest division = 0.5 mm.','誤差＝最小分度的一半＝0.5 mm。'),
+M(3,'When heating liquid in a test tube, you should…','在試管中加熱液體時，你應該……',[['point the mouth of the tube away from people','把試管口指向沒有人的方向'],['fill the tube to the top','把試管注滿'],['look into the tube from above','從上方望入試管'],['hold the tube with bare hands','徒手拿着試管']],'Hot liquid may shoot out; also fill no more than 1/3 and shake gently.','熱液體可能噴出；液體不超過三分之一並輕輕搖動。'),
+M(4,'Mei opens the air hole and the flame becomes blue and noisy. What caused the change?','Mei 打開空氣孔，火焰變成藍色並發出聲響，原因是甚麼？',[['More air mixes with the gas, so it burns completely','更多空氣與燃氣混合，燃燒得較完全'],['Less gas is supplied','燃氣供應減少'],['The burner is broken','本生燈壞了'],['The flame has gone out','火焰熄滅了']],'Extra air (oxygen) gives complete burning – hotter blue flame.','更多空氣（氧）令燃燒較完全，產生較熱的藍色火焰。'),
+M(4,'The flame suddenly burns at the bottom of the chimney with a roaring sound. This is…','火焰突然在燈管底部燃燒並發出隆隆聲，這是……',[['strike back – turn off the gas at once','回擊－立即關掉燃氣'],['normal – continue heating','正常－繼續加熱'],['a luminous flame','光焰'],['a sign of low temperature','溫度低的表現']],'Strike back is dangerous; turn off the gas tap and let the burner cool.','回擊很危險，要立即關掉氣掣並讓本生燈冷卻。'),
+M(5,'A student reads the TOP of the meniscus of water in a measuring cylinder. The reading will be…','學生讀取量筒內水的彎液面頂部，讀數會……',[['too large','偏大'],['too small','偏小'],['correct','正確'],['zero','是零']],'For water we read the bottom of the curved surface.','讀水的體積要讀彎液面的底部。'),
+M(6,'You must heat 20 cm³ of water to boiling safely. Which set of apparatus is BEST?','你要安全地把 20 cm³ 的水加熱至沸騰，哪組儀器最合適？',[['Beaker on wire gauze on tripod, non-luminous flame','燒杯放在三腳架上的鐵絲網上，用無光焰'],['Measuring cylinder held over a luminous flame','把量筒放在光焰上'],['Test tube rack on the Bunsen burner','把試管架放在本生燈上'],['Reagent bottle held by hand','用手拿着試劑瓶']],'Wire gauze spreads heat; the blue flame is hottest. Never heat a measuring cylinder.','鐵絲網令熱力平均分佈；藍色火焰最熱。切勿加熱量筒。')
+]}
+]},
+{id:2,en:'Water',zh:'水',col:'#D8F3DC',ink:'#4E8F6A',icon:'drop',sections:[
+{id:'2.1',en:'Change in states of water',zh:'水的物態變化',
+notes:[['Water exists in 3 physical states: <b>solid</b> (ice), <b>liquid</b> (water), <b>gas</b> (water vapour / steam).','水有三種物態：<b>固態</b>（冰）、<b>液態</b>（水）、<b>氣態</b>（水汽／蒸汽）。'],
+['<b>Melting</b> (0 °C), <b>boiling</b> (100 °C) and <b>evaporation</b> (below 100 °C) <b>absorb</b> energy.','<b>熔化</b>（0 °C）、<b>沸騰</b>（100 °C）和<b>蒸發</b>（低於 100 °C）會<b>吸收</b>能量。'],
+['<b>Freezing</b> (0 °C) and <b>condensation</b> <b>release</b> energy.','<b>凝固</b>（0 °C）和<b>凝結</b>會<b>釋放</b>能量。'],
+['During melting and boiling, the temperature <b>stays constant</b> although heat is supplied.','在熔化和沸騰期間，雖然持續加熱，溫度<b>保持不變</b>。'],
+['Evaporation happens only at the <b>surface</b>; boiling happens throughout the liquid.','蒸發只在液體<b>表面</b>發生；沸騰則在整個液體內發生。']],
+terms:[['physical state','物態'],['melting','熔化'],['melting point','熔點'],['freezing','凝固'],['boiling','沸騰'],['boiling point','沸點'],['evaporation','蒸發'],['condensation','凝結'],['water vapour','水汽'],['steam','蒸汽']],
+qs:[
+M(1,'What is the melting point of pure ice?','純冰的熔點是多少？',[['0 °C','0 °C'],['100 °C','100 °C'],['37 °C','37 °C'],['−10 °C','−10 °C']],'Ice melts at 0 °C.','冰在 0 °C 熔化。'),
+M(1,'The change from water vapour to liquid water is called…','由水汽變成液態水的過程稱為……',[['condensation','凝結'],['evaporation','蒸發'],['melting','熔化'],['freezing','凝固']],'Gas → liquid = condensation.','氣態 → 液態＝凝結。'),
+M(1,'The change from liquid water to ice is called…','由液態水變成冰的過程稱為……',[['freezing','凝固'],['melting','熔化'],['boiling','沸騰'],['condensation','凝結']],'Liquid → solid = freezing (0 °C).','液態 → 固態＝凝固（0 °C）。'),
+T(2,'Evaporation can happen at temperatures below 100 °C.','蒸發可以在低於 100 °C 的溫度發生。',true,'Wet clothes dry at room temperature by evaporation.','濕衣服在室溫下也會因蒸發而變乾。'),
+T(2,'Freezing absorbs energy from the surroundings.','凝固時會從周圍吸收能量。',false,'Freezing RELEASES energy; melting absorbs energy.','凝固會釋放能量；熔化才會吸收能量。'),
+M(2,'Which processes ABSORB energy?','以下哪些過程會吸收能量？',[['Melting, boiling and evaporation','熔化、沸騰和蒸發'],['Freezing and condensation','凝固和凝結'],['Freezing and boiling','凝固和沸騰'],['Condensation only','只有凝結']],'Solid→liquid→gas needs energy.','固態→液態→氣態都需要吸收能量。'),
+M(3,'Water droplets form on the outside of a cold can of drink. Where does the water come from?','凍罐裝飲品外面出現水珠，水從哪裏來？',[['Water vapour in the air condenses on the cold can','空氣中的水汽在凍罐上凝結'],['The drink leaks through the can','飲品從罐中滲出'],['The can melts','罐熔化了'],['Ice evaporates','冰蒸發了']],'Cold surface cools water vapour → condensation.','冷的表面令水汽冷卻而凝結。'),
+M(3,'Ice is heated steadily. While it is melting, its temperature…','持續加熱冰，當冰正在熔化時，溫度會……',[['stays at 0 °C','維持在 0 °C'],['rises quickly','迅速上升'],['falls','下降'],['jumps to 100 °C','跳升至 100 °C']],'Energy is used to change state, so the temperature stays constant.','能量用來改變物態，所以溫度保持不變。'),
+M(4,'On a heating graph of ice → steam, the two flat parts show…','在冰 → 蒸汽的加熱曲線上，兩段平坦的部分表示……',[['melting at 0 °C and boiling at 100 °C','在 0 °C 熔化和在 100 °C 沸騰'],['the heater was switched off','加熱器被關掉'],['freezing and condensation','凝固和凝結'],['water cooling down','水正在冷卻']],'Temperature is constant during a change of state.','改變物態期間溫度保持不變。'),
+M(4,'What is the difference between evaporation and boiling?','蒸發和沸騰有甚麼分別？',[['Evaporation happens only at the surface below 100 °C; boiling happens throughout the liquid at 100 °C','蒸發在低於 100 °C 時只在表面發生；沸騰在 100 °C 時在整個液體中發生'],['They are exactly the same','兩者完全相同'],['Boiling releases energy','沸騰會釋放能量'],['Evaporation only happens at 100 °C','蒸發只在 100 °C 發生']],'Both turn liquid into gas, but under different conditions.','兩者都把液體變成氣體，但條件不同。'),
+M(5,'Sweating cools us down on a hot day. Which explanation is BEST?','在炎熱天氣中流汗能令我們降溫，哪個解釋最好？',[['Sweat evaporates and absorbs heat from the skin','汗水蒸發時從皮膚吸收熱'],['Sweat is colder than air','汗水比空氣冷'],['Sweat releases heat when it evaporates','汗水蒸發時釋放熱'],['Sweat freezes on the skin','汗水在皮膚上凝固']],'Evaporation absorbs energy → skin loses heat.','蒸發會吸收能量，令皮膚失去熱。'),
+M(6,'You want to show that condensation releases energy using steam. Which observation would support this?','你想用蒸汽證明凝結會釋放能量，哪個觀察可以支持？',[['Cold water gets warmer when steam condenses in it','蒸汽在冷水中凝結時，冷水變暖'],['Ice melts in the sun','冰在陽光下熔化'],['Water boils at 100 °C','水在 100 °C 沸騰'],['Steam is invisible','蒸汽是看不見的']],'The energy released by condensing steam warms the water.','蒸汽凝結釋放的能量令水變暖。')
+]},
+{id:'2.2',en:'Water cycle',zh:'水循環',
+notes:[['The <b>water cycle</b>: <b>evaporation</b> → <b>condensation</b> (clouds) → <b>transportation</b> (by wind) → <b>precipitation</b> (rain).','<b>水循環</b>：<b>蒸發</b> → <b>凝結</b>（形成雲）→ <b>運送</b>（被風吹走）→ <b>降水</b>（下雨）。'],
+['The Sun provides the energy for evaporation.','太陽提供蒸發所需的能量。'],
+['Rate of evaporation is <b>higher</b> when: surface area is <b>larger</b>, humidity is <b>lower</b>, temperature is <b>higher</b>, air speed is <b>higher</b>.','以下情況蒸發速率<b>較高</b>：表面面積<b>較大</b>、濕度<b>較低</b>、溫度<b>較高</b>、風速<b>較高</b>。']],
+terms:[['water cycle','水循環'],['precipitation','降水'],['humidity','濕度'],['rate of evaporation','蒸發速率'],['surface area','表面面積']],
+qs:[
+M(1,'Water falling from clouds as rain is called…','水從雲中以雨的形式落下稱為……',[['precipitation','降水'],['evaporation','蒸發'],['condensation','凝結'],['transportation','運送']],'Rain, snow and hail are precipitation.','雨、雪和冰雹都是降水。'),
+M(1,'Clouds form when water vapour…','水汽怎樣形成雲？',[['cools down and condenses','冷卻並凝結'],['heats up and boils','受熱並沸騰'],['freezes into ice cubes on land','在地上凝固成冰塊'],['dissolves in the sea','溶解在海中']],'Rising vapour cools and condenses into tiny droplets.','上升的水汽冷卻並凝結成小水點。'),
+M(1,'Which provides the energy that drives the water cycle?','哪一項為水循環提供能量？',[['The Sun','太陽'],['The Moon','月球'],['Wind turbines','風力發電機'],['Rocks','岩石']],'The Sun heats water, causing evaporation.','太陽加熱水，使水蒸發。'),
+T(2,'Clouds can be carried to other places by wind.','雲可以被風吹到其他地方。',true,'This is the transportation stage.','這是運送階段。'),
+T(2,'Wet clothes dry faster on a humid day.','濕衣服在潮濕的日子乾得較快。',false,'High humidity LOWERS the rate of evaporation.','濕度高會降低蒸發速率。'),
+M(2,'Put the water cycle in order starting from the sea.','由海洋開始，把水循環排好次序。',[['Evaporation → condensation → transportation → precipitation','蒸發 → 凝結 → 運送 → 降水'],['Precipitation → evaporation → transportation → condensation','降水 → 蒸發 → 運送 → 凝結'],['Condensation → evaporation → precipitation → transportation','凝結 → 蒸發 → 降水 → 運送'],['Transportation → precipitation → condensation → evaporation','運送 → 降水 → 凝結 → 蒸發']],'Sea water evaporates first, then forms clouds, moves, and falls.','海水先蒸發，再形成雲、被風吹走，然後落下。'),
+M(3,'Which spreads out wet clothes to dry fastest?','怎樣晾衣服會乾得最快？',[['Spread them out in a sunny, windy place','攤開放在有陽光和有風的地方'],['Fold them in a closed bathroom','摺好放在密封的浴室'],['Pile them in a basket','堆在籃子裏'],['Hang them in a humid basement','掛在潮濕的地庫']],'Large surface area, high temperature, high air speed, low humidity.','表面面積大、溫度高、風速高、濕度低。'),
+M(3,'Why does water in a plate dry faster than the same volume in a cup?','為甚麼碟中的水比杯中相同體積的水乾得快？',[['The plate gives a larger surface area exposed to air','碟子令水有較大的表面面積接觸空氣'],['The plate is heavier','碟子較重'],['The cup is hotter','杯子較熱'],['Plates absorb water','碟子吸收了水']],'Larger surface area → higher rate of evaporation.','表面面積較大 → 蒸發速率較高。'),
+M(4,'Using a hair dryer on wet hair increases evaporation mainly by…','用風筒吹濕頭髮，主要透過哪些方法增加蒸發？',[['raising temperature and air speed','提高溫度和風速'],['increasing humidity','增加濕度'],['decreasing surface area','減少表面面積'],['adding more water','加入更多水']],'Hot moving air speeds up evaporation.','熱而流動的空氣會加快蒸發。'),
+M(4,'In an experiment, two identical wet cloths are placed in rooms at 20 °C and 30 °C. What is the independent variable?','實驗中，兩塊相同的濕布分別放在 20 °C 和 30 °C 的房間。自變量是甚麼？',[['Temperature','溫度'],['Time taken to dry','變乾所需時間'],['Size of cloth','布的大小'],['Type of cloth','布的種類']],'Temperature is changed; drying time is measured.','改變溫度，量度變乾所需時間。'),
+M(5,'Hong Kong has high humidity in spring. Which prediction is MOST reasonable?','香港春天濕度很高，哪個推斷最合理？',[['Clothes hung indoors take longer to dry','在室內晾的衣服需要較長時間才乾'],['Clothes dry faster than in autumn','衣服比秋天乾得更快'],['No evaporation happens at all','完全不會發生蒸發'],['It never rains in spring','春天從不下雨']],'Humid air already holds a lot of water vapour, so evaporation slows.','潮濕的空氣已含大量水汽，蒸發會減慢。'),
+M(6,'Design a solar still to get water from wet soil. Which feature is MOST important?','設計一個太陽能蒸餾器從濕泥中取水，哪個特徵最重要？',[['A cool cover where water vapour can condense and drip into a cup','一個可讓水汽凝結並滴入杯中的冷蓋'],['A dark box with no opening for light','一個完全不透光的箱子'],['A fan blowing vapour away','一把把水汽吹走的風扇'],['Freezing the soil first','先把泥土冷凍']],'It copies the water cycle: evaporation then condensation.','它模仿水循環：先蒸發，再凝結。')
+]},
+{id:'2.3',en:'Dissolving',zh:'溶解',
+notes:[['A <b>solute</b> dissolves in a <b>solvent</b> to form a <b>solution</b>. Water is a good solvent.','<b>溶質</b>溶解在<b>溶劑</b>中形成<b>溶液</b>。水是良好的溶劑。'],
+['Substances that dissolve are <b>soluble</b>; those that do not are <b>insoluble</b>.','能溶解的物質是<b>可溶的</b>；不能溶解的是<b>不可溶的</b>。'],
+['Rate of dissolving is higher when: <b>stirred</b>, water is <b>hotter</b>, solute pieces are <b>smaller</b>.','以下情況溶解速率較高：<b>攪拌</b>、水溫<b>較高</b>、溶質顆粒<b>較小</b>。'],
+['<b>Solubility</b> = amount of a substance that dissolves in a <b>fixed amount of water at a given temperature</b>.','<b>溶解度</b>＝在<b>指定溫度下</b>，<b>定量的水</b>中能溶解某物質的份量。'],
+['A <b>saturated</b> solution cannot dissolve any more solute. Different substances have different solubilities, and solubility changes with temperature.','<b>飽和</b>溶液不能再溶解更多溶質。不同物質的溶解度不同，溶解度亦會隨溫度改變。']],
+terms:[['dissolve','溶解'],['solvent','溶劑'],['solute','溶質'],['solution','溶液'],['soluble','可溶的'],['insoluble','不可溶的'],['rate of dissolving','溶解速率'],['saturated','飽和'],['solubility','溶解度']],
+qs:[
+M(1,'In salt water, the salt is the…','在鹽水中，鹽是……',[['solute','溶質'],['solvent','溶劑'],['solution','溶液'],['residue','殘餘物']],'The substance that dissolves is the solute.','被溶解的物質是溶質。'),
+M(1,'In salt water, the water is the…','在鹽水中，水是……',[['solvent','溶劑'],['solute','溶質'],['precipitate','沉澱物'],['filtrate','濾液']],'The liquid that does the dissolving is the solvent.','負責溶解其他物質的液體是溶劑。'),
+M(1,'Which substance is INSOLUBLE in water?','以下哪種物質不溶於水？',[['Sand','沙'],['Sugar','糖'],['Salt','鹽'],['Instant coffee powder','即溶咖啡粉']],'Sand does not dissolve – it settles.','沙不會溶解，只會沉底。'),
+T(2,'Stirring makes sugar dissolve faster.','攪拌可令糖溶解得較快。',true,'Stirring brings fresh water to the solute.','攪拌令新鮮的水接觸溶質。'),
+T(2,'All substances have the same solubility in water.','所有物質在水中的溶解度都相同。',false,'Different substances have different solubilities.','不同物質的溶解度不同。'),
+M(2,'A solution that cannot dissolve any more solute at that temperature is…','在該溫度下不能再溶解更多溶質的溶液是……',[['saturated','飽和的'],['insoluble','不可溶的'],['pure','純的'],['diluted','稀釋的']],'Extra solute stays undissolved in a saturated solution.','在飽和溶液中，多加的溶質不會溶解。'),
+M(3,'Which sugar dissolves FASTEST in the same cup of water?','在同一杯水中，哪種糖溶解得最快？',[['Sugar powder (icing sugar)','糖粉'],['A sugar cube','方糖'],['Rock sugar','冰糖'],['A big lump of sugar','一大塊糖']],'Smaller pieces have more surface in contact with water.','顆粒越小，與水接觸的表面越多。'),
+M(3,'Lemon tea powder dissolves faster in hot water because…','檸檬茶粉在熱水中溶解得較快，因為……',[['higher temperature increases the rate of dissolving','溫度較高令溶解速率增加'],['hot water has less water','熱水較少水'],['hot water is a solute','熱水是溶質'],['the powder is heavier','茶粉較重']],'Higher temperature → higher rate of dissolving.','溫度較高 → 溶解速率較高。'),
+M(4,'To compare the solubility of salt and sugar fairly, what must be kept the same?','要公平比較鹽和糖的溶解度，甚麼必須保持相同？',[['Volume and temperature of water','水的體積和溫度'],['Type of solute','溶質的種類'],['Mass of solute that dissolves','能溶解的溶質質量'],['Colour of the cup','杯的顏色']],'Solubility is defined for a fixed amount of water at a given temperature.','溶解度是指在指定溫度下定量的水所能溶解的份量。'),
+M(4,'At 20 °C, 100 g water dissolves 36 g salt. You add 40 g salt. What happens?','在 20 °C 時，100 g 水可溶解 36 g 鹽。你加入 40 g 鹽，會怎樣？',[['About 4 g stays undissolved; the solution is saturated','約 4 g 鹽不會溶解，溶液已飽和'],['All 40 g dissolves','全部 40 g 都會溶解'],['None of the salt dissolves','所有鹽都不會溶解'],['The water turns into salt','水變成鹽']],'Only 36 g can dissolve; the rest remains.','只可溶解 36 g，餘下的會留下。'),
+M(5,'Tim says "Stirring increases the solubility of sugar." Is he right?','Tim 說「攪拌會增加糖的溶解度。」他對嗎？',[['No – stirring increases the RATE of dissolving, not the solubility','不對－攪拌增加的是溶解速率，而不是溶解度'],['Yes – stirring lets more sugar dissolve in total','對－攪拌可令總共更多糖溶解'],['Yes – stirring changes the temperature a lot','對－攪拌大幅改變溫度'],['No – stirring stops dissolving','不對－攪拌會停止溶解']],'Rate (how fast) ≠ solubility (how much).','速率（多快）≠ 溶解度（多少）。'),
+M(6,'You want to make a sugar solution as fast as possible for a science fair drink. Which plan is BEST?','你想在科學展覽中最快調製一杯糖水，哪個計劃最好？',[['Use fine sugar, warm water and stir','用幼糖、暖水並攪拌'],['Use a sugar cube in iced water, no stirring','用方糖放入冰水，不攪拌'],['Use rock sugar and wait','用冰糖然後等待'],['Freeze the sugar first','先把糖冷凍']],'Combine all three factors that increase the rate.','結合三個增加溶解速率的因素。')
+]},
+{id:'2.4',en:'Water purification',zh:'水的淨化',
+notes:[['Natural water contains <b>insoluble impurities</b> (sand, plant debris), <b>soluble impurities</b> (mineral salts) and <b>microorganisms</b> (bacteria, <i>Amoeba</i>).','天然水含有<b>不可溶雜質</b>（沙、植物碎屑）、<b>可溶雜質</b>（礦物鹽）和<b>微生物</b>（細菌、變形蟲）。'],
+['<b>Sedimentation</b>: heavy insoluble impurities settle to the bottom. <b>Alum</b> speeds it up.','<b>沉積法</b>：較重的不可溶雜質沉到底部。<b>明礬</b>可加快沉積。'],
+['<b>Filtration</b>: water passes through a filter; the liquid that passes through is the <b>filtrate</b>, what stays behind is the <b>residue</b>. Removes insoluble impurities.','<b>過濾法</b>：水通過過濾器；穿過的液體是<b>濾液</b>，留下的是<b>殘餘物</b>。可除去不可溶雜質。'],
+['<b>Distillation</b>: boiling → condensation. The pure water collected is the <b>distillate</b>. Removes soluble & insoluble impurities and microorganisms, but costs a lot of energy.','<b>蒸餾法</b>：沸騰 → 凝結。收集到的純水是<b>餾液</b>。可除去可溶及不可溶雜質和微生物，但耗用大量能量。']],
+terms:[['impurity','雜質'],['microorganism','微生物'],['sedimentation','沉積法'],['filtration','過濾法'],['distillation','蒸餾法'],['alum','明礬'],['filtrate','濾液'],['residue','殘餘物'],['distillate','餾液'],['filter paper','濾紙']],
+qs:[
+M(1,'In filtration, the clear liquid that passes through the filter paper is the…','在過濾中，穿過濾紙的清澈液體稱為……',[['filtrate','濾液'],['residue','殘餘物'],['distillate','餾液'],['sediment','沉積物']],'Filtrate passes through; residue stays on the paper.','濾液穿過濾紙；殘餘物留在濾紙上。'),
+M(1,'Pure water collected from distillation is called…','從蒸餾收集到的純水稱為……',[['distillate','餾液'],['filtrate','濾液'],['residue','殘餘物'],['solute','溶質']],'Distillate = product of distillation.','餾液＝蒸餾的產物。'),
+M(1,'Which substance speeds up sedimentation?','哪種物質可以加快沉積？',[['Alum','明礬'],['Sugar','糖'],['Chlorine','氯'],['Fluoride','氟化物']],'Alum makes tiny particles clump together and settle faster.','明礬令細小顆粒聚集，更快沉底。'),
+T(2,'Clear stream water is always safe to drink.','清澈的溪水一定可以安全飲用。',false,'It may contain soluble impurities and microorganisms we cannot see.','溪水可能含有看不見的可溶雜質和微生物。'),
+T(2,'Filtration can remove insoluble impurities such as sand.','過濾法可以除去沙等不可溶雜質。',true,'Sand is trapped as residue on the filter.','沙會成為殘餘物留在過濾器上。'),
+M(2,'Which method removes SOLUBLE impurities such as salt from water?','哪種方法可以除去水中如鹽等可溶雜質？',[['Distillation','蒸餾法'],['Filtration','過濾法'],['Sedimentation','沉積法'],['Adding alum','加入明礬']],'Salt stays behind when water boils off.','水沸騰變成蒸汽，鹽被留下。'),
+M(3,'Muddy water is filtered. The mud left on the filter paper is the…','把泥水過濾，留在濾紙上的泥是……',[['residue','殘餘物'],['filtrate','濾液'],['distillate','餾液'],['solvent','溶劑']],'What cannot pass through = residue.','不能穿過濾紙的是殘餘物。'),
+M(3,'Put the steps of distillation of sea water in order.','把蒸餾海水的步驟排序。',[['Boil sea water → steam → condense → collect distillate','煮沸海水 → 蒸汽 → 凝結 → 收集餾液'],['Condense → boil → filter → collect','凝結 → 煮沸 → 過濾 → 收集'],['Add alum → boil → collect residue','加明礬 → 煮沸 → 收集殘餘物'],['Filter → freeze → melt','過濾 → 冷凍 → 熔化']],'Boiling then condensation.','先沸騰，再凝結。'),
+M(4,'Why is distillation NOT used to purify all of Hong Kong\'s drinking water?','為甚麼香港不用蒸餾法淨化全部食水？',[['Heating a huge amount of water costs too much energy','加熱大量的水耗費太多能量'],['Distillation cannot remove salt','蒸餾不能除去鹽'],['Distillate is dirty','餾液很髒'],['It adds microorganisms','它會加入微生物']],'Distillation works well but is very expensive at large scale.','蒸餾效果好，但大規模使用成本很高。'),
+M(4,'A filtration column has layers of gravel, coarse sand and fine sand. What does it mainly remove?','過濾柱內有礫石、粗沙和幼沙層，它主要除去甚麼？',[['Insoluble impurities','不可溶雜質'],['Dissolved salt','已溶解的鹽'],['All bacteria and viruses','所有細菌和病毒'],['Fluoride','氟化物']],'Layers trap solid particles; dissolved substances pass through.','沙石層截留固體顆粒；已溶解的物質會通過。'),
+M(5,'Hikers have only a cloth and a pot over a fire. Which gives the SAFEST drinking water from a stream?','遠足人士只有一塊布和一個可在火上加熱的鍋，哪個方法可從溪水得到最安全的食水？',[['Filter through cloth, then boil the water','先用布過濾，再把水煮沸'],['Only filter through cloth','只用布過濾'],['Only let it settle','只讓它沉積'],['Drink it directly','直接飲用']],'Filtering removes solids; boiling kills microorganisms.','過濾除去固體；煮沸殺死微生物。'),
+M(6,'Design a set-up to get fresh water from sea water using sunlight. Which idea works?','設計一個利用陽光從海水取得淡水的裝置，哪個構思可行？',[['A covered tray of sea water; vapour condenses on a sloped clear cover and drips into a cup','把海水放在有蓋的盤中；水汽在傾斜的透明蓋上凝結並滴入杯中'],['Filter sea water through sand many times','用沙把海水過濾多次'],['Add alum to sea water','在海水中加入明礬'],['Leave sea water in the dark','把海水放在暗處']],'This is a solar still – a mini distillation.','這是太陽能蒸餾器，即小型蒸餾。')
+]},
+{id:'2.5',en:'Further treatment of drinking water',zh:'食水的進一步處理',
+notes:[['<b>Chlorine</b>, <b>ozone</b> and <b>ultraviolet (UV) light</b> kill microorganisms in water.','<b>氯</b>、<b>臭氧</b>和<b>紫外光</b>可以殺死水中的微生物。'],
+['Adding <b>fluoride</b> (<b>fluoridation</b>) helps prevent <b>tooth decay</b>. Fluoride does <b>NOT</b> kill microorganisms.','加入<b>氟化物</b>（<b>加氟處理</b>）有助預防<b>蛀牙</b>。氟化物<b>不能</b>殺死微生物。'],
+['Hong Kong <b>water treatment works</b>: <b>sedimentation → filtration → adding chlorine → fluoridation</b>.','香港<b>濾水廠</b>的處理過程：<b>沉積 → 過濾 → 加氯 → 加氟</b>。'],
+['Boiling tap water also kills microorganisms.','把自來水煮沸亦可殺死微生物。']],
+terms:[['chlorine','氯'],['ozone','臭氧'],['ultraviolet light','紫外光'],['fluoride','氟化物'],['fluoridation','加氟處理'],['water treatment works','濾水廠']],
+qs:[
+M(1,'Which substance is added to drinking water to help prevent tooth decay?','哪種物質加入食水中有助預防蛀牙？',[['Fluoride','氟化物'],['Chlorine','氯'],['Alum','明礬'],['Salt','鹽']],'Fluoridation protects teeth.','加氟處理保護牙齒。'),
+M(1,'Which one does NOT kill microorganisms in water?','以下哪一項不能殺死水中的微生物？',[['Fluoride','氟化物'],['Chlorine','氯'],['Ozone','臭氧'],['Ultraviolet light','紫外光']],'Fluoride is for teeth only.','氟化物只用來保護牙齒。'),
+M(1,'A place where natural water is treated to become drinking water is called a…','把天然水處理成食水的地方稱為……',[['water treatment works','濾水廠'],['sewage treatment works','污水處理廠'],['fume cupboard','通風櫥'],['reservoir only','只是水塘']],'Water treatment works produce tap water.','濾水廠生產自來水。'),
+T(2,'Ultraviolet light can be used to kill microorganisms in water.','紫外光可以用來殺死水中的微生物。',true,'UV, ozone and chlorine all kill microorganisms.','紫外光、臭氧和氯都能殺死微生物。'),
+T(2,'Fluoride is added to water to kill bacteria.','在水中加入氟化物是為了殺死細菌。',false,'Fluoride helps prevent tooth decay; it cannot kill microorganisms.','氟化物用來預防蛀牙，不能殺死微生物。'),
+M(2,'Put the Hong Kong water treatment steps in order.','把香港濾水廠的處理步驟排序。',[['Sedimentation → filtration → adding chlorine → fluoridation','沉積 → 過濾 → 加氯 → 加氟'],['Fluoridation → filtration → sedimentation → chlorine','加氟 → 過濾 → 沉積 → 加氯'],['Adding chlorine → sedimentation → distillation','加氯 → 沉積 → 蒸餾'],['Filtration → boiling → freezing','過濾 → 煮沸 → 冷凍']],'Remove solids first, then kill microorganisms, then add fluoride.','先除去固體，再殺死微生物，最後加氟。'),
+M(3,'Why is chlorine added after filtration in water treatment works?','為甚麼濾水廠在過濾後加入氯？',[['To kill harmful microorganisms that filtration cannot remove','殺死過濾不能除去的有害微生物'],['To make the water taste sweet','令水變甜'],['To remove sand','除去沙'],['To prevent tooth decay','預防蛀牙']],'Filtration cannot remove all microorganisms.','過濾不能除去所有微生物。'),
+M(3,'Your tap water smells slightly like a swimming pool. This is most likely due to…','你家的自來水有點像泳池的氣味，最可能是因為……',[['chlorine added to kill microorganisms','加入了用來殺菌的氯'],['fluoride','氟化物'],['sand in the pipes','水管中的沙'],['alum','明礬']],'Swimming pools also use chlorine to kill germs.','泳池亦用氯來殺菌。'),
+M(4,'Which method of killing microorganisms is best for the SMALL amount of water you drink at home?','在家中飲用的少量食水，哪個殺菌方法最適合？',[['Boiling the water','把水煮沸'],['Adding ozone gas','加入臭氧'],['Adding fluoride','加入氟化物'],['Adding alum','加入明礬']],'Boiling is simple and kills microorganisms.','煮沸方法簡單，並可殺死微生物。'),
+M(4,'Why must water be clear (filtered) before UV light is used to kill germs?','為甚麼使用紫外光殺菌前，水必須清澈（已過濾）？',[['Particles block the UV light from reaching microorganisms','顆粒會阻擋紫外光照射微生物'],['UV light makes sand dissolve','紫外光會令沙溶解'],['UV light adds fluoride','紫外光會加入氟化物'],['Clear water is heavier','清水較重']],'UV must pass through the water to work.','紫外光必須穿過水才能發揮作用。'),
+M(5,'Some people worry about fluoride in water. Which is the MOST balanced view?','有些人擔心食水加氟，哪個看法最平衡？',[['A small, controlled amount helps prevent tooth decay; the amount must be monitored','少量並受控的氟化物有助預防蛀牙，但份量須受監察'],['Fluoride kills all germs so more is better','氟化物殺死所有細菌，越多越好'],['Fluoride has no effect at all','氟化物完全沒有作用'],['Water should contain no treatment at all','食水不應作任何處理']],'Benefits depend on the right amount.','好處取決於適當的份量。'),
+M(6,'You design a water plan for a remote village with a muddy river. Which order is BEST?','你為一條有泥河的偏遠村落設計食水方案，哪個次序最好？',[['Let it settle (with alum) → filter through sand → disinfect (chlorine or boil)','先沉積（加明礬）→ 用沙過濾 → 消毒（加氯或煮沸）'],['Add fluoride only','只加氟化物'],['Disinfect muddy water first, never filter','先為泥水消毒，永不過濾'],['Drink straight from the river','直接從河中飲水']],'Copy the treatment works: solids out first, then kill germs.','模仿濾水廠：先除去固體，再殺菌。')
+]},
+{id:'2.6',en:'Water conservation and pollution',zh:'節約用水和水污染',
+notes:[['Fresh water is a <b>precious natural resource</b> – we should conserve it (e.g. shorter showers, fix dripping taps, reuse water).','淡水是<b>珍貴的天然資源</b>，我們應該節約用水（例如縮短淋浴時間、修理漏水的水龍頭、循環用水）。'],
+['<b>Water pollution</b> is mainly caused by <b>waste water</b> from homes, farms and factories, <b>solid waste</b> (e.g. plastics, microplastics) and <b>oil spills</b>.','<b>水污染</b>主要由家居、農場和工廠的<b>污水</b>、<b>固體廢物</b>（如塑膠、微塑膠）和<b>漏油</b>造成。'],
+['In Hong Kong, waste water is treated in <b>sewage treatment works</b> before discharge into the sea.','在香港，污水會先在<b>污水處理廠</b>處理，然後才排放到海中。'],
+['Waste water with harmful chemicals goes to the <b>Chemical Waste Treatment Centre</b>.','含有害化學品的廢水會送往<b>化學廢物處理中心</b>處理。']],
+terms:[['water conservation','節約用水'],['water pollution','水污染'],['pollutant','污染物'],['microplastic','微塑膠'],['sewage treatment works','污水處理廠']],
+qs:[
+M(1,'Which is a good way to conserve water?','以下哪一項是節約用水的好方法？',[['Turn off the tap while brushing teeth','刷牙時關上水龍頭'],['Take long baths every day','每天長時間浸浴'],['Wash one T-shirt in a full washing machine','用洗衣機只洗一件T恤'],['Leave a dripping tap unrepaired','不修理漏水的水龍頭']],'Small daily actions save a lot of water.','日常小行動可節省大量用水。'),
+M(1,'Tiny pieces of plastic that pollute the sea are called…','污染海洋的細小塑膠碎片稱為……',[['microplastics','微塑膠'],['microorganisms','微生物'],['minerals','礦物'],['fluorides','氟化物']],'Microplastics are eaten by sea animals.','微塑膠會被海洋生物吃下。'),
+M(1,'Where is waste water from homes in Hong Kong treated before going to the sea?','香港的家居污水在排入大海前在哪裏處理？',[['Sewage treatment works','污水處理廠'],['Water treatment works','濾水廠'],['Fume cupboard','通風櫥'],['Reservoir','水塘']],'Sewage treatment works clean waste water.','污水處理廠處理污水。'),
+T(2,'Oil spills from ships are a cause of water pollution.','船隻漏油是水污染的成因之一。',true,'Oil covers the water and harms sea birds and fish.','油會覆蓋水面，傷害海鳥和魚類。'),
+T(2,'Since the Earth has lots of water, we do not need to save fresh water.','地球有很多水，所以我們不需要節約淡水。',false,'Most water is salty sea water; fresh water is limited and precious.','大部分是鹹海水，淡水有限而珍貴。'),
+M(2,'Which is a pollutant from farms?','以下哪一項是來自農場的污染物？',[['Animal waste and fertilizers','動物糞便和肥料'],['Clean rainwater','清潔的雨水'],['Fluoride','氟化物'],['Oxygen','氧']],'These wash into rivers and pollute them.','它們會被沖入河流造成污染。'),
+M(3,'A factory produces waste water with harmful chemicals. It should be sent to…','一間工廠產生含有害化學品的廢水，應送往……',[['the Chemical Waste Treatment Centre','化學廢物處理中心'],['the nearest river directly','直接排入附近河流'],['a water treatment works for drinking','濾水廠製成食水'],['a playground drain','遊樂場的渠道']],'Harmful chemicals need special treatment.','有害化學品需要特別處理。'),
+M(3,'Which daily habit reduces microplastic pollution?','哪個日常習慣可以減少微塑膠污染？',[['Bring your own bottle instead of buying plastic bottled drinks','自備水樽，不買膠樽飲品'],['Throw plastic bags into the sea','把膠袋扔進海裏'],['Use more disposable cutlery','多用即棄餐具'],['Burn plastic at the beach','在海灘燒塑膠']],'Less plastic waste → fewer microplastics.','塑膠廢物越少，微塑膠越少。'),
+M(4,'Why is it harmful when oil covers the surface of the sea?','為甚麼油覆蓋海面會造成傷害？',[['It stops oxygen entering the water and sticks to birds\' feathers','它阻止氧進入水中，並黏在海鳥的羽毛上'],['It makes the water too cold','它令水太冷'],['It adds fluoride to the water','它把氟化物加入水中'],['It makes fish grow faster','它令魚生長得更快']],'Aquatic life needs oxygen; oily feathers cannot keep birds warm or let them fly.','水中生物需要氧；沾油的羽毛令鳥不能保暖或飛行。'),
+M(4,'Using flush water from the sea for toilets in Hong Kong helps to…','香港用海水沖廁有助……',[['save fresh water','節省淡水'],['clean the sea','清潔海洋'],['add fluoride','加入氟化物'],['make drinking water','製造食水']],'Toilets do not need fresh water.','沖廁不需要淡水。'),
+M(5,'Which action has the BIGGEST effect on saving water for a family?','以下哪個行動對家庭節約用水的效果最大？',[['Replacing long baths with short showers every day','每天以短時間淋浴取代長時間浸浴'],['Turning off the tap once a month','每月關一次水龍頭'],['Buying a bigger bathtub','買一個更大的浴缸'],['Washing the car daily with a hose','每天用水喉洗車']],'A daily habit that saves many litres each time.','這是每天都能節省大量用水的習慣。'),
+M(6,'Plan a school campaign against water pollution. Which idea is MOST effective?','策劃一個反對水污染的學校活動，哪個構思最有效？',[['A beach clean-up plus a "bring your own bottle" week with data on plastic collected','海灘清潔加「自備水樽」週，並記錄收集的塑膠數量'],['Pour leftover paint down the drain','把剩餘油漆倒進渠道'],['Give out free plastic bottles','免費派發膠樽'],['Do nothing because one school is too small','甚麼也不做，因為一間學校太小']],'Action + measuring results shows real impact.','行動並量度成效，能顯示真正的影響。')
+]}
+]},
+{id:3,en:'Looking at living things',zh:'觀察生物',col:'#FFF1C5',ink:'#B08A2E',icon:'leaf',sections:[
+{id:'3.1',en:'Living things',zh:'生物',
+notes:[['Living things carry out 7 <b>vital functions</b>: need <b>food</b>, need <b>oxygen</b>, <b>move</b>, <b>grow</b>, <b>detect and react to stimuli</b>, <b>excrete</b>, <b>reproduce</b>.','生物有七項<b>重要功能</b>：需要<b>食物</b>、需要<b>氧</b>、<b>移動</b>、<b>生長</b>、<b>察覺刺激並作出反應</b>、<b>排泄</b>、<b>生殖</b>。'],
+['Living things include <b>animals</b>, <b>plants</b> and <b>microorganisms</b>.','生物包括<b>動物</b>、<b>植物</b>和<b>微生物</b>。'],
+['The wide variety of living things is called <b>biodiversity</b>.','生物種類繁多，稱為<b>生物多樣性</b>。'],
+['Living things vary in shape, structure and size.','生物在形狀、結構和大小上各有不同。']],
+terms:[['living thing','生物'],['non-living thing','非生物'],['vital function','重要功能'],['stimulus','刺激'],['excrete','排泄'],['reproduce','生殖'],['biodiversity','生物多樣性']],
+qs:[
+M(1,'How many vital functions do living things carry out?','生物有多少項重要功能？',[['7','7'],['3','3'],['5','5'],['10','10']],'Food, oxygen, move, grow, stimuli, excrete, reproduce.','食物、氧、移動、生長、刺激、排泄、生殖。'),
+M(1,'Removing waste made in the body is called…','把體內產生的廢物排出體外稱為……',[['excretion','排泄'],['reproduction','生殖'],['growth','生長'],['movement','移動']],'Living things excrete wastes.','生物會排泄廢物。'),
+M(1,'A change in the surroundings that a living thing can detect is a…','生物可以察覺到的環境變化稱為……',[['stimulus','刺激'],['hypothesis','假說'],['solute','溶質'],['residue','殘餘物']],'E.g. light, sound, touch.','例如光、聲音、觸碰。'),
+T(1,'Plants are living things.','植物是生物。',true,'Plants grow, reproduce, respond, etc.','植物會生長、生殖、作出反應等。'),
+T(2,'A robot that moves and recognizes faces is a living thing.','一個會移動和認出人臉的機械人是生物。',false,'It cannot grow, reproduce or excrete, so it is non-living.','它不會生長、生殖或排泄，所以是非生物。'),
+M(2,'A plant bends towards the window. Which vital function is this?','植物向窗口彎曲生長，這是哪項重要功能？',[['Detect and react to stimuli','察覺刺激並作出反應'],['Excrete','排泄'],['Reproduce','生殖'],['Need oxygen','需要氧']],'The plant detects light and responds.','植物察覺光線並作出反應。'),
+M(2,'The wide variety of living things on Earth is called…','地球上生物種類繁多，這稱為……',[['biodiversity','生物多樣性'],['classification','分類'],['heredity','遺傳'],['evolution only','只是進化']],'Bio = life, diversity = variety.','生物多樣性即生命的多樣。'),
+M(3,'A car moves, needs fuel and gives out waste gas. Why is it still NOT a living thing?','汽車會移動、需要燃料並排出廢氣，為甚麼它仍然不是生物？',[['It cannot grow or reproduce','它不能生長或生殖'],['It is too big','它太大'],['It is made of metal only','它只由金屬製成'],['It does not need oxygen','它不需要氧']],'A living thing must show ALL vital functions.','生物必須具備所有重要功能。'),
+M(3,'Which group includes bacteria?','細菌屬於哪一類？',[['Microorganisms','微生物'],['Plants','植物'],['Mammals','哺乳類'],['Non-living things','非生物']],'Bacteria are tiny living things seen only under a microscope.','細菌是只能在顯微鏡下看到的細小生物。'),
+M(4,'A seed looks dead, but it grows into a plant when watered. What does this show?','種子看似沒有生命，但澆水後會長成植物。這顯示了甚麼？',[['A seed is a living thing','種子是生物'],['Water is a living thing','水是生物'],['Seeds are non-living','種子是非生物'],['Plants do not need water','植物不需要水']],'It can grow – a vital function.','它會生長，這是重要功能之一。'),
+M(5,'Which is the BEST evidence that a mushroom is a living thing?','哪個是蘑菇是生物的最佳證據？',[['It grows and reproduces by spores','它會生長並以孢子繁殖'],['It is soft','它很軟'],['It is brown','它是啡色的'],['It is found in shops','商店有售']],'Growth and reproduction are vital functions.','生長和生殖是重要功能。'),
+M(6,'You design a test to find out whether "sea monkeys" in a packet are living. What would you observe?','你設計一個測試，看看包裝內的「海猴子」是否生物，你會觀察甚麼？',[['Whether they grow, move and reproduce in water over days','觀察它們在水中數天內是否會生長、移動和繁殖'],['Only their colour','只看它們的顏色'],['The price of the packet','包裝的價錢'],['Whether they float','它們是否浮起']],'Look for several vital functions over time.','觀察一段時間內是否具備多項重要功能。')
+]},
+{id:'3.2',en:'Grouping of living things',zh:'生物的分類',
+notes:[['<b>Classification</b> groups living things by similarities in <b>key features</b>.','<b>分類</b>是根據<b>主要特徵</b>的相似之處把生物分組。'],
+['Animals: <b>vertebrates</b> (with backbone) and <b>invertebrates</b> (without backbone).','動物分為<b>脊椎動物</b>（有脊柱）和<b>無脊椎動物</b>（沒有脊柱）。'],
+['5 vertebrate groups: <b>fish</b> (slimy scales, gills, fins), <b>amphibians</b> (moist skin; young use gills), <b>reptiles</b> (dry scales, shelled eggs), <b>birds</b> (feathers, beak, constant body temperature), <b>mammals</b> (fur/hair, live young, mammary glands).','五類脊椎動物：<b>魚類</b>（黏滑鱗片、鰓、鰭）、<b>兩棲類</b>（濕潤皮膚；幼體用鰓）、<b>爬行類</b>（乾硬鱗片、有殼蛋）、<b>鳥類</b>（羽毛、喙、體溫恆定）、<b>哺乳類</b>（毛髮、胎生、乳腺）。'],
+['Plants: <b>non-vascular</b> (e.g. moss) vs <b>vascular</b>; vascular → <b>seedless</b> (fern) or <b>seed</b>; seed → <b>non-flowering</b> (pine) or <b>flowering</b>.','植物：<b>非維管植物</b>（如苔蘚）和<b>維管植物</b>；維管植物分<b>無種子</b>（蕨）和<b>種子植物</b>；種子植物分<b>無花</b>（松）和<b>有花植物</b>。'],
+['Living things have special features that <b>adapt</b> them to their <b>habitats</b>.','生物有特別的身體特徵，<b>適應</b>它們的<b>生境</b>。']],
+terms:[['classification','分類'],['key feature','主要特徵'],['vertebrate','脊椎動物'],['invertebrate','無脊椎動物'],['amphibian','兩棲類'],['reptile','爬行類'],['mammal','哺乳類'],['vascular plant','維管植物'],['flowering plant','有花植物'],['habitat','生境']],
+qs:[
+M(1,'Animals WITH a backbone are called…','有脊柱的動物稱為……',[['vertebrates','脊椎動物'],['invertebrates','無脊椎動物'],['microorganisms','微生物'],['amphibians only','只是兩棲類']],'Vertebrate = backbone.','脊椎動物＝有脊柱。'),
+M(1,'Which animal group has feathers?','哪類動物有羽毛？',[['Birds','鳥類'],['Reptiles','爬行類'],['Mammals','哺乳類'],['Fish','魚類']],'Only birds have feathers.','只有鳥類有羽毛。'),
+M(1,'Fish breathe with…','魚用甚麼呼吸？',[['gills','鰓'],['lungs','肺'],['skin only','只用皮膚'],['feathers','羽毛']],'Gills take oxygen from water.','鰓從水中吸取氧。'),
+T(2,'A butterfly is an invertebrate.','蝴蝶是無脊椎動物。',true,'Insects have no backbone.','昆蟲沒有脊柱。'),
+T(2,'Reptiles keep a constant body temperature.','爬行類的體溫保持恆定。',false,'Only birds and mammals keep a constant body temperature.','只有鳥類和哺乳類的體溫恆定。'),
+M(2,'Which plant has vascular tissues but does NOT produce seeds?','哪種植物有維管組織但不產生種子？',[['Fern','蕨'],['Moss','苔蘚'],['Pine','松樹'],['Apple tree','蘋果樹']],'Ferns reproduce by spores.','蕨以孢子繁殖。'),
+M(2,'A frog is an amphibian because…','青蛙是兩棲類，因為……',[['its young live in water with gills; adults live on land with lungs','幼體在水中用鰓呼吸，成體在陸上用肺呼吸'],['it has feathers','它有羽毛'],['it gives birth to live young','它是胎生的'],['it has dry scales','它有乾硬的鱗片']],'Amphibian = double life.','兩棲＝兩種生活方式。'),
+M(3,'A bat has wings and flies. It has fur and feeds milk to its young. It is a…','蝙蝠有翼會飛，有毛髮並以乳汁餵哺幼兒。它屬於……',[['mammal','哺乳類'],['bird','鳥類'],['reptile','爬行類'],['insect','昆蟲']],'Fur + milk = mammal. Its wings are modified forelimbs.','有毛髮＋餵乳＝哺乳類。它的翼是變異的前肢。'),
+M(3,'A whale lives in the sea. Which feature shows it is NOT a fish?','鯨生活在海中，哪個特徵顯示它不是魚類？',[['It breathes with lungs and gives birth to live young','它用肺呼吸並且是胎生的'],['It swims','它會游泳'],['It has fins-like flippers','它有像鰭的鰭肢'],['It lives in water','它生活在水中']],'Whales are mammals.','鯨是哺乳類。'),
+M(4,'An animal has dry hard scales and lays shelled eggs on land. Which group?','一種動物有乾硬的鱗片，並在陸上產有殼的蛋。它屬於哪類？',[['Reptile','爬行類'],['Fish','魚類'],['Amphibian','兩棲類'],['Mammal','哺乳類']],'E.g. turtles, snakes, lizards.','例如龜、蛇、蜥蜴。'),
+M(4,'A polar bear has thick fur and a layer of fat. These help it adapt to…','北極熊有厚毛和脂肪層，這些特徵幫助它適應……',[['a very cold habitat','非常寒冷的生境'],['a hot desert','炎熱的沙漠'],['life in fresh water','淡水生活'],['flying','飛行']],'Fur and fat keep it warm.','毛和脂肪幫助保暖。'),
+M(5,'Sam groups a penguin with fish because it swims. Is this a good classification?','Sam 因為企鵝會游泳而把牠歸入魚類，這分類好嗎？',[['No – it has feathers and a beak, so it is a bird','不好－牠有羽毛和喙，所以是鳥類'],['Yes – swimming is the key feature','好－游泳是主要特徵'],['Yes – it lives near water','好－牠住在水邊'],['No – it is a mammal','不好－牠是哺乳類']],'Classify by key body features, not behaviour.','應根據主要身體特徵分類，而不是行為。'),
+M(6,'Design a cactus-like plant for a hot desert. Which set of features fits BEST?','為炎熱沙漠設計一種像仙人掌的植物，哪組特徵最合適？',[['Spines instead of leaves, thick stem storing water, long roots','以刺代葉、能儲水的粗莖、長根'],['Big thin leaves and short roots','大而薄的葉和短根'],['No roots and floating leaves','沒有根和浮葉'],['Soft stem with no water storage','不能儲水的軟莖']],'Reduce water loss and store water.','減少失水並儲存水分。')
+]},
+{id:'3.3',en:'Identification key',zh:'檢索表',
+notes:[['A <b>key</b> helps us identify living things by their body features.','<b>檢索表</b>幫助我們根據身體特徵辨認生物。'],
+['Each level gives <b>two alternative features</b>; choose one at each step until you reach a name.','每一層提供<b>兩個對立的特徵</b>；每一步選擇其一，直至得出名稱。'],
+['Keys can be drawn as a <b>tree diagram</b> or written as <b>numbered statements</b>.','檢索表可以畫成<b>樹狀圖</b>或寫成<b>編號句子</b>。'],
+['When making a key, use <b>observable</b> features (e.g. "has tails on wings"), not size words like "big" or "pretty" that are opinions.','製作檢索表時，應使用<b>可觀察</b>的特徵（例如「翅膀有尾突」），避免使用「大」、「漂亮」等主觀字眼。']],
+terms:[['key','檢索表'],['feature','特徵'],['tree diagram','樹狀圖'],['identify','辨認']],
+qs:[
+M(1,'What is an identification key used for?','檢索表有甚麼用途？',[['Identifying living things by their features','根據特徵辨認生物'],['Opening locked doors','打開上鎖的門'],['Measuring volume','量度體積'],['Killing microorganisms','殺死微生物']],'Keys help scientists name unfamiliar living things.','檢索表幫助科學家辨認不熟悉的生物。'),
+M(1,'At each level of a simple key, how many alternatives are given?','在簡單的檢索表中，每一層提供多少個選擇？',[['Two','兩個'],['One','一個'],['Five','五個'],['Ten','十個']],'Two opposite features, e.g. "has wings / has no wings".','兩個對立的特徵，例如「有翼／沒有翼」。'),
+T(2,'A key can be written as numbered statements instead of a tree diagram.','檢索表可以寫成編號句子，而不一定是樹狀圖。',true,'Both forms work the same way.','兩種形式的原理相同。'),
+T(2,'"Is it cute?" is a good question to use in a key.','「牠可愛嗎？」是檢索表中的好問題。',false,'"Cute" is an opinion – different people give different answers.','「可愛」是主觀意見，不同人會有不同答案。'),
+M(2,'Which is the BEST feature to use in a key for leaves?','在葉的檢索表中，哪個特徵最適合使用？',[['Leaf edge is smooth / toothed','葉緣光滑／有鋸齒'],['Leaf is beautiful / ugly','葉漂亮／醜陋'],['Leaf is my favourite / not','是我喜歡的葉／不是'],['Leaf smells nice / not nice','葉好香／不香']],'Observable, clear features avoid confusion.','清晰可觀察的特徵可避免混淆。'),
+M(3,'Key: 1a Has tails on wings → Paris Peacock; 1b No tails → go to 2. 2a Black eyespots → Common Five-ring; 2b No eyespots → go to 3. A butterfly has no tails but has black eyespots. It is…','檢索表：1a 翅膀有尾突 → 巴黎翠鳳蝶；1b 沒有尾突 → 到 2。2a 有黑色眼斑 → 矍眼蝶；2b 沒有眼斑 → 到 3。一隻蝴蝶沒有尾突但有黑色眼斑，牠是……',[['Common Five-ring','矍眼蝶'],['Paris Peacock','巴黎翠鳳蝶'],['Common Lascar','金蟠蛺蝶'],['Yellow Orange Tip','橙粉蝶']],'1b → 2a.','1b → 2a。'),
+M(3,'Same key, 3a Has stripes → Common Lascar; 3b No stripes → Yellow Orange Tip. A butterfly has no tails, no eyespots and has stripes. It is…','同一檢索表，3a 有條紋 → 金蟠蛺蝶；3b 沒有條紋 → 橙粉蝶。一隻蝴蝶沒有尾突、沒有眼斑、有條紋，牠是……',[['Common Lascar','金蟠蛺蝶'],['Yellow Orange Tip','橙粉蝶'],['Paris Peacock','巴黎翠鳳蝶'],['Common Five-ring','矍眼蝶']],'1b → 2b → 3a.','1b → 2b → 3a。'),
+M(3,'Key: 1a Has 6 legs → insect; 1b Has 8 legs → spider. An animal has 8 legs. It is…','檢索表：1a 有 6 隻腳 → 昆蟲；1b 有 8 隻腳 → 蜘蛛。一種動物有 8 隻腳，牠是……',[['a spider','蜘蛛'],['an insect','昆蟲'],['a bird','鳥'],['a fish','魚']],'Follow 1b.','依照 1b。'),
+M(4,'To make a key for 4 fish, how many questions (levels) are needed at LEAST?','為 4 種魚製作檢索表，最少需要多少個問題？',[['3','3'],['1','1'],['2','2'],['4','4']],'Each question separates one group into two; 4 organisms need 3 splits.','每個問題把一組分成兩組；4 種生物需要分 3 次。'),
+M(4,'A key question "Has stripes?" splits 4 fish into 1 and 3. What should the next question do?','檢索表問題「有條紋嗎？」把 4 條魚分成 1 條和 3 條。下一個問題應該做甚麼？',[['Split the group of 3 into smaller groups','把 3 條魚那組再分成更小的組'],['Split the single fish','把單獨那條魚再分'],['Ask the same question again','重複同一問題'],['Stop the key','停止製作檢索表']],'Keep dividing until each fish is alone.','繼續分組，直至每條魚都被分開。'),
+M(5,'Which key question is WEAKEST?','哪個檢索表問題最弱？',[['Is it big?','牠大嗎？'],['Does it have 8 legs?','牠有 8 隻腳嗎？'],['Does it have feathers?','牠有羽毛嗎？'],['Does it have a shell?','牠有殼嗎？']],'"Big" compared with what? It is not clear.','「大」是和甚麼比較？意思不清晰。'),
+M(6,'Make a key for: cat, sparrow, goldfish, snake. Which FIRST question splits them into 2 + 2?','為貓、麻雀、金魚、蛇製作檢索表，哪個第一個問題可以把牠們分成 2＋2？',[['Does it have legs?','牠有腳嗎？'],['Does it have feathers?','牠有羽毛嗎？'],['Does it have fur?','牠有毛髮嗎？'],['Is it a pet?','牠是寵物嗎？']],'Legs: cat, sparrow / No legs: goldfish, snake.','有腳：貓、麻雀／沒有腳：金魚、蛇。')
+]},
+{id:'3.4',en:'Biodiversity',zh:'生物多樣性',
+notes:[['Biodiversity keeps nature in <b>balance</b> and makes it more <b>sustainable</b>.','生物多樣性維持大自然的<b>平衡</b>，令環境更可<b>持續</b>。'],
+['It gives humans <b>food</b>, <b>raw materials</b> and <b>medicines</b>.','它為人類提供<b>食物</b>、<b>原材料</b>和<b>藥物</b>。'],
+['Species in danger of dying out are <b>endangered species</b>; when all die they become <b>extinct</b>.','面臨滅絕危機的物種稱為<b>瀕危物種</b>；全部死亡便會<b>滅絕</b>。'],
+['Threats: <b>habitat destruction</b>, <b>overhunting & overexploitation</b>, <b>foreign species</b>, <b>pollution</b>.','威脅：<b>破壞生境</b>、<b>過度獵殺及過度開發</b>、<b>引入外來物種</b>、<b>污染</b>。'],
+['<b>Conservation</b> by governments (country parks, laws) and individuals (4 Rs: Reduce, Reuse, Recycle, Replace).','政府（郊野公園、法例）和個人（4R：減少使用、物盡其用、循環再造、替代使用）共同進行<b>保育</b>。'],
+['HK examples: Romer\'s Tree Frog, Chinese White Dolphin, Black-faced Spoonbill.','香港例子：盧氏小樹蛙、中華白海豚、黑臉琵鷺。']],
+terms:[['sustainable development','可持續發展'],['extinct','滅絕'],['endangered species','瀕危物種'],['overhunted','過度獵殺'],['foreign species','外來物種'],['native species','原生物種'],['conservation','保育'],['pollution','污染']],
+qs:[
+M(1,'Living things in danger of extinction are called…','面臨滅絕危機的生物稱為……',[['endangered species','瀕危物種'],['foreign species','外來物種'],['native species','原生物種'],['microorganisms','微生物']],'Endangered = at risk of dying out.','瀕危＝有滅絕的風險。'),
+M(1,'Which is a Hong Kong endangered animal?','以下哪一種是香港的瀕危動物？',[['Chinese White Dolphin','中華白海豚'],['House sparrow','家麻雀'],['Pet goldfish','寵物金魚'],['Pigeon','白鴿']],'Also Romer\'s Tree Frog and Black-faced Spoonbill.','還有盧氏小樹蛙和黑臉琵鷺。'),
+T(1,'Many medicines come from plants and other living things.','很多藥物來自植物和其他生物。',true,'Biodiversity provides medicines, e.g. artemisinin from a plant.','生物多樣性提供藥物，例如從植物提取的青蒿素。'),
+T(2,'Introducing foreign species never harms native species.','引入外來物種從不會傷害原生物種。',false,'Foreign species may compete with or eat native species.','外來物種可能與原生物種競爭或捕食牠們。'),
+M(2,'Which human activity threatens biodiversity?','以下哪種人類活動威脅生物多樣性？',[['Cutting down forests for buildings','砍伐森林興建樓宇'],['Setting up country parks','設立郊野公園'],['Recycling paper','回收廢紙'],['Planting native trees','種植原生樹木']],'Habitat destruction removes homes of living things.','破壞生境令生物失去居所。'),
+M(2,'What does the 4 Rs principle stand for?','4R 原則代表甚麼？',[['Reduce, Reuse, Recycle, Replace','減少使用、物盡其用、循環再造、替代使用'],['Read, Write, Run, Rest','閱讀、寫作、跑步、休息'],['Rain, River, Rock, Root','雨、河、石、根'],['Remove, Refill, Return, Rebuild','移除、補充、歸還、重建']],'Individuals can practise the 4 Rs daily.','個人可在日常生活實踐 4R。'),
+M(3,'Fishermen catch so many fish that the population cannot recover. This is…','漁民捕獲太多魚，令魚群數目無法回復，這是……',[['overexploitation','過度開發'],['conservation','保育'],['pollution','污染'],['classification','分類']],'Using a resource faster than it can be replaced.','使用資源的速度快過它能補充的速度。'),
+M(3,'Which is a role of the GOVERNMENT in conservation?','以下哪一項是政府在保育方面的角色？',[['Making laws to protect wild animals and setting up marine parks','訂立法例保護野生動物及設立海岸公園'],['Bringing your own shopping bag','自備購物袋'],['Turning off lights at home','在家關燈'],['Buying fewer clothes','少買衣服']],'Governments make laws and protected areas.','政府訂立法例和設立保護區。'),
+M(4,'If bees became extinct, which is the MOST likely result?','如果蜜蜂滅絕，最可能出現甚麼後果？',[['Many flowering plants and crops could not be pollinated','很多有花植物和農作物無法傳粉'],['There would be more fruits','會有更多果實'],['Nothing would change','甚麼也不會改變'],['Rivers would dry up','河流會乾涸']],'Living things depend on one another – losing one affects others.','生物互相依賴，失去一種會影響其他生物。'),
+M(4,'Why does higher biodiversity make an ecosystem more stable?','為甚麼生物多樣性較高會令生態系統較穩定？',[['If one species declines, others can fill its role','如果一種生物減少，其他生物可以取代牠的角色'],['There are fewer living things','生物較少'],['Pollution stops','污染會停止'],['All animals eat the same food','所有動物吃同一種食物']],'More variety = more backup.','種類越多，後備越多。'),
+M(5,'A new road is planned through a stream where Romer\'s Tree Frogs live. Which is the BEST decision?','計劃興建一條穿過盧氏小樹蛙棲息溪流的新道路，哪個決定最好？',[['Change the route or build protected passages, and conduct an environmental study first','改道或建造保護通道，並先進行環境評估'],['Build the road anyway','照樣興建道路'],['Move all frogs into tanks forever','把所有青蛙永遠放入水族箱'],['Fill the stream with concrete','用混凝土填平溪流']],'Balance development with conservation – sustainable development.','平衡發展和保育，即可持續發展。'),
+M(6,'Plan a class project to help the Black-faced Spoonbill. Which is MOST useful?','策劃一個幫助黑臉琵鷺的班級專題，哪個最有用？',[['Research its threats, share findings, and support wetland protection (e.g. Mai Po)','研究牠面對的威脅，分享結果，並支持保護濕地（例如米埔）'],['Catch one as a class pet','捉一隻當班寵'],['Feed it bread at the beach','在海灘餵牠麵包'],['Ignore it because it is only a bird','不理會，因為牠只是一隻鳥']],'Knowledge + protecting habitats helps most.','知識加上保護生境最有幫助。')
+]}
+]},
+{id:4,en:'Cells, human reproduction & heredity',zh:'細胞、人類生殖和遺傳',col:'#E8DDF5',ink:'#8A6BB5',icon:'cell',sections:[
+{id:'4.1',en:'Cells',zh:'細胞',
+notes:[['<b>Cells</b> are the basic units of living things.','<b>細胞</b>是生物的基本單位。'],
+['Total magnification = <b>eyepiece × objective</b>. The image in a light microscope is <b>magnified and inverted</b>.','總放大率＝<b>目鏡放大率 × 物鏡放大率</b>。光學顯微鏡的影像是<b>放大及倒轉</b>的。'],
+['Both plant & animal cells: <b>cell membrane</b> (controls substances in/out), <b>cytoplasm</b> (chemical reactions), <b>nucleus</b> (genetic material, controls activities).','植物和動物細胞都有：<b>細胞膜</b>（控制物質進出）、<b>細胞質</b>（進行化學反應）、<b>細胞核</b>（含遺傳物質，控制細胞活動）。'],
+['Plant cells only: <b>cell wall</b> (support, regular shape), <b>large vacuole</b>, <b>chloroplasts</b> (chlorophyll, photosynthesis; in green parts).','只有植物細胞有：<b>細胞壁</b>（支持、形狀規則）、<b>大液泡</b>、<b>葉綠體</b>（含葉綠素，進行光合作用；在綠色部分）。']],
+terms:[['cell','細胞'],['microscope','顯微鏡'],['magnification','放大率'],['cell wall','細胞壁'],['cell membrane','細胞膜'],['cytoplasm','細胞質'],['nucleus','細胞核'],['vacuole','液泡'],['chloroplast','葉綠體']],
+qs:[
+M(1,'What are the basic units of living things?','生物的基本單位是甚麼？',[['Cells','細胞'],['Atoms of water','水分子'],['Organs','器官'],['Bones','骨骼']],'All living things are made of cells.','所有生物都由細胞組成。'),
+M(1,'Which part controls the activities of a cell?','細胞哪部分控制細胞的活動？',[['Nucleus','細胞核'],['Cell wall','細胞壁'],['Vacuole','液泡'],['Cytoplasm','細胞質']],'It contains genetic material.','它含有遺傳物質。'),
+M(1,'Where does photosynthesis take place?','光合作用在哪裏進行？',[['Chloroplasts','葉綠體'],['Nucleus','細胞核'],['Cell membrane','細胞膜'],['Vacuole','液泡']],'Chloroplasts contain chlorophyll.','葉綠體含有葉綠素。'),
+T(2,'Animal cells have a cell wall.','動物細胞有細胞壁。',false,'Only plant cells have a cell wall.','只有植物細胞有細胞壁。'),
+T(2,'The image seen in a light microscope is inverted.','光學顯微鏡中看到的影像是倒轉的。',true,'Moving the slide left makes the image move right.','把玻片向左移，影像會向右移。'),
+M(2,'Which part controls the movement of substances into and out of the cell?','哪部分控制物質進出細胞？',[['Cell membrane','細胞膜'],['Cell wall','細胞壁'],['Chloroplast','葉綠體'],['Nucleus','細胞核']],'The membrane is a selective barrier.','細胞膜有選擇性地讓物質通過。'),
+M(3,'Eyepiece ×10, objective ×40. What is the total magnification?','目鏡 ×10，物鏡 ×40，總放大率是多少？',[['×400','×400'],['×50','×50'],['×4','×4'],['×30','×30']],'10 × 40 = 400.','10 × 40 = 400。'),
+M(3,'A cell has a nucleus, cell membrane and cytoplasm, but NO cell wall. It is most likely…','一個細胞有細胞核、細胞膜和細胞質，但沒有細胞壁。它最可能是……',[['a human cheek cell','人類口腔皮膜細胞'],['an onion cell','洋葱細胞'],['a leaf cell','葉細胞'],['a moss cell','苔蘚細胞']],'No cell wall → animal cell.','沒有細胞壁 → 動物細胞。'),
+M(4,'Onion epidermis cells have no chloroplasts. Why?','洋葱表皮細胞沒有葉綠體，為甚麼？',[['They are not in a green part exposed to light','它們不在接觸光線的綠色部分'],['They are animal cells','它們是動物細胞'],['They have no nucleus','它們沒有細胞核'],['Chloroplasts melt','葉綠體熔化了']],'Only cells in green parts have chloroplasts.','只有綠色部分的細胞才有葉綠體。'),
+M(4,'The specimen appears at the top-left of the view. To move it to the centre, move the slide…','標本出現在視野的左上方，要把它移到中央，應把玻片移向……',[['top-left','左上方'],['bottom-right','右下方'],['top-right','右上方'],['bottom-left','左下方']],'Image is inverted, so move the slide the same way the image appears.','影像倒轉，所以影像在哪方便把玻片移向那方。'),
+M(5,'A student says "A plant cell is just an animal cell with extra parts." Which extra parts make this MOSTLY true?','學生說「植物細胞只是多了一些部分的動物細胞」。哪些額外部分令這說法大致正確？',[['Cell wall, large vacuole and chloroplasts','細胞壁、大液泡和葉綠體'],['Nucleus and cytoplasm','細胞核和細胞質'],['Cell membrane only','只有細胞膜'],['Bones and blood','骨和血液']],'Both share nucleus, cytoplasm, membrane.','兩者都有細胞核、細胞質和細胞膜。'),
+M(6,'You want to see cheek cells clearly under a microscope. Which step helps MOST?','你想在顯微鏡下清楚看到口腔皮膜細胞，哪一步最有幫助？',[['Stain the cells (e.g. with methylene blue) and start with the low-power objective','把細胞染色（例如用亞甲藍）並先用低倍物鏡'],['Use the highest power first without focusing','先用最高倍數而不對焦'],['Add a thick layer of cells','放厚厚一層細胞'],['Turn off the light','關掉光源']],'Stain adds contrast; low power helps find the cells.','染色增加對比；低倍數有助找到細胞。')
+]},
+{id:'4.2',en:'From a single cell to a multicellular organism',zh:'由單一細胞到多細胞生物',
+notes:[['Cells <b>divide</b> (nucleus divides first, then two new cells form), <b>grow</b> (take in nutrients) and <b>differentiate</b> (become specialized).','細胞會<b>分裂</b>（細胞核先分裂，再形成兩個新細胞）、<b>生長</b>（吸收養分）和<b>分化</b>（變得專門化）。'],
+['Levels of organization: <b>cell → tissue → organ → system → organism</b>.','組織層次：<b>細胞 → 組織 → 器官 → 系統 → 生物個體</b>。'],
+['<b>DNA</b> is the genetic material; it carries genetic information that instructs cell activities. DNA is a <b>double helix</b>.','<b>DNA</b>是遺傳物質，攜帶指示細胞活動的遺傳信息。DNA 呈<b>雙螺旋</b>結構。'],
+['A <b>chromosome</b> contains a long coil of DNA; DNA has 4 <b>bases</b> (A, T, C, G); a specific sequence of bases makes up a <b>gene</b>.','<b>染色體</b>含有一條長而捲曲的 DNA；DNA 有四種<b>鹼基</b>（A、T、C、G）；鹼基的特定排列組成<b>基因</b>。']],
+terms:[['cell division','細胞分裂'],['cell differentiation','細胞分化'],['chromosome','染色體'],['DNA','去氧核糖核酸'],['double helix','雙螺旋'],['base','鹼基'],['gene','基因'],['tissue','組織'],['organ','器官']],
+qs:[
+M(1,'What is the correct order of the levels of organization?','組織層次的正確次序是甚麼？',[['Cell → tissue → organ → system','細胞 → 組織 → 器官 → 系統'],['Tissue → cell → system → organ','組織 → 細胞 → 系統 → 器官'],['Organ → cell → tissue → system','器官 → 細胞 → 組織 → 系統'],['System → organ → cell → tissue','系統 → 器官 → 細胞 → 組織']],'From small to large.','由小至大。'),
+M(1,'DNA has the shape of a…','DNA 的形狀是……',[['double helix','雙螺旋'],['cube','立方體'],['single straight line','單一直線'],['ring','環形']],'Two strands twisted together.','兩條鏈互相扭纏。'),
+M(1,'How many kinds of bases are found in DNA?','DNA 有多少種鹼基？',[['4','4'],['2','2'],['20','20'],['46','46']],'A, T, C, G.','A、T、C、G。'),
+T(2,'In cell division, the nucleus divides into two.','在細胞分裂時，細胞核會一分為二。',true,'Then the cytoplasm separates to form two cells.','然後細胞質分開，形成兩個細胞。'),
+T(2,'Cell differentiation means cells become bigger.','細胞分化是指細胞變大。',false,'Differentiation = becoming specialized; getting bigger is cell growth.','分化＝變得專門化；變大是細胞生長。'),
+M(2,'The heart is made of muscle, nerve and other tissues working together. The heart is an…','心臟由肌肉、神經等組織一起運作組成。心臟是一個……',[['organ','器官'],['tissue','組織'],['cell','細胞'],['system','系統']],'Different tissues → organ.','不同組織 → 器官。'),
+M(2,'A specific sequence of bases on DNA that makes up a unit of genetic information is a…','DNA 上一段特定排列的鹼基組成一個遺傳信息單位，稱為……',[['gene','基因'],['chromosome','染色體'],['nucleus','細胞核'],['tissue','組織']],'Chromosome ⊃ DNA ⊃ genes.','染色體 ⊃ DNA ⊃ 基因。'),
+M(3,'Red blood cells have no nucleus and carry oxygen. This is an example of…','紅血球沒有細胞核並負責運送氧，這是甚麼的例子？',[['cell differentiation','細胞分化'],['cell division','細胞分裂'],['a tissue','組織'],['a gene','基因']],'They are specialized for a function.','它們專門執行某種功能。'),
+M(3,'Where are chromosomes found in a cell?','染色體在細胞的哪部分？',[['Nucleus','細胞核'],['Cell wall','細胞壁'],['Vacuole','液泡'],['Cell membrane','細胞膜']],'The nucleus contains the genetic material.','細胞核含有遺傳物質。'),
+M(4,'Which order of size is correct, from LARGEST to SMALLEST?','由最大至最小，哪個次序正確？',[['Chromosome → DNA → gene → base','染色體 → DNA → 基因 → 鹼基'],['Gene → chromosome → base → DNA','基因 → 染色體 → 鹼基 → DNA'],['Base → gene → DNA → chromosome','鹼基 → 基因 → DNA → 染色體'],['DNA → chromosome → base → gene','DNA → 染色體 → 鹼基 → 基因']],'Chromosome contains DNA; genes are parts of DNA made of bases.','染色體含 DNA；基因是 DNA 的一部分，由鹼基組成。'),
+M(4,'A zygote grows into a baby with trillions of cells. Which processes are MOST needed?','一個合子長成擁有數以萬億計細胞的嬰兒，最需要哪些過程？',[['Cell division, growth and differentiation','細胞分裂、生長和分化'],['Only cell growth','只有細胞生長'],['Only cell differentiation','只有細胞分化'],['Photosynthesis','光合作用']],'Division increases number; growth increases size; differentiation makes different cell types.','分裂增加數目；生長增加體積；分化產生不同種類的細胞。'),
+M(5,'Which statement about levels of organization is CORRECT?','關於組織層次，哪個說法正確？',[['The digestive system has many organs working together','消化系統由多個器官一起運作'],['A tissue is made of different organs','組織由不同器官組成'],['A cell is made of systems','細胞由系統組成'],['An organ has only one type of cell','器官只有一種細胞']],'Systems are made of organs.','系統由器官組成。'),
+M(6,'Build a model to show DNA base pairing. Which rule should your model follow?','建立模型展示 DNA 鹼基配對，你的模型應遵守哪條規則？',[['A pairs with T, and C pairs with G','A 與 T 配對，C 與 G 配對'],['A pairs with C, T pairs with G','A 與 C 配對，T 與 G 配對'],['Any base pairs with any base','任何鹼基可與任何鹼基配對'],['Bases do not pair','鹼基不會配對']],'Base pairing: A–T, C–G.','鹼基配對：A–T、C–G。')
+]},
+{id:'4.3',en:'Sex cells and reproductive systems',zh:'性細胞和生殖系統',
+notes:[['Male sex cell: <b>sperm</b> (small, can move). Female sex cell: <b>ovum</b> (much larger, cannot move by itself).','男性性細胞：<b>精子</b>（細小、能自行移動）。女性性細胞：<b>卵</b>（大得多、不能自行移動）。'],
+['Each sex cell has <b>23</b> chromosomes; sperm carries <b>X or Y</b>, ovum carries <b>X</b> only.','每個性細胞有 <b>23</b> 條染色體；精子帶 <b>X 或 Y</b>，卵只帶 <b>X</b>。'],
+['Sperm + ovum fuse → <b>zygote</b> with <b>46</b> chromosomes. <b>XX = female</b>, <b>XY = male</b>.','精子與卵融合 → <b>合子</b>，有 <b>46</b> 條染色體。<b>XX＝女性</b>，<b>XY＝男性</b>。'],
+['Male system: <b>testes</b> (make sperm & sex hormones), <b>sperm ducts</b>, <b>sex glands</b>, <b>urethra</b>, <b>penis</b>.','男性生殖系統：<b>睾丸</b>（產生精子和性激素）、<b>輸精管</b>、<b>性腺體</b>、<b>尿道</b>、<b>陰莖</b>。'],
+['Female system: <b>ovaries</b> (release ova), <b>oviducts</b> (where fertilization occurs), <b>uterus</b> (where embryo develops), <b>vagina</b>.','女性生殖系統：<b>卵巢</b>（釋放卵）、<b>輸卵管</b>（受精的地方）、<b>子宮</b>（胚胎發育的地方）、<b>陰道</b>。']],
+terms:[['sperm','精子'],['ovum','卵'],['zygote','合子'],['testis','睾丸'],['sperm duct','輸精管'],['urethra','尿道'],['ovary','卵巢'],['oviduct','輸卵管'],['uterus','子宮'],['sex hormone','性激素']],
+qs:[
+M(1,'The male sex cell is the…','男性的性細胞是……',[['sperm','精子'],['ovum','卵'],['zygote','合子'],['embryo','胚胎']],'Sperms are made in the testes.','精子在睾丸中產生。'),
+M(1,'Which organ produces ova?','哪個器官產生卵？',[['Ovary','卵巢'],['Uterus','子宮'],['Testis','睾丸'],['Vagina','陰道']],'Ovaries release ova.','卵巢釋放卵。'),
+M(1,'How many chromosomes are in a human sperm?','人類精子有多少條染色體？',[['23','23'],['46','46'],['92','92'],['2','2']],'Sex cells have half the number: 23.','性細胞有一半數目：23 條。'),
+T(2,'An ovum can move by itself.','卵能自行移動。',false,'The ovum is moved along the oviduct; sperms swim.','卵是被輸卵管推送的；精子會游動。'),
+T(2,'A zygote with XY sex chromosomes develops into a male.','性染色體為 XY 的合子會發育成男性。',true,'XX = female, XY = male.','XX＝女性，XY＝男性。'),
+M(2,'Where does a baby develop inside the mother?','嬰兒在母親體內哪裏發育？',[['Uterus','子宮'],['Ovary','卵巢'],['Oviduct','輸卵管'],['Stomach','胃']],'The uterus has a thick lining for the embryo.','子宮有厚厚的內膜讓胚胎發育。'),
+M(2,'Which tube carries both urine and semen in males?','男性哪條管道同時輸送尿液和精液？',[['Urethra','尿道'],['Sperm duct','輸精管'],['Oviduct','輸卵管'],['Vagina','陰道']],'At different times, not together.','在不同時間輸送，不會同時。'),
+M(3,'A sperm (23) fuses with an ovum (23). How many chromosomes does the zygote have?','精子（23 條）與卵（23 條）融合，合子有多少條染色體？',[['46','46'],['23','23'],['69','69'],['92','92']],'23 + 23 = 46, restoring the normal number.','23 + 23 = 46，回復正常數目。'),
+M(3,'Which sex chromosome in the SPERM decides that a baby will be a boy?','精子中哪種性染色體決定嬰兒是男孩？',[['Y','Y'],['X','X'],['XX','XX'],['Any chromosome','任何染色體']],'Ovum always gives X; sperm gives X or Y.','卵總是提供 X；精子提供 X 或 Y。'),
+M(4,'Why does a sperm have a tail while an ovum is large?','為甚麼精子有尾部，而卵則較大？',[['Sperm swims to the ovum; the ovum stores food for the early embryo','精子游向卵；卵儲存供早期胚胎使用的養分'],['Both just look different by chance','兩者只是碰巧不同'],['The ovum needs to swim','卵需要游動'],['Sperm stores food','精子儲存養分']],'Structure matches function.','結構配合功能。'),
+M(5,'"The mother decides whether the baby is a boy or girl." Evaluate this claim.','「母親決定嬰兒是男孩還是女孩。」評價這說法。',[['Incorrect – the ovum always carries X; the sperm (X or Y) decides','不正確－卵總是帶 X；由精子（X 或 Y）決定'],['Correct – the ovum carries Y','正確－卵帶 Y'],['Correct – the uterus decides','正確－由子宮決定'],['Incorrect – the food eaten decides','不正確－由所吃的食物決定']],'Chance of boy or girl is about 50:50 each time.','每次生男或生女的機會約為各半。'),
+M(6,'Create a flow chart of the path of a sperm. Which is correct?','為精子的路徑製作流程圖，哪個正確？',[['Testis → sperm duct → urethra → out through penis','睾丸 → 輸精管 → 尿道 → 經陰莖排出'],['Sperm duct → testis → urethra','輸精管 → 睾丸 → 尿道'],['Urethra → testis → sperm duct','尿道 → 睾丸 → 輸精管'],['Testis → oviduct → uterus','睾丸 → 輸卵管 → 子宮']],'Sex glands add fluid to form semen along the way.','途中性腺體加入液體形成精液。')
+]},
+{id:'4.4',en:'Sexual maturity and birth of a new life',zh:'性成熟和新生命的誕生',
+notes:[['<b>Puberty</b>: testes start producing sperms (boys); ovaries start releasing ova (girls); <b>secondary sexual characteristics</b> appear.','<b>青春期</b>：男孩的睾丸開始產生精子；女孩的卵巢開始釋放卵；出現<b>第二性徵</b>。'],
+['<b>Menstrual cycle</b> (~28 days): the <b>uterine lining</b> thickens and breaks down. <b>Menstruation</b>: lining + ovum pass out with some blood. <b>Ovulation</b>: release of an ovum.','<b>月經週期</b>（約 28 日）：<b>子宮內膜</b>增厚然後脫落。<b>月經</b>：內膜組織和卵連同少量血液排出。<b>排卵</b>：釋放卵。'],
+['<b>Fertilization</b> (sperm + ovum → zygote, in oviduct) → <b>implantation</b> (embryo attaches to uterine lining) → growth → <b>birth</b>.','<b>受精</b>（精子＋卵 → 合子，在輸卵管）→ <b>植入</b>（胚胎附着於子宮內膜）→ 生長 → <b>分娩</b>。'],
+['The <b>placenta</b> passes nutrients and oxygen from mother to embryo and wastes back; connected by the <b>umbilical cord</b>. <b>Amniotic fluid</b> in the <b>amnion</b> protects the foetus.','<b>胎盤</b>把養分和氧由母親傳給胚胎，並把廢物送回；以<b>臍帶</b>連接。<b>羊膜</b>內的<b>羊水</b>保護胎兒。']],
+terms:[['puberty','青春期'],['menstrual cycle','月經週期'],['menstruation','月經'],['ovulation','排卵'],['uterine lining','子宮內膜'],['fertilization','受精'],['implantation','植入'],['embryo','胚胎'],['foetus','胎兒'],['placenta','胎盤'],['umbilical cord','臍帶'],['amniotic fluid','羊水']],
+qs:[
+M(1,'The fusion of a sperm and an ovum is called…','精子與卵的融合稱為……',[['fertilization','受精'],['implantation','植入'],['menstruation','月經'],['ovulation','排卵']],'It forms a zygote.','形成合子。'),
+M(1,'About how long is a menstrual cycle?','月經週期大約多長？',[['28 days','28 日'],['7 days','7 日'],['1 year','1 年'],['9 months','9 個月']],'About 28 days, it may vary.','約 28 日，因人而異。'),
+M(1,'The release of an ovum from the ovary is called…','卵巢釋放卵的過程稱為……',[['ovulation','排卵'],['fertilization','受精'],['implantation','植入'],['birth','分娩']],'Usually around the middle of the cycle.','通常在週期中段。'),
+T(2,'Puberty happens in both boys and girls.','男孩和女孩都會經歷青春期。',true,'Secondary sexual characteristics appear in both.','兩者都會出現第二性徵。'),
+T(2,'The embryo gets oxygen by breathing through its lungs in the uterus.','胚胎在子宮內用肺呼吸取得氧。',false,'Oxygen comes from the mother\'s blood through the placenta.','氧經胎盤從母親的血液取得。'),
+M(2,'Which structure joins the foetus to the placenta?','哪個結構連接胎兒和胎盤？',[['Umbilical cord','臍帶'],['Oviduct','輸卵管'],['Amnion','羊膜'],['Urethra','尿道']],'It carries blood vessels.','臍帶內有血管。'),
+M(2,'Where does fertilization usually take place?','受精通常在哪裏發生？',[['Oviduct','輸卵管'],['Uterus','子宮'],['Ovary','卵巢'],['Vagina','陰道']],'The zygote then moves to the uterus.','合子之後移到子宮。'),
+M(3,'Put these in order: implantation, fertilization, birth, embryo growth.','排列次序：植入、受精、分娩、胚胎生長。',[['Fertilization → implantation → embryo growth → birth','受精 → 植入 → 胚胎生長 → 分娩'],['Implantation → fertilization → birth → growth','植入 → 受精 → 分娩 → 生長'],['Birth → fertilization → implantation → growth','分娩 → 受精 → 植入 → 生長'],['Growth → birth → fertilization → implantation','生長 → 分娩 → 受精 → 植入']],'A zygote must form before it can attach.','必須先形成合子才能植入。'),
+M(3,'What is the function of amniotic fluid?','羊水有甚麼功能？',[['Protects the foetus from bumps','保護胎兒免受碰撞'],['Gives oxygen','提供氧'],['Makes sperms','產生精子'],['Digests food','消化食物']],'It acts as a shock absorber.','它有減震作用。'),
+M(4,'Why should a pregnant woman NOT smoke or drink alcohol?','為甚麼懷孕婦女不應吸煙或飲酒？',[['Harmful substances can pass through the placenta to the foetus','有害物質可經胎盤進入胎兒體內'],['The placenta blocks all substances','胎盤會阻擋所有物質'],['It only affects the mother','只影響母親'],['It makes the baby grow faster','令嬰兒生長得更快']],'The placenta lets many small substances pass.','胎盤會讓很多細小物質通過。'),
+M(4,'During menstruation, what is passed out of the body?','月經期間，甚麼會排出體外？',[['Tissues of the uterine lining, the ovum and some blood','子宮內膜組織、卵和少量血液'],['Only urine','只有尿液'],['The placenta','胎盤'],['Sperms','精子']],'The lining breaks down when no fertilization occurs.','沒有受精時，子宮內膜會脫落。'),
+M(5,'A friend is worried because her period is irregular in her first year after puberty. What is the BEST advice?','朋友在青春期第一年月經不規律，感到擔心。最好的建議是甚麼？',[['It is common at first; talk to a parent, school nurse or doctor if worried','初期很常見；如擔心可與家長、學校護士或醫生傾談'],['Ignore all body changes forever','永遠不理會身體變化'],['Stop eating','停止進食'],['It means she is seriously ill','表示她患了重病']],'Cycles often take time to become regular.','月經週期通常需要時間才會變得規律。'),
+M(6,'Design a poster on caring for a baby before birth. Which set of tips is BEST?','設計一張關於產前照顧嬰兒的海報，哪組建議最好？',[['Balanced diet, no smoking/alcohol, regular medical check-ups','均衡飲食、不吸煙飲酒、定期產前檢查'],['Eat only sweets and skip check-ups','只吃甜食並不做檢查'],['Smoke to relax','吸煙放鬆'],['Take any medicine without advice','隨便服藥']],'What the mother takes in reaches the foetus.','母親攝取的東西會到達胎兒。')
+]},
+{id:'4.5',en:'Becoming parents',zh:'成為父母',
+notes:[['The most reliable sign of pregnancy is the <b>absence of menstruation</b>.','懷孕最可靠的徵兆是<b>月經停止</b>。'],
+['<b>Parental care</b> is important for the survival, growth and development of babies.','<b>親代照顧</b>對嬰兒的存活、成長和發育十分重要。'],
+['Married couples practise <b>family planning</b> to decide how many children to have and when.','已婚夫婦透過<b>家庭計劃</b>決定生育子女的數目和時間。'],
+['Birth control: prevent ovum release – <b>contraceptive pills</b>; prevent fertilization – <b>condom</b>, <b>rhythm method</b>, <b>sterilization</b>; prevent embryo development – <b>IUD</b>.','避孕方法：防止排卵－<b>避孕丸</b>；防止受精－<b>安全套</b>、<b>安全期避孕法</b>、<b>絕育手術</b>；防止胚胎發育－<b>子宮環</b>。']],
+terms:[['pregnancy','懷孕'],['parental care','親代照顧'],['family planning','家庭計劃'],['contraceptive pill','避孕丸'],['condom','安全套'],['rhythm method','安全期避孕法'],['sterilization','絕育手術'],['intrauterine device (IUD)','子宮環']],
+qs:[
+M(1,'What is the most reliable sign of pregnancy?','懷孕最可靠的徵兆是甚麼？',[['Absence of menstruation','月經停止'],['Feeling hungry','感到肚餓'],['Getting taller','長高'],['Having a cold','患感冒']],'Menstruation stops because the lining is kept for the embryo.','由於內膜被保留給胚胎，月經會停止。'),
+M(1,'Contraceptive pills work by…','避孕丸的原理是……',[['preventing the release of ova','防止排卵'],['killing the embryo','殺死胚胎'],['blocking the urethra','阻塞尿道'],['preventing puberty','阻止青春期']],'No ovum → no fertilization.','沒有卵 → 不會受精。'),
+T(1,'Parental care helps babies survive and develop.','親代照顧幫助嬰兒存活和成長。',true,'Babies depend on parents for food, warmth and protection.','嬰兒依賴父母提供食物、溫暖和保護。'),
+T(2,'The rhythm method is the most reliable birth control method.','安全期避孕法是最可靠的避孕方法。',false,'Cycles vary, so the "safe period" is hard to predict – it is unreliable.','月經週期會改變，「安全期」難以預測，所以不太可靠。'),
+M(2,'Which method prevents fertilization by stopping sperms reaching the ovum?','哪種方法透過阻止精子到達卵以防止受精？',[['Condom','安全套'],['Contraceptive pill','避孕丸'],['IUD','子宮環'],['Balanced diet','均衡飲食']],'A physical barrier.','一種物理屏障。'),
+M(2,'An intrauterine device (IUD) works by…','子宮環的原理是……',[['preventing the development of an embryo in the uterus','防止胚胎在子宮內發育'],['stopping ovulation','阻止排卵'],['making sperms','產生精子'],['cutting sperm ducts','切斷輸精管']],'It prevents implantation.','它阻止胚胎植入。'),
+M(3,'Male sterilization cuts and ties the…','男性絕育手術會切斷並紮起……',[['sperm ducts','輸精管'],['urethra','尿道'],['oviducts','輸卵管'],['testes','睾丸']],'Sperms cannot leave the testes.','精子不能離開睾丸。'),
+M(3,'Which birth control method also helps reduce the spread of sexually transmitted infections?','哪種避孕方法同時有助減少性病傳播？',[['Condom','安全套'],['Contraceptive pill','避孕丸'],['Rhythm method','安全期避孕法'],['IUD','子宮環']],'It is a barrier to body fluids.','它能阻隔體液。'),
+M(4,'Why is family planning important?','為甚麼家庭計劃很重要？',[['Parents can give each child enough care, time and resources','父母可為每個孩子提供足夠的照顧、時間和資源'],['It makes babies taller','令嬰兒長得較高'],['It stops puberty','阻止青春期'],['It is only about money','只與金錢有關']],'Planning supports child health and family well-being.','計劃有助孩子健康和家庭福祉。'),
+M(4,'Sterilization is suitable for couples who…','絕育手術適合哪類夫婦？',[['do not want any more children','不想再生育的夫婦'],['want a baby next year','打算明年生育的夫婦'],['are teenagers','青少年'],['want twins','想要雙胞胎的夫婦']],'It is usually permanent.','它通常是永久性的。'),
+M(5,'Which comparison of birth control methods is CORRECT?','以下哪個避孕方法的比較是正確的？',[['Pills stop ovulation; condoms block sperms; IUDs stop embryo development','避孕丸阻止排卵；安全套阻隔精子；子宮環阻止胚胎發育'],['All methods work the same way','所有方法原理相同'],['Condoms stop ovulation','安全套阻止排卵'],['IUDs are used by males','子宮環由男性使用']],'Match each method to its working principle.','把每種方法與其原理配對。'),
+M(6,'A class creates a "Ready to be parents?" checklist. Which item is MOST relevant?','班上製作「準備好做父母嗎？」清單，哪一項最相關？',[['Can we give time, love, care and money for a child\'s growth?','我們能否為孩子的成長付出時間、愛心、照顧和金錢？'],['Do we have the newest phone?','我們有最新款手機嗎？'],['Is our flat painted pink?','我們的單位漆成粉紅色嗎？'],['Do we like cartoons?','我們喜歡卡通嗎？']],'Parental care needs commitment.','親代照顧需要承擔。')
+]},
+{id:'4.6',en:'Heredity and variation',zh:'遺傳和變異',
+notes:[['<b>Heredity</b> is the transmission of genetic information (in DNA) from parents to offspring.','<b>遺傳</b>是把遺傳信息（在 DNA 中）由父母傳給子代。'],
+['A <b>genetic tree diagram</b> shows how a trait passes through a family.','<b>遺傳系譜圖</b>顯示某特徵在家族中如何傳遞。'],
+['Most <b>variations</b> are determined by both <b>heredity and the environment</b>.','大部分<b>變異</b>同時由<b>遺傳和環境</b>決定。'],
+['<b>Discontinuous variation</b>: distinct categories (eye colour, blood group, earlobes) → <b>bar chart</b>. <b>Continuous variation</b>: range of values (height, weight) → <b>histogram</b>.','<b>不連續變異</b>：明確的類別（眼睛顏色、血型、耳垂）→ <b>棒形圖</b>。<b>連續變異</b>：一系列數值（身高、體重）→ <b>直方圖</b>。'],
+['<b>Identical twins</b>: one zygote splits → same genes. <b>Non-identical twins</b>: two ova + two sperms → different genes.','<b>單卵雙生</b>：一個合子分開 → 基因相同。<b>二卵雙生</b>：兩個卵與兩個精子受精 → 基因不同。']],
+terms:[['heredity','遺傳'],['variation','變異'],['continuous variation','連續變異'],['discontinuous variation','不連續變異'],['bar chart','棒形圖'],['histogram','直方圖'],['identical twins','單卵雙生'],['non-identical twins','二卵雙生']],
+qs:[
+M(1,'The passing of traits from parents to children is called…','特徵由父母傳給子女稱為……',[['heredity','遺傳'],['variation','變異'],['fertilization','受精'],['classification','分類']],'Genetic information is carried in DNA.','遺傳信息存於 DNA。'),
+M(1,'Which is a DISCONTINUOUS variation?','以下哪一項是不連續變異？',[['Blood group','血型'],['Height','身高'],['Body weight','體重'],['Arm length','手臂長度']],'Blood group: A, B, AB or O – distinct categories.','血型：A、B、AB 或 O，屬明確類別。'),
+M(1,'Which graph is used for CONTINUOUS variation?','連續變異用哪種圖表示？',[['Histogram','直方圖'],['Bar chart','棒形圖'],['Pie chart only','只可用圓形圖'],['Tree diagram','樹狀圖']],'Histogram bars touch because data are continuous.','直方圖的棒互相緊貼，因數據是連續的。'),
+T(2,'Identical twins develop from a single zygote.','單卵雙生由一個合子發育而成。',true,'The embryo splits into two.','胚胎分開成兩個。'),
+T(2,'Non-identical twins have exactly the same genetic make-up.','二卵雙生的遺傳組成完全相同。',false,'They come from two different ova and sperms.','他們來自兩個不同的卵和精子。'),
+M(2,'Free or attached earlobes is an example of…','有垂耳或無垂耳是甚麼的例子？',[['discontinuous variation','不連續變異'],['continuous variation','連續變異'],['a habitat','生境'],['a stimulus','刺激']],'Two clear categories.','兩個清楚的類別。'),
+M(3,'Your class records heights: 149.5–154.5 cm, 154.5–159.5 cm … Which graph should you draw?','全班記錄身高：149.5–154.5 cm、154.5–159.5 cm…… 你應畫哪種圖？',[['Histogram','直方圖'],['Bar chart with gaps','有空隙的棒形圖'],['Tree diagram','樹狀圖'],['Key','檢索表']],'Height is continuous – class intervals → histogram.','身高是連續變異，用組距畫直方圖。'),
+M(3,'Identical twins raised apart have different body weights. This shows variation is also affected by…','分開撫養的單卵雙生體重不同，這顯示變異亦受甚麼影響？',[['the environment (e.g. diet, exercise)','環境（例如飲食、運動）'],['nothing at all','完全沒有'],['their blood group','他們的血型'],['their chromosomes only','只有他們的染色體']],'Same genes, different environment → different weight.','基因相同，環境不同 → 體重不同。'),
+M(4,'Why are identical twins useful for studying the effect of the environment?','為甚麼單卵雙生有助研究環境的影響？',[['Their genes are the same, so differences are due to the environment','他們的基因相同，所以差異源自環境'],['They always live apart','他們總是分開生活'],['Their genes are completely different','他們的基因完全不同'],['They have no DNA','他們沒有 DNA']],'Genes are "controlled", like a fair test!','基因被「控制」了，就像公平測試！'),
+M(4,'Boy-and-girl twins must be…','一男一女的雙胞胎一定是……',[['non-identical twins','二卵雙生'],['identical twins','單卵雙生'],['clones','複製品'],['from one sperm','來自同一精子']],'Identical twins have the same sex chromosomes.','單卵雙生的性染色體相同。'),
+M(5,'"Height is determined only by genes." Evaluate this claim.','「身高只由基因決定。」評價這說法。',[['Partly wrong – genes set a range; diet, exercise and sleep also affect height','部分錯誤－基因設定範圍；飲食、運動和睡眠亦影響身高'],['Completely correct','完全正確'],['Height is determined only by food','身高只由食物決定'],['Height never varies','身高從不變異']],'Most variations = heredity + environment.','大部分變異＝遺傳＋環境。'),
+M(6,'Plan a class survey on tongue rolling. Which plan is BEST?','策劃一個關於捲舌能力的全班調查，哪個計劃最好？',[['Ask each student to try, count "can / cannot", and draw a bar chart','請每位同學嘗試，統計「能／不能」並畫棒形圖'],['Measure tongue length and draw a histogram','量度舌頭長度並畫直方圖'],['Guess results without testing','不測試只猜結果'],['Only ask one student','只問一位同學']],'Tongue rolling is discontinuous → bar chart.','捲舌屬不連續變異 → 棒形圖。')
+]}
+]}
+];
+
+</script>
+<script>
+/* ===================== Mochi Science Pals – game engine ===================== */
+(function(){
+'use strict';
+var KEY='s1SciencePals_v1';
+var O='#5B4B49';
+var $=function(s,r){return (r||document).querySelector(s);};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+
+/* ---------- helpers ---------- */
+function L(en,zh){return S&&S.lang==='en'?en:zh;}
+function LL(o){return S.lang==='en'?o.en:o.zh;}
+function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function dayNum(s){var p=s.split('-');return Math.round(Date.UTC(+p[0],+p[1]-1,+p[2])/864e5);}
+function fromDayNum(n){var d=new Date(n*864e5);return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0');}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+var ALLSECS=[];CHAPTERS.forEach(function(c){c.sections.forEach(function(s){s.chap=c;ALLSECS.push(s);});});
+function secById(id){for(var i=0;i<ALLSECS.length;i++)if(ALLSECS[i].id===id)return ALLSECS[i];return null;}
+function qById(qid){var p=qid.split('#');var s=secById(p[0]);return s?s.qs[+p[1]]:null;}
+var BLOOM=[null,['Remember','記憶'],['Understand','理解'],['Apply','應用'],['Analyse','分析'],['Evaluate','評鑑'],['Create','創造']];
+
+/* ---------- pets ---------- */
+var PETS=[
+ {id:'mochi',en:'Mochi',zh:'麻糬',body:'#FFFFFF',belly:'#FFF6EE',ears:'bear',price:0,
+  desc:['A squishy rice-cake bear who loves notes.','愛做筆記的軟綿綿麻糬熊。'],
+  cond:null},
+ {id:'matcha',en:'Matcha',zh:'抹茶',body:'#D5E8C8',belly:'#EAF4E2',ears:'frog',price:150,
+  desc:['A calm little frog who hums in the rain.','在雨中哼歌的冷靜小青蛙。'],
+  cond:{k:'best',n:3,en:'Reach a 3-day streak',zh:'連續溫習 3 日'}},
+ {id:'sakura',en:'Sakura',zh:'櫻花',body:'#FFD9E2',belly:'#FFEDF1',ears:'bunny',price:250,
+  desc:['A shy bunny who blushes at every right answer.','每答對一題都會臉紅的害羞兔兔。'],
+  cond:{k:'quizzes',n:10,en:'Finish 10 quizzes',zh:'完成 10 次測驗'}},
+ {id:'pudding',en:'Pudding',zh:'布甸',body:'#FFE9A6',belly:'#FFF5D6',ears:'tuft',price:350,
+  desc:['A wobbly chick who is scared of Bunsen flames.','很怕本生燈火焰的搖搖小雞。'],
+  cond:{k:'perfect',n:5,en:'Get 5 perfect scores',zh:'取得 5 次滿分'}},
+ {id:'soda',en:'Soda',zh:'蘇打',body:'#CFE7F6',belly:'#E9F5FC',ears:'seal',price:450,
+  desc:['A bubbly seal who guards the water cycle.','守護水循環的汽水海豹。'],
+  cond:{k:'cleared',n:15,en:'Clear 15 mistakes',zh:'清除 15 條錯題'}},
+ {id:'taro',en:'Taro',zh:'芋圓',body:'#E4D6F3',belly:'#F2EAFA',ears:'cat',price:600,
+  desc:['A sleepy cat who dreams in DNA spirals.','在 DNA 螺旋中做夢的睏睏貓。'],
+  cond:{k:'three',n:10,en:'Get 3★ in 10 sub-topics',zh:'在 10 個小節取得 3★'}}
+];
+function petDef(id){for(var i=0;i<PETS.length;i++)if(PETS[i].id===id)return PETS[i];return PETS[0];}
+function petLevel(xp){return Math.floor(Math.sqrt(xp/25))+1;}
+function lvXP(l){return 25*(l-1)*(l-1);}
+var STAGE=[null,['Baby','寶寶'],['Junior','少年'],['Master','大師']];
+var EVO=[null,null,{lv:5,cost:120},{lv:10,cost:300}];
+
+/* ---------- items ---------- */
+function I(id,cat,slot,en,zh,price,svg){return {id:id,cat:cat,slot:slot,en:en,zh:zh,price:price,svg:svg};}
+var ITEMS=[
+ // hats
+ I('h_sprout','wear','hat','Sprout','小芽葉',40,function(){return '<path d="M100 64 C100 50 100 44 101 36" stroke="#6FA06A" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M101 40 C88 26 74 30 72 38 C84 46 96 44 101 40Z" fill="#9BCB8E" stroke="'+O+'" stroke-width="3"/><path d="M101 38 C112 22 128 26 130 34 C118 44 106 42 101 38Z" fill="#B7DDA8" stroke="'+O+'" stroke-width="3"/>';}),
+ I('h_beret','wear','hat','Strawberry beret','士多啤梨貝雷帽',60,function(){return '<ellipse cx="100" cy="64" rx="44" ry="16" fill="#F28C9B" stroke="'+O+'" stroke-width="3" transform="rotate(-8 100 64)"/><circle cx="84" cy="60" r="2" fill="#FFF3B0"/><circle cx="100" cy="56" r="2" fill="#FFF3B0"/><circle cx="116" cy="60" r="2" fill="#FFF3B0"/><circle cx="92" cy="68" r="2" fill="#FFF3B0"/><circle cx="110" cy="67" r="2" fill="#FFF3B0"/><path d="M98 48 l4 -8 l4 8" fill="#8CC084" stroke="'+O+'" stroke-width="2.5"/>';}),
+ I('h_grad','wear','hat','Graduation cap','畢業帽',120,function(){return '<path d="M74 66 L126 66 L126 56 Q100 50 74 56Z" fill="#5E5577" stroke="'+O+'" stroke-width="3"/><path d="M58 50 L100 36 L142 50 L100 64Z" fill="#6E6590" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M100 50 L136 58 L136 74" stroke="#F2C14E" stroke-width="3" fill="none"/><circle cx="136" cy="76" r="4" fill="#F2C14E"/>';}),
+ I('h_crown','wear','hat','Little crown','小皇冠',150,function(){return '<path d="M76 66 L72 40 L88 52 L100 34 L112 52 L128 40 L124 66Z" fill="#FBD46D" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><circle cx="100" cy="56" r="4" fill="#F28C9B"/><circle cx="84" cy="60" r="3" fill="#8FC7E8"/><circle cx="116" cy="60" r="3" fill="#8FC7E8"/>';}),
+ I('h_chef','wear','hat','Chef hat','廚師帽',70,function(){return '<rect x="78" y="52" width="44" height="14" rx="4" fill="#fff" stroke="'+O+'" stroke-width="3"/><path d="M80 54 C66 50 66 30 82 32 C84 20 100 18 104 28 C112 18 132 24 124 38 C136 42 130 56 120 54Z" fill="#fff" stroke="'+O+'" stroke-width="3"/>';}),
+ I('h_flower','wear','hat','Flower crown','花冠',90,function(){var s='<path d="M64 70 Q100 54 136 70" stroke="#8CC084" stroke-width="4" fill="none"/>';[[66,68,'#FFB3C1'],[83,61,'#FFF1A8'],[100,58,'#C9B6EA'],[117,61,'#FFB3C1'],[134,68,'#FFF1A8']].forEach(function(f){s+='<circle cx="'+f[0]+'" cy="'+f[1]+'" r="7" fill="'+f[2]+'" stroke="'+O+'" stroke-width="2"/><circle cx="'+f[0]+'" cy="'+f[1]+'" r="2.5" fill="#F2A65A"/>';});return s;}),
+ I('h_bucket','wear','hat','Sky bucket hat','天藍漁夫帽',80,function(){return '<path d="M70 66 Q72 40 100 40 Q128 40 130 66Z" fill="#A9D4EE" stroke="'+O+'" stroke-width="3"/><path d="M56 68 Q100 56 144 68 Q100 78 56 68Z" fill="#8FC7E8" stroke="'+O+'" stroke-width="3"/>';}),
+ // glasses
+ I('g_round','wear','glasses','Round glasses','圓框眼鏡',50,function(){return '<circle cx="80" cy="116" r="13" fill="rgba(255,255,255,.35)" stroke="'+O+'" stroke-width="3"/><circle cx="120" cy="116" r="13" fill="rgba(255,255,255,.35)" stroke="'+O+'" stroke-width="3"/><path d="M93 115 Q100 110 107 115" stroke="'+O+'" stroke-width="3" fill="none"/>';}),
+ I('g_safety','wear','glasses','Safety spectacles','安全眼鏡',60,function(){return '<rect x="62" y="104" width="76" height="24" rx="12" fill="rgba(170,215,240,.45)" stroke="#6BA8CF" stroke-width="3"/><path d="M62 112 L40 106 M138 112 L160 106" stroke="#6BA8CF" stroke-width="3"/>';}),
+ I('g_star','wear','glasses','Star shades','星星墨鏡',80,function(){function st(cx){return '<path d="M'+cx+' 102 l4 9 l10 1 l-7 7 l2 10 l-9 -5 l-9 5 l2 -10 l-7 -7 l10 -1Z" fill="#FFB3C1" stroke="'+O+'" stroke-width="2.5" stroke-linejoin="round"/>';}return st(80)+st(120)+'<path d="M92 114 L108 114" stroke="'+O+'" stroke-width="3"/>';}),
+ I('g_heart','wear','glasses','Heart glasses','心心眼鏡',80,function(){function h(cx){return '<path d="M'+cx+' 126 C'+(cx-18)+' 114 '+(cx-12)+' 102 '+cx+' 110 C'+(cx+12)+' 102 '+(cx+18)+' 114 '+cx+' 126Z" fill="#F28C9B" stroke="'+O+'" stroke-width="2.5"/>';}return h(80)+h(120)+'<path d="M92 112 L108 112" stroke="'+O+'" stroke-width="3"/>';}),
+ // accessories
+ I('a_scarf','wear','acc','Cosy scarf','暖暖頸巾',60,function(){return '<path d="M44 150 Q100 170 156 150 L158 162 Q100 184 42 162Z" fill="#F28C9B" stroke="'+O+'" stroke-width="3"/><path d="M128 164 l6 22 l12 -2 l-4 -24Z" fill="#F7A9B5" stroke="'+O+'" stroke-width="3"/>';}),
+ I('a_bow','wear','acc','Bow tie','煲呔',40,function(){return '<path d="M100 160 L82 150 L82 170Z M100 160 L118 150 L118 170Z" fill="#FBD46D" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><circle cx="100" cy="160" r="5" fill="#F2A65A" stroke="'+O+'" stroke-width="2.5"/>';}),
+ I('a_bell','wear','acc','Bell collar','鈴鐺頸圈',50,function(){return '<path d="M52 152 Q100 168 148 152" stroke="#8FC7E8" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="100" cy="166" r="8" fill="#FBD46D" stroke="'+O+'" stroke-width="2.5"/><path d="M96 168 L104 168" stroke="'+O+'" stroke-width="2"/>';}),
+ I('a_ribbon','wear','acc','Side ribbon','側邊蝴蝶結',45,function(){return '<path d="M140 74 L124 62 L126 84Z M140 74 L156 62 L154 86Z" fill="#C9B6EA" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><circle cx="140" cy="74" r="5" fill="#E8AEB7" stroke="'+O+'" stroke-width="2.5"/>';}),
+ // hand items
+ I('i_tube','wear','hand','Test tube','試管',40,function(){return '<g transform="rotate(18 164 130)"><rect x="158" y="104" width="14" height="44" rx="7" fill="rgba(255,255,255,.8)" stroke="'+O+'" stroke-width="3"/><rect x="160.5" y="124" width="9" height="21" rx="4.5" fill="#9BDDB0"/><rect x="155" y="101" width="20" height="6" rx="3" fill="#fff" stroke="'+O+'" stroke-width="2.5"/></g>';}),
+ I('i_flask','wear','hand','Conical flask','錐形瓶',60,function(){return '<path d="M160 104 L172 104 L172 118 L184 146 Q186 152 180 152 L152 152 Q146 152 148 146 L160 118Z" fill="rgba(255,255,255,.85)" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M153 138 L179 138 L182 146 Q183 149 180 149 L152 149 Q149 149 150 146Z" fill="#C9B6EA"/><circle cx="166" cy="128" r="2.5" fill="#C9B6EA"/>';}),
+ I('i_magnifier','wear','hand','Magnifying glass','放大鏡',70,function(){return '<path d="M166 138 L182 162" stroke="#B98B64" stroke-width="7" stroke-linecap="round"/><circle cx="160" cy="126" r="16" fill="rgba(210,236,250,.7)" stroke="'+O+'" stroke-width="4"/><path d="M152 120 Q156 114 162 114" stroke="#fff" stroke-width="3" fill="none"/>';}),
+ I('i_pencil','wear','hand','Big pencil','大鉛筆',30,function(){return '<g transform="rotate(30 166 130)"><rect x="160" y="96" width="12" height="46" fill="#FBD46D" stroke="'+O+'" stroke-width="3"/><path d="M160 142 L166 156 L172 142Z" fill="#F4D9B8" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><rect x="160" y="90" width="12" height="8" rx="2" fill="#F28C9B" stroke="'+O+'" stroke-width="3"/></g>';}),
+ I('i_leaf','wear','hand','Leaf umbrella','葉子傘',50,function(){return '<path d="M164 150 L164 96" stroke="#6FA06A" stroke-width="4"/><path d="M136 100 Q164 60 194 100 Q180 92 164 98 Q148 92 136 100Z" fill="#9BCB8E" stroke="'+O+'" stroke-width="3"/>';}),
+ I('i_balloon','wear','hand','Water-drop balloon','水滴氣球',50,function(){return '<path d="M164 150 Q160 120 170 100" stroke="'+O+'" stroke-width="2" fill="none"/><path d="M170 58 C186 78 190 88 184 98 Q170 110 158 98 C152 88 156 78 170 58Z" fill="#A9D4EE" stroke="'+O+'" stroke-width="3"/><path d="M164 90 Q162 84 166 78" stroke="#fff" stroke-width="3" fill="none"/>';}),
+ // wallpapers
+ I('w0','room','wall','Cream dots','忌廉波點',0,null),
+ I('w1','room','wall','Matcha checks','抹茶格仔',60,null),
+ I('w2','room','wall','Sakura stripes','櫻花條紋',60,null),
+ I('w3','room','wall','Cloudy sky','雲朵天空',80,null),
+ I('w4','room','wall','Lab graph paper','實驗室方格紙',80,null),
+ I('w5','room','wall','Starry night','星空夜',120,null),
+ // desk props
+ I('p_microscope','room','prop','Microscope','顯微鏡',90,function(){return '<svg viewBox="0 0 100 100"><rect x="18" y="84" width="60" height="10" rx="5" fill="#C9B6EA" stroke="'+O+'" stroke-width="3"/><path d="M60 84 L60 40" stroke="'+O+'" stroke-width="8" stroke-linecap="round"/><rect x="26" y="62" width="40" height="7" rx="3" fill="#fff" stroke="'+O+'" stroke-width="3"/><rect x="30" y="16" width="16" height="42" rx="6" fill="#fff" stroke="'+O+'" stroke-width="3" transform="rotate(-20 38 37)"/><circle cx="46" cy="72" r="3" fill="#F28C9B"/></svg>';}),
+ I('p_globe','room','prop','Globe','地球儀',70,function(){return '<svg viewBox="0 0 100 100"><path d="M34 92 L66 92 L58 82 L42 82Z" fill="#B98B64" stroke="'+O+'" stroke-width="3"/><path d="M50 82 L50 74" stroke="'+O+'" stroke-width="3"/><circle cx="50" cy="44" r="30" fill="#A9D4EE" stroke="'+O+'" stroke-width="3"/><path d="M34 30 Q44 26 46 36 Q40 46 32 42Z M56 50 Q68 44 70 56 Q62 66 54 60Z" fill="#9BCB8E"/></svg>';}),
+ I('p_cactus','room','prop','Cactus pot','仙人掌盆栽',50,function(){return '<svg viewBox="0 0 100 100"><path d="M30 70 L70 70 L64 94 L36 94Z" fill="#F7A9B5" stroke="'+O+'" stroke-width="3"/><path d="M40 70 L40 30 Q50 16 60 30 L60 70Z" fill="#9BCB8E" stroke="'+O+'" stroke-width="3"/><path d="M40 50 L30 50 L30 38" stroke="'+O+'" stroke-width="3" fill="#9BCB8E"/><circle cx="50" cy="22" r="5" fill="#FFB3C1"/></svg>';}),
+ I('p_beakers','room','prop','Beaker set','燒杯套裝',80,function(){return '<svg viewBox="0 0 100 100"><path d="M12 50 L42 50 L42 92 L12 92Z" fill="rgba(255,255,255,.8)" stroke="'+O+'" stroke-width="3"/><rect x="14" y="70" width="26" height="20" fill="#FFB3C1"/><path d="M58 40 L70 40 L70 56 L86 88 Q88 94 82 94 L46 94 Q40 94 42 88 L58 56Z" fill="rgba(255,255,255,.8)" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M48 80 L80 80 L84 90 L44 90Z" fill="#9BDDB0"/></svg>';}),
+ I('p_lamp','room','prop','Desk lamp','枱燈',60,function(){return '<svg viewBox="0 0 100 100"><ellipse cx="40" cy="92" rx="24" ry="5" fill="#FBD46D" stroke="'+O+'" stroke-width="3"/><path d="M40 90 L40 52 L64 30" stroke="'+O+'" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M56 18 L84 30 L72 50 Z" fill="#FFF1A8" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M76 52 L84 62 M68 56 L70 68" stroke="#F2C14E" stroke-width="3" stroke-linecap="round"/></svg>';}),
+ I('p_books','room','prop','Book stack','書堆',40,function(){return '<svg viewBox="0 0 100 100"><rect x="18" y="76" width="64" height="16" rx="3" fill="#A9D4EE" stroke="'+O+'" stroke-width="3"/><rect x="24" y="60" width="56" height="16" rx="3" fill="#F7A9B5" stroke="'+O+'" stroke-width="3"/><rect x="16" y="44" width="60" height="16" rx="3" fill="#9BCB8E" stroke="'+O+'" stroke-width="3"/><path d="M60 44 L60 30 L66 36 L72 30 L72 44" fill="#FBD46D" stroke="'+O+'" stroke-width="2.5"/></svg>';}),
+ // stickers
+ I('s_dna','room','sticker','DNA sticker','DNA 貼紙',30,function(){return '<svg viewBox="0 0 60 60"><path d="M20 6 C44 18 16 42 40 54 M40 6 C16 18 44 42 20 54" stroke="#8A6BB5" stroke-width="4" fill="none"/><path d="M24 14 L36 14 M22 30 L38 30 M24 46 L36 46" stroke="#F28C9B" stroke-width="3"/></svg>';}),
+ I('s_drop','room','sticker','Water drop sticker','水滴貼紙',30,function(){return '<svg viewBox="0 0 60 60"><path d="M30 6 C44 26 50 34 46 44 Q30 60 14 44 C10 34 16 26 30 6Z" fill="#A9D4EE" stroke="'+O+'" stroke-width="3"/><circle cx="24" cy="38" r="2.5" fill="'+O+'"/><circle cx="36" cy="38" r="2.5" fill="'+O+'"/></svg>';}),
+ I('s_cell','room','sticker','Cell sticker','細胞貼紙',30,function(){return '<svg viewBox="0 0 60 60"><rect x="6" y="10" width="48" height="40" rx="8" fill="#D5E8C8" stroke="'+O+'" stroke-width="3"/><circle cx="36" cy="26" r="8" fill="#C9B6EA" stroke="'+O+'" stroke-width="2.5"/><ellipse cx="18" cy="38" rx="5" ry="3" fill="#6FA06A"/><ellipse cx="28" cy="42" rx="5" ry="3" fill="#6FA06A"/></svg>';}),
+ I('s_fly','room','sticker','Butterfly sticker','蝴蝶貼紙',30,function(){return '<svg viewBox="0 0 60 60"><path d="M30 30 C14 6 2 20 12 32 C2 44 18 54 30 34 C42 54 58 44 48 32 C58 20 46 6 30 30Z" fill="#FFB3C1" stroke="'+O+'" stroke-width="3"/><path d="M30 20 L30 44" stroke="'+O+'" stroke-width="3"/></svg>';}),
+ I('s_leaf','room','sticker','Leaf sticker','葉子貼紙',30,function(){return '<svg viewBox="0 0 60 60"><path d="M10 50 C8 20 30 8 52 8 C52 34 38 52 10 50Z" fill="#9BCB8E" stroke="'+O+'" stroke-width="3"/><path d="M12 48 L40 20" stroke="'+O+'" stroke-width="2.5"/></svg>';}),
+ I('s_flask','room','sticker','Flask sticker','燒瓶貼紙',30,function(){return '<svg viewBox="0 0 60 60"><path d="M24 6 L36 6 L36 20 L50 48 Q52 54 46 54 L14 54 Q8 54 10 48 L24 20Z" fill="#fff" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M14 40 L46 40 L50 50 L10 50Z" fill="#FBD46D"/></svg>';}),
+ I('s_star','room','sticker','Gold star sticker','金星貼紙',40,function(){return '<svg viewBox="0 0 60 60"><path d="M30 4 L37 21 L56 22 L41 34 L46 53 L30 42 L14 53 L19 34 L4 22 L23 21Z" fill="#FBD46D" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/></svg>';}),
+ I('s_fire','room','sticker','Fire triangle sticker','火三角貼紙',40,function(){return '<svg viewBox="0 0 60 60"><path d="M30 6 L54 50 L6 50Z" fill="#FFE9A6" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M30 22 C38 32 38 40 30 44 C22 40 22 32 30 22Z" fill="#F28C9B"/></svg>';})
+];
+function item(id){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id)return ITEMS[i];return null;}
+var SLOTS=['hat','glasses','acc','hand'];
+var FOODS=[
+ {id:'onigiri',e:'🍙',en:'Rice ball',zh:'飯糰',price:5,en2:20,hp:0},
+ {id:'apple',e:'🍎',en:'Apple slices',zh:'蘋果片',price:4,en2:12,hp:4},
+ {id:'dango',e:'🍡',en:'Dango',zh:'糰子',price:8,en2:15,hp:10},
+ {id:'tea',e:'🧋',en:'Milk tea',zh:'奶茶',price:12,en2:8,hp:22},
+ {id:'pudding',e:'🍮',en:'Pudding',zh:'布甸',price:15,en2:28,hp:14}
+];
+var WALLS={
+ w0:'radial-gradient(circle at 12px 12px,#F6E3D4 3px,transparent 3.5px) 0 0/28px 28px,#FFF8EC',
+ w1:'linear-gradient(90deg,rgba(166,200,160,.35) 50%,transparent 50%) 0 0/40px 40px,linear-gradient(rgba(166,200,160,.35) 50%,transparent 50%) 0 0/40px 40px,#EEF5EA',
+ w2:'repeating-linear-gradient(90deg,#FFE5EC 0 22px,#FFF4F7 22px 44px)',
+ w3:'radial-gradient(ellipse 60px 26px at 22% 30%,#fff 60%,transparent 62%),radial-gradient(ellipse 80px 30px at 70% 62%,#fff 60%,transparent 62%),linear-gradient(#CFE9F7,#EAF6FB)',
+ w4:'linear-gradient(rgba(143,199,232,.35) 1px,transparent 1px) 0 0/18px 18px,linear-gradient(90deg,rgba(143,199,232,.35) 1px,transparent 1px) 0 0/18px 18px,#FBFDFF',
+ w5:'radial-gradient(circle at 20% 30%,#FFF1C5 2px,transparent 2.5px),radial-gradient(circle at 70% 20%,#fff 1.5px,transparent 2px),radial-gradient(circle at 45% 60%,#FFF1C5 1.5px,transparent 2px),radial-gradient(circle at 85% 70%,#fff 2px,transparent 2.5px),linear-gradient(#6E6590,#A99AC8)'
+};
+
+/* ---------- trophies ---------- */
+function ownedCount(cat){var n=0;ITEMS.forEach(function(it){if(it.cat===cat&&it.price>0&&S.owned[it.id])n++;});return n;}
+function petsCount(){return Object.keys(S.pets).length;}
+function maxStage(){var m=1;for(var k in S.pets)m=Math.max(m,S.pets[k].stage);return m;}
+function maxLevel(){var m=1;for(var k in S.pets)m=Math.max(m,petLevel(S.pets[k].xp));return m;}
+function threeStars(){var n=0;ALLSECS.forEach(function(s){if((S.secs[s.id]||{}).stars===3)n++;});return n;}
+function chapDone(){var n=0;CHAPTERS.forEach(function(c){if(c.sections.every(function(s){return (S.secs[s.id]||{}).stars>0;}))n++;});return n;}
+var TROPHIES=[
+ {id:'first',e:'🌱',en:'First Steps',zh:'第一步',den:'Finish your first quiz',dzh:'完成第一次測驗',tier:1,f:function(){return [S.quizzes,1];}},
+ {id:'st3',e:'🔥',en:'3-Day Streak',zh:'連續 3 日',den:'Study 3 days in a row',dzh:'連續 3 日溫習',tier:1,f:function(){return [S.best,3];}},
+ {id:'st7',e:'🔥',en:'7-Day Streak',zh:'連續 7 日',den:'Study 7 days in a row',dzh:'連續 7 日溫習',tier:2,f:function(){return [S.best,7];}},
+ {id:'st14',e:'☄️',en:'14-Day Legend',zh:'14 日傳說',den:'Study 14 days in a row',dzh:'連續 14 日溫習',tier:3,f:function(){return [S.best,14];}},
+ {id:'perf1',e:'💯',en:'First Perfect Score',zh:'首次滿分',den:'Get 5/5 in a quiz',dzh:'在測驗中取得 5/5',tier:1,f:function(){return [S.perfect,1];}},
+ {id:'perf10',e:'🌟',en:'Perfectionist',zh:'完美主義者',den:'Get 10 perfect scores',dzh:'取得 10 次滿分',tier:3,f:function(){return [S.perfect,10];}},
+ {id:'crush',e:'🔨',en:'Mistake Crusher',zh:'錯題粉碎機',den:'Clear 10 mistakes in 錯題本',dzh:'在錯題本清除 10 條錯題',tier:2,f:function(){return [S.cleared,10];}},
+ {id:'crush40',e:'🛡️',en:'Mistake Slayer',zh:'錯題剋星',den:'Clear 40 mistakes',dzh:'清除 40 條錯題',tier:3,f:function(){return [S.cleared,40];}},
+ {id:'book',e:'📚',en:'Bookworm',zh:'書蟲',den:'Complete 20 study sessions',dzh:'完成 20 次溫習',tier:2,f:function(){return [S.studies,20];}},
+ {id:'fashion',e:'👒',en:'Fashionista',zh:'時尚達人',den:'Own 8 wardrobe items',dzh:'擁有 8 件衣飾',tier:2,f:function(){return [ownedCount('wear'),8];}},
+ {id:'decor',e:'🏡',en:'Interior Designer',zh:'室內設計師',den:'Own 8 room decorations',dzh:'擁有 8 件房間裝飾',tier:2,f:function(){return [ownedCount('room'),8];}},
+ {id:'pets3',e:'🐾',en:'Pet Pal',zh:'寵物好朋友',den:'Adopt 3 pets',dzh:'領養 3 隻寵物',tier:2,f:function(){return [petsCount(),3];}},
+ {id:'pets6',e:'🏠',en:'Full Family',zh:'大家庭',den:'Adopt all 6 pets',dzh:'領養全部 6 隻寵物',tier:3,f:function(){return [petsCount(),6];}},
+ {id:'evo',e:'✨',en:'Glow Up!',zh:'華麗進化！',den:'Evolve a pet',dzh:'令寵物進化',tier:2,f:function(){return [maxStage()-1,1];}},
+ {id:'lv10',e:'🎓',en:'Science Scholar',zh:'科學學者',den:'Raise a pet to Level 10',dzh:'把寵物升到 10 級',tier:3,f:function(){return [maxLevel(),10];}},
+ {id:'chap',e:'🏅',en:'Chapter Champion',zh:'單元冠軍',den:'Earn ★ in every part of a chapter',dzh:'在一個單元所有小節取得 ★',tier:2,f:function(){return [chapDone(),1];}},
+ {id:'allstar',e:'🏆',en:'S1 Science Star',zh:'中一科學之星',den:'Get 3★ in all 20 sub-topics',dzh:'在全部 20 個小節取得 3★',tier:3,f:function(){return [threeStars(),20];}},
+ {id:'match',e:'🃏',en:'Term Matcher',zh:'詞彙配對王',den:'Win 5 Term Match games',dzh:'贏 5 次詞彙配對',tier:1,f:function(){return [S.matchWins,5];}}
+];
+
+/* ---------- state ---------- */
+var S=null;
+function newPet(){return {xp:0,stage:1,energy:80,happy:80,eq:{hat:null,glasses:null,acc:null,hand:null}};}
+function defaultState(){return {v:1,lang:'zh',coins:40,xpTotal:0,pets:{mochi:newPet()},active:'mochi',owned:{w0:1},
+ room:{wall:'w0',prop:null},food:{onigiri:2,apple:1},streak:0,best:0,lastDay:null,shields:0,days:0,hist:[],
+ secs:{},q:{},seen:{},mistakes:{},cleared:0,quizzes:0,perfect:0,studies:0,studyDay:{},matchWins:0,matchDay:{d:'',n:0},
+ trophies:{},gift:'',lastTick:Date.now(),sfx:true,music:false,started:false};}
+function load(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];return o;}}catch(e){}return null;}
+function save(){try{S.lastTick=Date.now();localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+window.addEventListener('pagehide',function(){if(S&&S.started)save();});
+document.addEventListener('visibilitychange',function(){if(document.hidden&&S&&S.started)save();});
+
+function curPet(){return S.pets[S.active];}
+function decay(){var now=Date.now();var mins=(now-(S.lastTick||now))/60000;if(mins<1)return;
+ var dE=Math.min(55,mins/30),dH=Math.min(55,mins/40);
+ for(var k in S.pets){var p=S.pets[k];p.energy=clamp(p.energy-dE,5,100);p.happy=clamp(p.happy-dH,5,100);}
+ S.lastTick=now;}
+
+/* ---------- streak ---------- */
+function streakMult(){return 1+0.1*Math.min(Math.max(S.streak-1,0),5);}
+function fedBonus(){var p=curPet();return p.energy>=50&&p.happy>=50?1.2:1;}
+function markActive(){var t=today();if(S.lastDay===t)return;
+ var gap=S.lastDay?dayNum(t)-dayNum(S.lastDay):99;var msg=null;
+ if(gap===1)S.streak++;
+ else if(gap>1&&gap<=1+S.shields&&S.streak>0){S.shields-=gap-1;S.streak++;msg=L('🛡️ Streak shield saved your streak!','🛡️ 連續護盾保住了你的連續紀錄！');}
+ else S.streak=1;
+ if(S.streak%7===0&&S.shields<2){S.shields++;msg=L('🛡️ +1 streak shield!','🛡️ 獲得 1 個連續護盾！');}
+ S.best=Math.max(S.best,S.streak);S.lastDay=t;S.days++;S.hist.push(t);if(S.hist.length>14)S.hist=S.hist.slice(-14);
+ if(msg)setTimeout(function(){toast(msg);},900);
+ checkPetUnlocks();}
+
+/* ---------- rewards ---------- */
+function gain(coins,xp,why){var m=streakMult()*fedBonus();var c=Math.round(coins*m),x=Math.round(xp*m);
+ var p=curPet();var before=petLevel(p.xp);S.coins+=c;p.xp+=x;S.xpTotal+=x;var after=petLevel(p.xp);
+ if(after>before){setTimeout(function(){sfx('level');toast('⬆️ '+LL(petDef(S.active))+' '+L('reached Level ','升到 ')+after+L('!',' 級！'));confetti();},600);}
+ checkTrophies();save();return {c:c,x:x,m:m};}
+function checkTrophies(){TROPHIES.forEach(function(t){if(!S.trophies[t.id]){var v=t.f();if(v[0]>=v[1]){S.trophies[t.id]=today();S.coins+=20;
+ setTimeout(function(){sfx('fanfare');toast('🏆 '+L('Trophy unlocked: ','解鎖獎盃：')+LL(t)+' (+20 🪙)');confetti();},1300);}}});}
+function condVal(k){if(k==='three')return threeStars();return S[k]||0;}
+function checkPetUnlocks(){PETS.forEach(function(p){if(p.cond&&!S.pets[p.id]&&condVal(p.cond.k)>=p.cond.n){S.pets[p.id]=newPet();
+ setTimeout(function(){sfx('fanfare');toast('🎁 '+L('New pet unlocked: ','新寵物解鎖：')+LL(p)+'!');confetti();},1800);}});}
+
+/* ---------- audio ---------- */
+var AC=null;function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();return AC;}
+function tone(f,t0,dur,type,vol){var a=ac();if(!a)return;var o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.value=f;
+ g.gain.setValueAtTime(0.0001,a.currentTime+t0);g.gain.exponentialRampToValueAtTime(vol||0.18,a.currentTime+t0+0.015);g.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+t0+dur);
+ o.connect(g);g.connect(a.destination);o.start(a.currentTime+t0);o.stop(a.currentTime+t0+dur+0.05);}
+var SFX={
+ tap:function(){tone(660,0,.08,'triangle',.12);},
+ right:function(){tone(784,0,.12,'triangle');tone(1047,.1,.2,'triangle');},
+ wrong:function(){tone(300,0,.18,'sine',.15);tone(240,.14,.25,'sine',.12);},
+ coin:function(){tone(988,0,.08,'square',.06);tone(1319,.07,.16,'square',.06);},
+ eat:function(){tone(520,0,.06,'triangle');tone(620,.08,.06,'triangle');tone(720,.16,.1,'triangle');},
+ level:function(){[523,659,784,1047].forEach(function(f,i){tone(f,i*.09,.2,'triangle');});},
+ fanfare:function(){[523,523,659,784,659,784,1047].forEach(function(f,i){tone(f,i*.1,.22,'triangle',.14);});},
+ boing:function(){var a=ac();if(!a)return;var o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);o.frequency.exponentialRampToValueAtTime(700,a.currentTime+.15);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.0001,a.currentTime+.25);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.3);},
+ flip:function(){tone(880,0,.05,'sine',.1);}
+};
+function sfx(n){if(S&&S.sfx&&SFX[n])try{SFX[n]();}catch(e){}}
+var musicTimer=null;
+function startMusic(){stopMusic();if(!S.music||!ac())return;var notes=[523,659,784,659,587,698,880,698,523,659,784,1047,988,784,659,587];var i=0;
+ musicTimer=setInterval(function(){if(document.hidden)return;var f=notes[i%notes.length];tone(f,0,.9,'sine',.045);if(i%4===0)tone(f/2,0,1.4,'triangle',.03);i++;},420);}
+function stopMusic(){if(musicTimer)clearInterval(musicTimer);musicTimer=null;}
+
+/* ---------- UI bits ---------- */
+function toast(msg){var n=document.querySelectorAll('.toast').length;var d=document.createElement('div');d.className='toast';d.style.marginTop=(n*56)+'px';d.setAttribute('role','status');d.textContent=msg;document.body.appendChild(d);setTimeout(function(){d.remove();},2600);}
+function confetti(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;var cols=['#FFB3C1','#FFF1A8','#A9D4EE','#9BCB8E','#C9B6EA'];
+ for(var i=0;i<36;i++){var c=document.createElement('i');c.className='confetti';c.style.left=Math.random()*100+'vw';c.style.background=pick(cols);c.style.animationDelay=Math.random()*.5+'s';c.style.animationDuration=1.2+Math.random()*1+'s';document.body.appendChild(c);(function(c){setTimeout(function(){c.remove();},2800);})(c);}}
+function stars(n){var s='';for(var i=1;i<=3;i++)s+=i<=n?'★':'<span class="off">★</span>';return '<span class="stars" aria-label="'+n+' stars">'+s+'</span>';}
+function modal(html,onClose){var r=$('#ovroot');r.innerHTML='<div class="ov" id="ov"><div class="sheet" role="dialog" aria-modal="true">'+html+'</div></div>';
+ var ov=$('#ov');ov.addEventListener('click',function(e){if(e.target===ov&&!ov.dataset.lock){closeModal();}});
+ modal.onClose=onClose||null;var x=$('.x',ov);if(x)x.focus();}
+function closeModal(){$('#ovroot').innerHTML='';stopStudyTimer();if(modal.onClose){var f=modal.onClose;modal.onClose=null;f();}render();}
+function confirmBox(title,body,yes,cb){modal('<div class="sheet-h"><h2>'+title+'</h2></div><p>'+body+'</p><div class="row" style="justify-content:flex-end"><button class="btn white" id="cNo">'+L('Cancel','取消')+'</button><button class="btn pink" id="cYes">'+yes+'</button></div>');
+ $('#cNo').onclick=closeModal;$('#cYes').onclick=function(){$('#ovroot').innerHTML='';cb();render();};}
+
+/* ---------- pet SVG ---------- */
+function moodOf(id){var p=S.pets[id];if(tempMood&&id===S.active)return tempMood;if(p.energy<25)return 'hungry';if(p.happy<25)return 'sad';if(p.energy<42)return 'sleepy';if(p.happy>=75&&p.energy>=60)return 'joy';return 'happy';}
+var tempMood=null,tempTimer=null;
+function setTempMood(m,ms){tempMood=m;clearTimeout(tempTimer);if(ms)tempTimer=setTimeout(function(){tempMood=null;if(curScreen==='home')render();},ms);}
+function ears(t,b){var s='';var st=' stroke="'+O+'" stroke-width="3.5"';
+ if(t==='bear')s='<circle cx="60" cy="76" r="15" fill="'+b+'"'+st+'/><circle cx="140" cy="76" r="15" fill="'+b+'"'+st+'/><circle cx="60" cy="76" r="7" fill="#FFD1DA"/><circle cx="140" cy="76" r="7" fill="#FFD1DA"/>';
+ else if(t==='bunny')s='<ellipse cx="76" cy="44" rx="13" ry="32" fill="'+b+'"'+st+' transform="rotate(-12 76 44)"/><ellipse cx="124" cy="44" rx="13" ry="32" fill="'+b+'"'+st+' transform="rotate(12 124 44)"/><ellipse cx="76" cy="46" rx="6" ry="22" fill="#FFB9C8" transform="rotate(-12 76 46)"/><ellipse cx="124" cy="46" rx="6" ry="22" fill="#FFB9C8" transform="rotate(12 124 46)"/>';
+ else if(t==='cat')s='<path d="M50 96 L56 50 L90 70Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M150 96 L144 50 L110 70Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M58 84 L61 60 L80 72Z M142 84 L139 60 L120 72Z" fill="#F7C6D4"/>';
+ else if(t==='frog')s='<circle cx="70" cy="70" r="17" fill="'+b+'"'+st+'/><circle cx="130" cy="70" r="17" fill="'+b+'"'+st+'/>';
+ else if(t==='tuft')s='<path d="M100 64 C94 48 98 40 104 38 C102 46 104 54 100 64Z M100 64 C108 50 116 48 120 50 C112 54 106 60 100 64Z" fill="#F7D476"'+st+' stroke-linejoin="round"/>';
+ return s;}
+function petSVG(id,mood,opts){opts=opts||{};var P=petDef(id),p=S.pets[id]||newPet(),b=P.body,st=opts.stage||p.stage,eq=opts.eq||p.eq;
+ var s='<svg class="pet" viewBox="-10 0 220 200" role="img" aria-label="'+esc(LL(P))+'"><g class="bob">';
+ if(st>=3){s+='<circle cx="100" cy="118" r="86" fill="#FFF1C5" opacity=".75"/><circle cx="100" cy="118" r="86" fill="none" stroke="#FBD46D" stroke-width="3" stroke-dasharray="4 10"/>';}
+ s+='<ellipse cx="100" cy="182" rx="56" ry="8" fill="rgba(91,75,73,.12)"/>';
+ s+=ears(P.ears,b);
+ s+='<ellipse cx="76" cy="176" rx="14" ry="8" fill="'+b+'" stroke="'+O+'" stroke-width="3.5"/><ellipse cx="124" cy="176" rx="14" ry="8" fill="'+b+'" stroke="'+O+'" stroke-width="3.5"/>';
+ var sc=st===1?1:st===2?1.04:1.08;
+ s+='<g transform="translate(100 176) scale('+sc+') translate(-100 -176)">';
+ s+='<path d="M100 62 C148 62 170 98 170 130 C170 164 140 178 100 178 C60 178 30 164 30 130 C30 98 52 62 100 62Z" fill="'+b+'" stroke="'+O+'" stroke-width="3.5"/>';
+ s+='<ellipse cx="100" cy="152" rx="36" ry="20" fill="'+P.belly+'"/>';
+ if(P.ears==='frog')s+='<circle cx="70" cy="70" r="7" fill="#fff"/><circle cx="130" cy="70" r="7" fill="#fff"/>';
+ if(P.ears==='seal')s+='<path d="M34 148 Q18 160 22 170 Q34 168 44 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/><path d="M166 148 Q182 160 178 170 Q166 168 156 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/>';
+ else s+='<ellipse cx="40" cy="140" rx="9" ry="13" fill="'+b+'" stroke="'+O+'" stroke-width="3" transform="rotate(25 40 140)"/><ellipse cx="160" cy="140" rx="9" ry="13" fill="'+b+'" stroke="'+O+'" stroke-width="3" transform="rotate(-25 160 140)"/>';
+ // cheeks
+ s+='<ellipse cx="64" cy="132" rx="11" ry="6.5" fill="#FFB3C1" opacity=".75"/><ellipse cx="136" cy="132" rx="11" ry="6.5" fill="#FFB3C1" opacity=".75"/>';
+ if(st>=2)s+='<path d="M140 118 l2 4 l4 .5 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -.5Z" fill="#FBD46D"/>';
+ if(P.ears==='cat'||P.ears==='seal')s+='<path d="M52 124 L36 120 M52 130 L36 132 M148 124 L164 120 M148 130 L164 132" stroke="'+O+'" stroke-width="2" stroke-linecap="round"/>';
+ s+=face(mood);
+ s+='</g>';
+ if(eq.acc){var a=item(eq.acc);if(a)s+=a.svg();}
+ if(eq.hat){var h=item(eq.hat);if(h)s+=h.svg();}
+ if(eq.glasses&&mood!=='study'){var g=item(eq.glasses);if(g)s+=g.svg();}
+ if(mood==='study')s+=bookSVG();
+ else if(eq.hand){var hi=item(eq.hand);if(hi)s+=hi.svg();}
+ if(st>=3)s+='<g class="spark"><path d="M28 70 l3 7 l7 3 l-7 3 l-3 7 l-3 -7 l-7 -3 l7 -3Z" fill="#FBD46D"/></g><g class="spark" style="animation-delay:.6s"><path d="M176 52 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2Z" fill="#FBD46D"/></g>';
+ s+='</g></svg>';return s;}
+function eye(x,y){return '<ellipse cx="'+x+'" cy="'+y+'" rx="6" ry="7.5" fill="'+O+'"/><circle cx="'+(x+2)+'" cy="'+(y-2.8)+'" r="2.2" fill="#fff"/>';}
+function face(m){var s='';
+ if(m==='joy'){s+='<path d="M72 120 Q80 108 88 120 M112 120 Q120 108 128 120" stroke="'+O+'" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M90 128 Q100 146 110 128Z" fill="#E88A9A" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/>';
+  s+='<g class="spark"><path d="M30 92 l3 6 l6 3 l-6 3 l-3 6 l-3 -6 l-6 -3 l6 -3Z" fill="#FFB3C1"/></g><g class="spark" style="animation-delay:.5s"><path d="M170 94 l3 6 l6 3 l-6 3 l-3 6 l-3 -6 l-6 -3 l6 -3Z" fill="#A9D4EE"/></g>';}
+ else if(m==='sleepy'){s+='<path d="M72 117 Q80 122 88 117 M112 117 Q120 122 128 117" stroke="'+O+'" stroke-width="3.5" fill="none" stroke-linecap="round"/><ellipse cx="100" cy="133" rx="4" ry="5" fill="'+O+'"/>';
+  s+='<g class="zzz"><text x="146" y="80" font-size="22" font-weight="800" fill="#8FA7D6" font-family="sans-serif">z</text></g><g class="zzz" style="animation-delay:1s"><text x="160" y="62" font-size="16" font-weight="800" fill="#8FA7D6" font-family="sans-serif">z</text></g>';}
+ else if(m==='hungry'){s+=eye(80,116)+eye(120,116)+'<path d="M90 132 q5 -5 10 0 q5 5 10 0" stroke="'+O+'" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M109 134 Q112 142 109 146 Q106 142 109 134Z" fill="#A9D4EE"/>';
+  s+='<circle cx="152" cy="84" r="4" fill="#fff" stroke="'+O+'" stroke-width="2"/><circle cx="162" cy="70" r="6" fill="#fff" stroke="'+O+'" stroke-width="2"/><ellipse cx="178" cy="46" rx="20" ry="16" fill="#fff" stroke="'+O+'" stroke-width="2.5"/><path d="M168 52 L178 36 L188 52Z" fill="#fff" stroke="'+O+'" stroke-width="2" stroke-linejoin="round"/><rect x="171" y="46" width="14" height="7" fill="#5B6B5B"/>';}
+ else if(m==='sad'){s+='<path d="M70 106 L86 100 M130 106 L114 100" stroke="'+O+'" stroke-width="3" stroke-linecap="round"/><ellipse cx="80" cy="117" rx="7.5" ry="9" fill="'+O+'"/><ellipse cx="120" cy="117" rx="7.5" ry="9" fill="'+O+'"/><circle cx="82" cy="113" r="2.8" fill="#fff"/><circle cx="122" cy="113" r="2.8" fill="#fff"/><circle cx="78" cy="120" r="1.6" fill="#fff"/><circle cx="118" cy="120" r="1.6" fill="#fff"/>';
+  s+='<path d="M92 136 Q100 128 108 136" stroke="'+O+'" stroke-width="3" fill="none" stroke-linecap="round"/><path class="tear" d="M72 126 Q70 134 74 138 Q78 134 72 126Z" fill="#9ED0F0"/><path class="tear" style="animation-delay:.8s" d="M128 126 Q126 134 130 138 Q134 134 128 126Z" fill="#9ED0F0"/>';}
+ else if(m==='study'){s+='<path d="M72 114 L88 114 M112 114 L128 114" stroke="'+O+'" stroke-width="3" stroke-linecap="round"/><ellipse cx="80" cy="119" rx="5" ry="4" fill="'+O+'"/><ellipse cx="120" cy="119" rx="5" ry="4" fill="'+O+'"/><path d="M148 86 Q144 94 148 98 Q152 94 148 86Z" fill="#9ED0F0"/>';}
+ else {s+=eye(80,116)+eye(120,116)+'<path d="M93 129 Q100 136 107 129" stroke="'+O+'" stroke-width="3" fill="none" stroke-linecap="round"/>';}
+ return s;}
+function bookSVG(){return '<path d="M66 140 Q84 132 100 140 Q116 132 134 140 L134 168 Q116 160 100 168 Q84 160 66 168Z" fill="#fff" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M100 140 L100 168" stroke="'+O+'" stroke-width="2.5"/><path d="M74 148 L92 146 M74 155 L92 153 M108 146 L126 148 M108 153 L126 155" stroke="#C9B6EA" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="62" cy="152" rx="8" ry="10" fill="'+petDef(S.active).body+'" stroke="'+O+'" stroke-width="3"/><ellipse cx="138" cy="152" rx="8" ry="10" fill="'+petDef(S.active).body+'" stroke="'+O+'" stroke-width="3"/>';}
+function winSVG(){var night=new Date().getHours()>=19||new Date().getHours()<6;
+ return '<svg viewBox="0 0 100 105" width="100%" aria-hidden="true"><rect x="4" y="4" width="92" height="92" rx="18" fill="'+(night?'#6E6590':'#CFE9F7')+'" stroke="#fff" stroke-width="6"/>'+(night?'<circle cx="66" cy="34" r="12" fill="#FFF1C5"/><circle cx="72" cy="30" r="10" fill="#6E6590"/><circle cx="28" cy="60" r="2" fill="#fff"/><circle cx="40" cy="28" r="1.6" fill="#fff"/>':'<circle cx="30" cy="32" r="12" fill="#FFF1A8"/><ellipse cx="62" cy="62" rx="20" ry="9" fill="#fff"/>')+'<path d="M50 4 L50 96 M4 50 L96 50" stroke="#fff" stroke-width="5"/><rect x="0" y="92" width="100" height="10" rx="5" fill="#E6CBB0"/></svg>';}
+
+/* ---------- dialogue ---------- */
+var LINES={
+ happy:[['Let\'s learn something new today!','今日一齊學啲新嘢啦！'],['Science is everywhere, even in my snack!','科學無處不在，連我的小食都有！'],['I believe in you ✿','我相信你 ✿'],['Tap Study and let\'s go!','按「溫習」一齊出發！']],
+ joy:[['Yaha! I feel SO smart today!','呀哈！我今日覺得自己好聰明！'],['Best study buddy ever!!','你係最好的溫習拍檔！！'],['My brain is sparkling ✨','我個腦閃閃發光 ✨']],
+ sleepy:[['Mmm… a quick quiz will wake me up…','嗯……做個小測驗會令我醒啲……'],['*yawn* …was that condensation?','*打喊路* ……頭先係咪凝結？'],['Maybe a dango would help…','或者食粒糰子會好啲……']],
+ hungry:[['My tummy is growling… 🍙?','我個肚咕咕聲……🍙？'],['Feed me and I\'ll study harder!','餵我食嘢，我會更努力溫書！'],['Energy low… need snacks…','能量不足……需要小食……']],
+ sad:[['I miss studying with you…','我好掛住同你一齊溫書……'],['Can we play Term Match?','我哋可以玩詞彙配對嗎？'],['A little quiz would cheer me up…','做個小測驗會令我開心啲……']],
+ study:[['Reading… reading… hmm!','讀緊……讀緊……嗯！'],['I\'m highlighting the key words!','我幫你highlight重點！']]
+};
+function line(m){var l=pick(LINES[m]||LINES.happy);return L(l[0],l[1]);}
+
+/* ---------- screens ---------- */
+var curScreen='home',shopTab='food',colTab='pets',bubble=null;
+function render(){var a=$('#app');if(!S.started){a.innerHTML=welcomeHTML();bindWelcome();return;}
+ decay();
+ var mCount=Object.keys(S.mistakes).length;
+ var top='<header class="top"><div class="brand">'+miniLogo()+'<span>'+L('Mochi Science Pals','麻糬科學小夥伴')+'<br><small>'+L('S1 Science','中一科學')+'</small></span></div>'+
+ '<span class="chip" title="'+L('Coins','金幣')+'">🪙 '+S.coins+'</span><span class="chip" title="'+L('Streak','連續日數')+'">🔥 '+S.streak+'</span>'+
+ '<button class="iconbtn" id="bLang" aria-label="Language">'+L('中文','EN')+'</button>'+
+ '<button class="iconbtn" id="bSfx" aria-label="Sound effects">'+(S.sfx?'🔊':'🔇')+'</button>'+
+ '<button class="iconbtn" id="bMusic" aria-label="Music" aria-pressed="'+S.music+'">'+(S.music?'🎵':'<s>🎵</s>')+'</button>'+
+ '<button class="iconbtn" id="bSave" aria-label="Save code">💾</button></header>';
+ var body='';
+ if(curScreen==='home')body=homeHTML();else if(curScreen==='study')body=studyHTML();else if(curScreen==='practice')body=practiceHTML();else if(curScreen==='shop')body=shopHTML();else body=colHTML();
+ var tabs=[['home','🏠',L('Home','小窩')],['study','📚',L('Study','溫習')],['practice','📓',L('Mistakes','錯題本')],['shop','🛍️',L('Shop','商店')],['col','🏆',L('Collection','收藏')]];
+ var nav='<nav class="nav" aria-label="Main"><div class="nav-in">'+tabs.map(function(t){return '<button data-nav="'+t[0]+'"'+(curScreen===t[0]?' aria-current="page"':'')+'><span class="ni">'+t[1]+'</span>'+t[2]+(t[0]==='practice'&&mCount?'<span class="badge">'+mCount+'</span>':'')+'</button>';}).join('')+'</div></nav>';
+ a.innerHTML='<div class="app">'+top+'<main>'+body+'</main><p class="foot">'+L('Fan-inspired original art · made for HK S1 Science revision · progress saves on this device','原創角色（靈感來自日系可愛風）· 為香港中一科學溫習而設 · 進度儲存在此裝置')+'</p></div>'+nav;
+ bindCommon();bindScreen();}
+function miniLogo(){return '<svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><circle cx="11" cy="12" r="6" fill="#fff" stroke="'+O+'" stroke-width="2.5"/><circle cx="29" cy="12" r="6" fill="#fff" stroke="'+O+'" stroke-width="2.5"/><ellipse cx="20" cy="23" rx="16" ry="14" fill="#fff" stroke="'+O+'" stroke-width="2.5"/><circle cx="14" cy="22" r="2" fill="'+O+'"/><circle cx="26" cy="22" r="2" fill="'+O+'"/><ellipse cx="10" cy="27" rx="3" ry="2" fill="#FFB3C1"/><ellipse cx="30" cy="27" rx="3" ry="2" fill="#FFB3C1"/></svg>';}
+function bindCommon(){
+ $('#bLang').onclick=function(){S.lang=S.lang==='en'?'zh':'en';bubble=null;sfx('tap');save();render();};
+ $('#bSfx').onclick=function(){S.sfx=!S.sfx;save();render();sfx('tap');};
+ $('#bMusic').onclick=function(){S.music=!S.music;save();if(S.music)startMusic();else stopMusic();render();};
+ $('#bSave').onclick=function(){sfx('tap');openSave();};
+ document.querySelectorAll('[data-nav]').forEach(function(b){b.onclick=function(){curScreen=b.dataset.nav;sfx('tap');render();window.scrollTo(0,0);};});}
+
+/* HOME */
+function roomHTML(){var p=curPet(),m=moodOf(S.active);var sk=ITEMS.filter(function(i){return i.slot==='sticker'&&S.owned[i.id];});
+ var pos=[[6,8],[36,6],[8,34],[62,32],[40,30],[20,20],[52,16],[70,50]];
+ var sh='';sk.forEach(function(it,i){if(i<pos.length)sh+='<div class="stk" style="left:'+pos[i][0]+'%;top:'+pos[i][1]+'%">'+it.svg()+'</div>';});
+ var prop=S.room.prop?item(S.room.prop):null;
+ return '<div class="room"><div class="wall" style="background:'+WALLS[S.room.wall||'w0']+'"></div><div class="window">'+winSVG()+'</div>'+sh+'<div class="floor"></div>'+(prop?'<div class="prop">'+prop.svg()+'</div>':'')+
+ '<div class="petwrap" id="petTap">'+petSVG(S.active,m)+'</div>'+(bubble?'<div class="bubble" aria-live="polite">'+esc(bubble)+'</div>':'')+'</div>';}
+function statRow(label,v,col,txt){return '<div class="stat"><span>'+label+'</span><div class="bar" role="progressbar" aria-valuenow="'+Math.round(v)+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+clamp(v,0,100)+'%;background:'+col+'"></i></div><span class="num">'+txt+'</span></div>';}
+function homeHTML(){var P=petDef(S.active),p=curPet(),lv=petLevel(p.xp),into=p.xp-lvXP(lv),need=lvXP(lv+1)-lvXP(lv);
+ var ev=EVO[p.stage+1];var canEvo=ev&&lv>=ev.lv;
+ var t=today();var gift=S.gift!==t;
+ var last7='';for(var i=6;i>=0;i--){var d=fromDayNum(dayNum(t)-i);var on=S.hist.indexOf(d)>=0;var wd=new Date(d+'T12:00:00').getDay();last7+='<span class="'+(on?'on':'')+'" title="'+d+'">'+(on?'✓':L('SMTWTFS'[wd],'日一二三四五六'[wd]))+'</span>';}
+ var mood=moodOf(S.active);var moodName={happy:['Happy','開心'],joy:['Overjoyed','超開心'],sleepy:['Sleepy','好睏'],hungry:['Hungry','肚餓'],sad:['Lonely','寂寞'],study:['Studying','溫習中']}[mood];
+ return '<div class="home"><div>'+roomHTML()+'</div><div class="grid">'+
+ '<div class="card grid" style="gap:12px"><div class="petname"><h2>'+esc(LL(P))+'</h2><span class="tag">'+L(STAGE[p.stage][0],STAGE[p.stage][1])+'</span><span class="tag" style="background:var(--butter)">'+L(moodName[0],moodName[1])+'</span>'+(petsCount()>1?'<button class="btn small white" id="bSwitch" style="margin-left:auto">🔁 '+L('Switch','切換')+'</button>':'')+'</div>'+
+ '<div class="stats">'+statRow('⚡ '+L('Energy','能量'),p.energy,'#FBD46D',Math.round(p.energy))+statRow('💗 '+L('Happiness','快樂'),p.happy,'#F7A9B5',Math.round(p.happy))+statRow('🧠 Lv '+lv,into/need*100,'#9BCB8E',into+'/'+need)+'</div>'+
+ (fedBonus()>1?'<div class="muted" style="font-size:13px">🍀 '+L('Well-fed & happy: +20% rewards','飽飽又開心：獎勵 +20%')+'</div>':'<div class="muted" style="font-size:13px">💡 '+L('Keep Energy & Happiness ≥ 50 for +20% rewards','能量和快樂保持 50 以上，獎勵 +20%')+'</div>')+
+ '<div class="actions"><button class="btn pink" id="bFeed"><span class="e">🍙</span>'+L('Feed','餵食')+'</button><button class="btn lav" id="bPlay"><span class="e">🃏</span>'+L('Play','玩耍')+'</button><button class="btn green" id="bStudy"><span class="e">📖</span>'+L('Study','溫習')+'</button><button class="btn white" id="bDress"><span class="e">👒</span>'+L('Dress up','換裝')+'</button>'+
+ '<button class="btn" id="bEvo"'+(ev?'':' disabled')+'><span class="e">✨</span>'+(ev?L('Evolve','進化')+' (Lv'+ev.lv+')':L('Max stage','最終形態'))+'</button>'+
+ '<button class="btn '+(gift?'pink':'white')+'" id="bGift"'+(gift?'':' disabled')+'><span class="e">🎁</span>'+(gift?L('Daily gift','每日禮物'):L('Come back tomorrow','明天再來'))+'</button></div></div>'+
+ '<div class="card"><div class="streak"><span class="flame" aria-hidden="true">'+(S.streak>=7?'☄️':'🔥')+'</span><div style="min-width:0"><b style="font-size:18px">'+S.streak+' '+L('day streak','日連續溫習')+'</b><div class="muted" style="font-size:13px">'+L('Reward ×','獎勵 ×')+streakMult().toFixed(1)+' · 🛡️ '+S.shields+' · '+L('Best ','最佳 ')+S.best+'</div></div></div><div class="days" style="margin-top:10px">'+last7+'</div>'+
+ (S.lastDay!==t?'<p class="muted" style="font-size:13px;margin:10px 0 0">'+L('Finish one study session or quiz today to keep the flame alive 🌱','今日完成一次溫習或測驗，讓火焰繼續燃燒 🌱')+'</p>':'<p style="font-size:13px;margin:10px 0 0">✅ '+L('Today counted! Your future self says thanks.','今日已計算！未來的你會多謝你。')+'</p>')+'</div>'+
+ nextStepCard()+'</div></div>';}
+function nextStepCard(){var mc=Object.keys(S.mistakes).length;var s=null;
+ for(var i=0;i<ALLSECS.length;i++){var st=(S.secs[ALLSECS[i].id]||{}).stars||0;if(st<3){s=ALLSECS[i];break;}}
+ var txt,btn;
+ if(mc>=3){txt=L('You have '+mc+' mistakes waiting. Crushing 1 = +6 🪙 and a smarter brain.','你有 '+mc+' 條錯題等你。每清除 1 條 = +6 🪙，腦袋更強。');btn='<button class="btn pink" data-go="practice">📓 '+L('Review mistakes','複習錯題')+'</button>';}
+ else if(s){txt=L('Next right step: ','下一小步：')+'<b>'+s.id+' '+esc(LL(s))+'</b>';btn='<button class="btn green" data-studysec="'+s.id+'">📖 '+L('Read notes (2 min)','閱讀筆記（2 分鐘）')+'</button><button class="btn" data-quizsec="'+s.id+'">✏️ '+L('Quiz','測驗')+'</button>';}
+ else {txt=L('Every sub-topic has 3★! Keep your streak with a quick review.','所有小節都有 3★！做個快速複習保持連續紀錄吧。');btn='<button class="btn" data-go="study">📚 '+L('Review','複習')+'</button>';}
+ return '<div class="card"><div class="h-sec" style="margin:0 0 6px;font-size:16px">🌟 '+L('One small thing','一件小事')+'</div><p style="margin:0 0 10px">'+txt+'</p><div class="row">'+btn+'</div></div>';}
+
+/* STUDY LIST */
+function chapIcon(k){var m={flask:'<path d="M22 6 L34 6 L34 18 L46 42 Q48 48 42 48 L14 48 Q8 48 10 42 L22 18Z" fill="#FFE5EC" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M13 36 L43 36 L46 44 L10 44Z" fill="#F7A9B5"/>',
+ drop:'<path d="M28 6 C40 22 46 30 42 40 Q28 54 14 40 C10 30 16 22 28 6Z" fill="#A9D4EE" stroke="'+O+'" stroke-width="3"/>',
+ leaf:'<path d="M8 46 C6 18 28 6 48 6 C48 32 34 48 8 46Z" fill="#9BCB8E" stroke="'+O+'" stroke-width="3"/><path d="M10 44 L36 18" stroke="'+O+'" stroke-width="2.5"/>',
+ cell:'<ellipse cx="28" cy="28" rx="22" ry="18" fill="#E4D6F3" stroke="'+O+'" stroke-width="3"/><circle cx="32" cy="26" r="7" fill="#C9B6EA" stroke="'+O+'" stroke-width="2.5"/>'};
+ return '<svg viewBox="0 0 56 56" width="40" height="40" aria-hidden="true">'+m[k]+'</svg>';}
+function mastered(sec){var n=0;sec.qs.forEach(function(q,i){if(S.q[sec.id+'#'+i]===1)n++;});return n;}
+function studyHTML(){var h='<h1 class="h-sec">📚 '+L('Study by topic','按課題溫習')+'</h1><p class="muted" style="margin-top:-4px">'+L('Each sub-topic: read the notes 📖 (your pet studies with you), then take a 5-question quiz ✏️ that climbs from Remember to Create.','每個小節：先讀筆記 📖（寵物陪你溫），再做 5 題由「記憶」到「創造」的測驗 ✏️。')+'</p><div class="grid">';
+ CHAPTERS.forEach(function(c){var tot=0,got=0;c.sections.forEach(function(s){tot+=3;got+=(S.secs[s.id]||{}).stars||0;});
+  h+='<section class="chap" style="background:'+c.col+'"><div class="chap-h"><div class="ic">'+chapIcon(c.icon)+'</div><div style="min-width:0"><div class="muted" style="font-size:12px;font-weight:800">'+L('Unit ','第 ')+c.id+L('',' 單元')+'</div><h3>'+esc(LL(c))+'</h3></div><span class="chip" style="margin-left:auto">★ '+got+'/'+tot+'</span></div>';
+  c.sections.forEach(function(s){var r=S.secs[s.id]||{},mm=mastered(s),doneToday=S.studyDay[s.id]===today();
+   h+='<div class="sec"><div style="min-width:0"><b>'+s.id+' '+esc(LL(s))+'</b><div class="meta">'+stars(r.stars||0)+'<span>'+L('Mastered ','已掌握 ')+mm+'/'+s.qs.length+'</span>'+(doneToday?'<span>📖✓</span>':'')+'</div><div class="prog"><i style="width:'+(mm/s.qs.length*100)+'%"></i></div></div>'+
+   '<div class="acts"><button class="btn small green" data-studysec="'+s.id+'" aria-label="'+L('Notes','筆記')+' '+s.id+'">📖</button><button class="btn small" data-quizsec="'+s.id+'">✏️ '+L('Quiz','測驗')+'</button></div></div>';});
+  h+='</section>';});
+ return h+'</div>';}
+
+/* STUDY SESSION */
+var studyTimer=null;
+function stopStudyTimer(){if(studyTimer)clearInterval(studyTimer);studyTimer=null;if(tempMood==='study')tempMood=null;}
+function openStudy(id){var s=secById(id);if(!s)return;var need=20,t=0;setTempMood('study');
+ var notes=s.notes.map(function(n){return '<li><span>'+(S.lang==='en'?n[0]:n[1])+'</span></li>';}).join('');
+ var terms=s.terms.map(function(x){return '<span class="term">'+esc(x[0])+' <span>'+esc(x[1])+'</span></span>';}).join('');
+ modal('<div class="sheet-h"><h2>📖 '+s.id+' '+esc(LL(s))+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
+ '<div class="row" style="flex-wrap:nowrap;align-items:center;margin-bottom:12px"><div style="width:96px;flex:none">'+petSVG(S.active,'study')+'</div><div style="min-width:0"><b>'+esc(LL(petDef(S.active)))+L(' is studying with you!',' 正陪你溫習！')+'</b><div class="muted" style="font-size:13px">'+L('Read each point slowly. Say the key words out loud – it really helps memory.','慢慢讀每一點，把關鍵詞讀出聲，真的有助記憶。')+'</div></div></div>'+
+ '<ul class="notes">'+notes+'</ul><h3 style="margin:16px 0 8px;font-size:16px">🔑 '+L('Key terms','關鍵詞彙')+'</h3><div class="termchips">'+terms+'</div>'+
+ '<div class="row" style="margin-top:18px;flex-wrap:nowrap"><div class="ring" id="ring" style="--p:0"><span id="ringT">'+need+'s</span></div><button class="btn green" id="bDone" disabled style="flex:1">'+L('I\'ve read it ✓','我讀完了 ✓')+'</button></div>');
+ $('#xClose').onclick=closeModal;
+ studyTimer=setInterval(function(){t++;var r=$('#ring');if(!r){stopStudyTimer();return;}r.style.setProperty('--p',Math.min(100,t/need*100));$('#ringT').textContent=t>=need?'✓':(need-t)+'s';if(t>=need){$('#bDone').disabled=false;clearInterval(studyTimer);studyTimer=null;}},1000);
+ $('#bDone').onclick=function(){stopStudyTimer();var first=S.studyDay[s.id]!==today();S.studyDay[s.id]=today();S.studies++;markActive();
+  var p=curPet();p.energy=clamp(p.energy-4,5,100);p.happy=clamp(p.happy+4,5,100);var g=first?gain(8,15):gain(0,5);sfx('coin');
+  modal('<div class="empty"><div style="width:140px;margin:0 auto">'+petSVG(S.active,'joy')+'</div><h2>'+L('Study session complete!','溫習完成！')+'</h2><p>'+(first?'+'+g.c+' 🪙 · +'+g.x+' XP':'+'+g.x+' XP · '+L('(coins once per day per sub-topic)','（每小節每日可得一次金幣）'))+'</p><p class="muted">'+L('Strike while the memory is warm:','趁記憶還熱，馬上試試：')+'</p><div class="row" style="justify-content:center"><button class="btn" id="goQ">✏️ '+L('Take the quiz','做測驗')+'</button><button class="btn white" id="goH">'+L('Later','稍後')+'</button></div></div>');
+  $('#goQ').onclick=function(){$('#ovroot').innerHTML='';startQuiz(s.id,'quiz');};$('#goH').onclick=closeModal;tempMood=null;};}
+
+/* QUIZ */
+var Q=null;
+function pickQs(sec){var n=sec.qs.length,seen=S.seen[sec.id]||[],skip=seen.slice(-Math.max(0,Math.min(8,n-5)));
+ var pool=[];for(var i=0;i<n;i++)if(skip.indexOf(i)<0)pool.push(i);
+ pool=shuffle(pool).sort(function(a,b){return (S.q[sec.id+'#'+a]===1?1:0)-(S.q[sec.id+'#'+b]===1?1:0);});
+ var chosen=pool.slice(0,5).sort(function(a,b){return sec.qs[a].b-sec.qs[b].b;});
+ S.seen[sec.id]=seen.concat(chosen).slice(-12);return chosen.map(function(i){return sec.id+'#'+i;});}
+function startQuiz(id,mode,list){var ids;
+ if(mode==='quiz')ids=pickQs(secById(id));else ids=list;
+ if(!ids.length)return;
+ Q={mode:mode,sec:id,ids:ids,i:0,res:[],shown:0,answered:false,fast:0};showQ();}
+function optsFor(q){if(q.t==='tf')return [{en:TF_EN[0],zh:TF_ZH[0],ok:q.a},{en:TF_EN[1],zh:TF_ZH[1],ok:!q.a}];
+ return shuffle(q.o.map(function(o,i){return {en:o[0],zh:o[1],ok:i===0};}));}
+function showQ(){var qid=Q.ids[Q.i],q=qById(qid),sec=secById(qid.split('#')[0]);Q.opts=optsFor(q);Q.answered=false;Q.shown=Date.now();
+ var dots=Q.ids.map(function(_,i){return '<span class="'+(i<Q.res.length?(Q.res[i]?'ok':'no'):(i===Q.i?'cur':''))+'"></span>';}).join('');
+ var title=Q.mode==='quiz'?'✏️ '+sec.id+' '+esc(LL(sec)):'📓 '+L('Mistake practice','錯題練習');
+ var extra=Q.mode==='practice'?'<span class="pips" title="'+L('Correct in a row','連續答對')+'">'+[0,1].map(function(k){return '<i class="'+((S.mistakes[qid]||{}).s>k?'on':'')+'"></i>';}).join('')+'</span>':'';
+ modal('<div class="sheet-h"><h2>'+title+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
+ '<div class="qtop"><div class="dots">'+dots+'</div><span class="bloom">'+L(BLOOM[q.b][0],BLOOM[q.b][1])+' · L'+q.b+'</span>'+extra+(Q.mode==='practice'?'<span class="muted" style="font-size:12px">'+sec.id+'</span>':'')+'</div>'+
+ '<div class="card qcard"><div class="qtext">'+(q.t==='tf'?'<span class="tag" style="background:var(--sky)">'+L('True or false?','是非題')+'</span><br>':'')+esc(LL(q))+'</div>'+
+ '<div class="opts'+(q.t==='tf'?' two':'')+'" id="opts">'+Q.opts.map(function(o,i){return '<button class="opt" data-i="'+i+'"><span class="k">'+(q.t==='tf'?(i===0?'✓':'✗'):'ABCD'[i])+'</span><span>'+esc(LL(o))+'</span></button>';}).join('')+'</div><div id="fb"></div></div>',function(){Q=null;});
+ $('#ov').dataset.lock='1';
+ $('#xClose').onclick=function(){if(Q&&Q.res.length&&Q.mode==='quiz'){confirmBox(L('Leave quiz?','離開測驗？'),L('Your answers so far won\'t earn stars.','目前的答案不會獲得星星。'),L('Leave','離開'),function(){Q=null;});}else{Q=null;closeModal();}};
+ document.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){answer(+b.dataset.i);};});}
+function answer(i){if(Q.answered)return;Q.answered=true;var qid=Q.ids[Q.i],q=qById(qid),o=Q.opts[i],ok=o.ok,dt=(Date.now()-Q.shown)/1000;
+ var btns=document.querySelectorAll('.opt');btns.forEach(function(b,k){b.disabled=true;if(Q.opts[k].ok)b.classList.add('right');});
+ if(!ok)btns[i].classList.add('wrong');
+ Q.res.push(ok);S.q[qid]=ok?1:0;var p=curPet();var msg='',cool=0;
+ if(Q.mode==='quiz'){if(!ok){S.mistakes[qid]=S.mistakes[qid]||{s:0,t:Date.now()};S.mistakes[qid].s=0;}}
+ else{var m=S.mistakes[qid];if(m){if(ok){m.s++;if(m.s>=2){delete S.mistakes[qid];S.cleared++;var g=gain(6,8);msg='<b>🔨 '+L('Mistake crushed! +','錯題清除！+')+g.c+' 🪙</b> '+pick([L('You turned a weak spot into a strong one.','你把弱點變成強項了。'),L('That\'s real learning!','這才是真正的學習！'),L('Your brain just levelled up.','你的腦袋升級了。')])+'<br>';confetti();}else msg='<b>'+L('One more correct in a row to clear it!','再連續答對一次就能清除！')+'</b><br>';}else m.s=0;}}
+ if(!ok&&dt<3){cool=4;msg+='<b>🐢 '+L('Too quick! Read every option before tapping.','太快了！先讀完所有選項再作答。')+'</b><br>';p.happy=clamp(p.happy-2,5,100);}
+ sfx(ok?'right':'wrong');
+ var right=Q.opts.filter(function(x){return x.ok;})[0];
+ $('#fb').innerHTML='<div class="fb '+(ok?'ok':'no')+'"><div class="mini">'+petSVG(S.active,ok?'joy':'sad')+'</div><div style="min-width:0">'+msg+(ok?'<b>'+pick([L('Correct!','答對了！'),L('Yaha! Right!','呀哈！正確！'),L('Brilliant!','好叻！')])+'</b>':'<b>'+L('Answer: ','答案：')+esc(LL(right))+'</b>')+'<div style="margin-top:4px">'+esc(L(q.xe,q.xz))+'</div>'+
+ '<button class="btn" id="bNext" style="margin-top:10px"'+(cool?' disabled':'')+'>'+(Q.i<Q.ids.length-1?L('Next →','下一題 →'):L('Finish','完成'))+'</button></div></div>';
+ var nb=$('#bNext');if(cool){var c=cool;nb.textContent='⏳ '+c;var iv=setInterval(function(){c--;var n=$('#bNext');if(!n){clearInterval(iv);return;}if(c<=0){clearInterval(iv);n.disabled=false;n.textContent=Q.i<Q.ids.length-1?L('Next →','下一題 →'):L('Finish','完成');}else n.textContent='⏳ '+c;},1000);}
+ nb.onclick=function(){if(Q.i<Q.ids.length-1){Q.i++;showQ();}else finishQuiz();};
+ nb.scrollIntoView({block:'nearest',behavior:'smooth'});save();}
+function finishQuiz(){var n=Q.res.filter(Boolean).length,tot=Q.res.length,p=curPet(),html;
+ if(Q.mode==='quiz'){var sec=secById(Q.sec),r=S.secs[Q.sec]||{stars:0,best:0,plays:0},st=n===5?3:n===4?2:n===3?1:0;
+  r.plays++;r.best=Math.max(r.best,n);var newStar=st>r.stars;r.stars=Math.max(r.stars,st);S.secs[Q.sec]=r;S.quizzes++;if(n===5)S.perfect++;
+  p.energy=clamp(p.energy-8,5,100);p.happy=clamp(p.happy+(n>=3?6:-2),5,100);markActive();checkPetUnlocks();
+  var g=gain(n*5+(n===5?10:0),n*10);
+  var mood=n>=4?'joy':n>=2?'happy':'sad';
+  var cheer=n===5?L('PERFECT! Your pet is doing a happy dance!','滿分！寵物在跳開心舞！'):n>=3?L('Nice work! Mistakes went to your 錯題本 for later.','做得好！錯題已放入錯題本。'):L('Every mistake saved = a future right answer. Try the notes, then again!','每條記下的錯題＝將來答對的一題。先讀筆記再試！');
+  html='<div class="empty"><div style="width:150px;margin:0 auto">'+petSVG(S.active,mood)+'</div><h2>'+n+' / '+tot+'</h2><div style="font-size:26px">'+stars(st)+'</div>'+(newStar?'<p><b>'+L('New best stars!','新的最佳星數！')+'</b></p>':'')+
+  '<p>+'+g.c+' 🪙 · +'+g.x+' XP'+(g.m>1?' <span class="tag">×'+g.m.toFixed(2)+'</span>':'')+'</p><p class="muted">'+cheer+'</p><div class="row" style="justify-content:center">'+
+  '<button class="btn" id="again">🔁 '+L('Another round','再來一次')+'</button>'+(n<5?'<button class="btn green" id="notes">📖 '+L('Notes','筆記')+'</button>':'')+'<button class="btn white" id="home">🏠 '+L('Room','小窩')+'</button></div></div>';
+  var sid=Q.sec;Q=null;modal(html);sfx(n>=4?'fanfare':'coin');if(n===5)confetti();
+  $('#again').onclick=function(){$('#ovroot').innerHTML='';startQuiz(sid,'quiz');};if($('#notes'))$('#notes').onclick=function(){$('#ovroot').innerHTML='';openStudy(sid);};
+  $('#home').onclick=function(){curScreen='home';closeModal();};}
+ else{S.quizzes+=0;markActive();var left=Object.keys(S.mistakes).length;p.happy=clamp(p.happy+4,5,100);checkTrophies();checkPetUnlocks();
+  html='<div class="empty"><div style="width:140px;margin:0 auto">'+petSVG(S.active,n>=tot/2?'joy':'happy')+'</div><h2>'+L('Practice done!','練習完成！')+'</h2><p>'+n+' / '+tot+' '+L('correct','答對')+'</p><p class="muted">'+(left?L(left+' mistakes left. Each one needs 2 correct in a row.','尚餘 '+left+' 條錯題，每條需連續答對 2 次。'):L('Your 錯題本 is empty. Amazing!','錯題本已清空，太厲害了！'))+'</p><div class="row" style="justify-content:center">'+(left?'<button class="btn pink" id="again">🔁 '+L('Keep going','繼續')+'</button>':'')+'<button class="btn white" id="home">'+L('Done','完成')+'</button></div></div>';
+  Q=null;modal(html);sfx('coin');if($('#again'))$('#again').onclick=function(){$('#ovroot').innerHTML='';startPractice(practiceFilter);};$('#home').onclick=closeModal;}
+ save();}
+
+/* PRACTICE */
+var practiceFilter='all';
+function practiceHTML(){var ids=Object.keys(S.mistakes);var by={};ids.forEach(function(id){var c=id.split('.')[0];by[c]=(by[c]||0)+1;});
+ var h='<h1 class="h-sec">📓 '+L('Mistake Bank','錯題本')+'</h1><p class="muted" style="margin-top:-4px">'+L('Wrong answers from quizzes land here. Answer one correctly <b>2 times in a row</b> to crush it (+6 🪙).','測驗中答錯的題目會放在這裏。<b>連續答對 2 次</b>即可清除（+6 🪙）。')+'</p>';
+ if(!ids.length)return h+'<div class="card empty"><div style="width:130px;margin:0 auto">'+petSVG(S.active,'joy')+'</div><h2>'+L('No mistakes saved!','沒有錯題！')+'</h2><p class="muted">'+L('Cleared so far: ','已清除：')+S.cleared+'. '+L('Take a quiz – mistakes are just future points.','去做個測驗吧——錯題只是將來的分數。')+'</p><button class="btn" data-go="study">📚 '+L('Go study','去溫習')+'</button></div>';
+ h+='<div class="card grid" style="gap:12px"><div class="row"><b style="font-size:18px">'+ids.length+' '+L('to crush','條待清除')+'</b><span class="muted">· '+L('Cleared ','已清除 ')+S.cleared+'</span></div><div class="tabs" role="tablist"><button role="tab" data-pf="all" aria-selected="'+(practiceFilter==='all')+'">'+L('All','全部')+' ('+ids.length+')</button>';
+ CHAPTERS.forEach(function(c){if(by[c.id])h+='<button role="tab" data-pf="'+c.id+'" aria-selected="'+(practiceFilter==String(c.id))+'">'+L('Unit ','單元 ')+c.id+' ('+by[c.id]+')</button>';});
+ h+='</div><button class="btn pink" id="bPractice">▶ '+L('Practise 5 mistakes','練習 5 條錯題')+'</button></div><div class="grid" style="margin-top:14px;gap:8px">';
+ ids.filter(function(id){return practiceFilter==='all'||id.split('.')[0]===String(practiceFilter);}).forEach(function(id){var q=qById(id);if(!q)return;var m=S.mistakes[id];
+  h+='<div class="mistake"><div style="min-width:0"><span class="tag">'+id.split('#')[0]+'</span> '+esc(LL(q))+'</div><span class="pips">'+[0,1].map(function(k){return '<i class="'+(m.s>k?'on':'')+'"></i>';}).join('')+'</span></div>';});
+ return h+'</div>';}
+function startPractice(f){var ids=Object.keys(S.mistakes).filter(function(id){return f==='all'||id.split('.')[0]===String(f);});if(!ids.length)ids=Object.keys(S.mistakes);if(!ids.length){render();return;}
+ startQuiz(null,'practice',shuffle(ids).slice(0,5));}
+
+/* SHOP */
+function shopHTML(){var tabs=[['food','🍙 '+L('Snacks','小食')],['wear','👒 '+L('Wardrobe','衣櫃')],['room','🛋️ '+L('Room decor','房間裝飾')],['pets','🐾 '+L('Pets','寵物')]];
+ var h='<h1 class="h-sec">🛍️ '+L('Shop','商店')+'</h1><div class="tabs" role="tablist">'+tabs.map(function(t){return '<button role="tab" data-shop="'+t[0]+'" aria-selected="'+(shopTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div><div class="items">';
+ if(shopTab==='food')FOODS.forEach(function(f){h+='<div class="item"><div class="pic" style="font-size:54px">'+f.e+'</div><div class="nm">'+esc(LL(f))+'</div><div class="sub">⚡+'+f.en2+(f.hp?' 💗+'+f.hp:'')+' · '+L('Have ','持有 ')+(S.food[f.id]||0)+'</div><button class="btn small" data-buyfood="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>🪙 '+f.price+'</button></div>';});
+ else if(shopTab==='pets')PETS.forEach(function(P){var has=!!S.pets[P.id];h+='<div class="item">'+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">'+esc(L(P.desc[0],P.desc[1]))+'</div>'+
+  (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')</div><button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>')+'</div>';});
+ else ITEMS.filter(function(it){return it.cat===shopTab&&it.price>0;}).forEach(function(it){var has=!!S.owned[it.id];h+='<div class="item">'+(has?'<span class="own">✓</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+esc(LL(it))+'</div><div class="sub">'+slotName(it.slot)+'</div>'+
+  (has?equipBtn(it):'<button class="btn small" data-buy="'+it.id+'"'+(S.coins<it.price?' disabled':'')+'>🪙 '+it.price+'</button>')+'</div>';});
+ return h+'</div>';}
+function slotName(s){return {hat:L('Hat','帽子'),glasses:L('Glasses','眼鏡'),acc:L('Accessory','配飾'),hand:L('Handheld','手持物'),wall:L('Wallpaper','牆紙'),prop:L('Desk prop','桌面擺設'),sticker:L('Sticker','貼紙')}[s];}
+function itemPic(it){if(it.slot==='wall')return '<div style="width:100%;height:100%;background:'+WALLS[it.id]+'"></div>';
+ if(it.cat==='room')return it.svg();
+ var eq={hat:null,glasses:null,acc:null,hand:null};eq[it.slot]=it.id;return petSVG('mochi','happy',{stage:1,eq:eq});}
+function equipBtn(it){var on;if(it.cat==='wear')on=curPet().eq[it.slot]===it.id;else if(it.slot==='wall')on=S.room.wall===it.id;else if(it.slot==='prop')on=S.room.prop===it.id;else return '<span class="tag">'+L('On the wall','已貼上')+'</span>';
+ return '<button class="btn small '+(on?'green':'white')+'" data-equip="'+it.id+'">'+(on?L('Wearing ✓','使用中 ✓'):L('Use','使用'))+'</button>';}
+function equip(id){var it=item(id);if(it.cat==='wear'){var p=curPet();p.eq[it.slot]=p.eq[it.slot]===id?null:id;}else if(it.slot==='wall')S.room.wall=id;else if(it.slot==='prop')S.room.prop=S.room.prop===id?null:id;sfx('boing');save();}
+
+/* COLLECTION */
+function colHTML(){var tabs=[['pets','🐾 '+L('Pets','寵物')],['trophies','🏆 '+L('Trophies','獎盃')],['closet','👗 '+L('Closet','衣櫥')],['decor','🖼️ '+L('Decor','裝飾')]];
+ var got=Object.keys(S.trophies).length;
+ var h='<h1 class="h-sec">🏆 '+L('Collection','收藏館')+'</h1><div class="card row" style="justify-content:space-around;text-align:center"><div><b style="font-size:22px">'+petsCount()+'/6</b><div class="muted" style="font-size:12px">'+L('Pets','寵物')+'</div></div><div><b style="font-size:22px">'+got+'/'+TROPHIES.length+'</b><div class="muted" style="font-size:12px">'+L('Trophies','獎盃')+'</div></div><div><b style="font-size:22px">'+(ownedCount('wear')+ownedCount('room'))+'/'+ITEMS.filter(function(i){return i.price>0;}).length+'</b><div class="muted" style="font-size:12px">'+L('Items','物品')+'</div></div><div><b style="font-size:22px">'+threeStars()+'/20</b><div class="muted" style="font-size:12px">3★</div></div></div>'+
+ '<div class="tabs" role="tablist" style="margin-top:14px">'+tabs.map(function(t){return '<button role="tab" data-col="'+t[0]+'" aria-selected="'+(colTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div><div class="items">';
+ if(colTab==='pets')PETS.forEach(function(P){var p=S.pets[P.id];h+='<div class="item'+(p?'':' locked')+'"><div class="pic">'+petSVG(P.id,p?'joy':'sleepy',p?{}:{stage:1,eq:{}})+'</div><div class="nm">'+(p?esc(LL(P)):'???')+'</div><div class="sub">'+(p?'Lv '+petLevel(p.xp)+' · '+L(STAGE[p.stage][0],STAGE[p.stage][1]):'🔒')+'</div></div>';});
+ else if(colTab==='trophies')TROPHIES.forEach(function(t){var v=t.f(),has=!!S.trophies[t.id],pc=Math.min(100,v[0]/v[1]*100);h+='<div class="item trophy'+(has?'':' locked')+'"><div class="pic">'+cupSVG(t)+'</div><div class="nm">'+esc(LL(t))+'</div><div class="sub">'+esc(L(t.den,t.dzh))+'</div><div class="prog" style="width:100%"><i style="width:'+pc+'%;background:'+(has?'var(--gold)':'var(--good)')+'"></i></div><div class="sub">'+(has?'✓ '+S.trophies[t.id]:Math.min(v[0],v[1])+'/'+v[1])+'</div></div>';});
+ else ITEMS.filter(function(i){return (colTab==='closet'?i.cat==='wear':i.cat==='room')&&i.price>0;}).forEach(function(it){var has=!!S.owned[it.id];h+='<div class="item'+(has?'':' locked')+'"><div class="pic">'+itemPic(it)+'</div><div class="nm">'+(has?esc(LL(it)):'???')+'</div><div class="sub">'+slotName(it.slot)+'</div></div>';});
+ return h+'</div>';}
+function cupSVG(t){var col=t.tier===3?'#FBD46D':t.tier===2?'#D9DEE6':'#E8B98C';
+ return '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M30 18 L70 18 L66 50 Q50 64 34 50Z" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><path d="M30 24 Q14 24 18 38 Q22 46 32 44 M70 24 Q86 24 82 38 Q78 46 68 44" fill="none" stroke="'+O+'" stroke-width="3"/><rect x="44" y="58" width="12" height="12" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><rect x="32" y="70" width="36" height="12" rx="4" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><text x="50" y="44" text-anchor="middle" font-size="18">'+t.e+'</text></svg>';}
+
+/* FEED / DRESS / SWITCH / EVOLVE / PLAY */
+function openFeed(){var p=curPet();var h='<div class="sheet-h"><h2>🍙 '+L('Feed ','餵 ')+esc(LL(petDef(S.active)))+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><p class="muted" style="margin-top:0">⚡ '+Math.round(p.energy)+' · 💗 '+Math.round(p.happy)+'</p><div class="items">';
+ FOODS.forEach(function(f){var n=S.food[f.id]||0;h+='<div class="item"><div class="pic" style="font-size:50px">'+f.e+'</div><div class="nm">'+esc(LL(f))+' ×'+n+'</div><div class="sub">⚡+'+f.en2+(f.hp?' 💗+'+f.hp:'')+'</div>'+(n?'<button class="btn small pink" data-eat="'+f.id+'">'+L('Feed','餵食')+'</button>':'<button class="btn small" data-buyeat="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>'+L('Buy & feed','購買並餵食')+' 🪙'+f.price+'</button>')+'</div>';});
+ modal(h+'</div>');$('#xClose').onclick=closeModal;
+ document.querySelectorAll('[data-eat],[data-buyeat]').forEach(function(b){b.onclick=function(){var id=b.dataset.eat||b.dataset.buyeat,f=FOODS.filter(function(x){return x.id===id;})[0];
+  if(b.dataset.buyeat){if(S.coins<f.price)return;S.coins-=f.price;}else S.food[id]--;
+  if(p.energy>=100&&!f.hp){toast(L('Too full! Maybe later 😊','太飽了！遲啲再食 😊'));if(b.dataset.eat)S.food[id]++;else S.coins+=f.price;return;}
+  p.energy=clamp(p.energy+f.en2,5,100);p.happy=clamp(p.happy+f.hp+2,5,100);sfx('eat');setTempMood('joy',2500);bubble=pick([L('Yum yum! Thank you!','好好味！多謝你！'),L('Energy recharged ⚡','能量充滿 ⚡'),L('Now I can study more!','而家可以溫更多書！')]);save();closeModal();};});}
+function openDress(){var p=curPet();var h='<div class="sheet-h"><h2>👒 '+L('Dress up','換裝')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><div style="width:170px;margin:0 auto">'+petSVG(S.active,'joy')+'</div>';
+ SLOTS.forEach(function(sl){var own=ITEMS.filter(function(i){return i.slot===sl&&S.owned[i.id];});h+='<h3 style="font-size:15px;margin:12px 0 6px">'+slotName(sl)+'</h3><div class="row">';
+  h+='<button class="btn small '+(!p.eq[sl]?'green':'white')+'" data-unq="'+sl+'">'+L('None','無')+'</button>';
+  own.forEach(function(it){h+='<button class="btn small '+(p.eq[sl]===it.id?'green':'white')+'" data-wear="'+it.id+'">'+esc(LL(it))+'</button>';});
+  if(!own.length)h+='<span class="muted" style="font-size:13px">'+L('Buy items in the Shop','到商店購買')+'</span>';h+='</div>';});
+ modal(h+'<div class="row" style="margin-top:16px"><button class="btn" id="goShop">🛍️ '+L('Wardrobe shop','衣櫃商店')+'</button></div>');$('#xClose').onclick=closeModal;
+ document.querySelectorAll('[data-wear]').forEach(function(b){b.onclick=function(){equip(b.dataset.wear);openDress();};});
+ document.querySelectorAll('[data-unq]').forEach(function(b){b.onclick=function(){p.eq[b.dataset.unq]=null;save();openDress();};});
+ $('#goShop').onclick=function(){shopTab='wear';curScreen='shop';closeModal();};}
+function openSwitch(){var h='<div class="sheet-h"><h2>🔁 '+L('Choose your study buddy','選擇溫習拍檔')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><div class="items">';
+ PETS.forEach(function(P){var p=S.pets[P.id];if(!p)return;h+='<button class="item" data-active="'+P.id+'" style="border:2px solid '+(S.active===P.id?'var(--rose)':'transparent')+'"><div class="pic">'+petSVG(P.id,moodOf(P.id))+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">Lv '+petLevel(p.xp)+' · ⚡'+Math.round(p.energy)+' 💗'+Math.round(p.happy)+'</div></button>';});
+ modal(h+'</div>');$('#xClose').onclick=closeModal;document.querySelectorAll('#ov [data-active]').forEach(function(b){b.onclick=function(){S.active=b.dataset.active;sfx('boing');save();closeModal();};});}
+function openEvolve(){var p=curPet(),P=petDef(S.active),ev=EVO[p.stage+1];if(!ev)return;var lv=petLevel(p.xp),ok=lv>=ev.lv&&S.coins>=ev.cost;
+ modal('<div class="sheet-h"><h2>✨ '+L('Evolve ','進化 ')+esc(LL(P))+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><div class="row" style="justify-content:center;flex-wrap:nowrap"><div style="width:120px">'+petSVG(S.active,'happy')+'</div><b style="font-size:26px">→</b><div style="width:130px">'+petSVG(S.active,'joy',{stage:p.stage+1})+'</div></div>'+
+ '<p style="text-align:center"><b>'+L(STAGE[p.stage][0],STAGE[p.stage][1])+' → '+L(STAGE[p.stage+1][0],STAGE[p.stage+1][1])+'</b></p><ul class="notes"><li><span>'+(lv>=ev.lv?'✅':'⬜')+' '+L('Reach Level ','達到等級 ')+ev.lv+' ('+L('now ','現在 ')+lv+')</span></li><li><span>'+(S.coins>=ev.cost?'✅':'⬜')+' 🪙 '+ev.cost+'</span></li></ul><div class="row" style="justify-content:center;margin-top:14px"><button class="btn pink" id="doEvo"'+(ok?'':' disabled')+'>✨ '+L('Evolve now','立即進化')+'</button></div>'+(lv<ev.lv?'<p class="muted" style="text-align:center">'+L('Quizzes and study sessions give XP.','測驗和溫習會給予經驗值。')+'</p>':''));
+ $('#xClose').onclick=closeModal;$('#doEvo').onclick=function(){S.coins-=ev.cost;p.stage++;sfx('fanfare');confetti();checkTrophies();save();bubble=L('I feel brand new!!','我煥然一新了！！');setTempMood('joy',4000);closeModal();};}
+function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(function(s){s.terms.forEach(function(t){pool.push(t);});});var pairs=shuffle(pool).slice(0,6);
+ var cards=[];pairs.forEach(function(t,i){cards.push({p:i,txt:t[0]});cards.push({p:i,txt:t[1]});});cards=shuffle(cards);var open=[],done=0,moves=0,lock=false;
+ var t=today();if(S.matchDay.d!==t)S.matchDay={d:t,n:0};
+ modal('<div class="sheet-h"><h2>🃏 '+L('Term Match','詞彙配對')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><p class="muted" style="margin-top:0">'+L('Match each English term with its Chinese partner · ','把英文詞彙與中文配對 · ')+esc(LL(chap))+'</p><div class="match" id="mg">'+cards.map(function(c,i){return '<button class="mc" data-c="'+i+'" aria-label="card">?</button>';}).join('')+'</div><p class="muted" id="mv" style="text-align:center">'+L('Moves: 0','步數：0')+'</p>');
+ $('#xClose').onclick=closeModal;
+ document.querySelectorAll('.mc').forEach(function(b){b.onclick=function(){if(lock)return;var i=+b.dataset.c;if(b.classList.contains('up')||b.classList.contains('done'))return;
+  b.classList.add('up');b.textContent=cards[i].txt;sfx('flip');open.push(b);
+  if(open.length===2){moves++;$('#mv').textContent=L('Moves: ','步數：')+moves;var a=cards[+open[0].dataset.c],c=cards[+open[1].dataset.c];
+   if(a.p===c.p){open.forEach(function(x){x.classList.remove('up');x.classList.add('done');});open=[];done++;sfx('right');
+    if(done===6){var p=curPet();p.happy=clamp(p.happy+22,5,100);p.energy=clamp(p.energy-5,5,100);S.matchWins++;S.matchDay.n++;var paid=S.matchDay.n<=3;if(paid)gain(moves<=10?8:5,6);else {checkTrophies();save();}
+     setTimeout(function(){modal('<div class="empty"><div style="width:140px;margin:0 auto">'+petSVG(S.active,'joy')+'</div><h2>'+L('All matched!','全部配對成功！')+'</h2><p>💗 +22'+(paid?' · 🪙 +'+(moves<=10?8:5)+' ×'+streakMult().toFixed(1):'')+'</p><p class="muted">'+(paid?'':L('(Coins for the first 3 games each day)','（每日首 3 局有金幣）'))+'</p><div class="row" style="justify-content:center"><button class="btn lav" id="again">🔁 '+L('Play again','再玩')+'</button><button class="btn white" id="home">'+L('Done','完成')+'</button></div></div>');confetti();
+      $('#again').onclick=function(){$('#ovroot').innerHTML='';openMatch();};$('#home').onclick=closeModal;},500);}}
+   else{lock=true;open.forEach(function(x){x.classList.add('bad');});setTimeout(function(){open.forEach(function(x){x.classList.remove('up','bad');x.textContent='?';});open=[];lock=false;},800);}}};});}
+
+/* SAVE CODE (Crockford base32, scrambled, checksummed) */
+var B32='0123456789ABCDEFGHJKMNPQRSTVWXYZ',EPOCH=dayNum('2025-01-01');
+function wearIds(){return ITEMS.filter(function(i){return i.price>0;}).map(function(i){return i.id;});}
+function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.round(v),Math.pow(2,n)-1));for(var i=n-1;i>=0;i--)bits.push((v>>i)&1);}
+ w(1,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),3);
+ PETS.forEach(function(P){var p=S.pets[P.id];w(p?1:0,1);w(p?p.stage:0,2);w(p?p.xp/5:0,12);});
+ var ids=wearIds();ids.forEach(function(id){w(S.owned[id]?1:0,1);});
+ var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,6);});
+ w(['w0','w1','w2','w3','w4','w5'].indexOf(S.room.wall),3);w(S.room.prop?eqItems.indexOf(S.room.prop)+1:0,6);
+ w(S.streak,9);w(S.best,9);w(S.shields,2);w(S.lastDay?dayNum(S.lastDay)-EPOCH:0,13);w(S.days,10);w(S.quizzes,11);w(S.perfect,9);w(S.cleared,10);w(S.studies,10);w(S.matchWins,8);
+ ALLSECS.forEach(function(s){w((S.secs[s.id]||{}).stars||0,2);});
+ TROPHIES.forEach(function(t){w(S.trophies[t.id]?1:0,1);});
+ var sum=0;for(var i=0;i<bits.length;i++)sum=(sum*31+bits[i]*(i%7+1))%1021;w(sum,10);
+ while(bits.length%5)bits.push(0);scramble(bits);var out='';for(var j=0;j<bits.length;j+=5){var v=0;for(var k=0;k<5;k++)v=v*2+bits[j+k];out+=B32[v];}return out;}
+function scramble(bits){var x=0x5EED1;for(var i=0;i<bits.length;i++){x=(x*1103515245+12345)&0x7fffffff;bits[i]^=(x>>16)&1;}}
+function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1');var bits=[];
+ for(var i=0;i<code.length;i++){var v=B32.indexOf(code[i]);if(v<0)return null;for(var k=4;k>=0;k--)bits.push((v>>k)&1);}
+ scramble(bits);var pos=0;function r(n){var v=0;for(var i=0;i<n;i++){if(pos>=bits.length)throw 0;v=v*2+bits[pos++];}return v;}
+ try{var o={};if(r(4)!==1)return null;o.coins=r(16);o.active=r(3);o.pets={};PETS.forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
+  o.owned={};wearIds().forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(6);o.eq[sl]=v?eqItems[v-1]:null;});
+  o.wall=['w0','w1','w2','w3','w4','w5'][r(3)]||'w0';var pv=r(6);o.prop=pv?eqItems[pv-1]:null;
+  o.streak=r(9);o.best=r(9);o.shields=r(2);var ld=r(13);o.lastDay=ld?fromDayNum(ld+EPOCH):null;o.days=r(10);o.quizzes=r(11);o.perfect=r(9);o.cleared=r(10);o.studies=r(10);o.matchWins=r(8);
+  o.stars={};ALLSECS.forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.forEach(function(t){if(r(1))o.tro[t.id]=1;});
+  var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
+  if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
+function applyCode(o){var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
+ S.coins=o.coins;S.pets={};PETS.forEach(function(P,i){if(o.pets[P.id]){var p=newPet();p.stage=o.pets[P.id].st;p.xp=o.pets[P.id].xp;S.pets[P.id]=p;}});
+ S.active=PETS[o.active]&&S.pets[PETS[o.active].id]?PETS[o.active].id:Object.keys(S.pets)[0];S.pets[S.active].eq=o.eq;
+ S.owned=o.owned;S.owned.w0=1;S.room={wall:o.wall,prop:o.prop};['streak','best','shields','lastDay','days','quizzes','perfect','cleared','studies','matchWins'].forEach(function(k){S[k]=o[k];});
+ ALLSECS.forEach(function(s){if(o.stars[s.id])S.secs[s.id]={stars:o.stars[s.id],best:o.stars[s.id]+2,plays:1};});
+ for(var t in o.tro)S.trophies[t]=today();if(S.lastDay)S.hist=[S.lastDay];save();}
+function openSave(){var code=packState();var grouped=code.match(/.{1,5}/g).join('-');var link=location.href.split('#')[0]+'#'+code;
+ modal('<div class="sheet-h"><h2>💾 '+L('Save & transfer','儲存及轉移')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
+ '<p style="margin-top:0">✅ '+L('Progress auto-saves on this device.','進度會自動儲存在此裝置。')+'<br>'+L('To move to another phone/computer, copy this <b>save code</b>:','如要轉到另一部手機／電腦，請複製這個<b>存檔碼</b>：')+'</p><div class="code" id="code">'+grouped+'</div>'+
+ '<div class="row" style="margin-top:10px"><button class="btn" id="cp">📋 '+L('Copy code','複製存檔碼')+'</button><button class="btn white" id="cpl">🔗 '+L('Copy link','複製連結')+'</button></div>'+
+ '<p class="muted" style="font-size:13px">'+L('The code keeps pets, coins, items, stars, streak and trophies. Snacks, 錯題本 and pet moods start fresh.','存檔碼會保存寵物、金幣、物品、星星、連續紀錄和獎盃；小食、錯題本和寵物心情會重新開始。')+'</p>'+
+ '<h3 style="font-size:16px;margin:16px 0 8px">📥 '+L('Load a save code','載入存檔碼')+'</h3><textarea id="inCode" rows="3" aria-label="Save code" placeholder="XXXXX-XXXXX-…"></textarea><div id="prev"></div><div class="row" style="margin-top:8px"><button class="btn pink" id="chk">🔍 '+L('Preview','預覽')+'</button></div>');
+ $('#xClose').onclick=closeModal;
+ function copy(txt){try{navigator.clipboard.writeText(txt).then(function(){toast(L('Copied!','已複製！'));},function(){sel();});}catch(e){sel();}}
+ function sel(){var r=document.createRange();r.selectNodeContents($('#code'));var s=getSelection();s.removeAllRanges();s.addRange(r);toast(L('Selected – press copy','已選取，請手動複製'));}
+ $('#cp').onclick=function(){copy(grouped);};$('#cpl').onclick=function(){copy(link);};
+ $('#chk').onclick=function(){previewCode($('#inCode').value);};}
+function previewCode(v){var o=unpack(v);var pv=$('#prev');if(!pv)return;
+ if(!o){pv.innerHTML='<p style="color:#B4475A;font-weight:700">⚠️ '+L('That code doesn\'t look right. Check for missing letters and try again.','存檔碼好像不正確，請檢查有否漏字再試。')+'</p>';sfx('wrong');return;}
+ var st=0;for(var k in o.stars)st+=o.stars[k];
+ pv.innerHTML='<div class="card" style="margin-top:10px"><b>'+L('This code contains:','此存檔碼包含：')+'</b><ul style="margin:6px 0;padding-left:20px"><li>🐾 '+Object.keys(o.pets).map(function(id){return LL(petDef(id))+' Lv'+petLevel(o.pets[id].xp);}).join(', ')+'</li><li>🪙 '+o.coins+' · 🔥 '+o.streak+' ('+L('best ','最佳 ')+o.best+')</li><li>★ '+st+'/60 · 🏆 '+Object.keys(o.tro).length+' · 🎁 '+Object.keys(o.owned).length+' '+L('items','件物品')+'</li></ul><p class="muted" style="font-size:13px">'+L('Loading replaces the progress on this device.','載入後會取代此裝置上的進度。')+'</p><button class="btn pink" id="doLoad">📥 '+L('Load this save','載入此存檔')+'</button></div>';
+ $('#doLoad').onclick=function(){applyCode(o);sfx('fanfare');toast(L('Save loaded! Welcome back ✿','已載入存檔！歡迎回來 ✿'));curScreen='home';closeModal();};}
+
+/* WELCOME */
+function welcomeHTML(){var saved=load();
+ return '<div class="app"><div class="welcome"><div style="width:190px">'+petSVG('mochi','joy',{stage:1,eq:{hat:'h_sprout'}})+'</div><h1>'+L('Mochi Science Pals','麻糬科學小夥伴')+'</h1><p class="muted" style="margin:0">'+L('Study S1 Science, earn coins, and raise a squishy study buddy.','溫習中一科學、賺金幣，養大你的軟綿綿溫習拍檔。')+'</p>'+
+ '<div class="lang2"><button class="btn '+(S.lang==='zh'?'pink':'white')+'" data-lang="zh">繁體中文</button><button class="btn '+(S.lang==='en'?'pink':'white')+'" data-lang="en">English</button></div>'+
+ (saved&&saved.started?'<div class="card" style="width:100%"><b>'+L('Welcome back!','歡迎回來！')+'</b><p class="muted" style="margin:4px 0 10px">'+LL(petDef(saved.active))+' · 🪙 '+saved.coins+' · 🔥 '+saved.streak+'</p><div class="row" style="justify-content:center"><button class="btn green" id="wResume">▶ '+L('Resume game','繼續遊戲')+'</button><button class="btn white" id="wFresh">'+L('Start fresh','重新開始')+'</button></div></div>':
+ '<button class="btn green" id="wStart" style="min-width:220px">🌱 '+L('Meet your pet','認識你的寵物')+'</button>')+
+ '<details style="width:100%;text-align:left"><summary style="cursor:pointer;font-weight:800;min-height:44px">🔑 '+L('I have a save code','我有存檔碼')+'</summary><textarea id="inCode" rows="3" aria-label="Save code"></textarea><div id="prev"></div><button class="btn pink small" id="chk" style="margin-top:8px">🔍 '+L('Preview','預覽')+'</button></details>'+
+ '<p class="foot">'+L('Original characters inspired by cosy Japanese kawaii art. Not affiliated with any brand.','原創角色，靈感來自日系療癒可愛風，與任何品牌無關。')+'</p></div></div>';}
+function bindWelcome(){document.querySelectorAll('[data-lang]').forEach(function(b){b.onclick=function(){S.lang=b.dataset.lang;var sv=load();if(sv){sv.lang=S.lang;try{localStorage.setItem(KEY,JSON.stringify(sv));}catch(e){}}render();};});
+ var st=$('#wStart');if(st)st.onclick=function(){S.started=true;S.lastTick=Date.now();ac();sfx('fanfare');bubble=L('Hi! I\'m Mochi. Let\'s study together!','你好！我係麻糬，一齊溫書啦！');save();render();};
+ var rs=$('#wResume');if(rs)rs.onclick=function(){var lang=S.lang;S=load();S.lang=lang;ac();sfx('tap');if(S.music)startMusic();render();};
+ var fr=$('#wFresh');if(fr)fr.onclick=function(){confirmBox(L('Start fresh?','重新開始？'),L('This erases all pets, coins and stars on this device. Copy your save code first if you want to keep them.','這會清除此裝置上所有寵物、金幣和星星。如想保留，請先複製存檔碼。'),L('Erase & start','清除並開始'),function(){var lang=S.lang;S=defaultState();S.lang=lang;S.started=true;save();bubble=L('Hi! I\'m Mochi!','你好！我係麻糬！');});};
+ var ck=$('#chk');if(ck)ck.onclick=function(){previewCode($('#inCode').value);};}
+
+/* bind per screen */
+function bindScreen(){
+ var pt=$('#petTap');if(pt)pt.onclick=function(){var svg=pt.querySelector('.pet');svg.classList.remove('boing');void svg.getBoundingClientRect();svg.classList.add('boing');sfx('boing');var p=curPet();p.happy=clamp(p.happy+1,5,100);bubble=line(moodOf(S.active));var bb=$('.bubble');if(bb)bb.textContent=bubble;else render();};
+ var m={bFeed:openFeed,bPlay:function(){var p=curPet();if(p.energy<12){bubble=L('Too tired to play… feed me first?','太攰玩唔到……可唔可以先餵我？');render();return;}openMatch();},bStudy:function(){curScreen='study';render();},bDress:openDress,bEvo:openEvolve,bSwitch:openSwitch,
+  bGift:function(){S.gift=today();S.coins+=10;S.food.onigiri=(S.food.onigiri||0)+1;sfx('coin');confetti();toast('🎁 +10 🪙 · +1 🍙');save();render();},
+  bPractice:function(){startPractice(practiceFilter);}};
+ for(var k in m){var el=document.getElementById(k);if(el)el.onclick=m[k];}
+ document.querySelectorAll('[data-studysec]').forEach(function(b){b.onclick=function(){openStudy(b.dataset.studysec);};});
+ document.querySelectorAll('[data-quizsec]').forEach(function(b){b.onclick=function(){startQuiz(b.dataset.quizsec,'quiz');};});
+ document.querySelectorAll('[data-go]').forEach(function(b){b.onclick=function(){curScreen=b.dataset.go;render();};});
+ document.querySelectorAll('[data-pf]').forEach(function(b){b.onclick=function(){practiceFilter=b.dataset.pf;render();};});
+ document.querySelectorAll('[data-shop]').forEach(function(b){b.onclick=function(){shopTab=b.dataset.shop;sfx('tap');render();};});
+ document.querySelectorAll('[data-col]').forEach(function(b){b.onclick=function(){colTab=b.dataset.col;sfx('tap');render();};});
+ document.querySelectorAll('[data-buyfood]').forEach(function(b){b.onclick=function(){var f=FOODS.filter(function(x){return x.id===b.dataset.buyfood;})[0];if(S.coins<f.price)return;S.coins-=f.price;S.food[f.id]=(S.food[f.id]||0)+1;sfx('coin');save();render();};});
+ document.querySelectorAll('[data-buy]').forEach(function(b){b.onclick=function(){var it=item(b.dataset.buy);if(S.coins<it.price||S.owned[it.id])return;S.coins-=it.price;S.owned[it.id]=1;if(it.slot!=='sticker')equip(it.id);sfx('coin');toast('✨ '+LL(it));checkTrophies();save();render();};});
+ document.querySelectorAll('main [data-equip]').forEach(function(b){b.onclick=function(){equip(b.dataset.equip);render();};});
+ document.querySelectorAll('main [data-active]').forEach(function(b){b.onclick=function(){S.active=b.dataset.active;sfx('boing');save();render();};});
+ document.querySelectorAll('[data-buypet]').forEach(function(b){b.onclick=function(){var P=petDef(b.dataset.buypet);if(S.coins<P.price||S.pets[P.id])return;S.coins-=P.price;S.pets[P.id]=newPet();S.active=P.id;sfx('fanfare');confetti();bubble=L('Nice to meet you!','很高興認識你！');checkTrophies();save();curScreen='home';render();};});}
+
+/* ---------- boot ---------- */
+S=load()||defaultState();
+var fresh=S;if(S.started){S=defaultState();S.lang=fresh.lang;} // show welcome/resume first
+var hash=location.hash.replace('#','');
+render();
+if(hash&&hash.length>20){var det=document.querySelector('details');if(det){det.open=true;$('#inCode').value=hash;previewCode(hash);}}
+setInterval(function(){if(S.started&&curScreen==='home'&&!$('#ov')){render();}else if(S.started)decay();},60000);
+window.__game={get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;}};
+})();
+
+</script>
+
+</body>
+</html>
