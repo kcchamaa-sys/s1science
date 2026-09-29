@@ -185,6 +185,19 @@ textarea,input[type=text]{width:100%;font:inherit;font-family:ui-monospace,Menlo
 .item.special{background:linear-gradient(160deg,#FFF8E1,#FFFFFF 60%)}
 .item .spec{position:absolute;top:8px;left:8px;background:var(--butter);color:var(--ink);border-radius:999px;font-size:11px;font-weight:800;padding:1px 8px;z-index:1}
 .item.special.locked .pic{filter:grayscale(1) opacity(.35)}
+.vlist{display:grid;gap:8px}
+@media (min-width:640px){.vlist.two{grid-template-columns:1fr 1fr}}
+.vh{font-size:15px;margin:14px 0 8px}
+.vterm{display:grid;grid-template-columns:44px 44px minmax(0,1fr);gap:8px;align-items:center;background:#fff;border-radius:16px;padding:6px 10px 6px 6px;border:2px solid transparent;transition:background .2s}
+.vterm.now{border-color:var(--rose);background:var(--pink)}
+.vt{min-width:0;line-height:1.35}
+.vt b{font-size:15px}
+.vt .zh{font-size:13px;color:var(--ink2);font-weight:700}
+.ipa{font-family:'Noto Sans','Segoe UI','Lucida Sans Unicode','Arial Unicode MS',system-ui,sans-serif;color:#7A6BB0;font-size:14px;white-space:normal;overflow-wrap:anywhere}
+.say{width:44px;height:44px;border-radius:14px;background:var(--sky);border:2px solid #A9D3B3;font-size:18px;display:inline-grid;place-items:center;flex:none}
+.say.slow{background:var(--butter);border-color:#EBD89A}
+.say.inl{margin-right:8px;vertical-align:middle}
+.say.talk{animation:boing .5s cubic-bezier(.3,1.6,.5,1)}
 /* pop-ups */
 .pop-ov{position:fixed;inset:0;z-index:85;background:rgba(91,75,73,.3);display:grid;place-items:center;padding:16px}
 .pop-card{position:relative;overflow:hidden;background:var(--cream);border-radius:32px;padding:22px 18px 18px;max-width:380px;width:100%;text-align:center;box-shadow:0 18px 40px rgba(91,75,73,.25);border:4px solid #fff;animation:jelly .75s cubic-bezier(.3,1.6,.5,1)}
@@ -840,6 +853,8 @@ M(6,'Plan how to find the density of an irregular stone. Which method is BEST?',
 
 ];
 
+var IPA={"science": "ˈsaɪəns", "experiment": "ɪkˈsperɪmənt", "discovery": "dɪˈskʌvəri", "invention": "ɪnˈvenʃn", "evidence": "ˈevɪdəns", "technology": "tekˈnɒlədʒi", "scientific": "ˌsaɪənˈtɪfɪk", "investigation": "ɪnˌvestɪˈɡeɪʃn", "hypothesis": "haɪˈpɒθəsɪs", "conclusion": "kənˈkluːʒn", "fair": "feə", "test": "test", "independent": "ˌɪndɪˈpendənt", "variable": "ˈveəriəbl", "dependent": "dɪˈpendənt", "controlled": "kənˈtrəʊld", "pattern": "ˈpætn", "seeking": "ˈsiːkɪŋ", "classifying": "ˈklæsɪfaɪɪŋ", "laboratory": "ləˈbɒrətri", "safety": "ˈseɪfti", "spectacles": "ˈspektəklz", "fire": "ˈfaɪə", "extinguisher": "ɪkˈstɪŋɡwɪʃə", "blanket": "ˈblæŋkɪt", "sand": "sænd", "bucket": "ˈbʌkɪt", "eye": "aɪ", "wash": "wɒʃ", "bottle": "ˈbɒtl", "fume": "fjuːm", "cupboard": "ˈkʌbəd", "hazard": "ˈhæzəd", "warning": "ˈwɔːnɪŋ", "symbol": "ˈsɪmbl", "triangle": "ˈtraɪæŋɡl", "beaker": "ˈbiːkə", "conical": "ˈkɒnɪkl", "flask": "flɑːsk", "bunsen": "ˈbʌnsn", "burner": "ˈbɜːnə", "tripod": "ˈtraɪpɒd", "wire": "ˈwaɪə", "gauze": "ɡɔːz", "measuring": "ˈmeʒərɪŋ", "cylinder": "ˈsɪlɪndə", "meniscus": "məˈnɪskəs", "error": "ˈerə", "luminous": "ˈluːmɪnəs", "flame": "fleɪm", "non-luminous": "ˌnɒnˈluːmɪnəs", "strike": "straɪk", "back": "bæk", "physical": "ˈfɪzɪkl", "state": "steɪt", "melting": "ˈmeltɪŋ", "point": "pɔɪnt", "freezing": "ˈfriːzɪŋ", "boiling": "ˈbɔɪlɪŋ", "evaporation": "ɪˌvæpəˈreɪʃn", "condensation": "ˌkɒndenˈseɪʃn", "water": "ˈwɔːtə", "vapour": "ˈveɪpə", "steam": "stiːm", "cycle": "ˈsaɪkl", "precipitation": "prɪˌsɪpɪˈteɪʃn", "humidity": "hjuːˈmɪdəti", "rate": "reɪt", "of": "əv", "surface": "ˈsɜːfɪs", "area": "ˈeəriə", "dissolve": "dɪˈzɒlv", "solvent": "ˈsɒlvənt", "solute": "ˈsɒljuːt", "solution": "səˈluːʃn", "soluble": "ˈsɒljəbl", "insoluble": "ɪnˈsɒljəbl", "dissolving": "dɪˈzɒlvɪŋ", "saturated": "ˈsætʃəreɪtɪd", "solubility": "ˌsɒljuˈbɪləti", "impurity": "ɪmˈpjʊərəti", "microorganism": "ˌmaɪkrəʊˈɔːɡənɪzəm", "sedimentation": "ˌsedɪmenˈteɪʃn", "filtration": "fɪlˈtreɪʃn", "distillation": "ˌdɪstɪˈleɪʃn", "alum": "ˈæləm", "filtrate": "ˈfɪltreɪt", "residue": "ˈrezɪdjuː", "distillate": "ˈdɪstɪlət", "filter": "ˈfɪltə", "paper": "ˈpeɪpə", "chlorine": "ˈklɔːriːn", "ozone": "ˈəʊzəʊn", "ultraviolet": "ˌʌltrəˈvaɪələt", "light": "laɪt", "fluoride": "ˈflɔːraɪd", "fluoridation": "ˌflɔːrɪˈdeɪʃn", "treatment": "ˈtriːtmənt", "works": "wɜːks", "conservation": "ˌkɒnsəˈveɪʃn", "pollution": "pəˈluːʃn", "pollutant": "pəˈluːtənt", "microplastic": "ˌmaɪkrəʊˈplæstɪk", "sewage": "ˈsuːɪdʒ", "living": "ˈlɪvɪŋ", "thing": "θɪŋ", "non-living": "ˌnɒnˈlɪvɪŋ", "vital": "ˈvaɪtl", "function": "ˈfʌŋkʃn", "stimulus": "ˈstɪmjələs", "excrete": "ɪkˈskriːt", "reproduce": "ˌriːprəˈdjuːs", "biodiversity": "ˌbaɪəʊdaɪˈvɜːsəti", "classification": "ˌklæsɪfɪˈkeɪʃn", "key": "kiː", "feature": "ˈfiːtʃə", "vertebrate": "ˈvɜːtɪbrət", "invertebrate": "ɪnˈvɜːtɪbrət", "amphibian": "æmˈfɪbiən", "reptile": "ˈreptaɪl", "mammal": "ˈmæml", "vascular": "ˈvæskjələ", "plant": "plɑːnt", "flowering": "ˈflaʊərɪŋ", "habitat": "ˈhæbɪtæt", "tree": "triː", "diagram": "ˈdaɪəɡræm", "identify": "aɪˈdentɪfaɪ", "sustainable": "səˈsteɪnəbl", "development": "dɪˈveləpmənt", "extinct": "ɪkˈstɪŋkt", "endangered": "ɪnˈdeɪndʒəd", "species": "ˈspiːʃiːz", "overhunted": "ˌəʊvəˈhʌntɪd", "foreign": "ˈfɒrən", "native": "ˈneɪtɪv", "cell": "sel", "microscope": "ˈmaɪkrəskəʊp", "magnification": "ˌmæɡnɪfɪˈkeɪʃn", "wall": "wɔːl", "membrane": "ˈmembreɪn", "cytoplasm": "ˈsaɪtəʊplæzəm", "nucleus": "ˈnjuːkliəs", "vacuole": "ˈvækjuəʊl", "chloroplast": "ˈklɒrəplæst", "division": "dɪˈvɪʒn", "differentiation": "ˌdɪfərenʃiˈeɪʃn", "chromosome": "ˈkrəʊməsəʊm", "dna": "ˌdiː en ˈeɪ", "double": "ˈdʌbl", "helix": "ˈhiːlɪks", "base": "beɪs", "gene": "dʒiːn", "tissue": "ˈtɪʃuː", "organ": "ˈɔːɡən", "sperm": "spɜːm", "ovum": "ˈəʊvəm", "zygote": "ˈzaɪɡəʊt", "testis": "ˈtestɪs", "duct": "dʌkt", "urethra": "jʊˈriːθrə", "ovary": "ˈəʊvəri", "oviduct": "ˈəʊvɪdʌkt", "uterus": "ˈjuːtərəs", "sex": "seks", "hormone": "ˈhɔːməʊn", "puberty": "ˈpjuːbəti", "menstrual": "ˈmenstruəl", "menstruation": "ˌmenstruˈeɪʃn", "ovulation": "ˌɒvjuˈleɪʃn", "uterine": "ˈjuːtəraɪn", "lining": "ˈlaɪnɪŋ", "fertilization": "ˌfɜːtəlaɪˈzeɪʃn", "implantation": "ˌɪmplɑːnˈteɪʃn", "embryo": "ˈembriəʊ", "foetus": "ˈfiːtəs", "placenta": "pləˈsentə", "umbilical": "ʌmˈbɪlɪkl", "cord": "kɔːd", "amniotic": "ˌæmniˈɒtɪk", "fluid": "ˈfluːɪd", "pregnancy": "ˈpreɡnənsi", "parental": "pəˈrentl", "care": "keə", "family": "ˈfæməli", "planning": "ˈplænɪŋ", "contraceptive": "ˌkɒntrəˈseptɪv", "pill": "pɪl", "condom": "ˈkɒndɒm", "rhythm": "ˈrɪðəm", "method": "ˈmeθəd", "sterilization": "ˌsterəlaɪˈzeɪʃn", "intrauterine": "ˌɪntrəˈjuːtəraɪn", "device": "dɪˈvaɪs", "iud": "ˌaɪ juː ˈdiː", "heredity": "həˈredəti", "variation": "ˌveəriˈeɪʃn", "continuous": "kənˈtɪnjuəs", "discontinuous": "ˌdɪskənˈtɪnjuəs", "bar": "bɑː", "chart": "tʃɑːt", "histogram": "ˈhɪstəɡræm", "identical": "aɪˈdentɪkl", "twins": "twɪnz", "non-identical": "ˌnɒnaɪˈdentɪkl", "energy": "ˈenədʒi", "thermal": "ˈθɜːml", "chemical": "ˈkemɪkl", "kinetic": "kɪˈnetɪk", "potential": "pəˈtenʃl", "electrical": "ɪˈlektrɪkl", "conversion": "kənˈvɜːʃn", "joule": "dʒuːl", "law": "lɔː", "sankey": "ˈsæŋki", "efficiency": "ɪˈfɪʃnsi", "heat": "hiːt", "transfer": "ˈtrænsfɜː", "conduction": "kənˈdʌkʃn", "convection": "kənˈvekʃn", "radiation": "ˌreɪdiˈeɪʃn", "conductor": "kənˈdʌktə", "insulator": "ˈɪnsjuleɪtə", "vacuum": "ˈvækjuːm", "absorber": "əbˈzɔːbə", "emitter": "iˈmɪtə", "source": "sɔːs", "fossil": "ˈfɒsl", "fuel": "ˈfjuːəl", "non-renewable": "ˌnɒnrɪˈnjuːəbl", "renewable": "rɪˈnjuːəbl", "air": "eə", "acid": "ˈæsɪd", "rain": "reɪn", "global": "ˈɡləʊbl", "warming": "ˈwɔːmɪŋ", "solar": "ˈsəʊlə", "wind": "wɪnd", "power": "ˈpaʊə", "biomass": "ˈbaɪəʊmæs", "hydroelectric": "ˌhaɪdrəʊɪˈlektrɪk", "nuclear": "ˈnjuːkliə", "matter": "ˈmætə", "mass": "mæs", "particle": "ˈpɑːtɪkl", "randomly": "ˈrændəmli", "zig-zag": "ˈzɪɡzæɡ", "path": "pɑːθ", "theory": "ˈθɪəri", "atom": "ˈætəm", "molecule": "ˈmɒlɪkjuːl", "solid": "ˈsɒlɪd", "liquid": "ˈlɪkwɪd", "gas": "ɡæs", "model": "ˈmɒdl", "vibrate": "vaɪˈbreɪt", "compress": "kəmˈpres", "conserve": "kənˈsɜːv", "concentration": "ˌkɒnsnˈtreɪʃn", "concentrated": "ˈkɒnsntreɪtɪd", "dilute": "daɪˈluːt", "expansion": "ɪkˈspænʃn", "and": "ənd", "contraction": "kənˈtrækʃn", "expand": "ɪkˈspænd", "contract": "kənˈtrækt", "thermostat": "ˈθɜːməstæt", "bimetallic": "ˌbaɪmɪˈtælɪk", "strip": "strɪp", "pressure": "ˈpreʃə", "atmospheric": "ˌætməsˈferɪk", "bombard": "bɒmˈbɑːd", "suction": "ˈsʌkʃn", "cup": "kʌp", "density": "ˈdensəti", "volume": "ˈvɒljuːm", "sink": "sɪŋk", "float": "fləʊt", "medium": "ˈmiːdiəm"};
+
 </script>
 <script>
 /* ===================== Mochi Science Pals – game engine ===================== */
@@ -1055,7 +1070,7 @@ function newPet(){return {xp:0,stage:1,energy:80,happy:80,eq:{hat:null,glasses:n
 function defaultState(){return {v:1,lang:'zh',coins:40,xpTotal:0,pets:{mochi:newPet()},active:'mochi',owned:{w0:1},
  room:{wall:'w0',prop:null},food:{onigiri:2,apple:1},streak:0,best:0,lastDay:null,shields:0,days:0,hist:[],
  secs:{},q:{},seen:{},mistakes:{},cleared:0,quizzes:0,perfect:0,studies:0,studyDay:{},matchWins:0,matchDay:{d:'',n:0},
- trophies:{},gift:'',lastTick:Date.now(),sfx:true,music:false,started:false};}
+ trophies:{},gift:'',vocabDay:{},lastTick:Date.now(),sfx:true,music:false,started:false};}
 function load(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];return o;}}catch(e){}return null;}
 function save(){try{S.lastTick=Date.now();localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 window.addEventListener('pagehide',function(){if(S&&S.started)save();});
@@ -1121,10 +1136,42 @@ function stars(n){var s='';for(var i=1;i<=3;i++)s+=i<=n?'★':'<span class="off"
 function modal(html,onClose){var r=$('#ovroot');r.innerHTML='<div class="ov" id="ov"><div class="sheet" role="dialog" aria-modal="true">'+html+'</div></div>';
  var ov=$('#ov');ov.addEventListener('click',function(e){if(e.target===ov&&!ov.dataset.lock){closeModal();}});
  modal.onClose=onClose||null;var x=$('.x',ov);if(x)x.focus();}
-function closeModal(){$('#ovroot').innerHTML='';stopStudyTimer();if(modal.onClose){var f=modal.onClose;modal.onClose=null;f();}render();}
+function closeModal(){stopSay();$('#ovroot').innerHTML='';stopStudyTimer();if(modal.onClose){var f=modal.onClose;modal.onClose=null;f();}render();}
 function confirmBox(title,body,yes,cb){modal('<div class="sheet-h"><h2>'+title+'</h2></div><p>'+body+'</p><div class="row" style="justify-content:flex-end"><button class="btn white" id="cNo">'+L('Cancel','取消')+'</button><button class="btn pink" id="cYes">'+yes+'</button></div>');
  $('#cNo').onclick=closeModal;$('#cYes').onclick=function(){$('#ovroot').innerHTML='';cb();render();};}
 
+
+
+/* ---------- British pronunciation (Web Speech API, en-GB) ---------- */
+function ipaOf(t){var ws=t.replace(/[()]/g,'').toLowerCase().split(/\s+/),o=[];for(var i=0;i<ws.length;i++){var v=IPA[ws[i]];if(!v)return '';o.push(v);}return '/'+o.join(' ')+'/';}
+var TTS=('speechSynthesis' in window)?window.speechSynthesis:null,ukVoice=null,seqRun=0;
+function pickVoice(){if(!TTS)return;var vs=[];try{vs=TTS.getVoices()||[];}catch(e){}var gb=vs.filter(function(v){return /en[-_]GB/i.test(v.lang);});
+ var pref=['Google UK English Female','Google UK English Male','Serena','Kate','Daniel','Martha','Arthur','Sonia','Libby','Ryan','Hazel','George','Susan'];ukVoice=null;
+ for(var i=0;i<pref.length&&!ukVoice;i++)for(var j=0;j<gb.length;j++)if(gb[j].name.indexOf(pref[i])>=0){ukVoice=gb[j];break;}
+ if(!ukVoice)ukVoice=gb[0]||null;}
+if(TTS){pickVoice();try{TTS.addEventListener('voiceschanged',pickVoice);}catch(e){TTS.onvoiceschanged=pickVoice;}}
+function say(text,slow,onend){if(!TTS){toast(L('Sorry, this browser cannot speak. Try Chrome or Safari.','抱歉，此瀏覽器不支援朗讀，請試用 Chrome 或 Safari。'));if(onend)onend();return;}
+ try{TTS.cancel();var u=new SpeechSynthesisUtterance(String(text).replace(/\s*\(.*?\)\s*/g,' ').trim());u.lang='en-GB';if(ukVoice)u.voice=ukVoice;u.rate=slow?0.6:0.92;u.pitch=1.05;
+ var done=false;function fin(){if(!done){done=true;if(onend)onend();}}u.onend=u.onerror=fin;TTS.speak(u);if(onend)setTimeout(fin,2500+u.text.length*(slow?160:95));}catch(e){if(onend)onend();}}
+function stopSay(){seqRun++;if(TTS)try{TTS.cancel();}catch(e){}}
+function voiceNote(){if(!TTS)return '⚠️ '+L('This browser cannot speak. Try Chrome or Safari.','此瀏覽器不支援朗讀，請試用 Chrome 或 Safari。');
+ if(ukVoice)return '🇬🇧 '+L('British voice: ','英式讀音：')+esc(ukVoice.name);
+ return '⚠️ '+L('No British voice found on this device, so the nearest English voice is used. Tip: add an "English (UK)" voice in your phone/computer settings.','此裝置找不到英式語音，會使用最接近的英語語音。提示：可在手機／電腦設定中加入「English (UK)」語音。');}
+function termRow(t,i){var ip=ipaOf(t[0]);return '<div class="vterm" data-vi="'+(i==null?'':i)+'"><button class="say" data-say="'+esc(t[0])+'" aria-label="'+L('Play ','播放 ')+esc(t[0])+'">🔊</button><button class="say slow" data-say="'+esc(t[0])+'" data-slow="1" aria-label="'+L('Play slowly ','慢速播放 ')+esc(t[0])+'">🐢</button><div class="vt"><b>'+esc(t[0])+'</b>'+(ip?' <span class="ipa">'+ip+'</span>':'')+'<div class="zh">'+esc(t[1])+'</div></div></div>';}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-say]');if(!b)return;e.stopPropagation();stopSay();say(b.dataset.say,!!b.dataset.slow);b.classList.remove('talk');void b.offsetWidth;b.classList.add('talk');},true);
+function openVocab(cid){var c=CHAPTERS.filter(function(x){return x.id==cid;})[0];var all=[],h='';
+ c.sections.forEach(function(s){h+='<h3 class="vh">'+s.id+' '+esc(LL(s))+'</h3><div class="vlist">';s.terms.forEach(function(t){h+=termRow(t,all.length);all.push(t);});h+='</div>';});
+ modal('<div class="sheet-h"><h2>🔊 '+L('Vocab · Unit ','詞彙 · 第 ')+c.id+L('',' 單元')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
+ '<p class="muted" style="margin:0 0 6px;font-size:13px">'+voiceNote()+'</p><p style="margin:0 0 10px">'+L('Tap 🔊 to hear the British pronunciation, 🐢 to hear it slowly. <b>Listen & Repeat</b> plays every word and gives you time to say it out loud.','按 🔊 聽英式讀音，按 🐢 慢速播放。<b>聆聽跟讀</b>會逐個播放，並留時間讓你讀出來。')+'</p>'+
+ '<div class="row" style="position:sticky;top:-18px;background:var(--cream);padding-block:8px;z-index:2"><button class="btn green" id="vPlay">▶ '+L('Listen & Repeat','聆聽跟讀')+' ('+all.length+')</button><button class="btn white" id="vStop">⏹ '+L('Stop','停止')+'</button><span id="vStat" class="muted" style="font-weight:700"></span></div>'+h,function(){stopSay();});
+ $('#xClose').onclick=closeModal;$('#vStop').onclick=function(){stopSay();document.querySelectorAll('.vterm.now').forEach(function(x){x.classList.remove('now');});$('#vStat').textContent='';};
+ $('#vPlay').onclick=function(){stopSay();var run=seqRun,i=0;
+  function step(){if(run!==seqRun||!$('#vStat'))return;document.querySelectorAll('.vterm.now').forEach(function(x){x.classList.remove('now');});
+   if(i>=all.length){$('#vStat').textContent='✅ '+L('Done!','完成！');var t=today();S.vocabDay=S.vocabDay||{};if(S.vocabDay[cid]!==t){S.vocabDay[cid]=t;var g=gain(5,5);toast('🗣️ '+L('Great listening! +','聽得好！+')+g.c+' 🪙');}else toast('🗣️ '+L('Great listening!','聽得好！'));var p=curPet();p.happy=clamp(p.happy+5,5,100);save();return;}
+   var row=document.querySelector('.vterm[data-vi="'+i+'"]');if(row){row.classList.add('now');row.scrollIntoView({block:'center',behavior:'smooth'});}
+   $('#vStat').textContent='🔊 '+(i+1)+'/'+all.length;var w=all[i][0];
+   say(w,false,function(){if(run!==seqRun)return;var st=$('#vStat');if(st)st.textContent='🗣️ '+L('Your turn!','輪到你！');setTimeout(function(){i++;step();},Math.min(4000,1600+w.length*70));});}
+  step();};}
 
 /* ---------- cute pop-ups (streak + special items) ---------- */
 var popQ=[];
@@ -1304,7 +1351,7 @@ function chapIcon(k){var m={flask:'<path d="M22 6 L34 6 L34 18 L46 42 Q48 48 42 
 function mastered(sec){var n=0;sec.qs.forEach(function(q,i){if(S.q[sec.id+'#'+i]===1)n++;});return n;}
 function studyHTML(){var h='<h1 class="h-sec">📚 '+L('Study by topic','按課題溫習')+'</h1><p class="muted" style="margin-top:-4px">'+L('Each sub-topic: read the notes 📖 (your pet studies with you), then take a 5-question quiz ✏️ that climbs from Remember to Create.','每個小節：先讀筆記 📖（寵物陪你溫），再做 5 題由「記憶」到「創造」的測驗 ✏️。')+'</p><div class="grid">';
  CHAPTERS.forEach(function(c){var tot=0,got=0;c.sections.forEach(function(s){tot+=3;got+=(S.secs[s.id]||{}).stars||0;});
-  h+='<section class="chap" style="background:'+c.col+'"><div class="chap-h"><div class="ic">'+chapIcon(c.icon)+'</div><div style="min-width:0"><div class="muted" style="font-size:12px;font-weight:800">'+L('Unit ','第 ')+c.id+L('',' 單元')+'</div><h3>'+esc(LL(c))+'</h3></div><span class="chip" style="margin-left:auto">★ '+got+'/'+tot+'</span></div>';
+  h+='<section class="chap" style="background:'+c.col+'"><div class="chap-h"><div class="ic">'+chapIcon(c.icon)+'</div><div style="min-width:0"><div class="muted" style="font-size:12px;font-weight:800">'+L('Unit ','第 ')+c.id+L('',' 單元')+'</div><h3>'+esc(LL(c))+'</h3></div><span class="chip" style="margin-left:auto">★ '+got+'/'+tot+'</span></div><button class="btn small white" data-vocab="'+c.id+'" style="margin-top:10px">🔊 '+L('Vocab: Listen & Repeat','詞彙：聆聽跟讀')+'</button>';
   c.sections.forEach(function(s){var r=S.secs[s.id]||{},mm=mastered(s),doneToday=S.studyDay[s.id]===today();
    h+='<div class="sec"><div style="min-width:0"><b>'+s.id+' '+esc(LL(s))+'</b><div class="meta">'+stars(r.stars||0)+'<span>'+L('Mastered ','已掌握 ')+mm+'/'+s.qs.length+'</span>'+(doneToday?'<span>📖✓</span>':'')+'</div><div class="prog"><i style="width:'+(mm/s.qs.length*100)+'%"></i></div></div>'+
    '<div class="acts"><button class="btn small green" data-studysec="'+s.id+'" aria-label="'+L('Notes','筆記')+' '+s.id+'">📖</button><button class="btn small" data-quizsec="'+s.id+'">✏️ '+L('Quiz','測驗')+'</button></div></div>';});
@@ -1316,10 +1363,10 @@ var studyTimer=null;
 function stopStudyTimer(){if(studyTimer)clearInterval(studyTimer);studyTimer=null;if(tempMood==='study')tempMood=null;}
 function openStudy(id){var s=secById(id);if(!s)return;var need=20,t=0;setTempMood('study');
  var notes=s.notes.map(function(n){return '<li><span>'+(S.lang==='en'?n[0]:n[1])+'</span></li>';}).join('');
- var terms=s.terms.map(function(x){return '<span class="term">'+esc(x[0])+' <span>'+esc(x[1])+'</span></span>';}).join('');
+ var terms=s.terms.map(function(x){return termRow(x);}).join('');
  modal('<div class="sheet-h"><h2>📖 '+s.id+' '+esc(LL(s))+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
  '<div class="row" style="flex-wrap:nowrap;align-items:center;margin-bottom:12px"><div style="width:96px;flex:none">'+petSVG(S.active,'study')+'</div><div style="min-width:0"><b>'+esc(LL(petDef(S.active)))+L(' is studying with you!',' 正陪你溫習！')+'</b><div class="muted" style="font-size:13px">'+L('Read each point slowly. Say the key words out loud – it really helps memory.','慢慢讀每一點，把關鍵詞讀出聲，真的有助記憶。')+'</div></div></div>'+
- '<ul class="notes">'+notes+'</ul><h3 style="margin:16px 0 8px;font-size:16px">🔑 '+L('Key terms','關鍵詞彙')+'</h3><div class="termchips">'+terms+'</div>'+
+ '<ul class="notes">'+notes+'</ul><h3 style="margin:16px 0 4px;font-size:16px">🔑 '+L('Key terms','關鍵詞彙')+'</h3><p class="muted" style="margin:0 0 8px;font-size:13px">🇬🇧 '+L('Tap 🔊 for British pronunciation, 🐢 for slow. Say each word out loud after it!','按 🔊 聽英式讀音，🐢 慢速。聽完跟着讀出來！')+'</p><div class="vlist two">'+terms+'</div>'+
  '<div class="row" style="margin-top:18px;flex-wrap:nowrap"><div class="ring" id="ring" style="--p:0"><span id="ringT">'+need+'s</span></div><button class="btn green" id="bDone" disabled style="flex:1">'+L('I\'ve read it ✓','我讀完了 ✓')+'</button></div>');
  $('#xClose').onclick=closeModal;
  studyTimer=setInterval(function(){t++;var r=$('#ring');if(!r){stopStudyTimer();return;}r.style.setProperty('--p',Math.min(100,t/need*100));$('#ringT').textContent=t>=need?'✓':(need-t)+'s';if(t>=need){$('#bDone').disabled=false;clearInterval(studyTimer);studyTimer=null;}},1000);
@@ -1347,7 +1394,7 @@ function showQ(){var qid=Q.ids[Q.i],q=qById(qid),sec=secById(qid.split('#')[0]);
  var extra=Q.mode==='practice'?'<span class="pips" title="'+L('Correct in a row','連續答對')+'">'+[0,1].map(function(k){return '<i class="'+((S.mistakes[qid]||{}).s>k?'on':'')+'"></i>';}).join('')+'</span>':'';
  modal('<div class="sheet-h"><h2>'+title+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
  '<div class="qtop"><div class="dots">'+dots+'</div><span class="bloom">'+L(BLOOM[q.b][0],BLOOM[q.b][1])+' · L'+q.b+'</span>'+extra+(Q.mode==='practice'?'<span class="muted" style="font-size:12px">'+sec.id+'</span>':'')+'</div>'+
- '<div class="card qcard"><div class="qtext">'+(q.t==='tf'?'<span class="tag" style="background:var(--sky)">'+L('True or false?','是非題')+'</span><br>':'')+esc(LL(q))+'</div>'+
+ '<div class="card qcard"><div class="qtext">'+(S.lang==='en'?'<button class="say inl" data-say="'+esc(q.en)+'" aria-label="Read question aloud">🔊</button>':'')+(q.t==='tf'?'<span class="tag" style="background:var(--sky)">'+L('True or false?','是非題')+'</span><br>':'')+esc(LL(q))+'</div>'+
  '<div class="opts'+(q.t==='tf'?' two':'')+'" id="opts">'+Q.opts.map(function(o,i){return '<button class="opt" data-i="'+i+'"><span class="k">'+(q.t==='tf'?(i===0?'✓':'✗'):'ABCD'[i])+'</span><span>'+esc(LL(o))+'</span></button>';}).join('')+'</div><div id="fb"></div></div>',function(){Q=null;});
  $('#ov').dataset.lock='1';
  $('#xClose').onclick=function(){if(Q&&Q.res.length&&Q.mode==='quiz'){confirmBox(L('Leave quiz?','離開測驗？'),L('Your answers so far won\'t earn stars.','目前的答案不會獲得星星。'),L('Leave','離開'),function(){Q=null;});}else{Q=null;closeModal();}};
@@ -1453,12 +1500,12 @@ function openEvolve(){var p=curPet(),P=petDef(S.active),ev=EVO[p.stage+1];if(!ev
  '<p style="text-align:center"><b>'+L(STAGE[p.stage][0],STAGE[p.stage][1])+' → '+L(STAGE[p.stage+1][0],STAGE[p.stage+1][1])+'</b></p><ul class="notes"><li><span>'+(lv>=ev.lv?'✅':'⬜')+' '+L('Reach Level ','達到等級 ')+ev.lv+' ('+L('now ','現在 ')+lv+')</span></li><li><span>'+(S.coins>=ev.cost?'✅':'⬜')+' 🪙 '+ev.cost+'</span></li></ul><div class="row" style="justify-content:center;margin-top:14px"><button class="btn pink" id="doEvo"'+(ok?'':' disabled')+'>✨ '+L('Evolve now','立即進化')+'</button></div>'+(lv<ev.lv?'<p class="muted" style="text-align:center">'+L('Quizzes and study sessions give XP.','測驗和溫習會給予經驗值。')+'</p>':''));
  $('#xClose').onclick=closeModal;$('#doEvo').onclick=function(){S.coins-=ev.cost;p.stage++;sfx('fanfare');confetti();checkTrophies();save();bubble=L('I feel brand new!!','我煥然一新了！！');setTempMood('joy',4000);closeModal();};}
 function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(function(s){s.terms.forEach(function(t){pool.push(t);});});var pairs=shuffle(pool).slice(0,6);
- var cards=[];pairs.forEach(function(t,i){cards.push({p:i,txt:t[0]});cards.push({p:i,txt:t[1]});});cards=shuffle(cards);var open=[],done=0,moves=0,lock=false;
+ var cards=[];pairs.forEach(function(t,i){cards.push({p:i,txt:t[0],en:1});cards.push({p:i,txt:t[1]});});cards=shuffle(cards);var open=[],done=0,moves=0,lock=false;
  var t=today();if(S.matchDay.d!==t)S.matchDay={d:t,n:0};
  modal('<div class="sheet-h"><h2>🃏 '+L('Term Match','詞彙配對')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><p class="muted" style="margin-top:0">'+L('Match each English term with its Chinese partner · ','把英文詞彙與中文配對 · ')+esc(LL(chap))+'</p><div class="match" id="mg">'+cards.map(function(c,i){return '<button class="mc" data-c="'+i+'" aria-label="card">?</button>';}).join('')+'</div><p class="muted" id="mv" style="text-align:center">'+L('Moves: 0','步數：0')+'</p>');
  $('#xClose').onclick=closeModal;
  document.querySelectorAll('.mc').forEach(function(b){b.onclick=function(){if(lock)return;var i=+b.dataset.c;if(b.classList.contains('up')||b.classList.contains('done'))return;
-  b.classList.add('up');b.textContent=cards[i].txt;sfx('flip');open.push(b);
+  b.classList.add('up');b.textContent=cards[i].txt;if(cards[i].en)say(cards[i].txt);else sfx('flip');open.push(b);
   if(open.length===2){moves++;$('#mv').textContent=L('Moves: ','步數：')+moves;var a=cards[+open[0].dataset.c],c=cards[+open[1].dataset.c];
    if(a.p===c.p){open.forEach(function(x){x.classList.remove('up');x.classList.add('done');});open=[];done++;sfx('right');
     if(done===6){var p=curPet();p.happy=clamp(p.happy+22,5,100);p.energy=clamp(p.energy-5,5,100);S.matchWins++;S.matchDay.n++;var paid=S.matchDay.n<=3;if(paid)gain(moves<=10?8:5,6);else {checkTrophies();save();}
@@ -1536,6 +1583,7 @@ function bindScreen(){
   bPractice:function(){startPractice(practiceFilter);}};
  for(var k in m){var el=document.getElementById(k);if(el)el.onclick=m[k];}
  document.querySelectorAll('[data-studysec]').forEach(function(b){b.onclick=function(){openStudy(b.dataset.studysec);};});
+ document.querySelectorAll('[data-vocab]').forEach(function(b){b.onclick=function(){openVocab(b.dataset.vocab);};});
  document.querySelectorAll('[data-quizsec]').forEach(function(b){b.onclick=function(){startQuiz(b.dataset.quizsec,'quiz');};});
  document.querySelectorAll('[data-go]').forEach(function(b){b.onclick=function(){curScreen=b.dataset.go;render();};});
  document.querySelectorAll('[data-pf]').forEach(function(b){b.onclick=function(){practiceFilter=b.dataset.pf;render();};});

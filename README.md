@@ -10,6 +10,7 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
 - **Care loop**: feed snacks, play *Term Match* (EN ↔ 中文), dress up, decorate the room.
 - **Special items**: 29 themed collectibles (one per sub-topic) unlock free with a 3/5+ quiz score, with an animated reveal.
 - **Streak pop-ups**: animated reminders on return, celebration on each new day, milestone confetti (3/7/14/21/30…), shield and welcome-back messages.
+- **British pronunciation**: every key term (232) has 🔊 normal and 🐢 slow playback in an en-GB voice (Web Speech API) plus British IPA; each unit has a *Listen & Repeat* vocab list; English Term Match cards speak when flipped; quiz questions can be read aloud in English mode.
 - **Retention**: daily streak with reward multiplier (up to ×1.5) and streak shields, daily gift, 18 trophies, collection gallery.
 - **錯題本 Mistake Bank**: wrong answers are saved automatically; answer one right twice in a row to clear it (+6 coins).
 - **Saving**: auto-saves to `localStorage` key `s1SciencePals_v1`; 💾 gives a save code + share link (`…/#CODE`) to move devices, with preview and checksum. Codes from the first version (v1) still load.
