@@ -242,6 +242,34 @@ textarea,input[type=text]{width:100%;font:inherit;font-family:ui-monospace,Menlo
 .dans{font-size:20px;letter-spacing:.5px}
 .dres{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:20px}
 .dres.ok{background:#E6F5EA;color:#3E8A5B}.dres.no{background:#FDECEF;color:#B4475A}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.gal figure{margin:0;background:#fff;border-radius:14px;padding:8px;display:grid;gap:6px;align-content:start;min-width:0}
+.gal figure.wide{grid-column:1/-1}
+.gal img,.fig img.photo{width:100%;height:auto;border-radius:10px;display:block}
+.gal figure:not(.wide) img{aspect-ratio:4/3;object-fit:contain;background:#fff}
+.gal figcaption{font-size:13px;font-weight:700;line-height:1.35}
+.fig img.photo{max-height:230px;width:auto;max-width:100%;object-fit:contain}
+.tier{position:absolute;top:8px;left:8px;z-index:1;font-size:11px;font-weight:800;padding:1px 8px;border-radius:999px;background:#EEE9E3;color:#6E6661;max-width:calc(100% - 50px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tier.t-rare{background:#DDEEFB;color:#2F6F9E}.tier.t-epic{background:#EDE2FA;color:#7443B0}.tier.t-legendary{background:linear-gradient(90deg,#FBD46D,#FFF1C5,#FBD46D);color:#7A5200}
+p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
+.pop-in .tier{position:static;display:inline-block}
+.item.t-rare{box-shadow:0 0 0 2px #BFDDF5,var(--shadow)}
+.item.t-epic{box-shadow:0 0 0 2px #CDB5EE,var(--shadow)}
+.item.t-legendary{box-shadow:0 0 0 3px #F2C14E,0 8px 22px rgba(242,193,78,.35);background:linear-gradient(160deg,#FFF8E1,#fff 55%)}
+.item.t-legendary .pic{position:relative;overflow:hidden}
+.item.t-legendary .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%);transform:translateX(-100%);animation:shine 3.2s ease-in-out infinite}
+@keyframes shine{60%,100%{transform:translateX(100%)}}
+.tierbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.tierbar .tb{background:#fff;border-radius:14px;padding:8px;text-align:center;display:grid;font-size:12px;font-weight:800}
+.tierbar .tb b{font-size:18px;font-variant-numeric:tabular-nums}
+.tierbar .t-common{color:#6E6661}.tierbar .t-rare{color:#2F6F9E}.tierbar .t-epic{color:#7443B0}.tierbar .t-legendary{color:#9A6A00;background:linear-gradient(160deg,#FFF1C5,#fff)}
+@media (max-width:420px){.tierbar{grid-template-columns:repeat(2,1fr)}}
+.pop-prize.legend .rays{background:repeating-conic-gradient(#FBD46D 0 10deg,#FFF8E1 10deg 20deg)}
+.dlist{margin-top:14px;background:#fff;border-radius:16px;padding:8px 12px}
+.dlist summary{cursor:pointer;font-weight:800;min-height:40px;display:flex;align-items:center}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;max-height:300px;overflow:auto;padding-bottom:6px}
+.dli{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;align-items:center;font-size:14px}
+.dli .zh{font-size:12px;color:var(--ink2);font-weight:700}
 /* pop-ups */
 .pop-ov{position:fixed;inset:0;z-index:85;background:rgba(91,75,73,.3);display:grid;place-items:center;padding:16px}
 .pop-card{position:relative;overflow:hidden;background:var(--cream);border-radius:32px;padding:22px 18px 18px;max-width:380px;width:100%;text-align:center;box-shadow:0 18px 40px rgba(91,75,73,.25);border:4px solid #fff;animation:jelly .75s cubic-bezier(.3,1.6,.5,1)}
@@ -1005,17 +1033,32 @@ var CTX={
 /* new picture questions (appended) */
 var XQ={
  '1.3':[
-  F(M(1,'What does this hazard warning symbol mean?','這個危險警告標記代表甚麼？',[['Flammable','易燃'],['Corrosive','腐蝕性'],['Toxic','有毒'],['Harmful','有害']],'A flame = flammable. Keep away from flames and sparks.','火焰＝易燃，要遠離火焰和火花。'),'haz_flam'),
-  F(M(1,'What does this hazard warning symbol mean?','這個危險警告標記代表甚麼？',[['Corrosive','腐蝕性'],['Flammable','易燃'],['Toxic','有毒'],['Harmful','有害']],'Liquid eating into a hand and a surface = corrosive.','液體侵蝕手和物件表面＝腐蝕性。'),'haz_corr'),
-  F(M(1,'What does this hazard warning symbol mean?','這個危險警告標記代表甚麼？',[['Toxic','有毒'],['Harmful','有害'],['Flammable','易燃'],['Corrosive','腐蝕性']],'Skull and crossbones = toxic (poisonous).','骷髏骨＝有毒。'),'haz_tox'),
-  F(M(3,'A bottle has this label. Which safety precaution is MOST suitable?','一個瓶子貼有這個標記，哪項安全措施最合適？',[['Keep it away from flames and sparks','使它遠離火焰和火花'],['Wash it down the sink with lots of water','用大量水沖入水槽'],['Heat it strongly to test it','強烈加熱測試'],['Smell it closely to check','靠近嗅一嗅檢查']],'It is flammable – keep away from fire.','它是易燃的，要遠離火源。'),'haz_flam'),
-  F(M(2,'What does this hazard warning symbol mean?','這個危險警告標記代表甚麼？',[['Harmful / irritant','有害／刺激性'],['Toxic','有毒'],['Flammable','易燃'],['Corrosive','腐蝕性']],'The exclamation mark warns the chemical is harmful or irritating.','感嘆號表示化學品有害或有刺激性。'),'haz_harm')],
+  F(M(1,'What does this hazard warning symbol mean?','這個危險警告標記代表甚麼？',[['Flammable','易燃'],['Oxidizing','氧化性'],['Corrosive','腐蝕性'],['Harmful','有害']],'Red diamond with a flame = flammable. Keep away from flames and sparks.','紅色菱形加火焰＝易燃，要遠離火焰和火花。'),'ph_haz_flammable'),
+  F(M(1,'What does this hazard warning symbol mean?','這個危險警告標記代表甚麼？',[['Corrosive','腐蝕性'],['Flammable','易燃'],['Oxidizing','氧化性'],['Toxic','有毒']],'Liquids dripping onto a hand and a surface and eating them away = corrosive.','液體滴在手和物件上並侵蝕它們＝腐蝕性。'),'ph_haz_corrosive_q'),
+  F(M(1,'What does this hazard warning symbol mean?','這個危險警告標記代表甚麼？',[['Oxidizing','氧化性'],['Flammable','易燃'],['Corrosive','腐蝕性'],['Harmful','有害']],'Yellow diamond with a flame over a circle = oxidizing.','黃色菱形，圓圈上有火焰＝氧化性。'),'ph_haz_oxidizing'),
+  F(M(3,'A bottle has this label. Which safety precaution is MOST suitable?','一個瓶子貼有這個標記，哪項安全措施最合適？',[['Keep it away from flames and sparks','使它遠離火焰和火花'],['Wash it down the sink with lots of water','用大量水沖入水槽'],['Heat it strongly to test it','強烈加熱測試'],['Smell it closely to check','靠近嗅一嗅檢查']],'It is flammable – keep away from fire.','它是易燃的，要遠離火源。'),'ph_haz_flammable'),
+  F(M(3,'A bottle has this label. Which safety precaution is MOST suitable?','一個瓶子貼有這個標記，哪項安全措施最合適？',[['Wear safety spectacles and gloves; avoid skin contact','戴安全眼鏡和手套，避免接觸皮膚'],['Keep it near a Bunsen flame','放在本生燈火焰旁'],['Taste a little to check it','嚐一點檢查'],['Pour it on the bench to dry','倒在實驗桌上待乾']],'Corrosive chemicals damage skin and eyes.','腐蝕性化學品會損害皮膚和眼睛。'),'ph_haz_corrosive_q'),
+  F(M(1,'What is this safety equipment?','這是甚麼安全設備？',[['Fume cupboard','通風櫥'],['First aid box','急救箱'],['Fire blanket','滅火氈'],['Eye wash bottle','洗眼瓶']],'A fume cupboard removes harmful gases.','通風櫥可以抽走有害氣體。'),'ph_eq_fumecup'),
+  F(M(2,'When should you use this equipment?','你應在甚麼時候使用這個設備？',[['When a chemical splashes into your eyes','化學品濺入眼睛時'],['When there is a small fire','發生小火警時'],['When you cut your finger','割傷手指時'],['When you want to heat water','想加熱水時']],'It is an eye wash bottle with distilled water.','這是盛有蒸餾水的洗眼瓶。'),'ph_eq_eyewash'),
+  F(M(1,'What is this safety equipment?','這是甚麼安全設備？',[['Sand bucket','滅火沙桶'],['Fire extinguisher','滅火筒'],['First aid box','急救箱'],['Fire blanket','滅火氈']],'Sand can be poured on a small fire to put it out.','把沙倒在小火上可以滅火。'),'ph_eq_sandbucket'),
+  F(M(2,'According to the laboratory rules, when must you wear these?','根據實驗室守則，甚麼時候必須佩戴這個？',[['When heating or mixing substances','加熱或混合物質時'],['Only when reading the textbook','只在閱讀課本時'],['Only when walking in the corridor','只在走廊行走時'],['Never','永不']],'Safety spectacles protect your eyes during experiments.','安全眼鏡在實驗時保護眼睛。'),'ph_eq_spectacles'),
+  F(M(3,'Pulling this over a small fire puts it out. Which side of the fire triangle does it remove?','把這個蓋在小火上可以滅火。它移除了火三角的哪一邊？',[['Oxygen','氧'],['Fuel','燃料'],['Heat','熱'],['All three at once','三者同時']],'Covering the fire cuts off the supply of oxygen.','覆蓋火焰可以隔絕氧氣供應。'),'ph_eq_fireblanket'),
+  F(M(2,'This is the fire triangle. To put out a fire, you must remove…','這是火三角。要滅火，你必須移除……',[['any one of the three conditions','三個條件中任何一個'],['all three conditions','全部三個條件'],['the triangle','三角形'],['only the fuel','只有燃料']],'Without fuel, heat or oxygen, a fire cannot continue.','缺少燃料、熱或氧，火便不能繼續燃燒。'),'ph_fire_triangle')],
  '1.4':[
-  F(M(1,'Which one is a conical flask?','哪一個是錐形瓶？',[['B','B'],['A','A'],['C','C'],['D','D']],'A beaker (A), conical flask (B), measuring cylinder (C), test tube (D).','燒杯 (A)、錐形瓶 (B)、量筒 (C)、試管 (D)。'),'app4'),
-  F(M(2,'You need to measure exactly 25 cm³ of water. Which apparatus should you use?','你需要準確量度 25 cm³ 水，應使用哪件儀器？',[['C','C'],['A','A'],['B','B'],['D','D']],'The measuring cylinder (C) has a fine scale.','量筒 (C) 有精細的刻度。'),'app4'),
+  F(M(1,'In the photo, which one is a conical flask?','相中哪一個是錐形瓶？',[['d','d'],['a','a'],['b','b'],['c','c'],['e','e']],'a test tube · b boiling tube · c beaker · d conical flask · e reagent bottle','a 試管 · b 大試管 · c 燒杯 · d 錐形瓶 · e 試劑瓶'),'ph_apparatus_ae'),
+  F(M(2,'Which apparatus in the photo is used to STORE liquids?','相中哪件儀器用來儲存液體？',[['e','e'],['a','a'],['c','c'],['d','d']],'e is a reagent bottle – it has a stopper to store liquids.','e 是試劑瓶，有瓶塞可儲存液體。'),'ph_apparatus_ae'),
   F(M(3,'The eye is at the correct position. What is the volume of water?','眼睛位置正確，水的體積是多少？',[['34 cm³','34 cm³'],['35 cm³','35 cm³'],['36 cm³','36 cm³'],['40 cm³','40 cm³']],'Read the BOTTOM of the meniscus at eye level: 34 cm³.','視線與彎液面底部同一水平，讀數為 34 cm³。'),'cyl','Each small mark on the scale is 1 cm³.','刻度上每一小格代表 1 cm³。'),
   F(M(2,'Which flame should be used to heat a beaker of water?','應用哪個火焰加熱一燒杯水？',[['Q – it is hotter','Q－因為它較熱'],['P – it is hotter','P－因為它較熱'],['P – it is easier to see','P－因為它較容易看見'],['Either – they are the same','兩者皆可－它們相同']],'Q is the blue non-luminous flame – hotter and clean.','Q 是藍色無光焰，較熱且不會留下煤煙。'),'bunsen','The small circle on each burner shows the air hole (filled = closed, empty = open).','每盞本生燈上的小圓圈代表空氣孔（實心＝關上，空心＝打開）。'),
-  F(M(2,'Flame P is produced when the air hole is…','火焰 P 在空氣孔怎樣時產生？',[['closed','關上'],['fully open','完全打開'],['removed','拆除'],['half filled with water','一半注滿水']],'Closed air hole → yellow luminous flame.','空氣孔關上 → 黃色光焰。'),'bunsen')],
+  F(M(2,'Flame P is produced when the air hole is…','火焰 P 在空氣孔怎樣時產生？',[['closed','關上'],['fully open','完全打開'],['removed','拆除'],['half filled with water','一半注滿水']],'Closed air hole → yellow luminous flame.','空氣孔關上 → 黃色光焰。'),'bunsen'),
+  F(M(2,'Which letter shows the AIR HOLE of the Bunsen burner?','哪個字母標示本生燈的空氣孔？',[['B','B'],['A','A'],['C','C'],['D','D']],'A chimney · B air hole · C collar · D base · E rubber tubing','A 燈管 · B 空氣孔 · C 套環 · D 底座 · E 橡膠管'),'ph_bunsen_parts'),
+  F(M(2,'What is part C of the Bunsen burner?','本生燈的 C 部分是甚麼？',[['Collar – turn it to open or close the air hole','套環－轉動它可開關空氣孔'],['Chimney','燈管'],['Base','底座'],['Rubber tubing','橡膠管']],'Turning the collar opens or closes the air hole.','轉動套環可打開或關上空氣孔。'),'ph_bunsen_parts'),
+  F(M(2,'What is g used for?','g 有甚麼用途？',[['To protect the bench from overheating','保護實驗桌免受過熱'],['To heat substances','加熱物質'],['To support the wire gauze','承托鐵絲網'],['To store liquids','儲存液體']],'g is an insulating mat.','g 是隔熱墊。'),'ph_apparatus_fi'),
+  F(M(2,'Which letter is the WIRE GAUZE?','哪個字母是鐵絲網？',[['h','h'],['f','f'],['g','g'],['i','i']],'f Bunsen burner · g insulating mat · h wire gauze · i tripod','f 本生燈 · g 隔熱墊 · h 鐵絲網 · i 三腳架'),'ph_apparatus_fi'),
+  F(M(2,'In this sectional diagram, what does 2 represent?','在這個截面圖中，2 代表甚麼？',[['Tripod','三腳架'],['Wire gauze','鐵絲網'],['Bunsen burner','本生燈'],['Insulating mat','隔熱墊']],'1 wire gauze · 2 tripod · 3 Bunsen burner · 4 insulating mat','1 鐵絲網 · 2 三腳架 · 3 本生燈 · 4 隔熱墊'),'ph_sec_heating'),
+  F(M(2,'In this sectional diagram, what is P?','在這個截面圖中，P 是甚麼？',[['Filter paper','濾紙'],['Filter funnel','漏斗'],['Glass rod','玻璃棒'],['Dropper','滴管']],'P filter paper · Q filter funnel','P 濾紙 · Q 漏斗'),'ph_sec_funnel'),
+  F(M(1,'Which apparatus does this sectional diagram show?','這個截面圖表示哪件儀器？',[['Conical flask','錐形瓶'],['Beaker','燒杯'],['Test tube','試管'],['Dropper','滴管']],'A conical flask has a wide base and a narrow neck.','錐形瓶底闊頸窄。'),'ph_sec_flask'),
+  F(M(2,'What does this instrument measure?','這個儀器量度甚麼？',[['Mass','質量'],['Volume','體積'],['Temperature','溫度'],['Time','時間']],'A balance measures mass in mg, g or kg.','天平量度質量，單位是 mg、g 或 kg。'),'ph_balance'),
+  F(M(2,'Which unit is used with this instrument?','這個儀器使用哪個單位？',[['second (s)','秒 (s)'],['gram (g)','克 (g)'],['degree Celsius (°C)','攝氏度 (°C)'],['millilitre (mL)','毫升 (mL)']],'A stopwatch measures time.','秒錶量度時間。'),'ph_stopwatch')],
  '2.1':[
   F(M(3,'The graph shows ice being heated steadily. Which part shows water BOILING?','圖表顯示冰被持續加熱。哪一部分表示水在沸騰？',[['D','D'],['B','B'],['C','C'],['E','E']],'The flat part at 100 °C is boiling.','在 100 °C 的平坦部分表示沸騰。'),'heatcurve'),
   F(M(4,'In part B of the graph, the substance is…','在圖表的 B 部分，物質正在……',[['melting – temperature stays at 0 °C','熔化－溫度維持在 0 °C'],['boiling at 100 °C','在 100 °C 沸騰'],['cooling down','冷卻'],['a gas only','只是氣體']],'Flat line at 0 °C = melting (ice + water).','0 °C 的平坦線＝熔化（冰＋水）。'),'heatcurve')],
@@ -1330,6 +1373,29 @@ var DPIC={
  'atom':['atom'],'molecule':['molecule'],'solid state':['particles','P'],'liquid state':['particles','Q'],'gas state':['particles','R'],'bimetallic strip':['bimetal',null]
 };
 
+/* ===== Photos from the school revision notes (img/*.jpg) ===== */
+var PHOTO_SIZE={"eq_tap_sink": [434, 304], "eq_gas_tap": [434, 304], "eq_socket": [434, 304], "eq_spectacles": [434, 304], "eq_gloves": [434, 304], "eq_labcoat": [434, 304], "eq_extinguisher": [434, 304], "eq_sandbucket": [434, 304], "eq_fireblanket": [434, 304], "eq_firstaid": [434, 304], "eq_eyewash": [434, 304], "eq_fumecup": [434, 304], "haz_flammable": [222, 220], "haz_oxidizing": [208, 207], "haz_corrosive": [220, 194], "fire_triangle": [420, 187], "scale_reading": [900, 214], "bunsen_parts": [640, 456], "apparatus_ae": [700, 421], "apparatus_fi": [700, 396], "sec_testtube": [147, 240], "sec_beaker": [240, 227], "sec_flask": [249, 264], "sec_dropper": [114, 246], "sec_glassrod": [165, 240], "sec_funnel": [499, 337], "sec_heating": [520, 302], "sec_stand": [328, 355], "ruler": [381, 100], "measuring_tape": [224, 160], "measuring_cylinder": [239, 239], "balance": [301, 232], "thermometer": [326, 263], "stopwatch": [299, 300], "haz_corrosive_q": [220, 194]};
+function photoImg(id,alt,cls){var s=PHOTO_SIZE[id]||[400,300];return '<img class="'+(cls||'photo')+'" src="img/'+id+'.jpg" width="'+s[0]+'" height="'+s[1]+'" alt="'+(alt||'')+'" loading="lazy">';}
+Object.keys(PHOTO_SIZE).forEach(function(id){FIGS['ph_'+id]=function(){return photoImg(id,'photo');};});
+/* gallery shown in study notes */
+var GALLERY={
+ '1.3':[['eq_tap_sink','Water tap and sink','水龍頭及水槽'],['eq_gas_tap','Gas tap','氣體掣'],['eq_socket','Electric socket','電插座'],['eq_spectacles','Safety spectacles','安全眼鏡'],['eq_gloves','Gloves','防護手套'],['eq_labcoat','Laboratory coat','實驗袍'],['eq_extinguisher','Fire extinguisher','滅火筒'],['eq_sandbucket','Sand bucket','滅火沙桶'],['eq_fireblanket','Fire blanket','滅火氈'],['eq_firstaid','First aid box','急救箱'],['eq_eyewash','Eye wash bottle','洗眼瓶'],['eq_fumecup','Fume cupboard','通風櫥'],['haz_flammable','Flammable','易燃'],['haz_oxidizing','Oxidizing','氧化性'],['haz_corrosive','Corrosive','腐蝕性'],['fire_triangle','Fire triangle: oxygen + heat + fuel','火三角：氧＋熱＋燃料']],
+ '1.4':[['apparatus_ae','a test tube · b boiling tube · c beaker · d conical flask · e reagent bottle','a 試管 · b 大試管 · c 燒杯 · d 錐形瓶 · e 試劑瓶',1],['apparatus_fi','f Bunsen burner · g insulating mat · h wire gauze · i tripod','f 本生燈 · g 隔熱墊 · h 鐵絲網 · i 三腳架',1],['bunsen_parts','A chimney · B air hole · C collar · D base · E rubber tubing','A 燈管 · B 空氣孔 · C 套環 · D 底座 · E 橡膠管',1],['scale_reading','Read with your eye level with the scale / bottom of the meniscus','視線要與刻度／彎液面底部同一水平',1],
+  ['sec_testtube','Test tube (sectional)','試管（截面圖）'],['sec_beaker','Beaker (sectional)','燒杯（截面圖）'],['sec_flask','Conical flask (sectional)','錐形瓶（截面圖）'],['sec_dropper','Dropper (sectional)','滴管（截面圖）'],['sec_glassrod','Glass rod (sectional)','玻璃棒（截面圖）'],['sec_funnel','P filter paper · Q filter funnel','P 濾紙 · Q 漏斗'],['sec_heating','1 wire gauze · 2 tripod · 3 Bunsen burner · 4 insulating mat','1 鐵絲網 · 2 三腳架 · 3 本生燈 · 4 隔熱墊'],['sec_stand','X clamp · Y stand','X 夾 · Y 架'],
+  ['ruler','Ruler – length (mm, cm, m)','尺－長度 (mm, cm, m)'],['measuring_tape','Measuring tape – length','捲尺－長度'],['measuring_cylinder','Measuring cylinder – volume (cm³, mL)','量筒－體積 (cm³, mL)'],['balance','Balance – mass (mg, g, kg)','天平－質量 (mg, g, kg)'],['thermometer','Thermometer – temperature (°C)','溫度計－溫度 (°C)'],['stopwatch','Stopwatch – time (s, min, h)','秒錶－時間 (s, min, h)']]
+};
+/* new key terms from the revision notes */
+(function(){var add={'1.3':[['gloves','防護手套'],['laboratory coat','實驗袍'],['first aid box','急救箱'],['water tap and sink','水龍頭及水槽'],['electric socket','電插座']],
+ '1.4':[['test tube','試管'],['boiling tube','大試管'],['reagent bottle','試劑瓶'],['insulating mat','隔熱墊'],['glass rod','玻璃棒'],['dropper','滴管'],['filter funnel','漏斗'],['balance','天平'],['thermometer','溫度計'],['stopwatch','秒錶'],['measuring tape','捲尺']]};
+ CHAPTERS.forEach(function(c){c.sections.forEach(function(s){if(add[s.id])add[s.id].forEach(function(t){if(!s.terms.some(function(x){return x[0].toLowerCase()===t[0];}))s.terms.push(t);});});});
+ var ipa={gloves:'ɡlʌvz',coat:'kəʊt',first:'fɜːst',aid:'eɪd',box:'bɒks',tap:'tæp',electric:'ɪˈlektrɪk',socket:'ˈsɒkɪt',tube:'tjuːb',reagent:'riˈeɪdʒənt',insulating:'ˈɪnsjuleɪtɪŋ',mat:'mæt',glass:'ɡlɑːs',rod:'rɒd',dropper:'ˈdrɒpə',funnel:'ˈfʌnl',balance:'ˈbæləns',thermometer:'θəˈmɒmɪtə',stopwatch:'ˈstɒpwɒtʃ',tape:'teɪp'};for(var k in ipa)IPA[k]=ipa[k];
+ var def={'gloves':'Worn on the hands to protect them from chemicals.','laboratory coat':'A long coat worn to protect your clothes and skin in the lab.','first aid box':'A box of plasters, bandages and other things for treating small injuries.','water tap and sink':'Where you wash apparatus and wash chemicals off the skin.','electric socket':'Where you plug in electrical apparatus – never touch it with wet hands.',
+ 'test tube':'A small glass tube with a round bottom, used to hold liquids or solids.','boiling tube':'A larger glass tube used to hold a larger amount of liquids or solids.','reagent bottle':'A bottle with a stopper, used to store liquids.','insulating mat':'A heat-proof board that protects the bench from overheating.','glass rod':'A thin glass stick used to stir liquids.','dropper':'A tube with a rubber bulb, used to add a liquid drop by drop.','filter funnel':'A cone-shaped piece of apparatus that holds filter paper.','balance':'An instrument used to measure mass.','thermometer':'An instrument used to measure temperature.','stopwatch':'An instrument used to measure time.','measuring tape':'A long, bendable ruler used to measure length.'};for(var d in def)DEF[d]=def[d];
+ var pic={'safety spectacles':['ph:eq_spectacles'],'fire extinguisher':['ph:eq_extinguisher'],'sand bucket':['ph:eq_sandbucket'],'eye wash bottle':['ph:eq_eyewash'],'fume cupboard':['ph:eq_fumecup'],'gloves':['ph:eq_gloves'],'laboratory coat':['ph:eq_labcoat'],'water tap and sink':['ph:eq_tap_sink'],'electric socket':['ph:eq_socket'],
+  'hazard warning symbol':['ph:haz_flammable'],'fire triangle':['ph:fire_triangle'],'test tube':['ph:apparatus_ae','a'],'boiling tube':['ph:apparatus_ae','b'],'beaker':['ph:apparatus_ae','c'],'conical flask':['ph:apparatus_ae','d'],'reagent bottle':['ph:apparatus_ae','e'],
+  'bunsen burner':['ph:apparatus_fi','f'],'insulating mat':['ph:apparatus_fi','g'],'wire gauze':['ph:apparatus_fi','h'],'tripod':['ph:apparatus_fi','i'],'measuring cylinder':['ph:measuring_cylinder'],'balance':['ph:balance'],'thermometer':['ph:thermometer'],'stopwatch':['ph:stopwatch'],'measuring tape':['ph:measuring_tape'],
+  'dropper':['ph:sec_dropper'],'glass rod':['ph:sec_glassrod'],'filter funnel':['ph:sec_funnel','Q'],'filter paper':['ph:sec_funnel','P']};for(var p in pic)DPIC[p]=pic[p];})();
+
 </script>
 <script>
 /* ===================== Mochi Science Pals – game engine ===================== */
@@ -1392,8 +1458,18 @@ var PETS=[
   cond:{k:'three',n:20,en:'Get 3★ in 20 sub-topics',zh:'在 20 個小節取得 3★'}},
  {id:'wata',en:'Wata',zh:'棉花糖',body:'#FFF7EA',belly:'#FFFDF8',ears:'sheep',price:800,
   desc:['A fluffy lamb made of marshmallow clouds.','由棉花糖雲朵做成的軟綿綿小羊。'],
-  cond:{k:'cleared',n:30,en:'Clear 30 mistakes',zh:'清除 30 條錯題'}}
+  cond:{k:'cleared',n:30,en:'Clear 30 mistakes',zh:'清除 30 條錯題'}},
+ {id:'hana',en:'Hana',zh:'栗子',body:'#F3E1C8',belly:'#FFF8EE',ears:'hedgehog',price:900,
+  desc:['A shy hedgehog who spells every word twice.','每個字都要默兩次的害羞刺蝟。'],
+  cond:{k:'dictn',n:80,en:'Spell 80 words correctly in dictation',zh:'默書正確拼寫 80 個詞彙'}},
+ {id:'kuma',en:'Kuma',zh:'灰灰',body:'#D6D9DE',belly:'#F2F3F5',ears:'koala',price:1400,
+  desc:['A dozy koala who naps between quizzes.','測驗之間總要小睡的樹熊。'],
+  cond:{k:'three',n:18,en:'Get 3★ in 18 sub-topics',zh:'在 18 個小節取得 3★'}},
+ {id:'nova',en:'Nova',zh:'星光',body:'#F4EEFF',belly:'#FFFFFF',ears:'nova',price:0,tier:'legendary',
+  desc:['A legendary star-unicorn that only visits the most devoted scientists.','只會拜訪最用心的小科學家的傳說星光獨角獸。'],
+  cond:{k:'days',n:60,en:'Study on 60 different days',zh:'在 60 個不同日子溫習'}}
 ];
+(function(){var t={mochi:'common',matcha:'rare',sakura:'rare',pudding:'rare',soda:'rare',taro:'epic',kinako:'rare',goma:'epic',mikan:'epic',nori:'epic',ume:'epic',wata:'epic',hana:'epic',kuma:'epic'};PETS.forEach(function(P){if(!P.tier)P.tier=t[P.id]||'rare';if(P.price&&['hana','kuma'].indexOf(P.id)<0)P.price=Math.round(P.price*1.5/10)*10;});})();
 function petDef(id){for(var i=0;i<PETS.length;i++)if(PETS[i].id===id)return PETS[i];return PETS[0];}
 function petLevel(xp){return Math.floor(Math.sqrt(xp/25))+1;}
 function lvXP(l){return 25*(l-1)*(l-1);}
@@ -1487,7 +1563,7 @@ function SW(o,w){return 'stroke="#O" stroke-width="'+(w||3)+'"';}
  SP('i_bubbles','wear','hand','Bubble wand','泡泡棒','6.5','<path d="M156 158 L172 118" stroke="#C9B6EA" stroke-width="4" stroke-linecap="round"/><circle cx="176" cy="108" r="10" fill="rgba(255,255,255,.3)" stroke="#C9B6EA" stroke-width="4"/><circle class="spark" cx="190" cy="84" r="9" fill="rgba(169,212,238,.35)" stroke="#8FC7E8" stroke-width="2"/><circle cx="172" cy="72" r="6" fill="rgba(255,179,193,.35)" stroke="#F7A9B5" stroke-width="2"/><circle cx="196" cy="60" r="5" fill="rgba(251,212,109,.35)" stroke="#F2C14E" stroke-width="2"/>'),
  SP('p_duck','room','prop','Floating rubber duck','浮浮橡皮鴨','6.6','<svg viewBox="0 0 100 100"><path d="M30 70 Q28 50 46 50 Q42 38 54 32 Q70 30 70 44 Q70 52 62 54 Q76 54 74 66 Q72 76 52 76 Q34 76 30 70Z" fill="#FBD46D" '+SW()+' stroke-linejoin="round"/><path d="M70 42 L82 44 L70 49Z" fill="#F2A65A" '+SW(0,2)+'/><circle cx="60" cy="40" r="2.5" fill="#O"/><ellipse cx="56" cy="47" rx="4" ry="2.5" fill="#FFB3C1"/><path d="M6 72 Q50 62 94 72 L88 94 L12 94Z" fill="rgba(169,212,238,.85)" '+SW()+'/><path d="M20 80 Q28 76 36 80 M58 82 Q66 78 74 82" stroke="#fff" stroke-width="2.5" fill="none"/></svg>')
 ].forEach(function(it){ITEMS.push(it);});
-function isOwned(it){if(!it)return false;if(it.sec)return ((S.secs[it.sec]||{}).stars||0)>0;return !!S.owned[it.id];}
+function isOwned(it){if(!it)return false;if(it.sec)return !!(S.specGot&&S.specGot[it.sec])||((S.secs[it.sec]||{}).stars||0)===3;return !!S.owned[it.id];}
 function specialFor(sec){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].sec===sec)return ITEMS[i];return null;}
 function specialsOwned(){return ITEMS.filter(function(i){return i.sec&&isOwned(i);}).length;}
 function specialsTotal(){return ITEMS.filter(function(i){return i.sec;}).length;}
@@ -1508,6 +1584,75 @@ var WALLS={
  w4:'linear-gradient(rgba(143,199,232,.35) 1px,transparent 1px) 0 0/18px 18px,linear-gradient(90deg,rgba(143,199,232,.35) 1px,transparent 1px) 0 0/18px 18px,#FBFDFF',
  w5:'radial-gradient(circle at 20% 30%,#FFF1C5 2px,transparent 2.5px),radial-gradient(circle at 70% 20%,#fff 1.5px,transparent 2px),radial-gradient(circle at 45% 60%,#FFF1C5 1.5px,transparent 2px),radial-gradient(circle at 85% 70%,#fff 2px,transparent 2.5px),linear-gradient(#6E6590,#A99AC8)'
 };
+
+
+/* ---------- Rarity tiers · harder collecting · quests ---------- */
+var TIERS=['common','rare','epic','legendary'];
+var TIER_NAME={common:['Common','普通'],rare:['Rare','稀有'],epic:['Epic','史詩'],legendary:['Legendary','傳說']};
+function tierName(t){return L(TIER_NAME[t][0],TIER_NAME[t][1]);}
+/* existing shop items: tier from original price, then prices raised */
+ITEMS.forEach(function(it){if(it.tier)return;if(it.sec){it.tier='rare';return;}if(it.id==='w0'){it.tier='common';return;}
+ it.tier=it.price<=50?'common':it.price<=90?'rare':'epic';var m={common:1.5,rare:2,epic:2.5}[it.tier];it.price=Math.round(it.price*m/5)*5;});
+function TI(id,cat,slot,en,zh,tier,price,svg){var it=I(id,cat,slot,en,zh,price,svg?function(){return svg.replace(/#O/g,O);}:null);it.tier=tier;return it;}
+function QI(id,cat,slot,en,zh,tier,quest,svg){var it=TI(id,cat,slot,en,zh,tier,0,svg);it.quest=quest;return it;}
+function unitThree(cid){var c=CHAPTERS.filter(function(x){return x.id===cid;})[0];return c.sections.filter(function(s){return (S.secs[s.id]||{}).stars===3;}).length;}
+function unitQuest(cid){var c=CHAPTERS.filter(function(x){return x.id===cid;})[0];return {en:'Get 3★ in every sub-topic of Unit '+cid,zh:'第 '+cid+' 單元所有小節取得 3★',f:function(){return [unitThree(cid),c.sections.length];}};}
+function masteredQs(){var n=0;for(var k in S.q)if(S.q[k]===1)n++;return n;}
+var SW3='stroke="#O" stroke-width="3"';
+[
+ /* new shop items */
+ TI('h_nightcap','wear','hat','Sleepy nightcap','星月睡帽','rare',200,'<path d="M66 68 Q76 30 128 34 Q148 38 154 60 L140 52 Q122 46 120 68Z" fill="#6E6590" '+SW3+' stroke-linejoin="round"/><path d="M66 68 Q100 58 122 68" stroke="#FFF1A8" stroke-width="5" fill="none"/><circle cx="154" cy="62" r="8" fill="#FFF1A8" '+SW3+'/><path d="M92 46 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z" fill="#FBD46D"/>'),
+ TI('i_starwand','wear','hand','Star wand','星星魔法棒','rare',180,'<path d="M160 156 L172 106" stroke="#C9B6EA" stroke-width="5" stroke-linecap="round"/><path d="M174 78 l6 13 l14 2 l-10 10 l3 14 l-13 -7 l-13 7 l3 -14 l-10 -10 l14 -2Z" fill="#FBD46D" '+SW3+' stroke-linejoin="round"/><circle class="spark" cx="194" cy="74" r="3" fill="#FFB3C1"/>'),
+ TI('p_aquarium','room','prop','Mini aquarium','迷你水族箱','rare',220,'<svg viewBox="0 0 100 100"><rect x="10" y="26" width="80" height="62" rx="10" fill="rgba(169,212,238,.6)" '+SW3+'/><path d="M12 46 Q30 40 50 46 T88 46" stroke="#fff" stroke-width="2" fill="none"/><path d="M34 64 Q46 54 58 64 Q46 74 34 64Z M58 64 L66 58 L66 70Z" fill="#F7A06B" '+SW3.replace('3','2')+'/><path d="M22 86 Q20 70 26 60 M78 86 Q82 68 76 58" stroke="#6FA06A" stroke-width="3" fill="none"/><circle cx="70" cy="40" r="3" fill="#fff"/><circle cx="74" cy="32" r="2" fill="#fff"/></svg>'),
+ TI('s_rainbow','room','sticker','Rainbow sticker','彩虹貼紙','rare',120,'<svg viewBox="0 0 60 60"><path d="M6 44 A24 24 0 0 1 54 44" stroke="#F28C9B" stroke-width="6" fill="none"/><path d="M12 44 A18 18 0 0 1 48 44" stroke="#FBD46D" stroke-width="6" fill="none"/><path d="M18 44 A12 12 0 0 1 42 44" stroke="#8FC7E8" stroke-width="6" fill="none"/><ellipse cx="10" cy="46" rx="8" ry="5" fill="#fff" '+SW3.replace('3','2')+'/><ellipse cx="50" cy="46" rx="8" ry="5" fill="#fff" '+SW3.replace('3','2')+'/></svg>'),
+ TI('w6','room','wall','Sakura night','夜櫻','epic',600,null),
+ TI('a_starcape','wear','acc','Starry cape','星空斗篷','epic',700,'<path d="M36 146 Q100 168 164 146 L178 186 Q100 200 22 186Z" fill="#6E6590" '+SW3+' stroke-linejoin="round"/><circle cx="60" cy="176" r="2.5" fill="#FFF1A8"/><circle cx="140" cy="178" r="2.5" fill="#FFF1A8"/><path d="M46 180 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z M154 170 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z" fill="#FBD46D"/><circle cx="100" cy="158" r="6" fill="#FBD46D" '+SW3.replace('3','2')+'/>'),
+ /* epic: unit mastery */
+ QI('a_minicoat','wear','acc','Tiny lab coat','迷你實驗袍','epic',unitQuest(1),'<path d="M52 142 L84 150 L96 186 L60 184 Q46 168 52 142Z M148 142 L116 150 L104 186 L140 184 Q154 168 148 142Z" fill="#fff" '+SW3+' stroke-linejoin="round"/><rect x="124" y="162" width="14" height="12" rx="2" fill="#EAF6FB" stroke="#O" stroke-width="2"/><path d="M128 158 L128 168" stroke="#5E9FD0" stroke-width="3"/>'),
+ QI('h_raincloud','wear','hat','Raincloud hat','雨雲帽','epic',unitQuest(2),'<path d="M62 60 Q56 40 76 38 Q82 22 100 28 Q118 20 126 36 Q146 36 140 58Z" fill="#fff" '+SW3+'/><path d="M80 66 l-2 8 M100 68 l-2 8 M120 66 l-2 8" stroke="#8FC7E8" stroke-width="4" stroke-linecap="round"/><circle cx="92" cy="44" r="2.5" fill="#O"/><circle cx="108" cy="44" r="2.5" fill="#O"/>'),
+ QI('a_wings','wear','acc','Butterfly wings','蝴蝶翅膀','epic',unitQuest(3),'<path d="M38 116 C6 86 -2 124 18 132 C0 150 22 170 42 146Z" fill="#FFB3C1" '+SW3+'/><path d="M162 116 C194 86 202 124 182 132 C200 150 178 170 158 146Z" fill="#FFB3C1" '+SW3+'/><circle cx="20" cy="114" r="5" fill="#FFF1A8"/><circle cx="180" cy="114" r="5" fill="#FFF1A8"/>'),
+ QI('i_dnawand','wear','hand','DNA wand','DNA 魔杖','epic',unitQuest(4),'<path d="M160 158 L170 110" stroke="#B98B64" stroke-width="4" stroke-linecap="round"/><path d="M160 106 C184 96 158 82 182 70 M182 106 C158 96 184 82 160 70" stroke="#8A6BB5" stroke-width="4" fill="none"/><path d="M164 100 L178 100 M166 88 L176 88 M164 76 L178 76" stroke="#F28C9B" stroke-width="3"/>'),
+ QI('g_solar','wear','glasses','Solar-panel shades','太陽能墨鏡','epic',unitQuest(5),'<rect x="62" y="104" width="32" height="24" rx="5" fill="#3E5B8C" '+SW3+'/><rect x="106" y="104" width="32" height="24" rx="5" fill="#3E5B8C" '+SW3+'/><path d="M73 104 L73 128 M83 104 L83 128 M62 116 L94 116 M117 104 L117 128 M127 104 L127 128 M106 116 L138 116" stroke="#8FB3E0" stroke-width="1.5"/><path d="M94 112 L106 112" '+SW3+'/>'),
+ QI('h_atom','wear','hat','Atom orbit halo','原子光環','epic',unitQuest(6),'<ellipse cx="100" cy="44" rx="40" ry="12" fill="none" stroke="#8FC7E8" stroke-width="4"/><ellipse cx="100" cy="44" rx="40" ry="12" fill="none" stroke="#F7A9B5" stroke-width="4" transform="rotate(30 100 44)"/><ellipse cx="100" cy="44" rx="40" ry="12" fill="none" stroke="#9BCB8E" stroke-width="4" transform="rotate(-30 100 44)"/><circle cx="100" cy="44" r="8" fill="#FBD46D" '+SW3+'/>'),
+ /* legendary: very hard milestones */
+ QI('h_nobel','wear','hat','Nobel laurel crown','諾貝爾桂冠','legendary',{en:'Get 3★ in ALL sub-topics',zh:'所有小節取得 3★',f:function(){return [threeStars(),ALLSECS.length];}},(function(){var s='';for(var i=0;i<9;i++){var a=Math.PI*(1.05+i*0.1),x=100+52*Math.cos(a),y=78+30*Math.sin(a);s+='<ellipse cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" rx="10" ry="5" fill="'+(i%2?'#E0B23A':'#FBD46D')+'" stroke="#O" stroke-width="2" transform="rotate('+(a*180/Math.PI+90).toFixed(0)+' '+x.toFixed(1)+' '+y.toFixed(1)+')"/>';}return s+'<circle cx="100" cy="46" r="10" fill="#FBD46D" '+SW3+'/><path d="M100 40 l2 4 l4 .5 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -.5Z" fill="#fff"/>';})()),
+ QI('a_aurora','wear','acc','Aurora cape','極光斗篷','legendary',{en:'Reach a 30-day study streak',zh:'連續溫習 30 日',f:function(){return [S.best,30];}},'<path d="M34 146 Q100 170 166 146 L180 188 Q100 202 20 188Z" fill="#7FD1C0" '+SW3+'/><path d="M30 164 Q100 184 170 164 L174 176 Q100 196 26 176Z" fill="#B9A6E8"/><path d="M40 152 Q100 174 160 152 L164 160 Q100 182 36 160Z" fill="#A9E3F0"/><circle class="spark" cx="60" cy="182" r="3" fill="#fff"/><circle class="spark" cx="146" cy="180" r="3" fill="#fff" style="animation-delay:.6s"/>'),
+ QI('w_galaxy','room','wall','Galaxy wallpaper','銀河牆紙','legendary',{en:'Master 300 different questions',zh:'掌握 300 條不同題目',f:function(){return [masteredQs(),300];}},null),
+ QI('i_dragon','wear','hand','Dragon plush','小龍公仔','legendary',{en:'Clear 100 mistakes in 錯題本',zh:'在錯題本清除 100 條錯題',f:function(){return [S.cleared,100];}},'<path d="M150 150 C140 120 160 104 180 110 C196 116 196 140 184 152Z" fill="#9BCB8E" '+SW3+'/><path d="M170 106 L166 94 L176 102 M184 110 L186 96 L192 108" fill="#FBD46D" stroke="#O" stroke-width="2"/><path d="M150 128 C134 112 132 138 146 140Z" fill="#B7DDA8" stroke="#O" stroke-width="2"/><circle cx="178" cy="124" r="3" fill="#O"/><ellipse cx="184" cy="132" rx="4" ry="2.5" fill="#FFB3C1"/><path d="M160 146 l4 -4 l4 4 l4 -4" stroke="#FBD46D" stroke-width="2.5" fill="none"/>'),
+ QI('p_crystalscope','room','prop','Crystal microscope','水晶顯微鏡','legendary',{en:'Spell 300 words correctly in dictation',zh:'默書中正確拼寫 300 個詞彙',f:function(){return [(S.dict||{}).n||0,300];}},'<svg viewBox="0 0 100 100"><rect x="18" y="84" width="60" height="10" rx="5" fill="#C9B6EA" stroke="#O" stroke-width="3"/><path d="M60 84 L60 40" stroke="#B9A6E8" stroke-width="9" stroke-linecap="round"/><rect x="26" y="62" width="40" height="7" rx="3" fill="#E4D6F3" stroke="#O" stroke-width="3"/><rect x="30" y="14" width="16" height="44" rx="6" fill="rgba(228,214,243,.8)" stroke="#O" stroke-width="3" transform="rotate(-20 38 37)"/><path d="M78 20 l3 7 l7 3 l-7 3 l-3 7 l-3 -7 l-7 -3 l7 -3Z M14 30 l2 4 l4 2 l-4 2 l-2 4 l-2 -4 l-4 -2 l4 -2Z" fill="#FBD46D"/></svg>'),
+ QI('g_golden','wear','glasses','Golden goggles','黃金護目鏡','legendary',{en:'Get 20 perfect dictation rounds',zh:'默書全對 20 次',f:function(){return [(S.dict||{}).perf||0,20];}},'<path d="M38 112 L162 112" stroke="#E0B23A" stroke-width="6"/><rect x="62" y="100" width="32" height="26" rx="12" fill="rgba(251,212,109,.55)" stroke="#B8861F" stroke-width="3"/><rect x="106" y="100" width="32" height="26" rx="12" fill="rgba(251,212,109,.55)" stroke="#B8861F" stroke-width="3"/><path d="M68 106 L76 104 M112 106 L120 104" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M94 112 L106 112" stroke="#B8861F" stroke-width="3"/>'),
+ QI('s_halloffame','room','sticker','Hall-of-fame trophy','名人堂獎盃','legendary',{en:'Unlock 20 trophies',zh:'解鎖 20 個獎盃',f:function(){return [Object.keys(S.trophies).length,20];}},'<svg viewBox="0 0 60 60"><path d="M16 8 L44 8 L42 30 Q30 40 18 30Z" fill="#FBD46D" stroke="#O" stroke-width="3"/><path d="M16 12 Q6 12 8 22 Q10 28 18 28 M44 12 Q54 12 52 22 Q50 28 42 28" fill="none" stroke="#O" stroke-width="3"/><rect x="26" y="36" width="8" height="8" fill="#FBD46D" stroke="#O" stroke-width="2.5"/><rect x="18" y="44" width="24" height="10" rx="3" fill="#E0B23A" stroke="#O" stroke-width="3"/><path d="M30 14 l2.5 5 l5.5 1 l-4 4 l1 5.5 l-5 -2.6 l-5 2.6 l1 -5.5 l-4 -4 l5.5 -1Z" fill="#fff"/></svg>')
+].forEach(function(it){ITEMS.push(it);});
+WALLS.w6='radial-gradient(circle at 20% 30%,#FFD1DC 3px,transparent 3.5px) 0 0/46px 46px,radial-gradient(circle at 70% 70%,#FFE5EC 2.5px,transparent 3px) 0 0/60px 60px,linear-gradient(#5B4E86,#C08AB8)';
+WALLS.w_galaxy='radial-gradient(circle at 15% 25%,#fff 1.5px,transparent 2px) 0 0/40px 40px,radial-gradient(circle at 60% 70%,#FFF1C5 2px,transparent 2.5px) 0 0/70px 70px,radial-gradient(ellipse at 70% 30%,rgba(247,169,181,.55),transparent 55%),radial-gradient(ellipse at 25% 75%,rgba(143,199,232,.5),transparent 55%),linear-gradient(135deg,#1E1B4B,#3B2A6B 60%,#1A3A5C)';
+function questItems(){return ITEMS.filter(function(i){return i.quest;});}
+function checkQuests(){questItems().forEach(function(it){if(S.owned[it.id])return;var v=it.quest.f();if(v[0]>=v[1]){S.owned[it.id]=1;var t=it;setTimeout(function(){specialPopup(t);},1500);}});}
+function tierBadge(it){var t=it.tier||'common';return '<span class="tier t-'+t+'">'+(t==='legendary'?'👑 ':t==='epic'?'💎 ':t==='rare'?'✦ ':'')+tierName(t)+(it.sec?' · ✿'+it.sec:'')+'</span>';}
+function tierRank(t){return TIERS.indexOf(t||'common');}
+function tierCounts(filter){var o={};TIERS.forEach(function(t){o[t]=[0,0];});ITEMS.forEach(function(it){if(it.id==='w0'||!filter(it))return;var t=it.tier||'common';o[t][1]++;if(isOwned(it))o[t][0]++;});PETS.forEach(function(P){if(!filter({pet:1}))return;var t=P.tier||'common';o[t][1]++;if(S.pets[P.id])o[t][0]++;});return o;}
+function lockLine(it){if(it.quest){var v=it.quest.f(),pc=Math.min(100,Math.round(v[0]/v[1]*100));return '<div class="sub">🎯 '+esc(L(it.quest.en,it.quest.zh))+'</div><div class="prog" style="width:100%"><i style="width:'+pc+'%;background:'+(it.tier==='legendary'?'var(--gold)':'#A58BD6')+'"></i></div><div class="sub">'+Math.min(v[0],v[1])+' / '+v[1]+'</div>';}
+ if(it.sec)return '<div class="sub">🔒 '+L('Get 3★ (5/5) in the '+it.sec+' quiz','在 '+it.sec+' 測驗取得 3★（5/5）')+'</div>';return '';}
+function shopHTML(){var tabs=[['food','🍙 '+L('Snacks','小食')],['wear','👒 '+L('Wardrobe','衣櫃')],['room','🛋️ '+L('Room decor','房間裝飾')],['pets','🐾 '+L('Pets','寵物')],['quests','🎯 '+L('Quests','任務')]];
+ var h='<h1 class="h-sec">🛍️ '+L('Shop','商店')+'</h1><div class="tabs" role="tablist">'+tabs.map(function(t){return '<button role="tab" data-shop="'+t[0]+'" aria-selected="'+(shopTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div>';
+ if(shopTab==='wear'||shopTab==='room'||shopTab==='quests')h+='<p class="muted" style="margin:10px 0 0;font-size:14px">'+TIERS.map(function(t){return tierBadge({tier:t});}).join(' ')+'<br>'+L('✦ Rare sub-topic items: 3★ in that quiz · 💎 Epic unit rewards: 3★ in a whole unit · 👑 Legendary: very hard milestones.','✦ 稀有小節物品：該測驗 3★ · 💎 史詩單元獎勵：整個單元 3★ · 👑 傳說：非常困難的里程碑。')+'</p>';
+ h+='<div class="items">';
+ if(shopTab==='food')FOODS.forEach(function(f){h+='<div class="item"><div class="pic" style="font-size:54px">'+f.e+'</div><div class="nm">'+esc(LL(f))+'</div><div class="sub">⚡+'+f.en2+(f.hp?' 💗+'+f.hp:'')+' · '+L('Have ','持有 ')+(S.food[f.id]||0)+'</div><button class="btn small" data-buyfood="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>🪙 '+f.price+'</button></div>';});
+ else if(shopTab==='pets')PETS.slice().sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier);}).forEach(function(P){var has=!!S.pets[P.id];h+='<div class="item t-'+(P.tier||'common')+'">'+tierBadge(P)+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">'+esc(L(P.desc[0],P.desc[1]))+'</div>'+
+  (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')</div>'+(P.price?'<button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>':'<div class="sub">👑 '+L('Quest only','只限任務')+'</div>'))+'</div>';});
+ else{var list=shopTab==='quests'?ITEMS.filter(function(i){return i.quest;}):ITEMS.filter(function(it){return it.cat===shopTab&&it.id!=='w0';});
+  list.sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier)||(a.sec?1:0)-(b.sec?1:0)||a.price-b.price;}).forEach(function(it){var has=isOwned(it),free=it.sec||it.quest;
+   h+='<div class="item t-'+it.tier+(free&&!has?' locked':'')+'">'+tierBadge(it)+(has?'<span class="own">✓</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+esc(LL(it))+'</div><div class="sub">'+slotName(it.slot)+'</div>'+
+   (has?equipBtn(it):free?lockLine(it):'<button class="btn small" data-buy="'+it.id+'"'+(S.coins<it.price?' disabled':'')+'>🪙 '+it.price+'</button>')+'</div>';});}
+ return h+'</div>';}
+function colHTML(){var tabs=[['pets','🐾 '+L('Pets','寵物')],['trophies','🏆 '+L('Trophies','獎盃')],['closet','👗 '+L('Closet','衣櫥')],['decor','🖼️ '+L('Decor','裝飾')]];
+ var got=Object.keys(S.trophies).length,tc=tierCounts(function(){return true;});
+ var h='<h1 class="h-sec">🏆 '+L('Collection','收藏館')+'</h1><div class="card row" style="justify-content:space-around;text-align:center"><div><b style="font-size:22px">'+petsCount()+'/'+PETS.length+'</b><div class="muted" style="font-size:12px">'+L('Pets','寵物')+'</div></div><div><b style="font-size:22px">'+got+'/'+TROPHIES.length+'</b><div class="muted" style="font-size:12px">'+L('Trophies','獎盃')+'</div></div><div><b style="font-size:22px">'+(ownedCount('wear')+ownedCount('room'))+'/'+ITEMS.filter(function(i){return i.id!=='w0';}).length+'</b><div class="muted" style="font-size:12px">'+L('Items','物品')+'</div></div><div><b style="font-size:22px">'+threeStars()+'/'+ALLSECS.length+'</b><div class="muted" style="font-size:12px">3★</div></div></div>'+
+ '<div class="tierbar">'+TIERS.map(function(t){return '<div class="tb t-'+t+'"><span>'+tierName(t)+'</span><b>'+tc[t][0]+' / '+tc[t][1]+'</b></div>';}).join('')+'</div>'+
+ '<div class="tabs" role="tablist" style="margin-top:14px">'+tabs.map(function(t){return '<button role="tab" data-col="'+t[0]+'" aria-selected="'+(colTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div><div class="items">';
+ if(colTab==='pets')PETS.slice().sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier);}).forEach(function(P){var p=S.pets[P.id];h+='<div class="item t-'+(P.tier||'common')+(p?'':' locked')+'">'+tierBadge(P)+'<div class="pic">'+petSVG(P.id,p?'joy':'sleepy',p?{}:{stage:1,eq:{}})+'</div><div class="nm">'+(p?esc(LL(P)):'???')+'</div><div class="sub">'+(p?'Lv '+petLevel(p.xp)+' · '+L(STAGE[p.stage][0],STAGE[p.stage][1]):'🔒')+'</div></div>';});
+ else if(colTab==='trophies')TROPHIES.forEach(function(t){var v=t.f(),has=!!S.trophies[t.id],pc=Math.min(100,v[0]/v[1]*100);h+='<div class="item trophy'+(has?'':' locked')+'"><div class="pic">'+cupSVG(t)+'</div><div class="nm">'+esc(LL(t))+'</div><div class="sub">'+esc(L(t.den,t.dzh))+'</div><div class="prog" style="width:100%"><i style="width:'+pc+'%;background:'+(has?'var(--gold)':'var(--good)')+'"></i></div><div class="sub">'+(has?'✓ '+S.trophies[t.id]:Math.min(v[0],v[1])+'/'+v[1])+'</div></div>';});
+ else ITEMS.filter(function(i){return (colTab==='closet'?i.cat==='wear':i.cat==='room')&&i.id!=='w0';}).sort(function(a,b){return tierRank(b.tier)-tierRank(a.tier);}).forEach(function(it){var has=isOwned(it);h+='<div class="item t-'+it.tier+(has?'':' locked')+'">'+tierBadge(it)+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+(has?esc(LL(it)):'???')+'</div><div class="sub">'+slotName(it.slot)+'</div>'+(has?'':lockLine(it))+'</div>';});
+ return h+'</div>';}
 
 /* ---------- trophies ---------- */
 function ownedCount(cat){var n=0;ITEMS.forEach(function(it){if(it.cat===cat&&it.id!=='w0'&&isOwned(it))n++;});return n;}
@@ -1538,7 +1683,8 @@ var TROPHIES=[
  {id:'pets12',e:'🏠',en:'Full Family',zh:'大家庭',den:'Adopt all 12 pets',dzh:'領養全部 12 隻寵物',tier:3,f:function(){return [petsCount(),PETS.length];}},
  {id:'spec10',e:'🎀',en:'Treasure Hunter',zh:'尋寶獵人',den:'Unlock 10 special items',dzh:'解鎖 10 件特別物品',tier:2,f:function(){return [specialsOwned(),10];}},
  {id:'specall',e:'👑',en:'Complete Collector',zh:'完美收藏家',den:'Unlock every special item',dzh:'解鎖所有特別物品',tier:3,f:function(){return [specialsOwned(),specialsTotal()];}},
- {id:'spell',e:'✍️',en:'Spelling Star',zh:'串字之星',den:'Spell 100 words correctly in dictation',dzh:'默書中正確拼寫 100 個詞彙',tier:2,f:function(){return [(S.dict||{}).n||0,100];}}
+ {id:'spell',e:'✍️',en:'Spelling Star',zh:'串字之星',den:'Spell 100 words correctly in dictation',dzh:'默書中正確拼寫 100 個詞彙',tier:2,f:function(){return [(S.dict||{}).n||0,100];}},
+ {id:'legend',e:'👑',en:'Legend Hunter',zh:'傳說獵人',den:'Unlock 3 legendary items',dzh:'解鎖 3 件傳說物品',tier:3,f:function(){return [ITEMS.filter(function(i){return i.tier==='legendary'&&S.owned[i.id];}).length,3];}}
 ];
 
 /* ---------- state ---------- */
@@ -1547,8 +1693,9 @@ function newPet(){return {xp:0,stage:1,energy:80,happy:80,eq:{hat:null,glasses:n
 function defaultState(){return {v:1,lang:'zh',coins:40,xpTotal:0,pets:{mochi:newPet()},active:'mochi',owned:{w0:1},
  room:{wall:'w0',prop:null},food:{onigiri:2,apple:1},streak:0,best:0,lastDay:null,shields:0,days:0,hist:[],
  secs:{},q:{},seen:{},mistakes:{},cleared:0,quizzes:0,perfect:0,studies:0,studyDay:{},matchWins:0,matchDay:{d:'',n:0},
- trophies:{},gift:'',vocabDay:{},dict:{n:0,miss:{}},lastTick:Date.now(),sfx:true,music:false,started:false};}
-function load(k){try{var r=localStorage.getItem(k||KEY);if(r){var o=JSON.parse(r);var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];return o;}}catch(e){}return null;}
+ trophies:{},gift:'',vocabDay:{},dict:{n:0,miss:{},perf:0},specGot:{},mig4:1,lastTick:Date.now(),sfx:true,music:false,started:false};}
+function upgradeState(o){if(!o.mig4){o.specGot={};for(var q in (o.secs||{}))if((o.secs[q].stars||0)>0)o.specGot[q]=1;o.mig4=1;}var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];if(o.dict&&o.dict.perf==null)o.dict.perf=0;return o;}
+function load(k){try{var r=localStorage.getItem(k||KEY);if(r){return upgradeState(JSON.parse(r));}}catch(e){}return null;}
 function save(){try{S.lastTick=Date.now();S.upd=Date.now();localStorage.setItem(storeKey(),JSON.stringify(S));}catch(e){}cloudSaveSoon();}
 window.addEventListener('pagehide',function(){if(S&&S.started)save();});
 document.addEventListener('visibilitychange',function(){if(document.hidden&&S&&S.started)save();});
@@ -1577,9 +1724,9 @@ function gain(coins,xp,why){var m=streakMult()*fedBonus();var c=Math.round(coins
  var p=curPet();var before=petLevel(p.xp);S.coins+=c;p.xp+=x;S.xpTotal+=x;var after=petLevel(p.xp);
  if(after>before){setTimeout(function(){sfx('level');toast('⬆️ '+LL(petDef(S.active))+' '+L('reached Level ','升到 ')+after+L('!',' 級！'));confetti();},600);}
  checkTrophies();save();return {c:c,x:x,m:m};}
-function checkTrophies(){TROPHIES.forEach(function(t){if(!S.trophies[t.id]){var v=t.f();if(v[0]>=v[1]){S.trophies[t.id]=today();S.coins+=20;
+function checkTrophies(){checkQuests();TROPHIES.forEach(function(t){if(!S.trophies[t.id]){var v=t.f();if(v[0]>=v[1]){S.trophies[t.id]=today();S.coins+=20;
  setTimeout(function(){sfx('fanfare');toast('🏆 '+L('Trophy unlocked: ','解鎖獎盃：')+LL(t)+' (+20 🪙)');confetti();},1300);}}});}
-function condVal(k){if(k==='three')return threeStars();return S[k]||0;}
+function condVal(k){if(k==='three')return threeStars();if(k==='dictn')return (S.dict||{}).n||0;return S[k]||0;}
 function checkPetUnlocks(){PETS.forEach(function(p){if(p.cond&&!S.pets[p.id]&&condVal(p.cond.k)>=p.cond.n){S.pets[p.id]=newPet();
  setTimeout(function(){sfx('fanfare');toast('🎁 '+L('New pet unlocked: ','新寵物解鎖：')+LL(p)+'!');confetti();},1800);}});}
 
@@ -1680,9 +1827,10 @@ function streakPopup(kind,extra){var P=petDef(S.active),n=S.streak,pet='<div cla
   popup(h,'🌱 '+L('Start again','重新出發'),function(){curScreen='study';render();});}}
 function openingPopup(){var t=today();if(!S.lastDay||S.lastDay===t||S.streak<1)return;var gap=dayNum(t)-dayNum(S.lastDay);
  setTimeout(function(){if(gap===1)streakPopup('remind');else if(gap<=1+S.shields)streakPopup('shield');else streakPopup('broken');},700);}
-function specialPopup(it){var eq=null;if(it.cat==='wear'){eq={hat:null,glasses:null,acc:null,hand:null};eq[it.slot]=it.id;}
- var h='<div class="pop-prize"><div class="rays"></div><div class="prize-pic">'+(eq?petSVG(S.active,'joy',{eq:eq}):itemPic(it))+'</div></div><div class="tag" style="background:var(--butter)">✿ '+L('Special item','特別物品')+' · '+it.sec+'</div><h2 style="margin-top:8px">'+esc(LL(it))+'</h2><p>'+L('You completed <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b>! This cute reward is yours forever.','你完成了 <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b>！這份可愛獎勵永遠屬於你。')+'</p>';
- confetti();popup(h,it.slot==='sticker'?L('Stick it up!','貼上去！'):L('Use it now!','立即使用！'),function(){if(it.slot!=='sticker'){equip(it.id);}curScreen='home';render();});checkTrophies();}
+function specialPopup(it){var eq=null;if(it.cat==='wear'){eq={hat:null,glasses:null,acc:null,hand:null};eq[it.slot]=it.id;}var t=it.tier||'rare';
+ var why=it.sec?L('You got 3★ in <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b>!','你在 <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b> 取得 3★！'):it.quest?L('Quest complete: <b>'+esc(it.quest.en)+'</b>','完成任務：<b>'+esc(it.quest.zh)+'</b>'):'';
+ var h='<div class="pop-prize'+(t==='legendary'?' legend':'')+'"><div class="rays"></div><div class="prize-pic">'+(eq?petSVG(S.active,'joy',{eq:eq}):itemPic(it))+'</div></div>'+tierBadge(it)+'<h2 style="margin-top:8px">'+(t==='legendary'?'👑 '+L('LEGENDARY! ','傳說級！'):'')+esc(LL(it))+'</h2><p>'+why+' '+L('This reward is yours forever.','這份獎勵永遠屬於你。')+'</p>';
+ confetti();if(t==='legendary')setTimeout(confetti,700);popup(h,it.slot==='sticker'?L('Stick it up!','貼上去！'):L('Use it now!','立即使用！'),function(){if(it.slot!=='sticker'){equip(it.id);}curScreen='home';render();});}
 
 /* ---------- pet SVG ---------- */
 function moodOf(id){var p=S.pets[id];if(tempMood&&id===S.active)return tempMood;if(p.energy<25)return 'hungry';if(p.happy<25)return 'sad';if(p.energy<42)return 'sleepy';if(p.happy>=75&&p.energy>=60)return 'joy';return 'happy';}
@@ -1698,12 +1846,17 @@ function ears(t,b){var s='';var st=' stroke="'+O+'" stroke-width="3.5"';
  else if(t==='fox')s='<path d="M150 162 C196 164 204 118 182 96 C176 118 164 136 144 146Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M182 96 C196 110 198 128 192 140 C186 126 184 112 182 96Z" fill="#FFF4E8"/><path d="M52 98 L50 44 L92 68Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M148 98 L150 44 L108 68Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M60 86 L58 58 L80 72Z M140 86 L142 58 L120 72Z" fill="#FFF4E8"/>';
  else if(t==='axolotl'){[[-30,34,90],[0,26,108],[30,34,126]].forEach(function(g){s+='<ellipse cx="'+g[1]+'" cy="'+g[2]+'" rx="15" ry="6" fill="#F58FB1"'+st+' transform="rotate('+g[0]+' '+g[1]+' '+g[2]+')"/><ellipse cx="'+(200-g[1])+'" cy="'+g[2]+'" rx="15" ry="6" fill="#F58FB1"'+st+' transform="rotate('+(-g[0])+' '+(200-g[1])+' '+g[2]+')"/>';});}
  else if(t==='sheep')s='<ellipse cx="36" cy="104" rx="17" ry="8" fill="#F1DCC0"'+st+' transform="rotate(20 36 104)"/><ellipse cx="164" cy="104" rx="17" ry="8" fill="#F1DCC0"'+st+' transform="rotate(-20 164 104)"/>';
+ else if(t==='hedgehog'){var sp='';for(var i=0;i<11;i++){var a=Math.PI*(0.95+i*0.11),x1=100+76*Math.cos(a),y1=128+70*Math.sin(a),x2=100+96*Math.cos(a+0.05),y2=128+90*Math.sin(a+0.05),x3=100+76*Math.cos(a+0.1),y3=128+70*Math.sin(a+0.1);sp+=(i?'L':'M')+x1.toFixed(1)+' '+y1.toFixed(1)+' L'+x2.toFixed(1)+' '+y2.toFixed(1)+' L'+x3.toFixed(1)+' '+y3.toFixed(1)+' ';}s='<path d="'+sp+'Z" fill="#A9825E"'+st+' stroke-linejoin="round"/>';}
+ else if(t==='koala')s='<circle cx="48" cy="84" r="26" fill="'+b+'"'+st+'/><circle cx="152" cy="84" r="26" fill="'+b+'"'+st+'/><circle cx="50" cy="86" r="14" fill="#fff"/><circle cx="150" cy="86" r="14" fill="#fff"/>';
+ else if(t==='nova')s='<path d="M92 66 L100 20 L108 66Z" fill="#FBD46D"'+st+' stroke-linejoin="round"/><path d="M95 52 L105 48 M96 40 L104 36" stroke="#E0A33A" stroke-width="2"/><path d="M60 80 Q52 58 68 64Z M140 80 Q148 58 132 64Z" fill="'+b+'"'+st+'/>';
  else if(t==='tuft')s='<path d="M100 64 C94 48 98 40 104 38 C102 46 104 54 100 64Z M100 64 C108 50 116 48 120 50 C112 54 106 60 100 64Z" fill="#F7D476"'+st+' stroke-linejoin="round"/>';
  return s;}
 function frontFeat(t){var s='';
  if(t==='hamster')s='<ellipse cx="100" cy="76" rx="9" ry="10" fill="#E3AE6C" opacity=".8"/>';
  else if(t==='panda')s='<ellipse cx="80" cy="118" rx="13" ry="14" fill="#8A7E7C" transform="rotate(-20 80 118)"/><ellipse cx="120" cy="118" rx="13" ry="14" fill="#8A7E7C" transform="rotate(20 120 118)"/>';
  else if(t==='penguin')s='<ellipse cx="100" cy="126" rx="54" ry="46" fill="#fff"/>';
+ else if(t==='koala')s='<ellipse cx="100" cy="123" rx="8" ry="6" fill="#6E6362"/>';
+ else if(t==='nova')s='<path d="M56 110 l2 4 l4 .5 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -.5Z M144 110 l2 4 l4 .5 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -.5Z" fill="#C9B6EA"/><path d="M70 70 Q100 56 130 70" stroke="#FFB3C1" stroke-width="4" fill="none" opacity=".7"/>';
  else if(t==='sheep'){[60,74,88,100,112,126,140].forEach(function(x,i){s+='<circle cx="'+x+'" cy="'+(i%2?70:76)+'" r="14" fill="#fff" stroke="'+O+'" stroke-width="3"/>';});}
  return s;}
 function petSVG(id,mood,opts){opts=opts||{};var P=petDef(id),p=S.pets[id]||newPet(),b=P.body,st=opts.stage||p.stage,eq=opts.eq||p.eq;
@@ -1844,7 +1997,7 @@ function openStudy(id){var s=secById(id);if(!s)return;var need=20,t=0;setTempMoo
  var terms=s.terms.map(function(x){return termRow(x);}).join('');
  modal('<div class="sheet-h"><h2>📖 '+s.id+' '+esc(LL(s))+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
  '<div class="row" style="flex-wrap:nowrap;align-items:center;margin-bottom:12px"><div style="width:96px;flex:none">'+petSVG(S.active,'study')+'</div><div style="min-width:0"><b>'+esc(LL(petDef(S.active)))+L(' is studying with you!',' 正陪你溫習！')+'</b><div class="muted" style="font-size:13px">'+L('Read each point slowly. Say the key words out loud – it really helps memory.','慢慢讀每一點，把關鍵詞讀出聲，真的有助記憶。')+'</div></div></div>'+
- '<ul class="notes">'+notes+'</ul><h3 style="margin:16px 0 4px;font-size:16px">🔑 '+L('Key terms','關鍵詞彙')+'</h3><p class="muted" style="margin:0 0 8px;font-size:13px">🇬🇧 '+L('Tap 🔊 for British pronunciation, 🐢 for slow. Say each word out loud after it!','按 🔊 聽英式讀音，🐢 慢速。聽完跟着讀出來！')+'</p><div class="vlist two">'+terms+'</div>'+
+ '<ul class="notes">'+notes+'</ul>'+(GALLERY[s.id]?'<h3 style="margin:16px 0 4px;font-size:16px">📷 '+L('Pictures from your revision notes','溫習筆記圖片')+'</h3><div class="gal">'+GALLERY[s.id].map(function(g){return '<figure class="'+(g[3]?'wide':'')+'">'+photoImg(g[0],g[1])+'<figcaption>'+esc(L(g[1],g[2]))+'</figcaption></figure>';}).join('')+'</div>':'')+'<h3 style="margin:16px 0 4px;font-size:16px">🔑 '+L('Key terms','關鍵詞彙')+'</h3><p class="muted" style="margin:0 0 8px;font-size:13px">🇬🇧 '+L('Tap 🔊 for British pronunciation, 🐢 for slow. Say each word out loud after it!','按 🔊 聽英式讀音，🐢 慢速。聽完跟着讀出來！')+'</p><div class="vlist two">'+terms+'</div>'+
  '<div class="row" style="margin-top:18px;flex-wrap:nowrap"><div class="ring" id="ring" style="--p:0"><span id="ringT">'+need+'s</span></div><button class="btn green" id="bDone" disabled style="flex:1">'+L('I\'ve read it ✓','我讀完了 ✓')+'</button></div>');
  $('#xClose').onclick=closeModal;
  studyTimer=setInterval(function(){t++;var r=$('#ring');if(!r){stopStudyTimer();return;}r.style.setProperty('--p',Math.min(100,t/need*100));$('#ringT').textContent=t>=need?'✓':(need-t)+'s';if(t>=need){$('#bDone').disabled=false;clearInterval(studyTimer);studyTimer=null;}},1000);
@@ -1895,7 +2048,7 @@ function answer(i){if(Q.answered)return;Q.answered=true;var qid=Q.ids[Q.i],q=qBy
  nb.scrollIntoView({block:'nearest',behavior:'smooth'});save();}
 function finishQuiz(){var n=Q.res.filter(Boolean).length,tot=Q.res.length,p=curPet(),html;
  if(Q.mode==='quiz'){var sec=secById(Q.sec),r=S.secs[Q.sec]||{stars:0,best:0,plays:0},st=n===5?3:n===4?2:n===3?1:0;
-  quizRec('done',st);var wasNone=!(r.stars>0);r.plays++;r.best=Math.max(r.best,n);var newStar=st>r.stars;r.stars=Math.max(r.stars,st);S.secs[Q.sec]=r;S.quizzes++;if(n===5)S.perfect++;
+  var spi0=specialFor(Q.sec),hadSp=isOwned(spi0);quizRec('done',st);r.plays++;r.best=Math.max(r.best,n);var newStar=st>r.stars;r.stars=Math.max(r.stars,st);S.secs[Q.sec]=r;S.quizzes++;if(n===5)S.perfect++;
   p.energy=clamp(p.energy-8,5,100);p.happy=clamp(p.happy+(n>=3?6:-2),5,100);markActive();checkPetUnlocks();
   var g=gain(n*5+(n===5?10:0),n*10);
   var mood=n>=4?'joy':n>=2?'happy':'sad';
@@ -1903,7 +2056,7 @@ function finishQuiz(){var n=Q.res.filter(Boolean).length,tot=Q.res.length,p=curP
   html='<div class="empty"><div style="width:150px;margin:0 auto">'+petSVG(S.active,mood)+'</div><h2>'+n+' / '+tot+'</h2><div style="font-size:26px">'+stars(st)+'</div>'+(newStar?'<p><b>'+L('New best stars!','新的最佳星數！')+'</b></p>':'')+
   '<p>+'+g.c+' 🪙 · +'+g.x+' XP'+(g.m>1?' <span class="tag">×'+g.m.toFixed(2)+'</span>':'')+'</p><p class="muted">'+cheer+'</p><div class="row" style="justify-content:center">'+
   '<button class="btn" id="again">🔁 '+L('Another round','再來一次')+'</button>'+(n<5?'<button class="btn green" id="notes">📖 '+L('Notes','筆記')+'</button>':'')+'<button class="btn white" id="home">🏠 '+L('Room','小窩')+'</button></div></div>';
-  var sid=Q.sec;Q=null;modal(html);if(wasNone&&st>0){var spi=specialFor(sid);if(spi)setTimeout(function(){specialPopup(spi);},900);}sfx(n>=4?'fanfare':'coin');if(n===5)confetti();
+  var sid=Q.sec;Q=null;modal(html);if(spi0&&!hadSp&&isOwned(spi0))setTimeout(function(){specialPopup(spi0);},900);sfx(n>=4?'fanfare':'coin');if(n===5)confetti();
   $('#again').onclick=function(){$('#ovroot').innerHTML='';startQuiz(sid,'quiz');};if($('#notes'))$('#notes').onclick=function(){$('#ovroot').innerHTML='';openStudy(sid);};
   $('#home').onclick=function(){curScreen='home';closeModal();};}
  else{quizRec('done',0);markActive();var left=Object.keys(S.mistakes).length;p.happy=clamp(p.happy+4,5,100);checkTrophies();checkPetUnlocks();
@@ -1926,15 +2079,6 @@ function startPractice(f){var ids=Object.keys(S.mistakes).filter(function(id){re
  startQuiz(null,'practice',shuffle(ids).slice(0,5));}
 
 /* SHOP */
-function shopHTML(){var tabs=[['food','🍙 '+L('Snacks','小食')],['wear','👒 '+L('Wardrobe','衣櫃')],['room','🛋️ '+L('Room decor','房間裝飾')],['pets','🐾 '+L('Pets','寵物')]];
- var h='<h1 class="h-sec">🛍️ '+L('Shop','商店')+'</h1><div class="tabs" role="tablist">'+tabs.map(function(t){return '<button role="tab" data-shop="'+t[0]+'" aria-selected="'+(shopTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div><div class="items">';
- if(shopTab==='food')FOODS.forEach(function(f){h+='<div class="item"><div class="pic" style="font-size:54px">'+f.e+'</div><div class="nm">'+esc(LL(f))+'</div><div class="sub">⚡+'+f.en2+(f.hp?' 💗+'+f.hp:'')+' · '+L('Have ','持有 ')+(S.food[f.id]||0)+'</div><button class="btn small" data-buyfood="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>🪙 '+f.price+'</button></div>';});
- else if(shopTab==='pets')PETS.forEach(function(P){var has=!!S.pets[P.id];h+='<div class="item">'+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">'+esc(L(P.desc[0],P.desc[1]))+'</div>'+
-  (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')</div><button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>')+'</div>';});
- else ITEMS.filter(function(it){return it.cat===shopTab&&it.id!=='w0';}).sort(function(a,b){return (a.sec?1:0)-(b.sec?1:0);}).forEach(function(it){var has=isOwned(it);h+='<div class="item'+(it.sec?' special':'')+(it.sec&&!has?' locked':'')+'">'+(has?'<span class="own">✓</span>':'')+(it.sec?'<span class="spec">✿ '+it.sec+'</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+esc(LL(it))+'</div><div class="sub">'+slotName(it.slot)+'</div>'+
-  (has?equipBtn(it):it.sec?'<div class="sub">🔒 '+L('Score 3/5+ in the ','在 ')+it.sec+L(' quiz',' 測驗取得 3/5 或以上')+'</div>':'<button class="btn small" data-buy="'+it.id+'"'+(S.coins<it.price?' disabled':'')+'>🪙 '+it.price+'</button>')+'</div>';});
- if(shopTab==='wear'||shopTab==='room')h='<p class="muted" style="margin:10px 0 0">✿ '+L('Special items unlock free when you complete each sub-topic quiz.','完成每個小節的測驗，即可免費解鎖特別物品。')+' ('+specialsOwned()+'/'+specialsTotal()+')</p>'+h;
- return h+'</div>';}
 function slotName(s){return {hat:L('Hat','帽子'),glasses:L('Glasses','眼鏡'),acc:L('Accessory','配飾'),hand:L('Handheld','手持物'),wall:L('Wallpaper','牆紙'),prop:L('Desk prop','桌面擺設'),sticker:L('Sticker','貼紙')}[s];}
 function itemPic(it){if(it.slot==='wall')return '<div style="width:100%;height:100%;background:'+WALLS[it.id]+'"></div>';
  if(it.cat==='room')return it.svg();
@@ -1944,14 +2088,6 @@ function equipBtn(it){var on;if(it.cat==='wear')on=curPet().eq[it.slot]===it.id;
 function equip(id){var it=item(id);if(!isOwned(it))return;if(it.cat==='wear'){var p=curPet();p.eq[it.slot]=p.eq[it.slot]===id?null:id;}else if(it.slot==='wall')S.room.wall=id;else if(it.slot==='prop')S.room.prop=S.room.prop===id?null:id;sfx('boing');save();}
 
 /* COLLECTION */
-function colHTML(){var tabs=[['pets','🐾 '+L('Pets','寵物')],['trophies','🏆 '+L('Trophies','獎盃')],['closet','👗 '+L('Closet','衣櫥')],['decor','🖼️ '+L('Decor','裝飾')]];
- var got=Object.keys(S.trophies).length;
- var h='<h1 class="h-sec">🏆 '+L('Collection','收藏館')+'</h1><div class="card row" style="justify-content:space-around;text-align:center"><div><b style="font-size:22px">'+petsCount()+'/'+PETS.length+'</b><div class="muted" style="font-size:12px">'+L('Pets','寵物')+'</div></div><div><b style="font-size:22px">'+got+'/'+TROPHIES.length+'</b><div class="muted" style="font-size:12px">'+L('Trophies','獎盃')+'</div></div><div><b style="font-size:22px">'+(ownedCount('wear')+ownedCount('room'))+'/'+ITEMS.filter(function(i){return i.id!=='w0';}).length+'</b><div class="muted" style="font-size:12px">'+L('Items','物品')+'</div></div><div><b style="font-size:22px">'+threeStars()+'/'+ALLSECS.length+'</b><div class="muted" style="font-size:12px">3★</div></div></div>'+
- '<div class="tabs" role="tablist" style="margin-top:14px">'+tabs.map(function(t){return '<button role="tab" data-col="'+t[0]+'" aria-selected="'+(colTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div><div class="items">';
- if(colTab==='pets')PETS.forEach(function(P){var p=S.pets[P.id];h+='<div class="item'+(p?'':' locked')+'"><div class="pic">'+petSVG(P.id,p?'joy':'sleepy',p?{}:{stage:1,eq:{}})+'</div><div class="nm">'+(p?esc(LL(P)):'???')+'</div><div class="sub">'+(p?'Lv '+petLevel(p.xp)+' · '+L(STAGE[p.stage][0],STAGE[p.stage][1]):'🔒')+'</div></div>';});
- else if(colTab==='trophies')TROPHIES.forEach(function(t){var v=t.f(),has=!!S.trophies[t.id],pc=Math.min(100,v[0]/v[1]*100);h+='<div class="item trophy'+(has?'':' locked')+'"><div class="pic">'+cupSVG(t)+'</div><div class="nm">'+esc(LL(t))+'</div><div class="sub">'+esc(L(t.den,t.dzh))+'</div><div class="prog" style="width:100%"><i style="width:'+pc+'%;background:'+(has?'var(--gold)':'var(--good)')+'"></i></div><div class="sub">'+(has?'✓ '+S.trophies[t.id]:Math.min(v[0],v[1])+'/'+v[1])+'</div></div>';});
- else ITEMS.filter(function(i){return (colTab==='closet'?i.cat==='wear':i.cat==='room')&&i.id!=='w0';}).forEach(function(it){var has=isOwned(it);h+='<div class="item'+(it.sec?' special':'')+(has?'':' locked')+'">'+(it.sec?'<span class="spec">✿ '+it.sec+'</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+(has?esc(LL(it)):'???')+'</div><div class="sub">'+slotName(it.slot)+'</div></div>';});
- return h+'</div>';}
 function cupSVG(t){var col=t.tier===3?'#FBD46D':t.tier===2?'#D9DEE6':'#E8B98C';
  return '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M30 18 L70 18 L66 50 Q50 64 34 50Z" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><path d="M30 24 Q14 24 18 38 Q22 46 32 44 M70 24 Q86 24 82 38 Q78 46 68 44" fill="none" stroke="'+O+'" stroke-width="3"/><rect x="44" y="58" width="12" height="12" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><rect x="32" y="70" width="36" height="12" rx="4" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><text x="50" y="44" text-anchor="middle" font-size="18">'+t.e+'</text></svg>';}
 
@@ -1995,13 +2131,13 @@ function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(f
 
 /* SAVE CODE (Crockford base32, scrambled, checksummed) */
 var B32='0123456789ABCDEFGHJKMNPQRSTVWXYZ',EPOCH=dayNum('2025-01-01');
-function wearIds(){return ITEMS.filter(function(i){return i.price>0;}).map(function(i){return i.id;});}
+function wearIds(){return ITEMS.filter(function(i){return i.id!=='w0'&&!i.sec;}).map(function(i){return i.id;});}
 function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.round(v),Math.pow(2,n)-1));for(var i=n-1;i>=0;i--)bits.push((v>>i)&1);}
- w(3,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),4);
+ w(4,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),4);
  PETS.forEach(function(P){var p=S.pets[P.id];w(p?1:0,1);w(p?p.stage:0,2);w(p?p.xp/5:0,12);});
  var ids=wearIds();ids.forEach(function(id){w(S.owned[id]?1:0,1);});
  var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,7);});
- w(['w0','w1','w2','w3','w4','w5'].indexOf(S.room.wall),3);w(S.room.prop?eqItems.indexOf(S.room.prop)+1:0,7);
+ w(eqItems.indexOf(S.room.wall||'w0'),7);w(S.room.prop?eqItems.indexOf(S.room.prop)+1:0,7);
  w(S.streak,9);w(S.best,9);w(S.shields,2);w(S.lastDay?dayNum(S.lastDay)-EPOCH:0,13);w(S.days,10);w(S.quizzes,11);w(S.perfect,9);w(S.cleared,10);w(S.studies,10);w(S.matchWins,8);
  ALLSECS.forEach(function(s){w((S.secs[s.id]||{}).stars||0,2);});
  TROPHIES.forEach(function(t){w(S.trophies[t.id]?1:0,1);});
@@ -2011,18 +2147,18 @@ function scramble(bits){var x=0x5EED1;for(var i=0;i<bits.length;i++){x=(x*110351
 function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1');var bits=[];
  for(var i=0;i<code.length;i++){var v=B32.indexOf(code[i]);if(v<0)return null;for(var k=4;k>=0;k--)bits.push((v>>k)&1);}
  scramble(bits);var pos=0;function r(n){var v=0;for(var i=0;i<n;i++){if(pos>=bits.length)throw 0;v=v*2+bits[pos++];}return v;}
- try{var o={};var ver=r(4);if(ver<1||ver>3)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:4);o.pets={};PETS.slice(0,v1?6:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
-  o.owned={};wearIds().forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
-  o.wall=['w0','w1','w2','w3','w4','w5'][r(3)]||'w0';var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
+ try{var o={};var ver=r(4);if(ver<1||ver>4)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:4);o.pets={};PETS.slice(0,v1?6:ver<4?12:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
+  o.owned={};wearIds().slice(0,ver<4?40:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
+  o.wall=ver<4?(['w0','w1','w2','w3','w4','w5'][r(3)]||'w0'):(eqItems[r(7)]||'w0');var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
   o.streak=r(9);o.best=r(9);o.shields=r(2);var ld=r(13);o.lastDay=ld?fromDayNum(ld+EPOCH):null;o.days=r(10);o.quizzes=r(11);o.perfect=r(9);o.cleared=r(10);o.studies=r(10);o.matchWins=r(8);
-  o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
+  o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:ver===3?22:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
   var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
   if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
 function applyCode(o){if(!AUTH.mode)AUTH.mode='guest';var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
  S.coins=o.coins;S.pets={};PETS.forEach(function(P,i){if(o.pets[P.id]){var p=newPet();p.stage=o.pets[P.id].st;p.xp=o.pets[P.id].xp;S.pets[P.id]=p;}});
  S.active=PETS[o.active]&&S.pets[PETS[o.active].id]?PETS[o.active].id:Object.keys(S.pets)[0];S.pets[S.active].eq=o.eq;
  S.owned=o.owned;S.owned.w0=1;if(!S.pets[S.active])S.active=Object.keys(S.pets)[0];S.room={wall:o.wall,prop:o.prop};['streak','best','shields','lastDay','days','quizzes','perfect','cleared','studies','matchWins'].forEach(function(k){S[k]=o[k];});
- ALLSECS.forEach(function(s){if(o.stars[s.id])S.secs[s.id]={stars:o.stars[s.id],best:o.stars[s.id]+2,plays:1};});
+ ALLSECS.forEach(function(s){if(o.stars[s.id]){S.secs[s.id]={stars:o.stars[s.id],best:o.stars[s.id]+2,plays:1};S.specGot[s.id]=1;}});
  for(var t in o.tro)S.trophies[t]=today();if(S.lastDay)S.hist=[S.lastDay];save();}
 function openSave(){var code=packState();var grouped=code.match(/.{1,5}/g).join('-');var link=location.href.split('#')[0]+'#'+code;
  modal('<div class="sheet-h"><h2>💾 '+L('Save & transfer','儲存及轉移')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
@@ -2091,7 +2227,7 @@ function dNorm(s){return String(s).toLowerCase().replace(/\(.*?\)/g,' ').replace
 function lev(a,b){var m=a.length,n=b.length,d=[];for(var i=0;i<=m;i++){d[i]=[i];}for(var j=0;j<=n;j++)d[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n];}
 function dCheck(ans,t){var a=dNorm(ans),g=dNorm(t.en);if(a===g)return {ok:true};var alt=(ALT[dKey(t)]||[]).map(dNorm);if(alt.indexOf(a)>=0)return {ok:true,note:true};return {ok:false,close:lev(a,g)<=2};}
 function dPattern(en){return '<div class="dpat" aria-hidden="true">'+dShown(en).split(' ').map(function(w){return '<span class="dw">'+w.split('').map(function(ch){return ch==='-'?'<i class="dh">-</i>':'<i></i>';}).join('')+'</span>';}).join('')+'</div>';}
-function dPic(t){var p=DPIC[dKey(t)];if(!p)return '';var name=p[0],f;if(name.indexOf('F:')===0){f=FIGS[name.slice(2)];}else f=ICO[name]||FIGS[name];if(!f)return '';
+function dPic(t){var p=DPIC[dKey(t)];if(!p)return '';var name=p[0],f;if(name.indexOf('ph:')===0){f=FIGS['ph_'+name.slice(3)];}else if(name.indexOf('F:')===0){f=FIGS[name.slice(2)];}else f=ICO[name]||FIGS[name];if(!f)return '';
  var ask=p[1]?L('What is the part labelled '+p[1]+'?','標示 '+p[1]+' 的是甚麼？'):L('What is this?','這是甚麼？');return '<div class="fig">'+f()+'</div><p class="dask">🖼️ '+ask+'</p>';}
 function openDictSetup(unit){var keep=!!document.querySelector('#ov .dmodes');if(unit)dictCfg.unit=+unit,dictCfg.sec='all';var missN=Object.keys(S.dict.miss).filter(function(k){return S.dict.miss[k]>0;}).length;
  var c=dictCfg.unit==='missed'?null:CHAPTERS.filter(function(x){return x.id==dictCfg.unit;})[0];var n=dTerms(dictCfg.unit,dictCfg.sec).length;
@@ -2103,12 +2239,13 @@ function openDictSetup(unit){var keep=!!document.querySelector('#ov .dmodes');if
  '<button class="btn small '+(dictCfg.unit==='missed'?'pink':'white')+'" data-du="missed"'+(missN?'':' disabled')+'>📝 '+L('My missed words','我的錯字')+' ('+missN+')</button></div>'+
  (c?'<div class="row" style="margin-top:8px"><button class="btn small '+(dictCfg.sec==='all'?'green':'white')+'" data-ds="all">'+L('Whole unit','整個單元')+'</button>'+c.sections.map(function(s){return '<button class="btn small '+(dictCfg.sec===s.id?'green':'white')+'" data-ds="'+s.id+'" title="'+esc(LL(s))+'">'+s.id+'</button>';}).join('')+'</div><p class="muted" style="font-size:13px;margin:6px 0 0">'+esc(LL(c))+(dictCfg.sec!=='all'?' · '+esc(LL(secById(dictCfg.sec))):'')+'</p>':'')+
  '<div class="row" style="margin-top:16px"><button class="btn green" id="dGo"'+(n?'':' disabled')+'>▶ '+L('Start','開始')+' · '+Math.min(10,n)+L(' words',' 個詞彙')+'</button><span class="muted" style="font-size:13px">'+n+L(' words in this range',' 個詞彙在此範圍')+'</span></div>'+
- '<p class="muted" style="font-size:13px">'+L('2 tries per word. First try without a hint = 2 🪙, otherwise 1 🪙. Words you miss are saved to "My missed words".','每個詞彙有 2 次機會。第一次答對且無提示＝2 🪙，否則 1 🪙。答錯的詞彙會存入「我的錯字」。')+'</p>';
+ dWordList()+'<p class="muted" style="font-size:13px">'+L('2 tries per word. First try without a hint = 2 🪙, otherwise 1 🪙. Words you miss are saved to "My missed words".','每個詞彙有 2 次機會。第一次答對且無提示＝2 🪙，否則 1 🪙。答錯的詞彙會存入「我的錯字」。')+'</p>';
  if(keep){$('#ov .sheet').innerHTML=h;}else modal(h);$('#xClose').onclick=closeModal;
  document.querySelectorAll('[data-dk]').forEach(function(b){b.onclick=function(){dictCfg.kind=b.dataset.dk;sfx('tap');openDictSetup();};});
  document.querySelectorAll('[data-du]').forEach(function(b){b.onclick=function(){dictCfg.unit=b.dataset.du==='missed'?'missed':+b.dataset.du;dictCfg.sec='all';sfx('tap');openDictSetup();};});
  document.querySelectorAll('[data-ds]').forEach(function(b){b.onclick=function(){dictCfg.sec=b.dataset.ds;sfx('tap');openDictSetup();};});
  $('#dGo').onclick=startDict;}
+function dWordList(){var ts=dTerms(dictCfg.unit,dictCfg.sec);if(!ts.length)return '';return '<details class="dlist" open><summary>📋 '+L('Words in this dictation','本次默書詞彙')+' ('+ts.length+')</summary><div class="dl">'+ts.map(function(t){var m=dictCfg.unit==='missed'?S.dict.miss[dKey(t)]:0;return '<div class="dli"><button class="say" data-say="'+esc(t.en)+'" aria-label="Play">🔊</button><div style="min-width:0"><b>'+esc(dShown(t.en))+'</b> <span class="ipa">'+ipaOf(t.en)+'</span><div class="zh">'+esc(t.zh)+' · '+t.sec+(m?' · ✗'+m:'')+'</div></div></div>';}).join('')+'</div></details>';}
 function startDict(){var list=shuffle(dTerms(dictCfg.unit,dictCfg.sec)).slice(0,10);if(!list.length)return;
  DQ={kind:dictCfg.kind,list:list,i:0,tries:0,hint:false,res:[],pts:0,t0:Date.now(),scope:dictCfg.unit==='missed'?'missed':(dictCfg.sec==='all'?'U'+dictCfg.unit:dictCfg.sec),unit:dictCfg.unit==='missed'?'':String(dictCfg.unit),done:false};showD();}
 function dictRec(status){if(!DQ||!DQ.res.length)return;var cor=DQ.res.filter(function(r){return r.ok;}).length;
@@ -2140,7 +2277,7 @@ function dSubmit(){if(DQ.done)return;var t=DQ.list[DQ.i],inp=$('#dIn'),v=inp.val
 function dNextBtn(){return '<button class="btn" id="dNext" style="margin-top:10px">'+(DQ.i<DQ.list.length-1?L('Next →','下一個 →'):L('Finish','完成'))+'</button>';}
 function dNext(){if(DQ.i<DQ.list.length-1){DQ.i++;showD();}else dFinish();}
 function dFinish(){var n=DQ.res.filter(function(r){return r.ok;}).length,tot=DQ.res.length,perfect=DQ.res.every(function(r){return r.first;});DQ.fin=true;
- dictRec('done');markActive();var p=curPet();p.happy=clamp(p.happy+(n>=tot/2?5:1),5,100);p.energy=clamp(p.energy-5,5,100);var g=gain(DQ.pts+(perfect?10:0),DQ.pts*2);
+ dictRec('done');if(perfect)S.dict.perf=(S.dict.perf||0)+1;markActive();var p=curPet();p.happy=clamp(p.happy+(n>=tot/2?5:1),5,100);p.energy=clamp(p.energy-5,5,100);var g=gain(DQ.pts+(perfect?10:0),DQ.pts*2);
  var missed=DQ.res.filter(function(r){return !r.ok;});
  var h='<div class="empty"><div style="width:130px;margin:0 auto">'+petSVG(S.active,n===tot?'joy':n>=tot/2?'happy':'sad')+'</div><h2>'+n+' / '+tot+'</h2><p>+'+g.c+' 🪙 · +'+g.x+' XP'+(perfect?' · 🌟 '+L('Perfect!','全對！'):'')+'</p></div>'+
  '<div class="vlist">'+DQ.res.map(function(r){return '<div class="vterm"><button class="say" data-say="'+esc(r.t.en)+'" aria-label="Play">🔊</button><span class="dres '+(r.ok?'ok':'no')+'">'+(r.ok?'✓':'✗')+'</span><div class="vt"><b>'+esc(dShown(r.t.en))+'</b> <span class="ipa">'+ipaOf(r.t.en)+'</span><div class="zh">'+esc(r.t.zh)+'</div></div></div>';}).join('')+'</div>'+
@@ -2183,7 +2320,7 @@ function onCredential(resp){var tok=resp.credential,pl=jwtPayload(tok),em=String
   AUTH.mode='google';AUTH.user=j.user;AUTH.stale=false;AUTH.lastSync=Date.now();
   var lang=S.lang,local=load(storeKey()),remote=null;try{remote=j.progress?JSON.parse(j.progress):null;}catch(e){}
   var chosen=(remote&&(!local||(remote.upd||0)>(local.upd||0)))?remote:local;
-  if(chosen){var d=defaultState();for(var k in d)if(!(k in chosen))chosen[k]=d[k];S=chosen;}else{S=defaultState();bubble=L('Hi! I\'m Mochi. Let\'s study together!','你好！我係麻糬，一齊溫書啦！');}
+  if(chosen){S=upgradeState(chosen);}else{S=defaultState();bubble=L('Hi! I\'m Mochi. Let\'s study together!','你好！我係麻糬，一齊溫書啦！');}
   S.lang=lang;S.started=true;curScreen=AUTH.user.teacher?'teacher':'home';ac();save();render();if(!AUTH.user.teacher)openingPopup();flushQueue();
   toast('👋 '+L('Hi ','你好，')+dispName()+(AUTH.user.cls?' ('+AUTH.user.cls+(AUTH.user.no?'-'+AUTH.user.no:'')+')':''));
  },function(){AUTH.token=null;loginMsg(errText('network'),true);});}
