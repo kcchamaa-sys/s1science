@@ -477,6 +477,15 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 .tipbar span{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:4px 10px;font-size:13px;font-weight:700}
 .item.food .nchip{margin:0}
 .item.food{align-self:start}
+
+.dech{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;font-size:16px;margin:18px 0 0}
+.dech span{font-size:13px;font-weight:700;color:var(--muted);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:2px 9px}
+.room .prop.d-lab{left:3%;bottom:13%;width:24%}
+.room .prop.d-nature{left:auto;right:7%;bottom:auto;top:44%;width:17%}
+.room .prop.d-cosy{left:4%;bottom:auto;top:30%;width:17%}
+.room .prop.d-nature::after,.room .prop.d-cosy::after{content:"";position:absolute;left:-8%;right:-8%;bottom:-3%;height:7%;min-height:4px;border-radius:3px;background:#C69C74;box-shadow:0 2px 0 #A8805C}
+.room .stk.d-sci{left:6%;top:6%}
+.room .stk.d-fun{left:34%;top:5%}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -2475,6 +2484,15 @@ function specialsOwned(){return ITEMS.filter(function(i){return i.sec&&isOwned(i
 function specialsTotal(){return ITEMS.filter(function(i){return i.sec;}).length;}
 function item(id){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id)return ITEMS[i];return null;}
 var SLOTS=['hat','glasses','acc','hand'];
+/* room decor: one item from each category can be used at the same time */
+var DECATS=[['wall','🖼️','Wallpaper','牆紙'],['lab','🔬','Science corner','科學角'],['nature','🌿','Nature corner','自然角'],['cosy','🛋️','Cosy corner','溫馨角'],['sci','🧬','Science stickers','科學貼紙'],['fun','⭐','Fun stickers','趣味貼紙']];
+var DECAT_OF={p_microscope:'lab',p_beakers:'lab',p_globe:'lab',p_crystal:'lab',p_crystalscope:'lab',p_cactus:'nature',p_aquarium:'nature',p_duck:'nature',p_lamp:'cosy',p_books:'cosy',p_frame:'cosy',p_lemontea:'cosy',p_dingding:'cosy',
+ s_dna:'sci',s_cell:'sci',s_atom:'sci',s_flask:'sci',s_funnel:'sci',s_fire:'sci',s_tap:'sci',s_drop:'sci',s_fly:'fun',s_leaf:'fun',s_star:'fun',s_rainbow:'fun',s_hearts:'fun',s_genz:'fun',s_halloffame:'fun'};
+function decCat(it){return it.slot==='wall'?'wall':DECAT_OF[it.id]||(it.slot==='sticker'?'fun':'cosy');}
+function decName(c){for(var i=0;i<DECATS.length;i++)if(DECATS[i][0]===c)return DECATS[i][1]+' '+L(DECATS[i][2],DECATS[i][3]);return '';}
+/* old saves had one desk prop and every sticker on the wall: keep the prop, put up the newest sticker of each kind */
+function migrateRoom(r,owned,sg){if(r.dec)return r;owned=owned||{};sg=sg||{};r.dec={};var pi=r.prop&&item(r.prop);if(pi)r.dec[decCat(pi)]=pi.id;
+ ITEMS.forEach(function(it){if(it.slot==='sticker'&&(owned[it.id]||(it.sec&&sg[it.sec])))r.dec[decCat(it)]=it.id;});delete r.prop;return r;}
 var FOODS=[
  {id:'onigiri',e:'🍙',en:'Rice ball',zh:'飯糰',price:5,en2:20,hp:0},
  {id:'apple',e:'🍎',en:'Apple slices',zh:'蘋果片',price:4,en2:12,hp:4},
@@ -2566,24 +2584,28 @@ function shopHTML(){var tabs=[['food','🍙 '+L('Snacks','小食')],['wear','�
  if(shopTab==='wear'||shopTab==='room'||shopTab==='quests')h+='<p class="muted" style="margin:10px 0 0;font-size:14px">'+TIERS.map(function(t){return tierBadge({tier:t});}).join(' ')+'<br>'+L('✦ Rare sub-topic items: 3★ in that quiz · 💎 Epic unit rewards: 3★ in a whole unit · 👑 Legendary: very hard milestones · 🌈 Mythic: long streaks and the toughest challenges.','✦ 稀有小節物品：該測驗 3★ · 💎 史詩單元獎勵：整個單元 3★ · 👑 傳說：非常困難的里程碑 · 🌈 神話：超長連續溫習及最艱難挑戰。')+'</p>'+(shopTab==='quests'?'<div class="row" style="margin-top:8px;gap:8px"><button class="btn small" data-fx="legendary">👑 '+L('Preview legendary unlock','預覽傳說級解鎖')+'</button><button class="btn small lav" data-fx="mythic">🌈 '+L('Preview mythic unlock','預覽神話級解鎖')+'</button></div>':'');
  if(shopTab==='clinic')return h+clinicHTML()+'<div class="items">'+medCards()+'</div>';
  if(shopTab==='food')h+='<div class="tipbar"><span>❤️ '+L('Favourite food = double happiness','最愛食物＝快樂加倍')+'</span><span>🧠 🪙 '+L('Boost foods multiply rewards','加成食物令獎勵倍增')+'</span><span>🍬 '+L('3 sugary snacks a day = sugar crash','一天 3 款高糖＝血糖急降')+'</span><span>🟢 🟡 🔴 '+L('Tap 🔍 for nutrition','按 🔍 看營養分析')+'</span></div>';
+ if(shopTab==='room')h+='<div class="tipbar"><span>✨ '+L('Use 1 item from each group at the same time','每組可同時擺放 1 件')+'</span><span>👆 '+L('Tap again to take it away','再按一次即可收起')+'</span></div>';
  h+='<div class="items">';
  if(shopTab==='food')FOODS.slice().sort(function(x,y){return x.price-y.price;}).forEach(function(f){h+='<div class="item food'+(PET_FAV[S.active]===f.id?' favf':'')+'">'+(S.food[f.id]?'<span class="own">×'+S.food[f.id]+'</span>':'')+'<div class="pic">'+foodIcon(f)+'</div><div class="nm">'+esc(LL(f))+'</div>'+foodFx(f,S.active)+'<button class="btn small" data-buyfood="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>🪙 '+f.price+'</button>'+nutriHTML(f)+'</div>';});
  else if(shopTab==='pets')PETS.slice().sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier);}).forEach(function(P){var has=!!S.pets[P.id];h+='<div class="item t-'+(P.tier||'common')+'">'+tierBadge(P)+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">'+esc(L(P.desc[0],P.desc[1]))+'</div>'+
   (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):!P.cond?'<div class="sub">💰 '+L('Coins only – save up!','只可用金幣購買——努力儲錢！')+'</div><div class="prog" style="width:100%"><i style="width:'+Math.min(100,Math.round(S.coins/P.price*100))+'%;background:linear-gradient(90deg,#FF9AA2,#FFD58A,#9EE0C0,#9DB8F0,#D9A8F0)"></i></div><div class="sub">🪙 '+Math.min(S.coins,P.price)+' / '+P.price+'</div><button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>🪙 '+P.price+'</button>':'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')</div>'+(P.price?'<button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>':'<div class="sub">👑 '+L('Quest only','只限任務')+'</div>'))+'</div>';});
  else{var list=shopTab==='quests'?ITEMS.filter(function(i){return i.quest;}):ITEMS.filter(function(it){return it.cat===shopTab&&it.id!=='w0';});
-  list.sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier)||(a.sec?1:0)-(b.sec?1:0)||a.price-b.price;}).forEach(function(it){var has=isOwned(it),free=it.sec||it.quest;
-   h+='<div class="item t-'+it.tier+(free&&!has?' locked':'')+'">'+tierBadge(it)+(has?'<span class="own">✓</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+esc(LL(it))+'</div><div class="sub">'+slotName(it.slot)+'</div>'+
-   (has?equipBtn(it):free?lockLine(it):'<button class="btn small" data-buy="'+it.id+'"'+(S.coins<it.price?' disabled':'')+'>🪙 '+it.price+'</button>')+'</div>';});}
+  var grp={};list.sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier)||(a.sec?1:0)-(b.sec?1:0)||a.price-b.price;}).forEach(function(it){var has=isOwned(it),free=it.sec||it.quest;
+   var c='<div class="item t-'+it.tier+(free&&!has?' locked':'')+'">'+tierBadge(it)+(has?'<span class="own">✓</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+esc(LL(it))+'</div><div class="sub">'+(it.cat==='room'?decName(decCat(it)):slotName(it.slot))+'</div>'+
+   (has?equipBtn(it):free?lockLine(it):'<button class="btn small" data-buy="'+it.id+'"'+(S.coins<it.price?' disabled':'')+'>🪙 '+it.price+'</button>')+'</div>';
+   if(shopTab==='room')(grp[decCat(it)]=grp[decCat(it)]||[]).push(c);else h+=c;});
+  if(shopTab==='room')h+='</div>'+decGroups(grp)+'<div>';}
  return h+'</div>';}
 function colHTML(){var tabs=[['pets','🧸 '+L('Science Pals','科學小夥伴')],['buds','🐱 '+L(palName()+'\'s pets',palName()+'的寵物')],['trophies','🏆 '+L('Trophies','獎盃')],['closet','👗 '+L('Closet','衣櫥')],['decor','🖼️ '+L('Decor','裝飾')]];
  var got=Object.keys(S.trophies).length,tc=tierCounts(function(){return true;});
- var h='<h1 class="h-sec">🏆 '+L('Collection','收藏館')+'</h1><div class="card row" style="justify-content:space-around;text-align:center"><div><b style="font-size:22px">'+petsCount()+'/'+PETS.length+'</b><div class="muted" style="font-size:12px">'+L('Science Pals','科學小夥伴')+'</div></div><div><b style="font-size:22px">'+budOwned()+'/'+BUDS.length+'</b><div class="muted" style="font-size:12px">🐱🐶🦋</div></div><div><b style="font-size:22px">'+got+'/'+TROPHIES.length+'</b><div class="muted" style="font-size:12px">'+L('Trophies','獎盃')+'</div></div><div><b style="font-size:22px">'+(ownedCount('wear')+ownedCount('room'))+'/'+ITEMS.filter(function(i){return i.id!=='w0';}).length+'</b><div class="muted" style="font-size:12px">'+L('Items','物品')+'</div></div><div><b style="font-size:22px">'+threeStars()+'/'+ALLSECS.length+'</b><div class="muted" style="font-size:12px">3★</div></div></div>'+
+ var h='<h1 class="h-sec">🏆 '+L('Collection','收藏館')+'</h1><div class="card row" style="justify-content:space-around;text-align:center"><div><b style="font-size:22px">'+petsCount()+'/'+PETS.length+'</b><div class="muted" style="font-size:12px">'+L('Science Pals','科學小夥伴')+'</div></div><div><b style="font-size:22px">'+budOwned()+'/'+BUDS.length+'</b><div class="muted" style="font-size:12px">'+L('Pets','寵物')+'</div></div><div><b style="font-size:22px">'+got+'/'+TROPHIES.length+'</b><div class="muted" style="font-size:12px">'+L('Trophies','獎盃')+'</div></div><div><b style="font-size:22px">'+(ownedCount('wear')+ownedCount('room'))+'/'+ITEMS.filter(function(i){return i.id!=='w0';}).length+'</b><div class="muted" style="font-size:12px">'+L('Items','物品')+'</div></div><div><b style="font-size:22px">'+threeStars()+'/'+ALLSECS.length+'</b><div class="muted" style="font-size:12px">'+L('3-star topics','三星小節')+'</div></div></div>'+
  '<div class="tierbar">'+TIERS.map(function(t){return '<div class="tb t-'+t+'"><span>'+tierName(t)+'</span><b>'+tc[t][0]+' / '+tc[t][1]+'</b></div>';}).join('')+'</div>'+
  '<div class="tabs" role="tablist" style="margin-top:14px">'+tabs.map(function(t){return '<button role="tab" data-col="'+t[0]+'" aria-selected="'+(colTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div><div class="items">';
  if(colTab==='pets')PETS.slice().sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier);}).forEach(function(P){var p=S.pets[P.id];h+='<div class="item t-'+(P.tier||'common')+(p?'':' locked')+'">'+tierBadge(P)+'<div class="pic">'+petSVG(P.id,p?'joy':'sleepy',p?{}:{stage:1,eq:{}})+'</div><div class="nm">'+(p?esc(LL(P)):'???')+'</div><div class="sub">'+(p?'Lv '+petLevel(p.xp)+' · '+L(STAGE[p.stage][0],STAGE[p.stage][1]):'🔒')+'</div></div>';});
  else if(colTab==='buds')BUDS.forEach(function(B){h+=budCard(B,false);});
  else if(colTab==='trophies')TROPHIES.forEach(function(t){var v=t.f(),has=!!S.trophies[t.id],pc=Math.min(100,v[0]/v[1]*100);h+='<div class="item trophy'+(has?'':' locked')+'"><div class="pic">'+cupSVG(t)+'</div><div class="nm">'+esc(LL(t))+'</div><div class="sub">'+esc(L(t.den,t.dzh))+'</div><div class="prog" style="width:100%"><i style="width:'+pc+'%;background:'+(has?'var(--gold)':'var(--good)')+'"></i></div><div class="sub">'+(has?'✓ '+S.trophies[t.id]:Math.min(v[0],v[1])+'/'+v[1])+'</div></div>';});
- else ITEMS.filter(function(i){return (colTab==='closet'?i.cat==='wear':i.cat==='room')&&i.id!=='w0';}).sort(function(a,b){return tierRank(b.tier)-tierRank(a.tier);}).forEach(function(it){var has=isOwned(it);h+='<div class="item t-'+it.tier+(has?'':' locked')+'">'+tierBadge(it)+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+(has?esc(LL(it)):'???')+'</div><div class="sub">'+slotName(it.slot)+'</div>'+(has?'':lockLine(it))+'</div>';});
+ else{var grp={};ITEMS.filter(function(i){return (colTab==='closet'?i.cat==='wear':i.cat==='room')&&i.id!=='w0';}).sort(function(a,b){return tierRank(b.tier)-tierRank(a.tier);}).forEach(function(it){var has=isOwned(it);var c='<div class="item t-'+it.tier+(has?'':' locked')+'">'+tierBadge(it)+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+(has?esc(LL(it)):'???')+'</div><div class="sub">'+(it.cat==='room'?decName(decCat(it)):slotName(it.slot))+'</div>'+(has?(it.cat==='room'?equipBtn(it):''):lockLine(it))+'</div>';
+  if(colTab==='decor')(grp[decCat(it)]=grp[decCat(it)]||[]).push(c);else h+=c;});if(colTab==='decor')h+='</div>'+decGroups(grp)+'<div>';}
  return h+'</div>';}
 
 /* ---------- trophies ---------- */
@@ -2633,10 +2655,10 @@ var TROPHIES=[
 var S=null;
 function newPet(){return {xp:0,stage:1,energy:80,happy:80,eq:{hat:null,glasses:null,acc:null,hand:null}};}
 function defaultState(){return {v:1,lang:'zh',coins:40,xpTotal:0,pets:{mochi:newPet()},active:'mochi',owned:{w0:1},
- room:{wall:'w0',prop:null},food:{onigiri:2,apple:1},streak:0,best:0,lastDay:null,shields:0,days:0,hist:[],
+ room:{wall:'w0',dec:{}},food:{onigiri:2,apple:1},streak:0,best:0,lastDay:null,shields:0,days:0,hist:[],
  secs:{},q:{},seen:{},mistakes:{},cleared:0,quizzes:0,perfect:0,studies:0,studyDay:{},matchWins:0,matchDay:{d:'',n:0},
  trophies:{},gift:'',vocabDay:{},dict:{n:0,miss:{},perf:0,days:0,dday:''},tc:0,bud:{own:{},act:null},ill:{lv:0,d:'',miss:0},say:{n:0,miss:{},rounds:0,perf:0},cures:0,illCure:null,buffs:{},sugar:null,dtask:null,qday:null,specGot:{},mig4:1,lastTick:Date.now(),sfx:true,music:false,started:false};}
-function upgradeState(o){if(!o.mig4){o.specGot={};for(var q in (o.secs||{}))if((o.secs[q].stars||0)>0)o.specGot[q]=1;o.mig4=1;}var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];if(o.dict&&o.dict.perf==null)o.dict.perf=0;if(o.dict&&o.dict.days==null){o.dict.days=0;o.dict.dday='';}return o;}
+function upgradeState(o){if(o.room)migrateRoom(o.room,o.owned,o.specGot);if(!o.mig4){o.specGot={};for(var q in (o.secs||{}))if((o.secs[q].stars||0)>0)o.specGot[q]=1;o.mig4=1;}var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];if(o.dict&&o.dict.perf==null)o.dict.perf=0;if(o.dict&&o.dict.days==null){o.dict.days=0;o.dict.dday='';}return o;}
 function load(k){try{var r=localStorage.getItem(k||KEY);if(r){return upgradeState(JSON.parse(r));}}catch(e){}return null;}
 function save(){try{S.lastTick=Date.now();S.upd=Date.now();localStorage.setItem(storeKey(),JSON.stringify(S));}catch(e){}cloudSaveSoon();}
 window.addEventListener('pagehide',function(){if(S&&S.started)save();});
@@ -2791,7 +2813,7 @@ function specialPopup(it,preview){var eq=null;if(it.cat==='wear'){eq={hat:null,g
  var why=it.sec?L('You got 3★ in <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b>!','你在 <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b> 取得 3★！'):it.quest?L('Quest complete: <b>'+esc(it.quest.en)+'</b>','完成任務：<b>'+esc(it.quest.zh)+'</b>'):'';
  var h='<div class="pop-prize'+(t==='legendary'?' legend':t==='mythic'?' legend mythic':'')+'"><div class="rays"></div><div class="prize-pic">'+(eq?petSVG(S.active,'joy',{eq:eq}):itemPic(it))+'</div></div>'+tierBadge(it)+'<h2 style="margin-top:8px">'+(t==='legendary'?'<span class="emo">👑</span> '+L('LEGENDARY! ','傳說級！'):t==='mythic'?'<span class="emo">🌈</span> '+L('MYTHIC! ','神話級！'):'')+esc(LL(it))+'</h2><p>'+why+' '+L('This reward is yours forever.','這份獎勵永遠屬於你。')+'</p>';
  if(preview){h=h.replace(L('This reward is yours forever.','這份獎勵永遠屬於你。'),'')+'<p class="muted" style="font-size:13px">👀 '+L('Preview only – unlock it for real to keep it!','只是預覽——真正解鎖才可擁有！')+'</p>';popup(h,L('I\'ll get it! 💪','我一定會得到！💪'),null,tierFX(t));return;}
- confetti();if(t==='legendary')setTimeout(confetti,1100);if(t==='mythic'){setTimeout(confetti,1000);setTimeout(confetti,1800);}popup(h,it.slot==='sticker'?L('Stick it up!','貼上去！'):L('Use it now!','立即使用！'),function(){if(it.slot!=='sticker'){equip(it.id);}curScreen='home';render();},tierFX(t));}
+ confetti();if(t==='legendary')setTimeout(confetti,1100);if(t==='mythic'){setTimeout(confetti,1000);setTimeout(confetti,1800);}popup(h,it.slot==='sticker'?L('Stick it up!','貼上去！'):L('Use it now!','立即使用！'),function(){var dc=it.cat==='room'&&decCat(it);if(!(dc&&dc!=='wall'&&(S.room.dec||{})[dc]===it.id))equip(it.id);curScreen='home';render();},tierFX(t));}
 
 /* ---------- pet SVG ---------- */
 function moodOf(id){var p=S.pets[id];if(tempMood&&id===S.active)return tempMood;if(S.ill&&S.ill.lv)return 'sick';if(isNight())return 'sleepy';if(p.energy<25)return 'hungry';if(p.happy<25)return 'sad';if(p.energy<42)return 'sleepy';if(p.happy>=75&&p.energy>=60)return 'joy';return 'happy';}
@@ -2911,11 +2933,9 @@ function bindCommon(){
  document.querySelectorAll('[data-nav]').forEach(function(b){b.onclick=function(){curScreen=b.dataset.nav;sfx('tap');render();window.scrollTo(0,0);};});}
 
 /* HOME */
-function roomHTML(){if(bubblePet!==S.active){bubble=null;bubblePet=S.active;}var p=curPet(),m=moodOf(S.active);var sk=ITEMS.filter(function(i){return i.slot==='sticker'&&isOwned(i);});
- var pos=[[6,8],[36,6],[8,34],[62,32],[40,30],[20,20],[52,16],[70,50],[4,52],[26,44],[48,4],[86,54],[14,2],[60,50]];
- var sh='';sk.forEach(function(it,i){if(i<pos.length)sh+='<div class="stk" style="left:'+pos[i][0]+'%;top:'+pos[i][1]+'%">'+it.svg()+'</div>';});
- var prop=S.room.prop?item(S.room.prop):null;
- return '<div class="room"><div class="wall" style="background:'+WALLS[S.room.wall||'w0']+'"></div><div class="window">'+winSVG()+'</div>'+sh+'<div class="floor"></div>'+(prop?'<div class="prop">'+prop.svg()+'</div>':'')+
+function roomHTML(){if(bubblePet!==S.active){bubble=null;bubblePet=S.active;}var p=curPet(),m=moodOf(S.active);var dec=S.room.dec||{};function di(c){var it=dec[c]&&item(dec[c]);return it&&isOwned(it)?it:null;}
+ var sh='';['lab','nature','cosy','sci','fun'].forEach(function(c){var it=di(c);if(it)sh+='<div class="'+(it.slot==='sticker'?'stk':'prop')+' d-'+c+'">'+it.svg()+'</div>';});
+ return '<div class="room"><div class="wall" style="background:'+WALLS[S.room.wall||'w0']+'"></div><div class="window">'+winSVG()+'</div>'+'<div class="floor"></div>'+sh+
  '<div class="petwrap" id="petTap">'+petSVG(S.active,m)+'</div>'+(S.bud&&S.bud.act&&budDef(S.bud.act)?'<div class="budroom'+(budDef(S.bud.act).kind==='fly'?' flying':'')+'" id="budTap">'+buddySVG(S.bud.act,budMood())+'</div>':'')+(bubble?'<div class="bubble" aria-live="polite">'+esc(bubble)+'</div>':'')+'</div>';}
 function statRow(label,v,col,txt){return '<div class="stat"><span>'+label+'</span><div class="bar" role="progressbar" aria-valuenow="'+Math.round(v)+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+clamp(v,0,100)+'%;background:'+col+'"></i></div><span class="num">'+txt+'</span></div>';}
 function homeHTML(){var h=homeParts(),P=h.split('<!--S-->');
@@ -3059,13 +3079,15 @@ function startPractice(f){var ids=Object.keys(S.mistakes).filter(function(id){re
  startQuiz(null,'practice',shuffle(ids).slice(0,5));}
 
 /* SHOP */
+function decGroups(grp){var h='';DECATS.forEach(function(c){var g=grp[c[0]];if(!g||!g.length)return;var on=c[0]==='wall'?S.room.wall:(S.room.dec||{})[c[0]],it=on&&item(on);
+ h+='<h3 class="dech">'+decName(c[0])+'<span>'+(it&&isOwned(it)?L('Using: ','使用中：')+esc(LL(it)):L('Empty','未擺放'))+'</span></h3><div class="items">'+g.join('')+'</div>';});return h;}
 function slotName(s){return {hat:L('Hat','帽子'),glasses:L('Glasses','眼鏡'),acc:L('Accessory','配飾'),hand:L('Handheld','手持物'),wall:L('Wallpaper','牆紙'),prop:L('Desk prop','桌面擺設'),sticker:L('Sticker','貼紙')}[s];}
 function itemPic(it){if(it.slot==='wall')return '<div style="width:100%;height:100%;background:'+WALLS[it.id]+'"></div>';
  if(it.cat==='room')return it.svg();
  var eq={hat:null,glasses:null,acc:null,hand:null};eq[it.slot]=it.id;return petSVG('mochi','happy',{stage:1,eq:eq});}
-function equipBtn(it){var on;if(it.cat==='wear')on=curPet().eq[it.slot]===it.id;else if(it.slot==='wall')on=S.room.wall===it.id;else if(it.slot==='prop')on=S.room.prop===it.id;else return '<span class="tag">'+L('On the wall','已貼上')+'</span>';
- return '<button class="btn small '+(on?'green':'white')+'" data-equip="'+it.id+'">'+(on?L('Wearing ✓','使用中 ✓'):L('Use','使用'))+'</button>';}
-function equip(id){var it=item(id);if(!isOwned(it))return;if(it.cat==='wear'&&illBlocked())return;if(it.cat==='wear'){var p=curPet();p.eq[it.slot]=p.eq[it.slot]===id?null:id;}else if(it.slot==='wall')S.room.wall=id;else if(it.slot==='prop')S.room.prop=S.room.prop===id?null:id;sfx('boing');save();}
+function equipBtn(it){var on;if(it.cat==='wear')on=curPet().eq[it.slot]===it.id;else if(it.slot==='wall')on=S.room.wall===it.id;else on=(S.room.dec||{})[decCat(it)]===it.id;
+ return '<button class="btn small '+(on?'green':'white')+'" data-equip="'+it.id+'">'+(on?(it.cat==='wear'?L('Wearing ✓','使用中 ✓'):L('In room ✓','擺放中 ✓')):L('Use','使用'))+'</button>';}
+function equip(id){var it=item(id);if(!isOwned(it))return;if(it.cat==='wear'&&illBlocked())return;if(it.cat==='wear'){var p=curPet();p.eq[it.slot]=p.eq[it.slot]===id?null:id;}else if(it.slot==='wall')S.room.wall=id;else{var dc=decCat(it),dd=S.room.dec||(S.room.dec={});dd[dc]=dd[dc]===id?null:id;}sfx('boing');save();}
 
 /* COLLECTION */
 function cupSVG(t){var col=t.tier===3?'#FBD46D':t.tier===2?'#D9DEE6':'#E8B98C';
@@ -3102,35 +3124,37 @@ function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(f
 var B32='0123456789ABCDEFGHJKMNPQRSTVWXYZ',EPOCH=dayNum('2025-01-01');
 function wearIds(){return ITEMS.filter(function(i){return i.id!=='w0'&&!i.sec;}).map(function(i){return i.id;});}
 function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.round(v),Math.pow(2,n)-1));for(var i=n-1;i>=0;i--)bits.push((v>>i)&1);}
- w(9,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),5);
+ w(10,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),5);
  PETS.forEach(function(P){var p=S.pets[P.id];w(p?1:0,1);w(p?p.stage:0,2);w(p?p.xp/5:0,12);});
  var ids=wearIds();ids.forEach(function(id){w(S.owned[id]?1:0,1);});
  var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,7);});
- w(eqItems.indexOf(S.room.wall||'w0'),7);w(S.room.prop?eqItems.indexOf(S.room.prop)+1:0,7);
+ var dec=S.room.dec||{};w(eqItems.indexOf(S.room.wall||'w0'),7);w(0,7);
  w(S.streak,9);w(S.best,9);w(S.shields,2);w(S.lastDay?dayNum(S.lastDay)-EPOCH:0,13);w(S.days,10);w(S.quizzes,11);w(S.perfect,9);w(S.cleared,10);w(S.studies,10);w(S.matchWins,8);
  ALLSECS.forEach(function(s){w((S.secs[s.id]||{}).stars||0,2);});
  TROPHIES.forEach(function(t){w(S.trophies[t.id]?1:0,1);});
  BUDS.forEach(function(B){w(S.bud.own[B.id]?1:0,1);});w(S.bud.act?BUDS.indexOf(budDef(S.bud.act))+1:0,5);w(S.ill.lv,3);var dd=S.dict||{};w(dd.n||0,12);w(dd.perf||0,8);w(dd.days||0,9);w(S.say.n||0,12);w(S.tc||0,14);
  PETS.forEach(function(P){var pp=S.pets[P.id];w(pp&&pp.rt?ROUTE_IDS.indexOf(pp.rt)+1:0,2);});
+ DECATS.slice(1).forEach(function(c){w(dec[c[0]]?eqItems.indexOf(dec[c[0]])+1:0,7);});
  var sum=0;for(var i=0;i<bits.length;i++)sum=(sum*31+bits[i]*(i%7+1))%1021;w(sum,10);
  while(bits.length%5)bits.push(0);scramble(bits);var out='';for(var j=0;j<bits.length;j+=5){var v=0;for(var k=0;k<5;k++)v=v*2+bits[j+k];out+=B32[v];}return out;}
 function scramble(bits){var x=0x5EED1;for(var i=0;i<bits.length;i++){x=(x*1103515245+12345)&0x7fffffff;bits[i]^=(x>>16)&1;}}
 function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1');var bits=[];
  for(var i=0;i<code.length;i++){var v=B32.indexOf(code[i]);if(v<0)return null;for(var k=4;k>=0;k--)bits.push((v>>k)&1);}
  scramble(bits);var pos=0;function r(n){var v=0;for(var i=0;i<n;i++){if(pos>=bits.length)throw 0;v=v*2+bits[pos++];}return v;}
- try{var o={};var ver=r(4);if(ver<1||ver>9)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:ver<8?4:5);o.pets={};PETS.slice(0,v1?6:ver<4?12:ver<8?15:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
+ try{var o={};var ver=r(4);if(ver<1||ver>10)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:ver<8?4:5);o.pets={};PETS.slice(0,v1?6:ver<4?12:ver<8?15:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
   o.owned={};wearIds().slice(0,ver<4?40:ver<5?59:ver<6?64:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
   o.wall=ver<4?(['w0','w1','w2','w3','w4','w5'][r(3)]||'w0'):(eqItems[r(7)]||'w0');var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
   o.streak=r(9);o.best=r(9);o.shields=r(2);var ld=r(13);o.lastDay=ld?fromDayNum(ld+EPOCH):null;o.days=r(10);o.quizzes=r(11);o.perfect=r(9);o.cleared=r(10);o.studies=r(10);o.matchWins=r(8);
   o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:ver===3?22:ver<6?23:ver<7?30:ver<8?33:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
   if(ver>=7){o.bud={};BUDS.forEach(function(B){if(r(1))o.bud[B.id]=1;});o.budAct=r(5);o.ill=r(3);o.dn=r(12);o.dperf=r(8);o.ddays=r(9);o.sayn=r(12);o.tc=r(14);}
   if(ver>=9){o.routes={};PETS.forEach(function(P){var v=r(2);if(v)o.routes[P.id]=ROUTE_IDS[v-1];});}
+  if(ver>=10){o.dec={};DECATS.slice(1).forEach(function(c){var v=r(7);if(v&&eqItems[v-1])o.dec[c[0]]=eqItems[v-1];});}
   var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
   if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
 function applyCode(o){if(!AUTH.mode)AUTH.mode='guest';var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
  S.coins=o.coins;S.pets={};PETS.forEach(function(P,i){if(o.pets[P.id]){var p=newPet();p.stage=o.pets[P.id].st;p.xp=o.pets[P.id].xp;S.pets[P.id]=p;}});
  S.active=PETS[o.active]&&S.pets[PETS[o.active].id]?PETS[o.active].id:Object.keys(S.pets)[0];S.pets[S.active].eq=o.eq;
- S.owned=o.owned;S.owned.w0=1;if(!S.pets[S.active])S.active=Object.keys(S.pets)[0];S.room={wall:o.wall,prop:o.prop};['streak','best','shields','lastDay','days','quizzes','perfect','cleared','studies','matchWins'].forEach(function(k){S[k]=o[k];});
+ S.owned=o.owned;S.owned.w0=1;if(!S.pets[S.active])S.active=Object.keys(S.pets)[0];S.room=o.dec?{wall:o.wall,dec:o.dec}:migrateRoom({wall:o.wall,prop:o.prop},o.owned);['streak','best','shields','lastDay','days','quizzes','perfect','cleared','studies','matchWins'].forEach(function(k){S[k]=o[k];});
  ALLSECS.forEach(function(s){if(o.stars[s.id]){S.secs[s.id]={stars:o.stars[s.id],best:o.stars[s.id]+2,plays:1};S.specGot[s.id]=1;}});
  for(var t in o.tro)S.trophies[t]=today();if(S.lastDay)S.hist=[S.lastDay];
  if(o.bud){BUDS.forEach(function(B){if(o.bud[B.id])S.bud.own[B.id]=today();});var ba=BUDS[o.budAct-1];S.bud.act=ba&&S.bud.own[ba.id]?ba.id:(Object.keys(S.bud.own)[0]||null);S.ill={lv:Math.min(4,o.ill||0),d:o.ill?today():'',miss:0};S.dict.n=o.dn;S.dict.perf=o.dperf;S.dict.days=o.ddays;S.say.n=o.sayn;S.tc=o.tc;}
@@ -3188,7 +3212,7 @@ function bindScreen(){if(curScreen==='teacher')bindTeacher();
  document.querySelectorAll('[data-shop]').forEach(function(b){b.onclick=function(){shopTab=b.dataset.shop;sfx('tap');render();};});
  document.querySelectorAll('[data-col]').forEach(function(b){b.onclick=function(){colTab=b.dataset.col;sfx('tap');render();};});
  document.querySelectorAll('[data-buyfood]').forEach(function(b){b.onclick=function(){var f=FOODS.filter(function(x){return x.id===b.dataset.buyfood;})[0];if(S.coins<f.price)return;S.coins-=f.price;S.food[f.id]=(S.food[f.id]||0)+1;sfx('coin');save();render();};});
- document.querySelectorAll('[data-buy]').forEach(function(b){b.onclick=function(){var it=item(b.dataset.buy);if(S.coins<it.price||S.owned[it.id])return;S.coins-=it.price;S.owned[it.id]=1;if(it.slot!=='sticker')equip(it.id);sfx('coin');toast('✨ '+LL(it));checkTrophies();save();render();};});
+ document.querySelectorAll('[data-buy]').forEach(function(b){b.onclick=function(){var it=item(b.dataset.buy);if(S.coins<it.price||S.owned[it.id])return;S.coins-=it.price;S.owned[it.id]=1;equip(it.id);sfx('coin');toast('✨ '+LL(it));checkTrophies();save();render();};});
  document.querySelectorAll('main [data-equip]').forEach(function(b){b.onclick=function(){equip(b.dataset.equip);render();};});
  document.querySelectorAll('main [data-active]').forEach(function(b){b.onclick=function(){S.active=b.dataset.active;sfx('boing');save();render();};});
  document.querySelectorAll('[data-buypet]').forEach(function(b){b.onclick=function(){var P=petDef(b.dataset.buypet);if(S.coins<P.price||S.pets[P.id])return;function buy(){S.coins-=P.price;S.pets[P.id]=newPet();S.active=P.id;sfx('fanfare');confetti();bubble=L('Nice to meet you!','很高興認識你！');bubblePet=P.id;checkTrophies();save();curScreen='home';render();if(P.tier==='mythic')petPopup(P);}

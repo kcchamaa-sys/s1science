@@ -41,7 +41,7 @@ It must copy the format of my finished game **"Mochi Science Pals 麻糬科學�
 ## Game
 
 - **Science Pals (main characters, not called "pets"):** original Chiikawa × Sumikko-style SVG characters with Energy, Happiness and Level; moods (overjoyed, happy, sleepy, hungry, lonely, studying); 3 evolution stages; 15 pets.
-- **Care loop:** feed snacks, Term Match mini-game (EN ↔ 中文), dress-up, room decoration.
+- **Care loop:** feed snacks, Term Match mini-game (EN ↔ 中文), dress-up (1 per slot), room decoration in 6 groups (wallpaper / science corner / nature corner / cosy corner / science sticker / fun sticker) with 1 active item per group.
 - **Pet chat card:** fun subject facts (with Hong Kong examples) and personal encouragement (streak, mistakes waiting, next sub-topic). It rotates every ~20 s and has 💡 Fun fact / 💪 Cheer me on buttons.
 - **Rarity tiers:** Common / ✦ Rare / 💎 Epic / 👑 Legendary / 🌈 Mythic.
   - Mythic outfits (original, cartoon-inspired, no official names or logos) need 40–200-day streaks or huge challenges.
