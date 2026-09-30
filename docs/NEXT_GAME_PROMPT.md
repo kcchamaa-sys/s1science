@@ -48,6 +48,8 @@ It must copy the format of my finished game **"Mochi Science Pals 麻糬科學�
   - Epic unit rewards need 3★ in every sub-topic of a unit.
   - Legendary items and a legendary pet need very hard milestones (all 3★, 30-day streak, master 300 questions, clear 100 mistakes, spell 300 words, 20 perfect dictations, 20 trophies, 60 study days).
   - A 🎯 Quests tab shows progress bars.
+- **Companion pets:** 12 real cat / dog / butterfly species (many from Hong Kong) with background stories, unlocked only by dictation challenges and streaks.
+- **Pet health:** a broken streak makes the pets hungry → cold → fever → very sick; students buy medicine (different prices) at a clinic; dress-up stays locked and the pet gives encouraging messages until they are cured.
 - Include a few **Hong Kong / Gen Z** items (e.g. pineapple-bun hat, egg-waffle cone, ding-ding tram, neon street wallpaper, 「好正！」 sticker).
 - **Retention:** daily streak with multiplier (up to ×1.5) and shields; daily gift; ~24 trophies; collection gallery with tier counts; animated streak pop-ups (new day, reminder, shield, welcome back); special-item unlock pop-ups.
 - **錯題本 Mistake Bank:** wrong answers are saved automatically; 2 correct in a row clears one (+6 🪙).
@@ -57,6 +59,7 @@ It must copy the format of my finished game **"Mochi Science Pals 麻糬科學�
 
 - 🌐 EN / 繁中 toggle everywhere.
 - 🇬🇧 **British pronunciation** for every key term: 🔊 normal and 🐢 slow (Web Speech API, en-GB voice), plus British IPA. Include a per-unit Listen & Repeat list.
+- 🎤 **Read aloud (朗讀):** Duolingo-style speaking practice with the Web Speech API (`SpeechRecognition`, en-GB, 5 alternatives, fuzzy match); self-rating fallback when there is no microphone. Tell management that the browser sends the audio to Google / Apple for recognition; the game stores no audio.
 - ✍️ **Dictation (默書):** two modes – 🔊 listen & spell, and 🖼️ meaning / picture.
   - Choose a unit, a sub-topic or "My missed words".
   - Show a 📋 word list (with 🔊, IPA and 中文) in the setup screen.
