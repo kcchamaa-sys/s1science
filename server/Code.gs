@@ -22,11 +22,12 @@ var REC_HEAD = ['記錄時間 Timestamp', '練習編號 Session ID', '電郵 Ema
   '開始時間 Start', '結束時間 End', '題目 Question IDs', '答錯題目 Wrong IDs'];
 var PROG_HEAD = ['電郵 Email', '更新時間 Updated', '連續日數 Streak', '最佳連續 Best streak', '星星 Stars', '寵物等級 Pet level',
   '金幣 Coins', '寵物 Pet', '測驗次數 Quizzes', '待清除錯題 Mistakes', '已清除錯題 Cleared', '獎盃 Trophies',
-  '最後溫習日 Last study day', '進度資料 Data (do not edit)', '總經驗 Total XP', '收藏 Collection', '傳說 Legendary', '神話 Mythic'];
+  '最後溫習日 Last study day', '進度資料 Data (do not edit)', '總經驗 Total XP', '收藏 Collection', '傳說 Legendary', '神話 Mythic',
+  '諾貝爾火種 Nobel Sparks', '諾貝爾任務 Nobel tasks (per chapter)'];
 var DATA_COL = 14; // column N holds the saved game data
 var MODES = { quiz: '測驗 Quiz', practice: '錯題練習 Mistake practice', study: '溫習筆記 Study notes', vocab: '詞彙跟讀 Vocab', match: '詞彙配對 Term Match',
   dict_listen: '默書（聽音）Dictation – listen', dict_meaning: '默書（看義／圖）Dictation – meaning/picture',
-  speak: '朗讀 Read aloud' };
+  speak: '朗讀 Read aloud', nobel: '諾貝爾大冒險 Nobel Quest' };
 var STATUS = { done: '完成', quit: '中途結束' };
 
 function doGet() {
@@ -146,13 +147,14 @@ function saveProgress(u, state, s) {
     var sh = sheet(PROG, PROG_HEAD);
     var row = [u.email, new Date(), num(s.streak), num(s.best), num(s.stars), num(s.level), num(s.coins), clean(s.pet, 20),
       num(s.quizzes), num(s.mistakes), num(s.cleared), num(s.trophies), clean(s.lastDay, 12), state,
-      num(s.xp), num(s.col), num(s.leg), num(s.myth)];
+      num(s.xp), num(s.col), num(s.leg), num(s.myth), num(s.sp), clean(s.nq, 40)];
     if (sh.getLastColumn() < PROG_HEAD.length) {
       sh.getRange(1, 1, 1, PROG_HEAD.length).setValues([PROG_HEAD]).setFontWeight('bold').setBackground('#FFF1C5');
     }
     var r = findRow(sh, u.email);
     if (r < 0) r = sh.getLastRow() + 1;
     sh.getRange(r, 13).setNumberFormat('@');
+    sh.getRange(r, DATA_COL + 6).setNumberFormat('@'); // keep "63,31,0,…" as text
     sh.getRange(r, 1, 1, row.length).setValues([row]);
   } finally { lock.releaseLock(); }
 }
@@ -188,6 +190,14 @@ function stats() {
       progress[String(r[0]).toLowerCase()] = { upd: r[1] instanceof Date ? r[1].toISOString() : '', streak: r[2], best: r[3], stars: r[4],
         level: r[5], coins: r[6], pet: r[7], quizzes: r[8], mistakes: r[9], cleared: r[10], trophies: r[11], lastDay: String(r[12] || '') };
     });
+    // Nobel Time Quest columns (S, T): Sparks and task bit-masks per chapter, e.g. "63,31,0,0,0,0"
+    if (ps.getLastColumn() >= DATA_COL + 6) {
+      var em = ps.getRange(2, 1, ps.getLastRow() - 1, 1).getValues();
+      ps.getRange(2, DATA_COL + 5, ps.getLastRow() - 1, 2).getValues().forEach(function (r, i) {
+        var p = progress[String(em[i][0]).toLowerCase()];
+        if (p) { p.nqsp = num(r[0]); p.nq = String(r[1] || ''); }
+      });
+    }
   }
   return { ok: true, students: students, records: records, progress: progress };
 }

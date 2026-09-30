@@ -512,17 +512,6 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 .nq-h{margin-top:18px!important}
 .nq-bar{display:block;height:8px;border-radius:6px;background:rgba(255,255,255,.14);overflow:hidden}
 .nq-bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--cy),var(--gd),var(--mg))}
-.nq-perks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
-.nq-perk{display:grid;grid-template-columns:96px 1fr;gap:8px;align-items:center;padding:10px 12px;border-radius:20px;background:linear-gradient(135deg,rgba(255,45,85,.16),rgba(0,196,255,.14));border:1.5px solid rgba(255,255,255,.18)}
-.nq-perk.got{border-color:var(--gd);box-shadow:0 0 20px rgba(255,208,0,.3)}
-.nq-perk .pp{position:relative;height:88px}
-.nq-perk .pp-pal{position:absolute;left:0;top:0;width:80px}
-.nq-perk .pp-bud{position:absolute;right:-4px;bottom:0;width:42px}
-.nq-perk .sil svg,.sil2 svg{filter:brightness(0) drop-shadow(0 0 6px rgba(0,196,255,.9));opacity:.85}
-.nq-perk .pt{display:flex;flex-direction:column;gap:3px;font-size:13px;min-width:0}
-.nq-perk .pt b{font-size:15px;color:#fff}
-.nq-perk .pt span{font-weight:800;color:#FFE680}
-.nq-perk small{color:#BFC8F5}
 .nq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .holo{position:relative;--rx:0deg;--ry:0deg;--mx:50%;transform:perspective(700px) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
 .holo::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:color-dodge;opacity:.35;background:linear-gradient(115deg,transparent 20%,rgba(0,196,255,.55) 35%,rgba(255,45,85,.5) 50%,rgba(255,208,0,.55) 65%,transparent 80%);background-size:250% 250%;background-position:var(--mx) 50%;animation:nqFoil 6s linear infinite}
@@ -608,12 +597,62 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 .big-stars span{color:rgba(255,255,255,.2)}.big-stars span.on{color:var(--gd);text-shadow:0 0 12px var(--gd)}
 .nq-pop{display:grid;place-items:center;margin-bottom:6px}
 .nq-pop .nq-card{width:190px;cursor:default}
-.nq-perkitems{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}
-.nq-perkitems>div{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:700}
-.nq-perkitems svg,.nq-perkitems>div>div{width:100%;max-width:74px;aspect-ratio:1}
 .nav .badge.nqdot{background:#FF2D55}
-@media (max-width:560px){.nq{margin:4px -10px 0;padding:16px 12px 22px;border-radius:22px}.nq-hero{grid-template-columns:72px 1fr}.nq h1{font-size:23px}.nq-perks{grid-template-columns:1fr}.nq-grid{grid-template-columns:1fr 1fr;gap:10px}.nq-chead{grid-template-columns:90px 1fr}.nq-card b{font-size:14px}.nq-boss .arena{height:220px}}
+@media (max-width:560px){.nq-perk .thumbs{grid-template-columns:repeat(4,1fr)}.nq-perk .hero{grid-column:span 4}.nq-perk .hero .th{max-width:120px}.nq{margin:4px -10px 0;padding:16px 12px 22px;border-radius:22px}.nq-hero{grid-template-columns:72px 1fr}.nq h1{font-size:23px}.nq-perks{grid-template-columns:1fr}.nq-grid{grid-template-columns:1fr 1fr;gap:10px}.nq-chead{grid-template-columns:90px 1fr}.nq-card b{font-size:14px}.nq-boss .arena{height:220px}}
 @media (prefers-reduced-motion:reduce){.nq-stars,.holo::after,.nq-hero .lan,.nq-boss .foe,.nq-cine .burst svg{animation:none}.holo{transform:none}}
+
+.nq-perk{padding:12px 14px 12px;border-radius:22px;background:linear-gradient(135deg,rgba(255,45,85,.18),rgba(0,196,255,.16));border:1.5px solid rgba(255,255,255,.22);box-shadow:0 0 22px rgba(0,196,255,.18)}
+.nq-perk.got{border-color:var(--gd);box-shadow:0 0 24px rgba(255,208,0,.35)}
+.nq-perk .ph{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;justify-content:space-between}
+.nq-perk .ph b{font-size:16px;color:#fff}
+.nq-perk .chip2{font-size:12px;font-weight:900;padding:3px 10px;border-radius:12px;background:rgba(255,208,0,.18);color:#FFE680;border:1px solid rgba(255,208,0,.5)}
+.nq-perk .thumbs{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:8px;margin:10px 0 8px;align-items:end}
+.nq-perk figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.nq-perk .th{width:100%;max-width:92px;aspect-ratio:1;border-radius:16px;background:radial-gradient(circle at 50% 60%,rgba(255,255,255,.95),rgba(255,255,255,.75));display:grid;place-items:center;overflow:hidden;box-shadow:0 0 12px rgba(255,255,255,.25)}
+.nq-perk .th>svg,.nq-perk .th>div{width:92%;height:92%}
+.nq-perk .hero .th{max-width:130px;background:radial-gradient(circle at 50% 60%,#FFF6D6,#FFD9E8);box-shadow:0 0 18px rgba(255,208,0,.55)}
+.nq-perk figcaption{font-size:11.5px;font-weight:800;line-height:1.25;color:#fff}
+.nq-perk figcaption small{display:block;font-size:10px;color:#9FDFFF;letter-spacing:.5px}
+.nq-perk .cnt{color:#BFC8F5}
+.nq-cine .fogged svg{filter:saturate(.35) brightness(.85) drop-shadow(0 0 10px #8FB3E0)}
+/* neon advert on Home */
+.nq-ad{position:relative;display:grid;grid-template-columns:1fr 340px;gap:10px;align-items:center;margin:4px 0 16px;padding:16px 18px;border-radius:26px;cursor:pointer;overflow:hidden;color:#fff;text-align:left;
+ background:radial-gradient(90% 120% at 0% 0%,#3A1F8A 0%,transparent 60%),radial-gradient(80% 120% at 100% 100%,#0B5A8C 0%,transparent 60%),#10133A;border:2px solid #00C4FF;
+ box-shadow:0 0 8px #00C4FF,0 0 22px rgba(0,196,255,.6),0 0 44px rgba(255,45,85,.35),inset 0 0 18px rgba(0,196,255,.25);animation:nqNeon 2.4s ease-in-out infinite}
+@keyframes nqNeon{0%,100%{border-color:#00C4FF;box-shadow:0 0 8px #00C4FF,0 0 22px rgba(0,196,255,.6),0 0 44px rgba(255,45,85,.3),inset 0 0 18px rgba(0,196,255,.25)}50%{border-color:#FF2D55;box-shadow:0 0 10px #FF2D55,0 0 28px rgba(255,45,85,.65),0 0 54px rgba(255,208,0,.35),inset 0 0 18px rgba(255,45,85,.25)}}
+.nq-ad::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 70%,rgba(255,255,255,.18) 80%,transparent 90%);animation:nqSpin 5s linear infinite;pointer-events:none}
+@keyframes nqSpin{to{transform:rotate(360deg)}}
+.nq-ad>*{position:relative}
+.nq-ad:focus-visible{outline:3px solid #FFD000;outline-offset:3px}
+.nq-ad .t{display:flex;flex-direction:column;gap:5px;min-width:0}
+.nq-ad .k{font-size:11.5px;font-weight:900;letter-spacing:1.5px;color:#FFD000}
+.neon{font-size:30px;font-weight:900;line-height:1.1;color:#fff;text-shadow:0 0 4px #fff,0 0 10px #00C4FF,0 0 22px #00C4FF,0 0 40px #FF2D55;animation:nqFlick 4s infinite}
+@keyframes nqFlick{0%,19%,21%,62%,64%,100%{opacity:1}20%,63%{opacity:.55}}
+.nq-ad .l{font-weight:800;font-size:15px;color:#BFE9FF}
+.nq-ad .rw{font-size:13.5px;font-weight:700;color:#FFD9E2}
+.nq-ad .nq-orbs .orb{width:26px;height:26px}.nq-ad .nq-orbs .orb svg{width:20px}
+.nq-ad .go{align-self:flex-start;margin-top:4px;padding:9px 18px;border-radius:16px;font-weight:900;color:#1B1640;background:linear-gradient(180deg,#FFE35C,#FFC400);box-shadow:0 4px 0 #C08F00,0 0 18px rgba(255,208,0,.6)}
+.nq-ad .pals{position:relative;height:190px}
+.nq-ad .pals>span{position:absolute;display:block}
+.nq-ad .p1{left:10px;top:0;width:150px;animation:nqFloat 3.2s ease-in-out infinite}
+.nq-ad .p2{right:0;top:24px;width:150px;animation:nqFloat 3.6s ease-in-out infinite .6s}
+.nq-ad .b1{left:130px;bottom:0;width:62px}.nq-ad .b2{right:150px;bottom:-4px;width:54px}
+.nq-ad .pals svg{filter:drop-shadow(0 0 10px rgba(0,196,255,.8))}
+@media (max-width:760px){.nq-ad{grid-template-columns:1fr 150px}.nq-ad .p1{width:100px;left:0}.nq-ad .p2{width:100px;top:50px}.nq-ad .b1{left:6px}.nq-ad .b2{right:6px}}
+@media (max-width:560px){.nq-ad{grid-template-columns:1fr 118px;padding:14px 12px;gap:6px}.neon{font-size:23px}.nq-ad .pals{height:150px}.nq-ad .p1{width:86px;left:-6px}.nq-ad .p2{width:86px;top:52px}.nq-ad .b1{left:0;width:44px}.nq-ad .b2{right:0;width:40px}.nq-ad .l{font-size:14px}}
+/* pop-up advert */
+.nq-adpop{margin:-6px -4px 4px;padding:16px 14px;border-radius:22px;color:#fff;text-align:center;background:radial-gradient(90% 90% at 0% 0%,#3A1F8A,transparent 60%),radial-gradient(90% 90% at 100% 100%,#0B5A8C,transparent 60%),#10133A;border:2px solid #00C4FF;box-shadow:0 0 18px rgba(0,196,255,.6)}
+.nq-adpop .k{font-size:12px;font-weight:900;letter-spacing:1.4px;color:#FFD000;margin:0}
+.nq-adpop h2.neon{font-size:26px;margin:6px 0}
+.nq-adpop .art{width:130px;margin:0 auto}
+.nq-adpop .duo2{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:260px;margin:0 auto}
+.nq-adpop p{color:#E6EAFF}.nq-adpop .rw{font-size:13.5px;color:#FFD9E2;font-weight:700}
+/* teacher tab */
+.tabs .nqtab{background:linear-gradient(90deg,#10133A,#3A1F8A);color:#fff;border-color:#00C4FF}
+.tabs .nqtab[aria-selected="true"]{background:linear-gradient(90deg,#10133A,#3A1F8A)!important;color:#FFE680!important;box-shadow:0 0 12px rgba(0,196,255,.6)}
+.nq-tnote p{margin:6px 0 0;font-size:13.5px}
+.nq-heat td,.nq-heat th{white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.nq-ad,.nq-ad::before,.neon,.nq-ad .p1,.nq-ad .p2{animation:none}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -2083,19 +2122,19 @@ var XQ3={
 var NQ_PROLOGUE=[
  ["Midnight in the Science Pals' lab. On the top shelf, the old Nobel Time Lantern flickers… then slowly turns grey.","午夜，科學小夥伴的實驗室。最高那層架上，古老的諾貝爾時光燈閃了幾下……然後慢慢變成灰色。"],
  ["A cold fog pours out and twists into a face with glowing eyes. “I am MURK, the Fog of Forgetting! Every time someone stops asking WHY, I grow stronger!”","一陣冰冷的霧湧出來，扭成一張眼睛發光的臉。「我是遺忘霧妖——默克！每當有人不再問『為甚麼』，我就會變得更強！」"],
- ["Murk swallows two brave Science Pals. Petal the Blossom Fawn, who grows seedlings of virtue in the garden of Pui Tak Canossian College, is frozen in fog-ice. Astra the Star-Map Pangolin, who guards the old star charts of Ricci Hall at the University of Hong Kong, has her glowing scales scattered across the night sky.","默克吞噬了兩位勇敢的科學小夥伴：在培德書院花園裏培育「德行幼苗」的花鹿培培，被困在霧冰之中；在香港大學利瑪竇宿舍守護古老星圖的星圖穿山甲星星，發光的鱗片被吹散到夜空各處。"],
+ ["Murk swallows two brave Science Pals. Petal the Blossom Fawn, who grows seedlings of virtue in a school garden, is frozen in fog-ice. Astra the Star-Map Pangolin, who guards the star charts of an old scholars' hall on a hillside, has her glowing scales scattered across the night sky.","默克吞噬了兩位勇敢的科學小夥伴：在校園花園裏培育「德行幼苗」的花鹿培培，被困在霧冰之中；在山坡上一座古老學人宿舍守護星圖的星圖穿山甲星星，發光的鱗片被吹散到夜空各處。"],
  ["The Lantern whispers: “Six Nobel Prize winners hold the Sparks of Discovery. Each month I can open ONE door in time. Three Sparks will melt Petal's ice. Six Sparks will rebuild Astra's star map. Are you brave enough, young scientist?”","時光燈輕聲說：「六位諾貝爾獎得主手中握着『發現之火』。我每個月只能打開一道時光之門。集齊三團火，就能融化培培的霧冰；集齊六團火，就能重組星星的星圖。年輕的科學家，你有勇氣出發嗎？」"]
 ];
 var NQ_FINALE=[
  [ /* after 3 sparks */
   ["CRACK! Three Sparks spin around the fog-ice. It shatters into glittering snow.","咔嚓！三團發現之火圍着霧冰旋轉，霧冰碎成閃閃發光的雪花。"],
-  ["Petal shakes her antlers and tiny seedlings burst into pink blossoms. “Thank you! Persistence, observation and imagination are seeds of virtue too. At Pui Tak we grow them every day.”","培培搖一搖鹿角，一棵棵小幼苗開出粉紅色的花。「謝謝你！堅毅、觀察和想像力，也是德行的種子。在培德，我們每天都悉心培育它們。」"],
+  ["Petal shakes her antlers and tiny seedlings burst into pink blossoms. “Thank you! Persistence, observation and imagination are seeds of virtue too. In our school garden we grow them every day.”","培培搖一搖鹿角，一棵棵小幼苗開出粉紅色的花。「謝謝你！堅毅、觀察和想像力，也是德行的種子。在我們的校園花園，我們每天都悉心培育它們。」"],
   ["A little Hong Kong newt climbs out of a stream and onto her hoof. “This is Kai, my friend from the hill streams. We'll help you save Astra!”","一條小小的香港瘰螈從山溪爬到她的蹄上。「這是我的山溪好朋友阿溪。我們會陪你一起拯救星星！」"]
  ],
  [ /* after 6 sparks */
   ["The six Sparks fly up into the sky and join into a shining map of stars.","六團發現之火飛上夜空，連成一幅閃亮的星圖。"],
   ["One by one, Astra's scales float back, each glowing with a constellation. She curls into a ball, then unrolls with a happy squeak!","星星的鱗片一片一片飛回來，每一片都閃着一個星座。她捲成一個球，再開心地吱一聲伸展開來！"],
-  ["“At Ricci Hall we remember Matteo Ricci, who shared maps, stars and geometry between East and West more than 400 years ago. Science grows when we share it.”","「在利瑪竇宿舍，我們紀念四百多年前把地圖、天文和幾何在東西方之間分享的利瑪竇。科學，要分享才會成長。」"],
+  ["“In our old scholars’ hall we remember a map-maker who, more than 400 years ago, shared maps, stars and geometry between East and West. Science grows when we share it.”","「在我們古老的學人宿舍，我們紀念四百多年前一位把地圖、天文和幾何在東西方之間分享的製圖學者。科學，要分享才會成長。」"],
   ["A tiny Romer's tree frog hops onto her tail. “This is Romer, a frog found only in Hong Kong. Murk is gone… for as long as you keep asking WHY!”","一隻小小的盧氏小樹蛙跳上她的尾巴。「這是小盧，只在香港找得到的樹蛙。默克消失了……只要你一直問『為甚麼』，它就不會回來！」"]
  ]
 ];
@@ -3290,8 +3329,8 @@ function roomHTML(){if(bubblePet!==S.active){bubble=null;bubblePet=S.active;}var
  return '<div class="room"><div class="wall" style="background:'+WALLS[S.room.wall||'w0']+'"></div><div class="window">'+winSVG()+'</div>'+'<div class="floor"></div>'+sh+
  '<div class="petwrap" id="petTap">'+petSVG(S.active,m)+'</div>'+(S.bud&&S.bud.act&&budDef(S.bud.act)?'<div class="budroom'+(budDef(S.bud.act).kind==='fly'?' flying':'')+'" id="budTap">'+buddySVG(S.bud.act,budMood())+'</div>':'')+(bubble?'<div class="bubble" aria-live="polite">'+esc(bubble)+'</div>':'')+'</div>';}
 function statRow(label,v,col,txt){return '<div class="stat"><span>'+label+'</span><div class="bar" role="progressbar" aria-valuenow="'+Math.round(v)+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+clamp(v,0,100)+'%;background:'+col+'"></i></div><span class="num">'+txt+'</span></div>';}
-function homeHTML(){var h=homeParts(),P=h.split('<!--S-->');
- return '<div class="home"><div class="homeL"><div class="o1">'+P[0]+'</div><div class="o3">'+P[2]+'</div><div class="o4">'+P[3]+'</div><div class="o6">'+P[5]+'</div></div><div class="homeR"><div class="o2">'+P[1]+'</div><div class="o5">'+P[4]+'</div><div class="o7">'+P[6]+'</div></div></div>';}
+function homeHTML(){var h=homeParts(),P=h.split('<!--S-->');nqAdCheck();
+ return nqAdHTML()+'<div class="home"><div class="homeL"><div class="o1">'+P[0]+'</div><div class="o3">'+P[2]+'</div><div class="o4">'+P[3]+'</div><div class="o6">'+P[5]+'</div></div><div class="homeR"><div class="o2">'+P[1]+'</div><div class="o5">'+P[4]+'</div><div class="o7">'+P[6]+'</div></div></div>';}
 function homeParts(){var P=petDef(S.active),p=curPet(),lv=petLevel(p.xp),into=p.xp-lvXP(lv),need=lvXP(lv+1)-lvXP(lv);
  var ev=EVO[p.stage+1];var canEvo=ev&&lv>=ev.lv;
  var t=today();var gift=S.gift!==t;
@@ -4311,12 +4350,12 @@ var NQ_TASKS=[['story','🎬','Story','故事'],['read','📖','Reading','閱讀
 var NQ_ALL=63,NQ_COINS=80;
 var NQV={ch:null,task:null};
 
-/* ----- rewards: perk 1 (Pui Tak Canossian College) and perk 2 (Ricci Hall, HKU) ----- */
+/* ----- rewards: perk 1 (Garden of Virtue) and perk 2 (Hall of Star Maps) ----- */
 PETS.push({id:'petal',en:'Petal',zh:'培培',body:'#E9B98A',belly:'#FFF3E4',ears:'fawn',price:0,tier:'mythic',
-  desc:['A Blossom Fawn from the garden of Pui Tak Canossian College. The seedlings on her antlers bloom whenever someone learns something kind or clever.','來自培德書院花園的花鹿。每當有人學到善良或聰明的事，她鹿角上的幼苗就會開花。'],
+  desc:['A Blossom Fawn from a school garden. The seedlings on her antlers bloom whenever someone learns something kind or clever.','來自校園花園的花鹿。每當有人學到善良或聰明的事，她鹿角上的幼苗就會開花。'],
   cond:{k:'nobel',n:3,en:'Collect 3 Nobel Sparks',zh:'收集 3 團諾貝爾發現之火'}},
  {id:'astra',en:'Astra',zh:'星星',body:'#6C7FD1',belly:'#F6EBD9',ears:'pangolin',price:0,tier:'mythic',
-  desc:['A Star-Map Pangolin who guards the old star charts of Ricci Hall, HKU. Every scale on her back is a tiny constellation.','守護香港大學利瑪竇宿舍古老星圖的星圖穿山甲。她背上每一片鱗都是一個小星座。'],
+  desc:['A Star-Map Pangolin who guards the star charts of an old scholars’ hall. Every scale on her back is a tiny constellation.','守護古老學人宿舍星圖的星圖穿山甲。她背上每一片鱗都是一個小星座。'],
   cond:{k:'nobel',n:6,en:'Collect all 6 Nobel Sparks',zh:'收集全部 6 團諾貝爾發現之火'}});
 BUDS.push({id:'n_newt',kind:'newt',tier:'mythic',en:'Kai',zh:'阿溪',sp:['Hong Kong newt','香港瘰螈'],
   story:['Kai lives in a cool, clear hill stream on Hong Kong Island. In winter he walks down to quiet pools to lay eggs, then climbs back into the leaf litter. He only lives where the water is clean, so seeing him is a sign of a healthy stream. He became Petal’s friend when she stopped to help him across a path.','阿溪住在港島一條清涼的山溪裏。冬天，他會走到平靜的水潭產卵，之後再爬回落葉堆中。他只會在乾淨的水中生活，所以見到他代表溪流很健康。有一次培培停下來幫他橫過小路，他們就成了好朋友。'],
@@ -4327,17 +4366,17 @@ BUDS.push({id:'n_newt',kind:'newt',tier:'mythic',en:'Kai',zh:'阿溪',sp:['Hong 
   fact:['Science: Romer’s tree frog is only about 1.5–2 cm long. Scientists track rare species like it to protect biodiversity.','科學小知識：盧氏小樹蛙只有約 1.5 至 2 厘米長。科學家追蹤這些稀有物種，以保護生物多樣性。'],
   cond:[['nobel',6]]});
 function nqQuest(n){return {en:n===3?'Collect 3 Nobel Sparks':'Collect all 6 Nobel Sparks',zh:n===3?'收集 3 團諾貝爾發現之火':'收集全部 6 團諾貝爾發現之火',f:function(){return [nobelDone(),n];}};}
-[QI('h_puitak','wear','hat','Pui Tak scholar beret','培德學人貝雷帽','mythic',nqQuest(3),'<ellipse cx="100" cy="58" rx="48" ry="17" fill="#2E3F7F" '+SW3+' transform="rotate(-6 100 58)"/><path d="M58 66 Q100 80 144 62" stroke="#F4C542" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="96" cy="41" r="5" fill="#2E3F7F" stroke="#O" stroke-width="2.5"/><path d="M132 60 L132 44" stroke="#5E9B4E" stroke-width="3" stroke-linecap="round"/><ellipse cx="126" cy="46" rx="7" ry="4" fill="#9BCB8E" stroke="#O" stroke-width="2" transform="rotate(-30 126 46)"/><ellipse cx="138" cy="44" rx="7" ry="4" fill="#9BCB8E" stroke="#O" stroke-width="2" transform="rotate(30 138 44)"/><circle cx="132" cy="40" r="4" fill="#FFB3C1" stroke="#O" stroke-width="1.5"/>'),
- QI('p_ptscroll','room','prop','“培德” calligraphy scroll','「培德」書法掛軸','mythic',nqQuest(3),'<svg viewBox="0 0 100 100"><path d="M36 10 L50 2 L64 10" stroke="#8A6A4A" stroke-width="2" fill="none"/><rect x="18" y="8" width="64" height="7" rx="3.5" fill="#8A5A3C" stroke="#O" stroke-width="2.5"/><rect x="26" y="15" width="48" height="70" fill="#FFF8E7" stroke="#O" stroke-width="2.5"/><rect x="30" y="19" width="40" height="62" fill="none" stroke="#D9A441" stroke-width="1.5"/><text x="50" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#3A2A20" font-family="serif">培</text><text x="50" y="70" text-anchor="middle" font-size="22" font-weight="700" fill="#3A2A20" font-family="serif">德</text><rect x="58" y="72" width="7" height="7" fill="#D6453D"/><rect x="18" y="85" width="64" height="7" rx="3.5" fill="#8A5A3C" stroke="#O" stroke-width="2.5"/></svg>'),
- QI('a_riccicape','wear','acc','Ricci Hall star-map cape','利瑪竇宿舍星圖斗篷','mythic',nqQuest(6),'<path d="M52 132 Q30 158 36 188 L74 188 Q62 162 68 140Z" fill="#23306B" '+SW3+' stroke-linejoin="round"/><path d="M148 132 Q170 158 164 188 L126 188 Q138 162 132 140Z" fill="#23306B" '+SW3+' stroke-linejoin="round"/><path d="M46 160 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z M154 164 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z" fill="#FFD000"/><circle cx="56" cy="178" r="2" fill="#FFF1A8"/><circle cx="146" cy="150" r="2" fill="#FFF1A8"/><path d="M60 180 L50 170 M140 152 L150 160" stroke="#8FB3E0" stroke-width="1.2"/><path d="M68 138 Q100 154 132 138" stroke="#F4C542" stroke-width="3.5" fill="none"/><path d="M100 140 l3 6 l6 1 l-4 4 l1 6 l-6 -3 l-6 3 l1 -6 l-4 -4 l6 -1Z" fill="#FFD000" stroke="#O" stroke-width="1.5"/>'),
- QI('p_armillary','room','prop','Ricci armillary sphere','利瑪竇渾天儀','mythic',nqQuest(6),'<svg viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="24" ry="5" fill="#8A5A3C" stroke="#O" stroke-width="2.5"/><path d="M50 88 L50 72" stroke="#B98B64" stroke-width="5"/><circle cx="50" cy="44" r="28" fill="none" stroke="#D9A441" stroke-width="4"/><ellipse cx="50" cy="44" rx="28" ry="9" fill="none" stroke="#E8C15A" stroke-width="3"/><ellipse cx="50" cy="44" rx="28" ry="9" fill="none" stroke="#C9942E" stroke-width="3" transform="rotate(60 50 44)"/><ellipse cx="50" cy="44" rx="9" ry="28" fill="none" stroke="#E8C15A" stroke-width="2.5"/><circle cx="50" cy="44" r="8" fill="#5E9FD0" stroke="#O" stroke-width="2"/><path d="M47 42 q3 -3 6 0 q-1 4 -4 3Z" fill="#9BCB8E"/><path d="M50 10 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z" fill="#FFD000"/></svg>')
+[QI('h_virtue','wear','hat','Virtue scholar beret','德行學人貝雷帽','mythic',nqQuest(3),'<ellipse cx="100" cy="58" rx="48" ry="17" fill="#2E3F7F" '+SW3+' transform="rotate(-6 100 58)"/><path d="M58 66 Q100 80 144 62" stroke="#F4C542" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="96" cy="41" r="5" fill="#2E3F7F" stroke="#O" stroke-width="2.5"/><path d="M132 60 L132 44" stroke="#5E9B4E" stroke-width="3" stroke-linecap="round"/><ellipse cx="126" cy="46" rx="7" ry="4" fill="#9BCB8E" stroke="#O" stroke-width="2" transform="rotate(-30 126 46)"/><ellipse cx="138" cy="44" rx="7" ry="4" fill="#9BCB8E" stroke="#O" stroke-width="2" transform="rotate(30 138 44)"/><circle cx="132" cy="40" r="4" fill="#FFB3C1" stroke="#O" stroke-width="1.5"/>'),
+ QI('p_scroll','room','prop','“求知” calligraphy scroll','「求知」書法掛軸','mythic',nqQuest(3),'<svg viewBox="0 0 100 100"><path d="M36 10 L50 2 L64 10" stroke="#8A6A4A" stroke-width="2" fill="none"/><rect x="18" y="8" width="64" height="7" rx="3.5" fill="#8A5A3C" stroke="#O" stroke-width="2.5"/><rect x="26" y="15" width="48" height="70" fill="#FFF8E7" stroke="#O" stroke-width="2.5"/><rect x="30" y="19" width="40" height="62" fill="none" stroke="#D9A441" stroke-width="1.5"/><text x="50" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#3A2A20" font-family="serif">求</text><text x="50" y="70" text-anchor="middle" font-size="22" font-weight="700" fill="#3A2A20" font-family="serif">知</text><rect x="58" y="72" width="7" height="7" fill="#D6453D"/><rect x="18" y="85" width="64" height="7" rx="3.5" fill="#8A5A3C" stroke="#O" stroke-width="2.5"/></svg>'),
+ QI('a_starcape','wear','acc','Star-map scholar cape','星圖學人斗篷','mythic',nqQuest(6),'<path d="M52 132 Q30 158 36 188 L74 188 Q62 162 68 140Z" fill="#23306B" '+SW3+' stroke-linejoin="round"/><path d="M148 132 Q170 158 164 188 L126 188 Q138 162 132 140Z" fill="#23306B" '+SW3+' stroke-linejoin="round"/><path d="M46 160 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z M154 164 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z" fill="#FFD000"/><circle cx="56" cy="178" r="2" fill="#FFF1A8"/><circle cx="146" cy="150" r="2" fill="#FFF1A8"/><path d="M60 180 L50 170 M140 152 L150 160" stroke="#8FB3E0" stroke-width="1.2"/><path d="M68 138 Q100 154 132 138" stroke="#F4C542" stroke-width="3.5" fill="none"/><path d="M100 140 l3 6 l6 1 l-4 4 l1 6 l-6 -3 l-6 3 l1 -6 l-4 -4 l6 -1Z" fill="#FFD000" stroke="#O" stroke-width="1.5"/>'),
+ QI('p_armillary','room','prop','Scholar’s armillary sphere','學人渾天儀','mythic',nqQuest(6),'<svg viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="24" ry="5" fill="#8A5A3C" stroke="#O" stroke-width="2.5"/><path d="M50 88 L50 72" stroke="#B98B64" stroke-width="5"/><circle cx="50" cy="44" r="28" fill="none" stroke="#D9A441" stroke-width="4"/><ellipse cx="50" cy="44" rx="28" ry="9" fill="none" stroke="#E8C15A" stroke-width="3"/><ellipse cx="50" cy="44" rx="28" ry="9" fill="none" stroke="#C9942E" stroke-width="3" transform="rotate(60 50 44)"/><ellipse cx="50" cy="44" rx="9" ry="28" fill="none" stroke="#E8C15A" stroke-width="2.5"/><circle cx="50" cy="44" r="8" fill="#5E9FD0" stroke="#O" stroke-width="2"/><path d="M47 42 q3 -3 6 0 q-1 4 -4 3Z" fill="#9BCB8E"/><path d="M50 10 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z" fill="#FFD000"/></svg>')
 ].forEach(function(it){ITEMS.push(it);});
-DECAT_OF.p_ptscroll='cosy';DECAT_OF.p_armillary='lab';
+DECAT_OF.p_scroll='cosy';DECAT_OF.p_armillary='lab';
 TROPHIES.push({id:'nobel3',e:'🔥',en:'Spark Keeper',zh:'火種守護者',den:'Collect 3 Nobel Sparks',dzh:'收集 3 團諾貝爾發現之火',tier:2,f:function(){return [nobelDone(),3];}},
  {id:'nobel6',e:'🏅',en:'Nobel Time Hero',zh:'諾貝爾時光英雄',den:'Collect all 6 Nobel Sparks',dzh:'收集全部 6 團諾貝爾發現之火',tier:3,f:function(){return [nobelDone(),6];}});
 BUD_KIND.newt=['Newt','蠑螈'];BUD_KIND.frog=['Frog','蛙'];
-var NQ_PERKS=[{n:3,pet:'petal',bud:'n_newt',items:['h_puitak','p_ptscroll'],theme:['Pui Tak Canossian College','培德書院']},
- {n:6,pet:'astra',bud:'n_frog',items:['a_riccicape','p_armillary'],theme:['Ricci Hall, The University of Hong Kong','香港大學利瑪竇宿舍']}];
+var NQ_PERKS=[{n:3,pet:'petal',bud:'n_newt',items:['h_virtue','p_scroll'],theme:['Garden of Virtue','德行花園']},
+ {n:6,pet:'astra',bud:'n_frog',items:['a_starcape','p_armillary'],theme:['Hall of Star Maps','星圖學人閣']}];
 
 /* ----- state helpers ----- */
 function nqS(){if(!S.nobel)S.nobel={t:{},seen:{},perk:{}};return S.nobel;}
@@ -4350,9 +4389,9 @@ function nqDate(i,long){var p=NQ[i].month.split('-'),mo=+p[1]-1;return L((long?'
 function nqDaysTo(i){return Math.max(0,dayNum(NQ[i].month+'-01')-dayNum(today()));}
 function nqNew(){if(!S||!S.started)return false;for(var i=NQ.length-1;i>=0;i--)if(nqOpen(i))return nqMask(NQ[i].id)!==NQ_ALL;return false;}
 function nqTaskName(k){var t=NQ_TASKS[k];return t[1]+' '+L(t[2],t[3]);}
-function nqSet(ch,k){var st=nqS(),c=NQ[ch],before=st.t[c.id]||0;if(before&(1<<k))return;st.t[c.id]=before|(1<<k);S.coins+=10;
+function nqSet(ch,k,lg){var st=nqS(),c=NQ[ch],before=st.t[c.id]||0;if(before&(1<<k))return;st.t[c.id]=before|(1<<k);S.coins+=10;nqLog(ch,k,lg,'done');
  if(st.t[c.id]===NQ_ALL){S.coins+=NQ_COINS;save();nqSparkPopup(ch);nqPerks();}else{toast('✅ '+nqTaskName(k)+' · +10 🪙');save();}checkTrophies();}
-function nqLinkCheck(){NQ.forEach(function(c,i){if(nqOpen(i)&&!nqHas(c.id,5)&&((S.secs[c.link]||{}).stars||0)>=2)nqSet(i,5);});}
+function nqLinkCheck(){NQ.forEach(function(c,i){if(nqOpen(i)&&!nqHas(c.id,5)&&((S.secs[c.link]||{}).stars||0)>=2)nqSet(i,5,{ans:0,cor:(S.secs[c.link]||{}).stars||2});});}
 function nqPerks(){var st=nqS(),n=nobelDone();NQ_PERKS.forEach(function(P,i){if(n<P.n||st.perk[i+1])return;st.perk[i+1]=today();
   if(!S.pets[P.pet])S.pets[P.pet]=newPet();if(!S.bud.own[P.bud]){S.bud.own[P.bud]=today();if(!S.bud.act)S.bud.act=P.bud;}P.items.forEach(function(id){S.owned[id]=1;});
   save();NQV={ch:null,task:'finale',f:i,pg:0};setTimeout(function(){if(curScreen==='nobel')render();},400);});}
@@ -4426,7 +4465,8 @@ function nobelHTML(){nqLinkCheck();var h='<div class="nq'+(NQV.fx?' fx-'+NQV.fx:
  return h+'</div>';}
 function nqOrbs(){var h='<div class="nq-orbs" role="img" aria-label="'+nobelDone()+' / 6 Sparks">';NQ.forEach(function(c){var on=nqMask(c.id)===NQ_ALL;h+='<span class="orb'+(on?' on':'')+'" style="--c:'+c.col+'">'+(on?sparkSVG(c.col):'')+'</span>';});return h+'</div>';}
 function nqPerkCard(i){var P=NQ_PERKS[i],got=!!nqS().perk[i+1],n=Math.min(nobelDone(),P.n);
- return '<div class="nq-perk'+(got?' got':'')+'"><div class="pp">'+'<div class="pp-pal'+(got?'':' sil')+'">'+petSVG(P.pet,'happy',{stage:1,eq:{},plain:true})+'</div><div class="pp-bud'+(got?'':' sil')+'">'+buddySVG(P.bud,'happy')+'</div></div><div class="pt"><b>'+(got?'🔓 ':'🔒 ')+L('Perk '+(i+1),'獎勵 '+(i+1))+'</b><span>'+esc(L(P.theme[0],P.theme[1]))+'</span><small>'+(got?L('Science Pal · pet · outfit · decor unlocked!','科學小夥伴 · 寵物 · 服飾 · 裝飾已解鎖！'):L('Science Pal · pet · outfit · decor','科學小夥伴 · 寵物 · 服飾 · 裝飾'))+'</small><div class="nq-bar"><i style="width:'+(n/P.n*100)+'%"></i></div><small>🔥 '+n+' / '+P.n+'</small></div></div>';}
+ var th=[[petSVG(P.pet,'joy',{stage:1,eq:{},plain:true}),LL(petDef(P.pet)),L('Science Pal','科學小夥伴')],[buddySVG(P.bud,'happy'),LL(budDef(P.bud)),L('Pet','寵物')]].concat(P.items.map(function(id){var it=item(id);return [itemPic(it),LL(it),it.cat==='wear'?L('Outfit','服飾'):L('Decor','裝飾')];}));
+ return '<div class="nq-perk'+(got?' got':'')+'"><div class="ph"><b>'+(got?'🔓 ':'🎁 ')+L('Perk '+(i+1),'獎勵 '+(i+1))+' · '+esc(L(P.theme[0],P.theme[1]))+'</b><span class="chip2">'+(got?L('Unlocked!','已解鎖！'):L('Collect '+P.n+' Sparks','集齊 '+P.n+' 團火種'))+'</span></div><div class="thumbs">'+th.map(function(t,k){return '<figure class="'+(k===0?'hero':'')+'"><div class="th">'+t[0]+'</div><figcaption><small>'+t[2]+'</small>'+esc(t[1])+'</figcaption></figure>';}).join('')+'</div><div class="nq-bar"><i style="width:'+(n/P.n*100)+'%"></i></div><small class="cnt">🔥 '+n+' / '+P.n+'</small></div>';}
 function nqHubHTML(){var h='<section class="nq-hero"><div class="lan">'+lanternSVG(nobelDone()>0||nqOpen(0))+'</div><div><p class="nq-kicker">'+L('SEASON EVENT · OCT 2026 – MAR 2027','限定活動 · 2026 年 10 月 – 2027 年 3 月')+'</p><h1>'+L('Nobel Time Quest','諾貝爾時光大冒險')+'</h1><p>'+L('Learn from six Nobel Prize winners, win their Sparks of Discovery and rescue two Science Pals from Murk, the Fog of Forgetting. A new door in time opens every month.','向六位諾貝爾獎得主學習，贏取「發現之火」，從遺忘霧妖默克手中救出兩位科學小夥伴。每個月都會打開一道新的時光之門。')+'</p>'+nqOrbs()+'</div></section>';
  if(nqPreview())h+='<p class="nq-note">👀 '+L('Preview mode: every chapter is open.','預覽模式：所有章節已開放。')+'</p>';
  h+='<button class="nq-btn ghost" data-nqpro="1">🎬 '+(nqS().seen.pro?L('Replay the prologue','重溫序章'):L('Start here: the prologue','由這裏開始：序章'))+'</button>';
@@ -4441,7 +4481,7 @@ function nqChapterHTML(){var i=NQV.ch,c=NQ[i],sec=secById(c.link),h=nqBack(L('Al
   h+='<button class="nq-task'+(d?' done':'')+'" data-nqtask="'+t[0]+'"><span class="ic">'+(d?'✅':t[1])+'</span><b>'+L(t[2],t[3])+'</b><small>'+sub+'</small></button>';});
  return h+'</div><p class="nq-note">'+L('Finish all 6 tasks to win the Spark. Every task gives +10 🪙.','完成全部 6 項任務即可贏得火種。每項任務 +10 🪙。')+'</p>';}
 function nqCinemaHTML(){var fin=NQV.task==='finale',P=fin?NQ_PERKS[NQV.f]:null,panels=fin?NQ_FINALE[NQV.f]:NQ_PROLOGUE,pg=NQV.pg||0,t=panels[pg],art;
- if(!fin)art=[lanternSVG(false),'<div class="big">'+murkSVG()+'</div>','<div class="duo"><div class="sil2">'+petSVG('petal','sleepy',{stage:1,eq:{},plain:true})+'</div><div class="sil2">'+petSVG('astra','sleepy',{stage:1,eq:{},plain:true})+'</div></div>',lanternSVG(true)][pg];
+ if(!fin)art=[lanternSVG(false),'<div class="big">'+murkSVG()+'</div>','<div class="duo"><div class="fogged">'+petSVG('petal','sleepy',{stage:1,eq:{},plain:true})+'</div><div class="fogged">'+petSVG('astra','sleepy',{stage:1,eq:{},plain:true})+'</div></div>',lanternSVG(true)][pg];
  else if(NQV.f===0)art=['<div class="burst">'+sparkSVG('#00C4FF')+sparkSVG('#1BD17A')+sparkSVG('#FFD000')+'</div>','<div class="big">'+petSVG('petal','joy',{stage:1,eq:{},plain:true})+'</div>','<div class="duo"><div>'+petSVG('petal','happy',{stage:1,eq:{},plain:true})+'</div><div class="budbig">'+buddySVG('n_newt','happy')+'</div></div>'][pg];
  else art=['<div class="burst">'+NQ.map(function(c){return sparkSVG(c.col);}).join('')+'</div>','<div class="big">'+petSVG('astra','joy',{stage:1,eq:{},plain:true})+'</div>','<div class="big">'+nqArtMap()+'</div>','<div class="duo"><div>'+petSVG('astra','happy',{stage:1,eq:{},plain:true})+'</div><div class="budbig">'+buddySVG('n_frog','happy')+'</div></div>'][pg];
  return (fin?'':nqBack(L('Back','返回')))+'<section class="nq-cine"><p class="nq-kicker">'+(fin?L('RESCUE!','救援成功！'):L('PROLOGUE','序章'))+' · '+(pg+1)+' / '+panels.length+'</p><div class="scene">'+art+'</div><p class="line">'+esc(L(t[0],t[1]))+'</p><button class="nq-btn" data-nqnext="1">'+(pg<panels.length-1?L('Next ▶','下一頁 ▶'):fin?L('Claim my rewards! 🎁','領取獎勵！🎁'):L('Let’s go! 🔥','出發！🔥'))+'</button></section>';}
@@ -4492,25 +4532,74 @@ function bindNobel(){var root=$('.nq');if(!root)return;
  root.querySelectorAll('[data-nqch]').forEach(function(b){b.onclick=function(){sfx('tap');NQV={ch:+b.dataset.nqch,task:null};go();window.scrollTo(0,0);};});
  root.querySelectorAll('[data-nqback]').forEach(function(b){b.onclick=function(){sfx('tap');NQV=NQV.task&&NQV.ch!=null?{ch:NQV.ch,task:null}:{ch:null,task:null};go();};});
  root.querySelectorAll('[data-nqpro]').forEach(function(b){b.onclick=function(){sfx('tap');NQV={ch:null,task:'prologue',pg:0};go();};});
- root.querySelectorAll('[data-nqtask]').forEach(function(b){b.onclick=function(){sfx('tap');NQV={ch:NQV.ch,task:b.dataset.nqtask,pg:0};go();window.scrollTo(0,0);};});
+ root.querySelectorAll('[data-nqtask]').forEach(function(b){b.onclick=function(){sfx('tap');NQV={ch:NQV.ch,task:b.dataset.nqtask,pg:0,t0:Date.now(),na:0};go();window.scrollTo(0,0);};});
  root.querySelectorAll('[data-nqquiz]').forEach(function(b){b.onclick=function(){startQuiz(b.dataset.nqquiz,'quiz');};});
  root.querySelectorAll('[data-nqnext]').forEach(function(b){b.onclick=function(){var t=NQV.task;sfx('tap');
   if(t==='prologue'){if(NQV.pg<NQ_PROLOGUE.length-1)NQV.pg++;else{nqS().seen.pro=1;save();NQV={ch:null,task:null};}}
   else if(t==='finale'){var f=NQV.f;if(NQV.pg<NQ_FINALE[f].length-1)NQV.pg++;else{NQV={ch:null,task:null};sfx('shatter');nqPerkPopup(f);}}
-  else if(t==='story'){if(NQV.pg<3)NQV.pg++;else{var ch=NQV.ch;NQV={ch:ch,task:null};nqSet(ch,0);}}
-  else if(t==='read'){if(NQV.pg<3){NQV.pg++;NQV.ans=null;NQV.opts=null;window.scrollTo(0,0);}else{var ch2=NQV.ch;NQV={ch:ch2,task:null};nqSet(ch2,1);}}
-  else{var ch3=NQV.ch,k={time:2,words:3,boss:4}[t];NQV={ch:ch3,task:null};nqSet(ch3,k);}
+  else if(t==='story'){if(NQV.pg<3)NQV.pg++;else{var ch=NQV.ch,lg0=nqLg(0,0);NQV={ch:ch,task:null};nqSet(ch,0,lg0);}}
+  else if(t==='read'){if(NQV.pg<3){NQV.pg++;NQV.ans=null;NQV.opts=null;window.scrollTo(0,0);}else{var ch2=NQV.ch,lg1=nqLg(NQV.na,4);NQV={ch:ch2,task:null};nqSet(ch2,1,lg1);}}
+  else{var ch3=NQV.ch,k={time:2,words:3,boss:4}[t],lg3=t==='boss'?nqLg(6+3-NQV.b.hearts,6):nqLg(NQV.na,t==='time'?5:6);NQV={ch:ch3,task:null};nqSet(ch3,k,lg3);}
   go();};});
- root.querySelectorAll('[data-nqans]').forEach(function(b){b.onclick=function(){var i=+b.dataset.nqans;NQV.ans=i;sfx(i===0?'right':'wrong');go();};});
- root.querySelectorAll('[data-nqev]').forEach(function(b){b.onclick=function(){var c=NQ[NQV.ch],i=+b.dataset.nqev,left=c.time.map(function(e,j){return j;}).filter(function(j){return NQV.placed.indexOf(j)<0;}),min=left.reduce(function(a,j){return c.time[j][0]<c.time[a][0]?j:a;},left[0]);
+ root.querySelectorAll('[data-nqans]').forEach(function(b){b.onclick=function(){var i=+b.dataset.nqans;NQV.ans=i;NQV.na=(NQV.na||0)+1;sfx(i===0?'right':'wrong');go();};});
+ root.querySelectorAll('[data-nqev]').forEach(function(b){b.onclick=function(){NQV.na=(NQV.na||0)+1;var c=NQ[NQV.ch],i=+b.dataset.nqev,left=c.time.map(function(e,j){return j;}).filter(function(j){return NQV.placed.indexOf(j)<0;}),min=left.reduce(function(a,j){return c.time[j][0]<c.time[a][0]?j:a;},left[0]);
   if(i===min){NQV.placed.push(i);NQV.wrong=null;sfx('right');}else{NQV.wrong=i;sfx('wrong');}go();};});
  root.querySelectorAll('[data-nqwl]').forEach(function(b){b.onclick=function(){NQV.sel=+b.dataset.nqwl;NQV.wrong=null;sfx('tap');go();};});
- root.querySelectorAll('[data-nqwr]').forEach(function(b){b.onclick=function(){var i=+b.dataset.nqwr;if(NQV.sel==null){sfx('wrong');return;}if(i===NQV.sel){NQV.got.push(i);NQV.sel=null;NQV.wrong=null;sfx('right');}else{NQV.wrong=i;sfx('wrong');}go();};});
- root.querySelectorAll('[data-nqboss]').forEach(function(b){b.onclick=function(){var B=NQV.b,i=+b.dataset.nqboss;B.ans=i;if(i===0){B.hp--;sfx('beam');NQV.fx='hit';}else{B.hearts--;sfx('hurt');NQV.fx='hurt';}render();setTimeout(function(){NQV.fx=null;},700);};});
+ root.querySelectorAll('[data-nqwr]').forEach(function(b){b.onclick=function(){var i=+b.dataset.nqwr;if(NQV.sel==null){sfx('wrong');return;}NQV.na=(NQV.na||0)+1;if(i===NQV.sel){NQV.got.push(i);NQV.sel=null;NQV.wrong=null;sfx('right');}else{NQV.wrong=i;sfx('wrong');}go();};});
+ root.querySelectorAll('[data-nqboss]').forEach(function(b){b.onclick=function(){var B=NQV.b,i=+b.dataset.nqboss;B.ans=i;if(i===0){B.hp--;sfx('beam');NQV.fx='hit';}else{B.hearts--;sfx('hurt');NQV.fx='hurt';if(!B.hearts)nqLog(NQV.ch,4,nqLg(6-B.hp+3,6-B.hp),'quit');}render();setTimeout(function(){NQV.fx=null;},700);};});
  root.querySelectorAll('[data-nqbnext]').forEach(function(b){b.onclick=function(){var B=NQV.b;B.i++;B.ans=null;NQV.opts=null;go();};});
- root.querySelectorAll('[data-nqretry]').forEach(function(b){b.onclick=function(){NQV.b=null;NQV.opts=null;go();};});
+ root.querySelectorAll('[data-nqretry]').forEach(function(b){b.onclick=function(){NQV.b=null;NQV.opts=null;NQV.t0=Date.now();go();};});
  root.querySelectorAll('.holo').forEach(function(el){el.addEventListener('pointermove',function(e){var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;el.style.setProperty('--rx',((0.5-y)*10).toFixed(1)+'deg');el.style.setProperty('--ry',((x-0.5)*12).toFixed(1)+'deg');el.style.setProperty('--mx',(x*100).toFixed(0)+'%');});
   el.addEventListener('pointerleave',function(){el.style.setProperty('--rx','0deg');el.style.setProperty('--ry','0deg');});});}
+
+function nqLg(ans,cor){return {ans:ans||0,cor:cor||0,secs:NQV.t0?Math.round((Date.now()-NQV.t0)/1000):0,start:new Date(NQV.t0||Date.now()).toISOString()};}
+function nqLog(ch,k,lg,status){lg=lg||{};try{logRec({mode:'nobel',unit:'N'+(ch+1),sec:NQ_TASKS[k][0],ans:lg.ans||0,cor:lg.cor||0,stars:0,secs:lg.secs||0,status:status,start:lg.start||new Date().toISOString()});}catch(e){}}
+
+/* ----- neon advert on Home + a pop-up once per new chapter ----- */
+function nqCur(){for(var i=NQ.length-1;i>=0;i--)if(today()>=NQ[i].month+'-01')return i;return -1;}
+function nqNext(){for(var i=0;i<NQ.length;i++)if(today()<NQ[i].month+'-01')return i;return -1;}
+function nqAdLine(){var i=nqCur(),nx=nqNext(),c=i>=0?NQ[i]:null;
+ if(!c)return L('Starts '+nqDate(0,true)+' · '+nqDaysTo(0)+' days to go!','開始日期：'+nqDate(0,true)+' · 倒數 '+nqDaysTo(0)+' 日！');
+ if(nqMask(c.id)!==NQ_ALL)return L('NOW OPEN · Chapter '+(i+1)+': '+c.who[0]+', “'+c.title[0]+'”','現已開放 · 第 '+(i+1)+' 章：'+c.who[1]+'《'+c.title[1]+'》');
+ return nx>=0?L('Chapter '+(i+1)+' cleared! Next door opens '+nqDate(nx,true),'第 '+(i+1)+' 章已完成！下一道門：'+nqDate(nx,true)):L('All six Sparks won. You are a Nobel Time Hero!','已集齊六團火種——你是諾貝爾時光英雄！');}
+function nqAdHTML(){if(!S||!S.started)return '';
+ return '<div class="nq-ad" role="link" tabindex="0" data-nqad="1" aria-label="'+L('Open the Nobel Time Quest','打開諾貝爾時光大冒險')+'"><span class="t"><span class="k">⚡ '+L('LIMITED SEASON EVENT · OCT 2026 – MAR 2027','限定活動 · 2026 年 10 月 – 2027 年 3 月')+'</span><b class="neon">'+L('Nobel Time Quest','諾貝爾時光大冒險')+'</b><span class="l">'+esc(nqAdLine())+'</span><span class="rw">🎁 '+L('Win 2 mythic Science Pals + 2 rare pets + outfits + decor!','贏取 2 隻神話級科學小夥伴 + 2 隻稀有寵物 + 服飾 + 裝飾！')+'</span>'+nqOrbs()+'<span class="go">'+L('Enter the quest ▶','立即出發 ▶')+'</span></span>'+
+  '<span class="pals"><span class="p1">'+petSVG('petal','joy',{stage:1,eq:{hat:'h_virtue'},plain:true})+'</span><span class="p2">'+petSVG('astra','joy',{stage:1,eq:{acc:'a_starcape'},plain:true})+'</span><span class="b1">'+buddySVG('n_newt','happy')+'</span><span class="b2">'+buddySVG('n_frog','happy')+'</span></span></div>';}
+var nqAdQueued=false;
+function nqAdCheck(){if(nqAdQueued||!S||!S.started||curScreen!=='home')return;var i=nqCur(),st=nqS(),key=i<0?'teaser':'c'+i;if(st.seen[key])return;nqAdQueued=true;
+ setTimeout(function(){if(curScreen!=='home'||st.seen[key])return;st.seen[key]=1;save();var c=i>=0?NQ[i]:null;
+  popup('<div class="nq-adpop"><p class="k">⚡ '+(c?L('A NEW DOOR IN TIME HAS OPENED!','新的時光之門已經打開！'):L('COMING SOON','即將開始'))+'</p><h2 class="neon">'+L('Nobel Time Quest','諾貝爾時光大冒險')+'</h2>'+(c?'<div class="art">'+nqArt(c.id)+'</div><p><b>'+L('Chapter '+(i+1),'第 '+(i+1)+' 章')+' · '+esc(L(c.who[0],c.who[1]))+'</b><br>'+esc(L(c.title[0],c.title[1]))+'</p>':'<div class="duo2">'+petSVG('petal','joy',{stage:1,eq:{},plain:true})+petSVG('astra','joy',{stage:1,eq:{},plain:true})+'</div><p>'+esc(nqAdLine())+'</p>')+
+   '<p class="rw">🎁 '+L('Rescue Petal and Astra to win them, plus 2 pets, outfits and decor!','救出培培和星星，就能贏得她們，以及 2 隻寵物、服飾和裝飾！')+'</p><button class="nq-btn" data-nqad="1">'+L('Enter the quest ▶','立即出發 ▶')+'</button></div>',L('Later','稍後'),null,'fx-legend');},2600);}
+document.addEventListener('click',function(e){var t=e.target&&e.target.closest&&e.target.closest('[data-nqad]');if(!t)return;var ok=$('#popOk');if(t.closest('#pop')&&ok)ok.click();curScreen='nobel';NQV={ch:null,task:null};sfx('tap');render();window.scrollTo(0,0);});
+document.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')return;var t=e.target&&e.target.closest&&e.target.closest('div[data-nqad]');if(t){e.preventDefault();t.click();}});
+
+/* ----- teacher dashboard: Nobel Quest stats (independent from the revision stats) ----- */
+function nqParse(p){var a=String(p&&p.nq||'').split(',').map(function(x){return +x||0;});while(a.length<NQ.length)a.push(0);return a.slice(0,NQ.length);}
+function nqBits(m){var n=0;for(var k=0;k<6;k++)if(m&(1<<k))n++;return n;}
+function nqTeacherRows(X){return X.rows.map(function(r){var m=nqParse(r.prog),sp=0,tasks=0,last='',ba=0,bc=0,bl=0;m.forEach(function(x){if(x===NQ_ALL)sp++;tasks+=nqBits(x);});
+ r.recs.forEach(function(x){if(x.mode!=='nobel')return;if(x.t>last)last=x.t;if(x.sec==='boss'){ba+=+x.ans||0;bc+=+x.cor||0;if(x.status==='quit')bl++;}});
+ return {r:r,m:m,sp:sp,tasks:tasks,last:last,ba:ba,bc:bc,bl:bl};}).sort(function(a,b){return b.sp-a.sp||b.tasks-a.tasks||(a.r.s.cls<b.r.s.cls?-1:a.r.s.cls>b.r.s.cls?1:(+a.r.s.no||0)-(+b.r.s.no||0));});}
+function nobelStatsHTML(X){var D=TD.data,R=nqTeacherRows(X),tot=R.length,cls=classesOf(D),h='',open=nqCur();
+ var joined=R.filter(function(x){return x.tasks>0;}).length,sparks=0,p1=0,p2=0,BA=0,BC=0;R.forEach(function(x){sparks+=x.sp;if(x.sp>=3)p1++;if(x.sp>=6)p2++;BA+=x.ba;BC+=x.bc;});
+ h+='<div class="card nq-tnote"><b>🏅 '+L('Nobel Time Quest – season stats','諾貝爾時光大冒險——活動數據')+'</b><p class="muted">'+L('Separate from the revision stats above. Progress counts are totals for the whole season (the Period filter only changes the boss-battle figures and last activity). Numbers update when a signed-in student’s game syncs.','與上面的溫習數據分開計算。進度為整個活動的累計數字（「時段」只影響霧妖之戰數據及最近活動）。已登入學生的遊戲同步後，數字就會更新。')+(open>=0?' '+L('Chapters open now: ','目前已開放章節：')+(open+1)+' / 6':' '+L('Chapter 1 opens ','第 1 章開放日期：')+nqDate(0,true))+'</p></div>';
+ var tiles=[[joined+' / '+tot,L('Students who joined','參加學生')],[sparks,L('Sparks won (total)','已贏得火種（總數）')],[tot?(sparks/tot).toFixed(1):'–',L('Avg Sparks per student','平均每人火種')],[p1,L('Perk 1 unlocked','已解鎖獎勵 1')],[p2,L('Perk 2 unlocked','已解鎖獎勵 2')],[BA?pct(BC,BA)+'%':'–',L('Fog battle accuracy','霧妖之戰準確率')]];
+ h+='<div class="tiles">'+tiles.map(function(t){return '<div class="tile"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';}).join('')+'</div><div class="vzgrid">';
+ VZW=window.innerWidth<700?Math.max(320,Math.min(420,window.innerWidth-40)):560;
+ var ch=NQ.map(function(c,i){var n=R.filter(function(x){return x.m[i]===NQ_ALL;}).length;return {label:L('Ch','第')+(i+1)+L('','章'),v:tot?Math.round(n/tot*100):0,tip:L(c.who[0],c.who[1])+': '+n+' / '+tot+L(' students won the Spark',' 位學生贏得火種'),color:VZ.series[i]};});
+ h+=vzCard('🔥 '+L('Spark won, by chapter','各章節贏得火種比例'),L('Share of students who finished all 6 tasks of each chapter.','完成每章全部 6 項任務的學生比例。'),vzBarsV(ch,100,'%'),'');
+ var byC=cls.map(function(c){var st=D.students.filter(function(s){return s.cls===c;}),sum=0;st.forEach(function(s){nqParse(D.progress[s.email]).forEach(function(x){if(x===NQ_ALL)sum++;});});return {label:c,v:st.length?Math.round(sum/st.length*10)/10:0,tip:c+': '+(st.length?(sum/st.length).toFixed(1):0)+L(' Sparks per student',' 團火種／每人')+' ('+sum+L(' in total',' 團合共')+')',color:classColor(cls,c)};});
+ var topC=byC.slice().sort(function(a,b){return b.v-a.v;});
+ h+=vzCard('🏫 '+L('Average Sparks by class','各班平均火種'),L('Average number of Sparks (0–6) per student in each class. Shows every class, whatever class is selected.','各班每位學生平均贏得的火種數目（0–6）。不論選了哪一班，都會顯示所有班別。'),byC.length?vzBarsH(byC,6,''):'<p class="muted">–</p>',topC.length>1&&topC[0].v>0?L('Leading class: <b>'+esc(topC[0].label)+'</b>.','領先班別：<b>'+esc(topC[0].label)+'</b>。'):'');
+ var grp=[[L('Not started','未開始'),function(x){return x.tasks===0;},VZ.muted],[L('Started, no Spark yet','已開始，未有火種'),function(x){return x.tasks>0&&x.sp===0;},VZ.series[0]],[L('1–2 Sparks','1–2 團火種'),function(x){return x.sp>=1&&x.sp<=2;},VZ.series[1]],[L('3–5 Sparks (Perk 1)','3–5 團火種（獎勵 1）'),function(x){return x.sp>=3&&x.sp<=5;},VZ.series[2]],[L('All 6 Sparks (Perk 2)','全部 6 團（獎勵 2）'),function(x){return x.sp===6;},VZ.series[3]]];
+ h+=vzCard('🍩 '+L('Where students are','學生進度分佈'),L('How far each student has got in the quest.','每位學生在活動中的進度。'),vzDonut(grp.map(function(g){return {label:g[0],v:R.filter(g[1]).length,color:g[2]};}),[joined+'/'+tot,L('joined','已參加')]),'');
+ h+='</div><h2 class="h-sec">🧩 '+L('Task completion by chapter','各章節任務完成率')+'</h2><div class="tbl"><table class="nq-heat"><thead><tr><th>'+L('Chapter','章節')+'</th>'+NQ_TASKS.map(function(t){return '<th>'+t[1]+' '+L(t[2],t[3])+'</th>';}).join('')+'</tr></thead><tbody>'+
+  NQ.map(function(c,i){return '<tr><td><b>'+(i+1)+'</b> '+esc(L(c.who[0],c.who[1]))+(nqOpen(i)||i<=open?'':' <span class="muted">🔒</span>')+'</td>'+NQ_TASKS.map(function(t,k){var n=R.filter(function(x){return x.m[i]&(1<<k);}).length,p=tot?Math.round(n/tot*100):0;return '<td class="n" style="background:rgba(42,120,214,'+(p/100*0.55).toFixed(2)+')" title="'+n+' / '+tot+'">'+p+'%</td>';}).join('')+'</tr>';}).join('')+'</tbody></table></div>';
+ var idle=R.filter(function(x){return x.tasks===0;});
+ if(open>=0&&idle.length)h+='<h2 class="h-sec">🔔 '+L('Not started yet','尚未開始')+' <span class="muted" style="font-size:13px">'+idle.length+'</span></h2><div class="row" style="gap:6px">'+idle.slice(0,60).map(function(x){var s=x.r.s;return '<span class="term">'+esc(s.cls)+(s.no!==''?'-'+esc(s.no):'')+' '+esc(s.zh||s.en||'')+'</span>';}).join('')+'</div>';
+ h+='<h2 class="h-sec">👩‍🎓 '+L('Students','學生')+'</h2><div class="tbl"><table><thead><tr><th>'+L('Class/No.','班別/號')+'</th><th>'+L('Name','姓名')+'</th><th>🔥</th>'+NQ.map(function(c,i){return '<th>'+L('Ch','第')+(i+1)+L('','章')+'</th>';}).join('')+'<th>'+L('Perks','獎勵')+'</th><th>'+L('Fog battle','霧妖之戰')+'</th><th>'+L('Last quest activity','最近活動')+'</th></tr></thead><tbody>'+
+  R.map(function(x){var s=x.r.s;return '<tr><td>'+esc(s.cls)+(s.no!==''?'-'+esc(s.no):'')+'</td><td>'+esc(s.zh||'')+' <span class="muted">'+esc(s.en||'')+'</span></td><td class="n"><b>'+x.sp+'</b></td>'+x.m.map(function(m){var n=nqBits(m);return '<td class="n">'+(m===NQ_ALL?'<span class="acc" style="background:#E6F5EA">✓</span>':n?n+'/6':'<span class="muted">–</span>')+'</td>';}).join('')+'<td>'+(x.sp>=3?'🦌':'')+(x.sp>=6?' 🌟':'')+'</td><td class="n">'+(x.ba?pct(x.bc,x.ba)+'%'+(x.bl?' <span class="muted">('+x.bl+L(' lost',' 敗')+')</span>':''):'<span class="muted">–</span>')+'</td><td>'+(x.last?fmtT(x.last):'<span class="muted">–</span>')+'</td></tr>';}).join('')+'</tbody></table></div>';
+ return h;}
+function nqExcelRows(X){return [['Class 班別','No. 班號','Chinese Name 中文姓名','English Name 英文姓名','Sparks 火種','Tasks done 任務'].concat(NQ.map(function(c,i){return 'Ch'+(i+1)+' '+c.who[0]+' (tasks /6)';})).concat(['Perk 1 獎勵1','Perk 2 獎勵2','Fog battle answered 霧妖之戰答題','Fog battle correct 答對','Battles lost 落敗','Last quest activity 最近活動'])].concat(nqTeacherRows(X).map(function(x){var s=x.r.s;return [s.cls,s.no===''?'':+s.no||s.no,s.zh||'',s.en||'',x.sp,x.tasks].concat(x.m.map(nqBits)).concat([x.sp>=3?'Yes 有':'',x.sp>=6?'Yes 有':'',x.ba,x.bc,x.bl,x.last?new Date(x.last):'']);}));}
 
 /* ---------- Dictation 默書 ---------- */
 var DQ=null,dictCfg={kind:'listen',unit:1,sec:'all'};
@@ -4634,7 +4723,7 @@ var cloudTimer=null;
 function cloudSaveSoon(now){if(AUTH.mode!=='google')return;clearTimeout(cloudTimer);cloudTimer=setTimeout(cloudSave,now?50:6000);}
 function totalStars(){var n=0;for(var k in S.secs)n+=S.secs[k].stars||0;return n;}
 function cloudPayload(){var st=JSON.stringify(S);if(st.length>45000){var c=JSON.parse(st);c.seen={};c.hist=(c.hist||[]).slice(-7);st=JSON.stringify(c);}
- return {state:st,summary:{streak:S.streak,best:S.best,stars:totalStars(),level:petLevel(curPet().xp),coins:S.coins,pet:S.active,quizzes:S.quizzes,mistakes:Object.keys(S.mistakes).length,cleared:S.cleared,trophies:Object.keys(S.trophies).length,lastDay:S.lastDay||'',xp:S.xpTotal||0,col:lbCount(),leg:lbTier('legendary'),myth:lbTier('mythic')}};}
+ return {state:st,summary:{streak:S.streak,best:S.best,stars:totalStars(),level:petLevel(curPet().xp),coins:S.coins,pet:S.active,quizzes:S.quizzes,mistakes:Object.keys(S.mistakes).length,cleared:S.cleared,trophies:Object.keys(S.trophies).length,lastDay:S.lastDay||'',nq:NQ.map(function(c){return nqMask(c.id);}).join(','),sp:nobelDone(),xp:S.xpTotal||0,col:lbCount(),leg:lbTier('legendary'),myth:lbTier('mythic')}};}
 function cloudSave(){if(AUTH.mode!=='google')return;if(!tokenOk()){markStale();return;}api('save',cloudPayload()).then(function(j){if(j.ok)AUTH.lastSync=Date.now();});}
 window.addEventListener('pagehide',function(){if(AUTH.mode==='google'&&tokenOk()&&navigator.sendBeacon){try{navigator.sendBeacon(CFGX.API_URL,JSON.stringify(Object.assign({action:'save',token:AUTH.token},cloudPayload())));var a=getQ();if(a.length)navigator.sendBeacon(CFGX.API_URL,JSON.stringify({action:'record',token:AUTH.token,records:a}));}catch(e){}}});
 
@@ -4653,7 +4742,7 @@ function openAccount(){var u=AUTH.user,q=getQ().length,h='<div class="sheet-h"><
 
 /* ---- teacher dashboard ---- */
 var TD={data:null,loading:false,err:'',cls:'all',period:'30',sort:'no',dir:1};
-var MODE_NAMES={quiz:['Quiz','測驗'],practice:['Mistake practice','錯題練習'],study:['Study notes','溫習筆記'],vocab:['Vocab','詞彙跟讀'],match:['Term Match','詞彙配對'],dict_listen:['Dictation (listen)','默書（聽音）'],dict_meaning:['Dictation (meaning/picture)','默書（看義／圖）'],speak:['Read aloud','朗讀']};
+var MODE_NAMES={nobel:['Nobel Quest','諾貝爾大冒險'],quiz:['Quiz','測驗'],practice:['Mistake practice','錯題練習'],study:['Study notes','溫習筆記'],vocab:['Vocab','詞彙跟讀'],match:['Term Match','詞彙配對'],dict_listen:['Dictation (listen)','默書（聽音）'],dict_meaning:['Dictation (meaning/picture)','默書（看義／圖）'],speak:['Read aloud','朗讀']};
 function modeName(k){var m=MODE_NAMES[k];return m?L(m[0],m[1]):k;}
 function loadStats(){TD.loading=true;TD.err='';api('stats',{}).then(function(j){TD.loading=false;if(j.ok){TD.data=j;TD.at=Date.now();}else TD.err=errText(j.error);if(curScreen==='teacher')render();});}
 function pct(c,a){return a?Math.round(c/a*100):null;}
@@ -4689,7 +4778,8 @@ function teacherHTML(){var h='<h1 class="h-sec">📊 '+L('Teacher dashboard','�
   '<button class="btn small white" id="tdRe">🔄 '+L('Refresh','更新')+'</button><button class="btn small green" id="tdXl">⬇️ '+L('Download Excel','下載 Excel')+'</button><span class="muted" style="font-size:12px">'+L('Updated ','更新於 ')+fmtT(TD.at)+'</span></div>';
  var tiles=[[X.active+' / '+X.tot,L('Active students','活躍學生')],[X.ans,L('Questions answered','已答題數')],[X.ans?pct(X.cor,X.ans)+'%':'–',L('Accuracy','準確率')],[X.dans?pct(X.dcor,X.dans)+'%':'–',L('Dictation accuracy','默書準確率')],[X.mins,L('Minutes studied','溫習分鐘')],[X.avgStreak,L('Avg streak (days)','平均連續日數')]];
  h+='<div class="tiles">'+tiles.map(function(t){return '<div class="tile"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';}).join('')+'</div>';
- h+='<div class="tabs" role="tablist" style="margin:14px 0 4px"><button role="tab" data-tdv="charts" aria-selected="'+(TD.view!=='tables')+'">📈 '+L('Charts','圖表')+'</button><button role="tab" data-tdv="tables" aria-selected="'+(TD.view==='tables')+'">📋 '+L('Tables & details','表格及詳情')+'</button></div>';
+ h+='<div class="tabs" role="tablist" style="margin:14px 0 4px"><button role="tab" data-tdv="charts" aria-selected="'+(TD.view!=='tables'&&TD.view!=='nobel')+'">📈 '+L('Charts','圖表')+'</button><button role="tab" data-tdv="tables" aria-selected="'+(TD.view==='tables')+'">📋 '+L('Tables & details','表格及詳情')+'</button><button role="tab" class="nqtab" data-tdv="nobel" aria-selected="'+(TD.view==='nobel')+'">🏅 '+L('Nobel Quest','諾貝爾大冒險')+'</button></div>';
+ if(TD.view==='nobel')return h+nobelStatsHTML(X);
  if(TD.view!=='tables')return h+chartsHTML();
  var cols=[['no',L('Class/No.','班別/號')],['name',L('Name','姓名')],['last',L('Last active','最近活動')],['sess',L('Sessions','次數')],['ans',L('Answered','答題')],['acc',L('Accuracy','準確率')],['dict',L('Dictation','默書')],['stars','★'],['streak','🔥'],['weak',L('Weakest','最弱小節')]];
  var rows=X.rows.slice();var key=TD.sort,dir=TD.dir;var val=function(r){return key==='no'?r.s.cls+String(r.s.no).padStart(3,'0'):key==='name'?(r.s.en||r.s.zh):key==='last'?r.last:key==='sess'?r.sess:key==='ans'?r.ans:key==='acc'?(r.acc==null?-1:r.acc):key==='dict'?(r.dans?r.dcor/r.dans:-1):key==='stars'?+(r.prog.stars||0):key==='streak'?+(r.prog.streak||0):(r.weak?r.weak.p:2);};
@@ -4722,6 +4812,7 @@ function downloadExcel(){loadXLSX(function(){var X=TD.X,wb=XLSX.utils.book_new()
  function add(name,aoa,w){var ws=XLSX.utils.aoa_to_sheet(aoa);ws['!cols']=w.map(function(x){return {wch:x};});XLSX.utils.book_append_sheet(wb,ws,name);}
  add('Summary 總覽',[['Mochi Science Pals – S1 Science 中一科學'],['Class 班別',TD.cls==='all'?'All 全部':TD.cls],['Period 時段',per],['Generated 產生時間',new Date().toLocaleString()],[],['Students 學生人數',X.tot],['Active students 活躍學生',X.active],['Questions answered 已答題數',X.ans],['Correct 答對',X.cor],['Accuracy % 準確率',X.ans?pct(X.cor,X.ans):''],['Dictation accuracy % 默書準確率',X.dans?pct(X.dcor,X.dans):''],['Minutes studied 溫習分鐘',X.mins],['Average streak 平均連續日數',+X.avgStreak]],[30,28]);
  add('Students 學生',[['Class 班別','No. 班號','Chinese Name 中文姓名','English Name 英文姓名','Email 電郵','Sessions 次數','Quizzes 測驗','Answered 答題','Correct 答對','Accuracy % 準確率','Stars 星星','Streak 連續','Best streak 最佳連續','Mistakes to clear 待清除錯題','Minutes 分鐘','Last active 最近活動','Weakest sub-topic 最弱小節','Weakest accuracy % 最弱準確率','Dictation words 默書字數','Dictation correct 默書答對','Dictation % 默書準確率']].concat(X.rows.map(function(r){var s=r.s,p=r.prog;return [s.cls,s.no===''?'':+s.no||s.no,s.zh,s.en,s.email,r.sess,r.quiz,r.ans,r.cor,r.acc==null?'':r.acc,+(p.stars||0),+(p.streak||0),+(p.best||0),p.mistakes==null?'':+p.mistakes,Math.round(r.secs/60),r.last?new Date(r.last):'',r.weak?r.weak.id:'',r.weak?Math.round(r.weak.p*100):'',r.dans,r.dcor,r.dans?pct(r.dcor,r.dans):''];})),[8,6,12,22,26,9,9,9,9,11,7,7,10,12,9,16,12,12,10,10,10]);
+ add('Nobel 諾貝爾',nqExcelRows(X),[8,6,12,20,8,8,12,12,12,12,12,12,10,10,12,10,10,18]);
  var zhOf={};CHAPTERS.forEach(function(c){c.sections.forEach(function(s){s.terms.forEach(function(t){zhOf[dShown(t[0]).toLowerCase()]=t[1];});});});
  add('Hard to say 難讀詞彙',[['Word 詞彙','中文','Times missed 讀錯次數']].concat(X.say.map(function(x){return [x.w,zhOf[x.w.toLowerCase()]||'',x.n];})),[30,16,14]);
  add('Misspelled 常錯拼寫',[['Word 詞彙','中文','Times wrong 拼錯次數']].concat(X.spell.map(function(x){return [x.w,zhOf[x.w.toLowerCase()]||'',x.n];})),[30,16,14]);

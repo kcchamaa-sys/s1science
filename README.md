@@ -39,7 +39,9 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
 - **Story arc:** Murk, the Fog of Forgetting, has trapped two Science Pals. Students learn from six Nobel Prize winners to win six *Sparks of Discovery*.
 - **One chapter unlocks on the 1st of each month:** Marie Curie (Oct), Alexander Fleming (Nov), Charles Kao (Dec), Tu Youyou (Jan), Ernest Rutherford (Feb), Jennifer Doudna & Emmanuelle Charpentier (Mar). Chapters stay open once unlocked, so late starters can catch up.
 - **6 tasks per chapter:** story (4 scenes), reading (4 pages, about 370 words, with a quick check on each page and the other language one tap away), timeline, word vault, boss battle (8 questions), and a link to a textbook quiz (≥ 2★).
-- **Rewards:** 3 Sparks → Perk 1 (Pui Tak Canossian College): Petal the Blossom Fawn, Kai the Hong Kong newt, a scholar beret and a 「培德」 scroll. 6 Sparks → Perk 2 (Ricci Hall, HKU): Astra the Star-Map Pangolin, Romer's tree frog, a star-map cape and an armillary sphere.
+- **Rewards (shown in full on the quest page to advertise it):** 3 Sparks → Perk 1 "Garden of Virtue": Petal the Blossom Fawn, Kai the Hong Kong newt, a scholar beret and a 「求知」 scroll. 6 Sparks → Perk 2 "Hall of Star Maps": Astra the Star-Map Pangolin, Romer's tree frog, a star-map cape and an armillary sphere.
+- **Advertising:** a glowing neon banner at the top of Home, a pop-up once before the season and once when each new chapter opens, and a red "!" on the Nobel tab.
+- **Teacher dashboard:** a separate 🏅 Nobel Quest tab (join rate, Sparks per chapter and per class, progress groups, task heat-map, students not started, per-student table) plus a "Nobel 諾貝爾" sheet in the Excel download. Needs the latest `server/Code.gs` deployed (it adds two columns to the progress sheet).
 - **Preview:** teacher accounts see every chapter; you can also add `#nobel-preview` to the web address.
 - Content lives in `nobeldata.js` (in the build) and progress is stored in save code v11.
 
