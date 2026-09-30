@@ -409,6 +409,19 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 .zoomcard{background:#fff;border-radius:20px;padding:14px;max-width:900px;width:100%;max-height:94vh;overflow:auto;display:grid;gap:10px;justify-items:center}
 .zoomcard svg,.zoomcard img{width:100%;height:auto;max-height:70vh}
 .zoomcard .nkey{justify-content:center}
+
+/* food effects */
+.item .fx{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin:2px 0 4px}
+.item .fx span{font-size:11.5px;font-weight:700;background:var(--cream);border:1.5px solid var(--line);border-radius:10px;padding:1px 6px;white-space:nowrap}
+.item .fx .fav{background:#FFE5EC;border-color:#F7A9B5}
+.item.favf{box-shadow:0 0 0 3px #F7A9B5,var(--shadow)}
+.tag.buff{background:linear-gradient(90deg,#E4D6F3,#D8F3DC);font-size:12px}
+
+/* daily mission */
+.dtask{background:linear-gradient(135deg,#FFF1F5,#FFFBEA);border:2px dashed #F7A9B5}
+.dtask.done{border-style:solid;border-color:#9BCB8E;background:linear-gradient(135deg,#EEF9F1,#FFFFFF)}
+.dthead{display:flex;gap:10px;align-items:center}
+.dte{font-size:36px;line-height:1;flex:none}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -1079,7 +1092,7 @@ var FIGS={
   s+='<text x="34" y="118" text-anchor="end" font-size="11">0 °C</text><text x="34" y="54" text-anchor="end" font-size="11">100 °C</text><path d="M40 114 h260 M40 50 h260" stroke="#D9CFC6" stroke-dasharray="3 4"/>';
   s+='<path d="M44 146 L80 114 L140 114 L190 50 L250 50 L292 20" stroke="#E07A3F" stroke-width="4" fill="none" stroke-linejoin="round"/>';
   s+=lab(56,122,'A')+lab(110,100,'B')+lab(176,90,'C')+lab(220,36,'D')+lab(280,44,'E');
-  return svgWrap('0 0 310 180',s,'heating curve of ice');},
+  return svgWrap('-12 0 322 180',s,'heating curve of ice');},
  watercycle:function(){var s='<rect x="0" y="0" width="320" height="180" fill="#EAF6FB"/><path d="M0 150 Q40 140 80 150 T160 150 L160 180 L0 180Z" fill="#8FC7E8"/><path d="M150 180 L220 90 L300 180Z" fill="#B7DDA8" stroke="'+FO+'" stroke-width="2"/><circle cx="30" cy="30" r="14" fill="#FBD46D"/>';
   s+='<path d="M70 50 Q60 36 76 34 Q82 22 98 28 Q114 24 116 38 Q126 44 116 52Z" fill="#fff" stroke="'+FO+'" stroke-width="2"/><path d="M212 44 Q202 30 218 28 Q224 16 240 22 Q256 18 258 32 Q268 38 258 46Z" fill="#DDE3EA" stroke="'+FO+'" stroke-width="2"/>';
   s+='<path d="M60 136 Q54 110 66 90 Q56 76 72 62" stroke="#E07A3F" stroke-width="3" fill="none" stroke-dasharray="5 4" marker-end="url(#ah)"/><path d="M126 40 L196 36" stroke="'+FO+'" stroke-width="3" marker-end="url(#ah)"/>';
@@ -1107,7 +1120,7 @@ var FIGS={
  charts:function(){var s='<path d="M20 110 L20 14 M20 110 L150 110" stroke="'+FO+'" stroke-width="2"/>';[[30,60],[60,40],[90,90],[120,70]].forEach(function(b){s+='<rect x="'+b[0]+'" y="'+(110-b[1])+'" width="20" height="'+b[1]+'" fill="#F7A9B5" stroke="'+FO+'" stroke-width="1.5"/>';});
   s+='<path d="M190 110 L190 14 M190 110 L320 110" stroke="'+FO+'" stroke-width="2"/>';[20,48,86,64,30].forEach(function(h,i){s+='<rect x="'+(196+i*24)+'" y="'+(110-h)+'" width="24" height="'+h+'" fill="#A9D4EE" stroke="'+FO+'" stroke-width="1.5"/>';});
   s+=lab(86,130,'P')+lab(256,130,'Q');return svgWrap('0 0 330 146',s,'two charts');},
- sankey:function(){return svgWrap('0 0 320 170','<path d="M10 30 L170 30 L170 80 L10 80Z" fill="#FBD46D"/><path d="M170 30 L270 30 L270 40 L170 40Z" fill="#FFF1A8"/><path d="M270 22 L300 35 L270 48Z" fill="#FFF1A8"/><path d="M170 40 L170 80 Q220 80 220 120 L220 140 L180 140 L180 120 Q180 100 170 100Z" fill="#F7A06B"/><path d="M170 80 Q210 80 210 120 L210 140" fill="none"/><path d="M168 140 L232 140 L200 166Z" fill="#F7A06B"/>'+
+ sankey:function(){return svgWrap('0 0 350 170','<path d="M10 30 L170 30 L170 80 L10 80Z" fill="#FBD46D"/><path d="M170 30 L270 30 L270 40 L170 40Z" fill="#FFF1A8"/><path d="M270 22 L300 35 L270 48Z" fill="#FFF1A8"/><path d="M170 40 L170 80 Q220 80 220 120 L220 140 L180 140 L180 120 Q180 100 170 100Z" fill="#F7A06B"/><path d="M170 80 Q210 80 210 120 L210 140" fill="none"/><path d="M168 140 L232 140 L200 166Z" fill="#F7A06B"/>'+
   T2(80,60,'100 J electrical','100 J 電能','middle',12)+T2(236,18,'20 J light','20 J 光能','middle',12)+T2(290,120,'80 J thermal','80 J 熱能','middle',12),'Sankey diagram of a light bulb');},
  convection:function(){return svgWrap('0 0 240 190','<path d="M50 20 L50 150 Q50 160 60 160 L180 160 Q190 160 190 150 L190 20" fill="#EAF6FB" stroke="'+FO+'" stroke-width="3"/><path d="M76 140 L76 50 Q76 40 90 40 L150 40 Q164 40 164 50 L164 140 Q164 146 156 146 L84 146" stroke="#E07A3F" stroke-width="3.5" fill="none" stroke-dasharray="7 5"/><path d="M70 64 L76 50 L82 64 M158 126 L164 140 L170 126" stroke="#E07A3F" stroke-width="3.5" fill="none"/><path d="M66 176 C60 166 64 162 70 166 C70 160 78 158 76 166 C84 162 86 170 80 176Z" fill="#F7A06B"/>'+T2(120,184,'heat','加熱','middle',11),'convection in a beaker');},
  particles:function(){var s='';function box(x,l){return '<rect x="'+x+'" y="10" width="90" height="90" rx="6" fill="#fff" stroke="'+FO+'" stroke-width="2.5"/>'+lab(x+45,120,l);}
@@ -1225,9 +1238,10 @@ function ld(x1,y1,x2,y2){return '<path d="M'+x1+' '+y1+' L'+x2+' '+y2+'" stroke=
 function arw(id,col){return '<marker id="'+id+'" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="'+col+'"/></marker>';}
 function box(x,y,w,h,fill,t1,t2,sz){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="10" fill="'+fill+'" stroke="'+FO+'" stroke-width="2"/>'+T2(x+w/2,y+h/2+(t2?-3:4),t1[0],t1[1],'middle',sz||11)+(t2?T2(x+w/2,y+h/2+12,t2[0],t2[1],'middle',10):'');}
 function flame(x,y,s){s=s||1;return '<path transform="translate('+x+' '+y+') scale('+s+')" d="M0 0 C-10 -8 -8 -18 0 -30 C8 -18 10 -8 0 0Z" fill="#F7A06B" stroke="#E0763A" stroke-width="1.5"/><path transform="translate('+x+' '+y+') scale('+s+')" d="M0 -2 C-4 -6 -3 -12 0 -18 C3 -12 4 -6 0 -2Z" fill="#FFE08A"/>';}
+function fitSz(t,w,mx){var u=0;for(var i=0;i<t.length;i++)u+=t.charCodeAt(i)>0x2E80?1:0.6;return Math.max(7,Math.min(mx,Math.floor(w/(u||1)*10)/10));}
 function chainFig(items,q,label){var n=items.length,w=Math.max(360,n*112),bw=(w-20-(n-1)*22)/n,s='<defs>'+arw('ca','#E0763A')+'</defs>';
  items.forEach(function(it,i){var x=10+i*(bw+22);var hide=q===i;s+='<rect x="'+x+'" y="20" width="'+bw+'" height="62" rx="12" fill="'+(hide?'#FFF1C5':it[2]||'#EAF6FB')+'" stroke="'+FO+'" stroke-width="2"'+(hide?' stroke-dasharray="5 4"':'')+'/>';
-  s+=hide?'<text x="'+(x+bw/2)+'" y="58" text-anchor="middle" font-size="26" font-weight="800">?</text>':T2(x+bw/2,47,it[0][0],it[0][1],'middle',11)+(it[1]?T2(x+bw/2,66,it[1][0],it[1][1],'middle',10):'');
+  s+=hide?'<text x="'+(x+bw/2)+'" y="58" text-anchor="middle" font-size="26" font-weight="800">?</text>':T2(x+bw/2,47,it[0][0],it[0][1],'middle',fitSz(L(it[0][0],it[0][1]),bw-10,11))+(it[1]?T2(x+bw/2,66,it[1][0],it[1][1],'middle',fitSz(L(it[1][0],it[1][1]),bw-10,10)):'');
   if(i<n-1)s+='<path d="M'+(x+bw+3)+' 51 L'+(x+bw+19)+' 51" stroke="#E0763A" stroke-width="3" marker-end="url(#ca)"/>';});
  return svgWrap('0 0 '+w+' 100',s,label);}
 var EN={light:['light energy','光能'],thermal:['thermal energy','熱能'],sound:['sound energy','聲能'],chem:['chemical energy','化學能'],kin:['kinetic energy','動能'],pot:['potential energy','勢能'],elec:['electrical energy','電能']};
@@ -1256,8 +1270,8 @@ Object.assign(FIGS,{
  /* energy conversion chains */
  e_torch:function(){return chainFig([[EN.chem,['(dry cells)','（乾電池）'],'#FFF1C5'],[EN.elec,null,'#E4D6F3'],[EN.light,['+ thermal energy','＋ 熱能'],'#FFE5EC']],null,'energy conversion in a torch');},
  e_torch_q:function(){return chainFig([[EN.chem,['(dry cells)','（乾電池）'],'#FFF1C5'],[EN.elec,null,'#E4D6F3'],[EN.light,['+ thermal energy','＋ 熱能'],'#FFE5EC']],1,'energy conversion in a torch');},
- e_hydro:function(){return chainFig([[EN.pot,['(water up high)','（高處的水）'],'#DDF0FB'],[EN.kin,['(flowing water, turbine)','（流水、渦輪機）'],'#D8F3DC'],[EN.elec,['(generator)','（發電機）'],'#E4D6F3']],null,'energy conversion in hydroelectric power');},
- e_hydro_q:function(){return chainFig([[EN.pot,['(water up high)','（高處的水）'],'#DDF0FB'],[EN.kin,['(flowing water, turbine)','（流水、渦輪機）'],'#D8F3DC'],[EN.elec,['(generator)','（發電機）'],'#E4D6F3']],2,'energy conversion in hydroelectric power');},
+ e_hydro:function(){return chainFig([[EN.pot,['(water up high)','（高處的水）'],'#DDF0FB'],[EN.kin,['(turbine)','（渦輪機）'],'#D8F3DC'],[EN.elec,['(generator)','（發電機）'],'#E4D6F3']],null,'energy conversion in hydroelectric power');},
+ e_hydro_q:function(){return chainFig([[EN.pot,['(water up high)','（高處的水）'],'#DDF0FB'],[EN.kin,['(turbine)','（渦輪機）'],'#D8F3DC'],[EN.elec,['(generator)','（發電機）'],'#E4D6F3']],2,'energy conversion in hydroelectric power');},
  e_station:function(){return chainFig([[EN.chem,['(fuel)','（燃料）'],'#FFF1C5'],[EN.thermal,['(boiling water)','（沸水）'],'#FFE5EC'],[EN.kin,['(steam, turbine)','（蒸汽、渦輪機）'],'#D8F3DC'],[EN.elec,['(generator)','（發電機）'],'#E4D6F3']],null,'energy conversion in a power station');},
  e_station_q:function(){return chainFig([[EN.chem,['(fuel)','（燃料）'],'#FFF1C5'],[EN.thermal,['(boiling water)','（沸水）'],'#FFE5EC'],[EN.kin,['(steam, turbine)','（蒸汽、渦輪機）'],'#D8F3DC'],[EN.elec,['(generator)','（發電機）'],'#E4D6F3']],1,'energy conversion in a power station');},
  /* swinging bean bag: A and C are the highest points, B the lowest */
@@ -1276,7 +1290,7 @@ Object.assign(FIGS,{
   s+='<path d="M170 80 H300 V70 L330 95 L300 120 V110 H170Z" fill="#7FBF8E"/>';   // 300 J kinetic (30 px)
   s+='<path d="M170 70 Q200 70 200 40 V30 H192 L205 12 L218 30 H210 V40 Q210 80 170 80Z" fill="#A9D4EE"/>'; // 100 J sound (10 px) up
   s+='<path d="M170 110 Q210 110 210 150 V160 H218 L205 178 L192 160 H200 V150 Q200 120 170 120Z" fill="#F7A06B"/>'; // 100 J thermal (10 px) down
-  s+=T2(24,64,'500 J electrical energy','500 J 電能','start',11)+T2(232,24,'100 J sound energy','100 J 聲能','start',11)+T2(250,140,'300 J kinetic energy','300 J 動能','start',11)+T2(224,190,'100 J thermal energy','100 J 熱能','start',11);
+  s+=T2(24,64,'500 J electrical energy','500 J 電能','start',11)+T2(232,24,'100 J sound energy','100 J 聲能','start',11)+T2(226,140,'300 J kinetic energy','300 J 動能','start',11)+T2(224,190,'100 J thermal energy','100 J 熱能','start',11);
   return svgWrap('0 0 360 200',s,'Sankey diagram of an electric fan');},
  /* ---------- 5.2 heat transfer ---------- */
  h_rod:function(){var s='<rect x="40" y="60" width="240" height="12" rx="4" fill="#E9A36B" stroke="'+FO+'" stroke-width="2"/><path d="M280 66 H320 M320 20 V170 M296 170 H344" stroke="'+FO+'" stroke-width="4" stroke-linecap="round"/><rect x="300" y="58" width="24" height="16" rx="3" fill="#8A7E7C"/>';
@@ -1345,8 +1359,7 @@ Object.assign(FIGS,{
   s+=T2(105,204,'Grade 1 = most efficient','1 級＝最具能源效益','middle',10);
   return svgWrap('0 0 210 220',s,'energy label');},
  s_greenhouse:function(){var s='<defs>'+arw('gh','#E0763A')+arw('gi','#F0506A')+'</defs><rect width="340" height="190" fill="#1E2A4A"/><circle cx="36" cy="36" r="20" fill="#FBD46D"/>';
-  s+='<circle cx="220" cy="210" r="120" fill="#3E7DE0"/><path d="M130 150 Q170 120 220 130 Q260 120 300 150" fill="#6FB36A"/>';
-  s+='<circle cx="220" cy="210" r="150" fill="none" stroke="#9EC9F0" stroke-width="10" opacity=".45"/>';
+  s+='<clipPath id="ghc"><rect width="340" height="190"/></clipPath><g clip-path="url(#ghc)"><circle cx="220" cy="210" r="120" fill="#3E7DE0"/><path d="M130 150 Q170 120 220 130 Q260 120 300 150" fill="#6FB36A"/><circle cx="220" cy="210" r="150" fill="none" stroke="#9EC9F0" stroke-width="10" opacity=".45"/></g>';
   s+='<path d="M56 50 L170 110" stroke="#FBD46D" stroke-width="3" marker-end="url(#gh)"/><path d="M60 70 L150 130" stroke="#FBD46D" stroke-width="3" marker-end="url(#gh)"/>';
   s+='<path d="M230 100 L250 70 L272 92 L292 64" stroke="#F0506A" stroke-width="3" fill="none" marker-end="url(#gi)"/><path d="M200 110 L210 78 L186 72" stroke="#F0506A" stroke-width="3" fill="none" marker-end="url(#gi)"/>';
   s+=lab(300,24,'X')+ld(300,35,300,62)+T2(250,184,'Earth','地球','middle',11).replace('font-weight="700"','font-weight="700" fill="#fff"');
@@ -1356,7 +1369,7 @@ Object.assign(FIGS,{
   return svgWrap('0 0 300 170',pot(80,false)+pot(220,true)+lab(80,158,'P')+lab(220,158,'Q'),'two plants in a fair test');},
  ramp_car:function(){var s='<defs>'+arw('rc',FO)+'</defs><path d="M20 40 L150 130 H330" stroke="'+FO+'" stroke-width="4" fill="none"/><path d="M20 40 V130 H150" stroke="#D9CFC6" stroke-width="2" fill="none" stroke-dasharray="4 4"/>';
   s+='<rect x="36" y="36" width="30" height="14" rx="4" fill="#F7A9B5" stroke="'+FO+'" stroke-width="2" transform="rotate(35 51 43)"/><circle cx="44" cy="58" r="4" fill="'+FO+'"/><circle cx="62" cy="70" r="4" fill="'+FO+'"/>';
-  s+='<path d="M8 40 V128" stroke="'+FO+'" stroke-width="1.5" marker-start="url(#rc)" marker-end="url(#rc)"/>'+T2(8,150,'height','高度','middle',10);
+  s+='<path d="M8 40 V128" stroke="'+FO+'" stroke-width="1.5" marker-start="url(#rc)" marker-end="url(#rc)"/>'+T2(2,150,'height','高度','start',10);
   s+='<path d="M152 146 H300" stroke="'+FO+'" stroke-width="1.5" marker-start="url(#rc)" marker-end="url(#rc)"/>'+T2(226,162,'distance travelled','行走距離','middle',10)+'<rect x="290" y="116" width="30" height="14" rx="4" fill="#F7A9B5" stroke="'+FO+'" stroke-width="2"/>';
   return svgWrap('0 0 340 170',s,'toy car and ramp');},
  dissolve3:function(){function bk(x,hot,lump,stir){var s='<path d="M'+(x-40)+' 40 V130 Q'+(x-40)+' 138 '+(x-32)+' 138 H'+(x+32)+' Q'+(x+40)+' 138 '+(x+40)+' 130 V40" fill="#fff" stroke="'+FO+'" stroke-width="2.5"/><rect x="'+(x-38)+'" y="70" width="76" height="66" fill="'+(hot?'#FFD2C4':'#DDF0FB')+'"/>';
@@ -1417,6 +1430,90 @@ Object.assign(FIGS,{
   return svgWrap('0 0 300 150',bk(70,false)+bk(230,true)+'<path d="M130 70 H168" stroke="'+FO+'" stroke-width="3" marker-end="url(#dp)"/><defs>'+arw('dp',FO)+'</defs>'+lab(70,142,'P')+lab(230,142,'Q'),'sugar dissolving – particle view').replace('viewBox="0 0 300 150"','viewBox="0 0 300 158"');},
  railgap:function(){function rail(y,gap){return '<rect x="10" y="'+y+'" width="'+(150-gap/2)+'" height="12" fill="#8A7E7C" stroke="'+FO+'" stroke-width="1.5"/><rect x="'+(160+gap/2)+'" y="'+y+'" width="'+(150-gap/2)+'" height="12" fill="#8A7E7C" stroke="'+FO+'" stroke-width="1.5"/>';}
   return svgWrap('0 0 320 110',rail(20,14)+rail(70,2)+lab(160,50,'P')+lab(160,100,'Q'),'gaps between railway tracks').replace('viewBox="0 0 320 110"','viewBox="0 0 320 116"');}
+});
+
+/* ===== Biology diagrams, redrawn: textbook-realistic shapes with a soft, friendly style =====
+   Letters and what they point to are unchanged, so existing questions still match. */
+Object.assign(FIGS,{
+ microscope:function(){var s='<defs><linearGradient id="msM" x1="0" x2="1"><stop offset="0" stop-color="#5E6B7A"/><stop offset=".45" stop-color="#9AA7B6"/><stop offset="1" stop-color="#4E5A68"/></linearGradient>'+
+  '<linearGradient id="msT" x1="0" x2="1"><stop offset="0" stop-color="#C9D1DA"/><stop offset=".4" stop-color="#FFFFFF"/><stop offset="1" stop-color="#AEB8C3"/></linearGradient>'+
+  '<linearGradient id="msB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6F7C8C"/><stop offset="1" stop-color="#3F4A57"/></linearGradient></defs>';
+  // base and arm
+  s+='<path d="M58 206 Q58 196 70 196 L196 196 Q208 196 208 206 L208 214 Q208 222 198 222 L68 222 Q58 222 58 214Z" fill="url(#msB)" stroke="'+FO+'" stroke-width="2"/>';
+  s+='<path d="M178 198 L178 150 Q178 96 150 62" stroke="'+FO+'" stroke-width="22" fill="none" stroke-linecap="round"/><path d="M178 198 L178 150 Q178 96 150 62" stroke="url(#msM)" stroke-width="17" fill="none" stroke-linecap="round"/>';
+  // focus knobs
+  s+='<circle cx="190" cy="132" r="12" fill="#8C98A6" stroke="'+FO+'" stroke-width="2"/><circle cx="190" cy="132" r="5" fill="#C9D1DA"/><circle cx="192" cy="156" r="7" fill="#8C98A6" stroke="'+FO+'" stroke-width="2"/>';
+  // body tube + eyepiece
+  s+='<rect x="108" y="36" width="30" height="66" rx="4" fill="url(#msT)" stroke="'+FO+'" stroke-width="2"/><rect x="113" y="14" width="20" height="24" rx="3" fill="url(#msT)" stroke="'+FO+'" stroke-width="2"/><rect x="110" y="10" width="26" height="7" rx="3" fill="#4E5A68" stroke="'+FO+'" stroke-width="1.5"/>';
+  // revolving nosepiece + objectives
+  s+='<path d="M100 102 L146 102 L140 114 L106 114Z" fill="#8C98A6" stroke="'+FO+'" stroke-width="2" stroke-linejoin="round"/>';
+  s+='<rect x="104" y="112" width="10" height="20" rx="2" fill="url(#msT)" stroke="'+FO+'" stroke-width="1.5" transform="rotate(14 109 112)"/><rect x="118" y="113" width="11" height="26" rx="2" fill="url(#msT)" stroke="'+FO+'" stroke-width="1.5"/><rect x="118" y="134" width="11" height="4" fill="#E0505A"/><rect x="133" y="112" width="10" height="17" rx="2" fill="url(#msT)" stroke="'+FO+'" stroke-width="1.5" transform="rotate(-14 138 112)"/>';
+  // stage with slide and clips
+  s+='<rect x="70" y="146" width="116" height="10" rx="3" fill="#3F4A57" stroke="'+FO+'" stroke-width="2"/><rect x="96" y="142" width="54" height="5" rx="1" fill="#DDF0FB" stroke="#8FB3E0" stroke-width="1.2"/><circle cx="123" cy="144" r="3" fill="#F7A9B5"/><path d="M84 142 L100 144 M166 142 L150 144" stroke="#C9D1DA" stroke-width="3" stroke-linecap="round"/>';
+  // mirror
+  s+='<path d="M123 170 V178" stroke="'+FO+'" stroke-width="3"/><ellipse cx="123" cy="184" rx="18" ry="7" fill="#FFF6D6" stroke="'+FO+'" stroke-width="2"/><ellipse cx="119" cy="182" rx="8" ry="2.5" fill="#fff"/>';
+  s+=lab(236,22,'A')+ld(225,22,134,22)+lab(236,124,'B')+ld(225,124,130,128)+lab(22,150,'C')+ld(33,150,72,151)+lab(22,186,'D')+ld(33,186,105,184);
+  return svgWrap('0 0 250 230',s,'light microscope');},
+ plantcell:function(){var s='<defs><radialGradient id="pcV" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#F3FBFF"/><stop offset="1" stop-color="#BFE2F5"/></radialGradient><radialGradient id="pcN" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#E4D6F3"/><stop offset="1" stop-color="#A58BD6"/></radialGradient></defs>';
+  s+='<rect x="50" y="16" width="180" height="156" rx="16" fill="#9CCB8C" stroke="#5E8F52" stroke-width="2"/>';
+  s+='<rect x="58" y="24" width="164" height="140" rx="11" fill="#EAF6DF" stroke="#4E7D44" stroke-width="1.6"/>';
+  for(var i=0;i<26;i++){s+='<circle cx="'+(66+(i*37)%150)+'" cy="'+(32+(i*23)%124)+'" r="1.3" fill="#B7D9A6"/>';}
+  s+='<rect x="96" y="42" width="98" height="98" rx="30" fill="url(#pcV)" stroke="#8FC7E8" stroke-width="2"/><path d="M110 58 Q126 48 146 52" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".8"/>';
+  s+='<circle cx="77" cy="130" r="14" fill="url(#pcN)" stroke="#6F5AA8" stroke-width="1.8"/><circle cx="80" cy="127" r="4.5" fill="#6F5AA8"/>';
+  [[76,40,0],[150,32,0],[206,62,90],[208,104,90],[204,146,20],[150,154,0],[112,154,0],[72,92,90]].forEach(function(c){var r=c[2];s+='<g transform="rotate('+r+' '+c[0]+' '+c[1]+')"><ellipse cx="'+c[0]+'" cy="'+c[1]+'" rx="11" ry="6" fill="#5FA052" stroke="#3E7535" stroke-width="1.2"/><path d="M'+(c[0]-6)+' '+c[1]+' h12 M'+(c[0]-5)+' '+(c[1]-2.5)+' h10 M'+(c[0]-5)+' '+(c[1]+2.5)+' h10" stroke="#A9D98F" stroke-width="1"/></g>';});
+  s+=lab(270,26,'A')+ld(259,26,227,34)+lab(270,74,'B')+ld(259,74,222,78)+lab(270,146,'C')+ld(259,146,212,146)+lab(20,130,'D')+ld(31,130,64,130)+lab(20,64,'E')+ld(31,64,100,64);
+  return svgWrap('0 0 290 190',s,'plant cell');},
+ female:function(){var s='<defs><linearGradient id="feU" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7B6C6"/><stop offset="1" stop-color="#E88FA6"/></linearGradient></defs>';
+  // oviducts with fimbriae
+  s+='<path d="M124 70 Q96 44 70 56 Q58 62 60 78" stroke="'+FO+'" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M124 70 Q96 44 70 56 Q58 62 60 78" stroke="#F4A7B9" stroke-width="5" fill="none" stroke-linecap="round"/>';
+  s+='<path d="M176 70 Q204 44 230 56 Q242 62 240 78" stroke="'+FO+'" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M176 70 Q204 44 230 56 Q242 62 240 78" stroke="#F4A7B9" stroke-width="5" fill="none" stroke-linecap="round"/>';
+  s+='<path d="M54 80 l-4 8 M60 82 l0 9 M66 80 l4 8 M246 80 l4 8 M240 82 l0 9 M234 80 l-4 8" stroke="#E88FA6" stroke-width="3" stroke-linecap="round"/>';
+  // ovaries with follicles
+  [[54,104],[246,104]].forEach(function(o){s+='<ellipse cx="'+o[0]+'" cy="'+o[1]+'" rx="17" ry="12" fill="#F9D3DC" stroke="'+FO+'" stroke-width="2"/><circle cx="'+(o[0]-6)+'" cy="'+(o[1]-2)+'" r="3" fill="#fff" stroke="#E88FA6"/><circle cx="'+(o[0]+5)+'" cy="'+(o[1]+3)+'" r="2.4" fill="#fff" stroke="#E88FA6"/><circle cx="'+(o[0]+2)+'" cy="'+(o[1]-5)+'" r="1.8" fill="#fff" stroke="#E88FA6"/>';});
+  s+='<path d="M60 92 Q66 84 72 88 M240 92 Q234 84 228 88" stroke="#C9A0B0" stroke-width="2" fill="none"/>';
+  // uterus: thick muscular wall and inner cavity, cervix, vagina
+  s+='<path d="M118 62 Q150 50 182 62 Q196 104 168 134 L160 146 L140 146 L132 134 Q104 104 118 62Z" fill="url(#feU)" stroke="'+FO+'" stroke-width="2.5"/>';
+  s+='<path d="M132 74 Q150 68 168 74 Q164 104 152 122 L148 122 Q136 104 132 74Z" fill="#FFE5EC"/>';
+  s+='<path d="M140 146 L138 190 L162 190 L160 146" fill="#F4A7B9" stroke="'+FO+'" stroke-width="2.5"/><path d="M150 150 V188" stroke="#FFE5EC" stroke-width="5"/>';
+  s+=lab(22,130,'A')+ld(32,126,46,112)+lab(272,36,'B')+ld(261,40,216,52)+lab(248,150,'C')+ld(237,148,172,112)+lab(210,196,'D')+ld(199,194,160,180);
+  return svgWrap('0 0 300 210',s,'female reproductive system');},
+ foetus:function(){var s='<defs><radialGradient id="ftA" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#EEF8FE"/><stop offset="1" stop-color="#CBE6F6"/></radialGradient><linearGradient id="ftS" x1="0" x2="1"><stop offset="0" stop-color="#FFE9D6"/><stop offset="1" stop-color="#F6CFB3"/></linearGradient></defs>';
+  s+='<ellipse cx="146" cy="100" rx="104" ry="90" fill="#F4A7B9" stroke="'+FO+'" stroke-width="2.5"/>';
+  s+='<ellipse cx="146" cy="102" rx="88" ry="75" fill="url(#ftA)" stroke="#9FC7E2" stroke-width="2"/>';
+  // placenta on the uterus wall
+  s+='<path d="M62 54 Q46 100 66 146 Q84 124 82 100 Q82 72 62 54Z" fill="#C8475E" stroke="'+FO+'" stroke-width="2"/><path d="M66 70 q6 8 0 16 M70 96 q6 8 0 16 M66 122 q6 6 0 12" stroke="#E88FA6" stroke-width="2" fill="none"/>';
+  // curled foetus (head down, facing the wall)
+  s+='<path d="M150 58 Q196 52 204 92 Q210 132 176 146 Q150 154 136 138" fill="url(#ftS)" stroke="'+FO+'" stroke-width="2.2"/>';
+  s+='<circle cx="138" cy="120" r="27" fill="url(#ftS)" stroke="'+FO+'" stroke-width="2.2"/><path d="M122 122 q4 4 8 0" stroke="'+FO+'" stroke-width="1.8" fill="none"/><ellipse cx="150" cy="112" rx="4" ry="5" fill="#F6CFB3" stroke="'+FO+'" stroke-width="1.2"/>';
+  s+='<path d="M186 110 Q176 128 160 132" stroke="'+FO+'" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M186 110 Q176 128 160 132" stroke="#F6CFB3" stroke-width="4" fill="none" stroke-linecap="round"/>';
+  s+='<path d="M196 76 Q180 72 170 86" stroke="'+FO+'" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M196 76 Q180 72 170 86" stroke="#F6CFB3" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="168" cy="90" rx="7" ry="5" fill="#F6CFB3" stroke="'+FO+'" stroke-width="1.5"/><circle cx="158" cy="132" r="5" fill="#F6CFB3" stroke="'+FO+'" stroke-width="1.5"/><path d="M114 108 q-4 4 -2 9" stroke="'+FO+'" stroke-width="1.5" fill="none"/>';
+  // umbilical cord (twisted)
+  s+='<path d="M80 100 Q104 88 118 100 Q132 112 160 104" stroke="#A58BD6" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M86 96 l6 6 M98 92 l5 7 M110 96 l4 7 M124 104 l3 7 M140 108 l2 6" stroke="#E4D6F3" stroke-width="2"/>';
+  s+=lab(22,100,'P')+ld(33,100,62,100)+lab(100,188,'Q')+ld(100,177,104,94)+lab(276,60,'R')+ld(265,62,220,76);
+  return svgWrap('0 0 290 200',s,'foetus in the uterus');}
+});
+Object.assign(FIGS,{
+ cells4:function(){var s='<defs><radialGradient id="c4R" cx=".5" cy=".5" r=".55"><stop offset="0" stop-color="#F7A9B5"/><stop offset=".55" stop-color="#E8566B"/><stop offset="1" stop-color="#C63A52"/></radialGradient></defs>';
+  // P sperm: head with cap, midpiece, long tail
+  s+='<g><ellipse cx="30" cy="52" rx="13" ry="9" fill="#EAF4FC" stroke="'+FO+'" stroke-width="2"/><path d="M19 46 Q22 42 30 43 Q38 42 41 46" fill="#D6C2F5" stroke="'+FO+'" stroke-width="1.2"/><ellipse cx="29" cy="53" rx="6" ry="4.5" fill="#B9A3E3"/><rect x="42" y="49" width="12" height="6" rx="3" fill="#F7C6A0" stroke="'+FO+'" stroke-width="1.5"/><path d="M54 52 Q64 42 74 52 T94 52 T106 50" stroke="'+FO+'" stroke-width="2" fill="none" stroke-linecap="round"/>'+lab(62,100,'P')+'</g>';
+  // Q red blood cell (biconcave, no nucleus) – top and side views
+  s+='<g><ellipse cx="150" cy="46" rx="26" ry="24" fill="url(#c4R)" stroke="'+FO+'" stroke-width="2"/><path d="M130 80 Q130 72 138 72 Q150 78 162 72 Q170 72 170 80 Q170 88 162 88 Q150 82 138 88 Q130 88 130 80Z" fill="#E8566B" stroke="'+FO+'" stroke-width="1.5"/>'+lab(150,100,'Q')+'</g>';
+  // R nerve cell: branched dendrites, cell body, long axon with myelin, endings
+  s+='<g><path d="M218 50 l-10 -14 m4 6 l-10 0 M216 44 l-4 -16 M226 40 l2 -16 m-1 7 l8 -4 M232 48 l12 -10 M214 58 l-14 6 m6 -3 l-2 10 M222 62 l-4 14" stroke="'+FO+'" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="222" cy="51" r="11" fill="#FFF1C5" stroke="'+FO+'" stroke-width="2"/><circle cx="222" cy="51" r="4" fill="#B9A3E3"/>';
+  s+='<path d="M233 52 H300" stroke="'+FO+'" stroke-width="2"/>'+[240,256,272,288].map(function(x){return '<rect x="'+x+'" y="48" width="12" height="8" rx="4" fill="#DDEFF9" stroke="'+FO+'" stroke-width="1.2"/>';}).join('')+'<path d="M300 52 l8 -8 M300 52 l9 0 M300 52 l8 8" stroke="'+FO+'" stroke-width="2" stroke-linecap="round"/>'+lab(262,100,'R')+'</g>';
+  // S root hair cell
+  s+='<g><path d="M330 30 H366 Q372 30 372 36 V54 H398 Q404 54 404 60 Q404 66 398 66 H372 V72 Q372 78 366 78 H330 Q324 78 324 72 V36 Q324 30 330 30Z" fill="#E3F1D8" stroke="#5E8F52" stroke-width="2.5"/><rect x="332" y="38" width="30" height="32" rx="10" fill="#CFE9F7"/><circle cx="378" cy="60" r="4.5" fill="#B9A3E3"/>'+lab(362,100,'S')+'</g>';
+  return svgWrap('0 0 414 116',s,'different kinds of cells');},
+ male:function(){var s='<defs><linearGradient id="maB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6D6"/><stop offset="1" stop-color="#F5E3A6"/></linearGradient></defs>';
+  s+='<path d="M120 22 Q150 10 180 22 Q196 44 180 62 Q150 74 120 62 Q104 44 120 22Z" fill="url(#maB)" stroke="'+FO+'" stroke-width="2.5"/>';
+  s+='<ellipse cx="150" cy="80" rx="18" ry="10" fill="#E9C9A8" stroke="'+FO+'" stroke-width="1.8"/>';
+  s+='<path d="M150 64 V150" stroke="'+FO+'" stroke-width="11" stroke-linecap="round"/><path d="M150 64 V150" stroke="#F4A7B9" stroke-width="6" stroke-linecap="round"/>';
+  s+='<path d="M116 150 Q150 200 184 150" fill="#FBE3D2" stroke="'+FO+'" stroke-width="2.2"/>';
+  [[132,160],[168,160]].forEach(function(t){s+='<ellipse cx="'+t[0]+'" cy="'+t[1]+'" rx="12" ry="15" fill="#F7A9B5" stroke="'+FO+'" stroke-width="2"/><path d="M'+(t[0]-6)+' '+(t[1]-6)+' q6 4 0 8 q6 4 0 8" stroke="#E88FA6" stroke-width="1.5" fill="none"/>';});
+  s+='<path d="M132 145 Q104 110 116 74 Q124 60 140 78" stroke="'+FO+'" stroke-width="6" fill="none"/><path d="M132 145 Q104 110 116 74 Q124 60 140 78" stroke="#8CCB7E" stroke-width="3" fill="none"/>';
+  s+='<path d="M168 145 Q196 110 184 74 Q176 60 160 78" stroke="'+FO+'" stroke-width="6" fill="none"/><path d="M168 145 Q196 110 184 74 Q176 60 160 78" stroke="#8CCB7E" stroke-width="3" fill="none"/>';
+  s+=lab(40,172,'A')+ld(51,170,122,162)+lab(40,104,'B')+ld(51,104,108,104)+lab(256,126,'C')+ld(245,126,154,126)+lab(256,40,'D')+ld(245,40,188,40);
+  return svgWrap('0 0 280 204',s,'male reproductive system (simplified)');}
 });
 
 /* ===== Pictures placed inside the study notes =====
@@ -2087,6 +2184,11 @@ var PETS=[
   cond:{k:'days',n:60,en:'Study on 60 different days',zh:'在 60 個不同日子溫習'}}
 ];
 (function(){var t={mochi:'common',matcha:'rare',sakura:'rare',pudding:'rare',soda:'rare',taro:'epic',kinako:'rare',goma:'epic',mikan:'epic',nori:'epic',ume:'epic',wata:'epic',hana:'epic',kuma:'epic'};PETS.forEach(function(P){if(!P.tier)P.tier=t[P.id]||'rare';if(P.price&&['hana','kuma'].indexOf(P.id)<0)P.price=Math.round(P.price*1.5/10)*10;});})();
+PETS.push({id:'finn',en:'Finn',zh:'阿鰭',body:'#8FBCE6',belly:'#FFFFFF',ears:'shark',price:2000,tier:'mythic',
+  desc:['A mythic baby shark who surfs the ocean currents (convection!) and never stops swimming – just like a streak.','神話級小鯊魚，乘着洋流（對流！）衝浪，永不停止游動——就像連續溫習一樣。'],cond:null},
+ {id:'luna',en:'Luna',zh:'月月',body:'#8A86C9',belly:'#F3EEFF',ears:'owl',price:5000,tier:'mythic',
+  desc:['A mythic moon owl of wisdom. She reads every textbook at night and turns her head 270°!','神話級智慧月光貓頭鷹。她晚上讀遍所有課本，頭部可轉動 270°！'],cond:null});
+
 function petDef(id){for(var i=0;i<PETS.length;i++)if(PETS[i].id===id)return PETS[i];return PETS[0];}
 function petLevel(xp){return Math.floor(Math.sqrt(xp/25))+1;}
 function lvXP(l){return 25*(l-1)*(l-1);}
@@ -2277,9 +2379,10 @@ function shopHTML(){var tabs=[['food','🍙 '+L('Snacks','小食')],['wear','�
  if(shopTab==='wear'||shopTab==='room'||shopTab==='quests')h+='<p class="muted" style="margin:10px 0 0;font-size:14px">'+TIERS.map(function(t){return tierBadge({tier:t});}).join(' ')+'<br>'+L('✦ Rare sub-topic items: 3★ in that quiz · 💎 Epic unit rewards: 3★ in a whole unit · 👑 Legendary: very hard milestones · 🌈 Mythic: long streaks and the toughest challenges.','✦ 稀有小節物品：該測驗 3★ · 💎 史詩單元獎勵：整個單元 3★ · 👑 傳說：非常困難的里程碑 · 🌈 神話：超長連續溫習及最艱難挑戰。')+'</p>'+(shopTab==='quests'?'<div class="row" style="margin-top:8px;gap:8px"><button class="btn small" data-fx="legendary">👑 '+L('Preview legendary unlock','預覽傳說級解鎖')+'</button><button class="btn small lav" data-fx="mythic">🌈 '+L('Preview mythic unlock','預覽神話級解鎖')+'</button></div>':'');
  if(shopTab==='clinic')return h+clinicHTML()+'<div class="items">'+medCards()+'</div>';
  h+='<div class="items">';
- if(shopTab==='food')FOODS.forEach(function(f){h+='<div class="item"><div class="pic" style="font-size:54px">'+f.e+'</div><div class="nm">'+esc(LL(f))+'</div><div class="sub">⚡+'+f.en2+(f.hp?' 💗+'+f.hp:'')+' · '+L('Have ','持有 ')+(S.food[f.id]||0)+'</div><button class="btn small" data-buyfood="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>🪙 '+f.price+'</button></div>';});
+ if(shopTab==='food')h+='<p class="muted" style="margin:8px 0 0;font-size:14px">❤️ '+L('Each pet has a favourite food (double happiness). 🧠/🪙 boosts multiply your rewards for a while. 🍬 3 sugary snacks a day = sugar crash!','每隻寵物都有最愛食物（快樂加倍）。🧠／🪙 加成可在一段時間內倍增獎勵。🍬 一天吃 3 款高糖小食＝血糖急降！')+'</p>';
+ if(shopTab==='food')FOODS.slice().sort(function(x,y){return x.price-y.price;}).forEach(function(f){h+='<div class="item food'+(PET_FAV[S.active]===f.id?' favf':'')+'"><div class="pic" style="font-size:50px">'+f.e+'</div><div class="nm">'+esc(LL(f))+'</div>'+foodFx(f,S.active)+'<div class="sub">'+L('Have ','持有 ')+(S.food[f.id]||0)+(f.tip?' · '+esc(L(f.tip[0],f.tip[1])):'')+'</div><button class="btn small" data-buyfood="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>🪙 '+f.price+'</button></div>';});
  else if(shopTab==='pets')PETS.slice().sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier);}).forEach(function(P){var has=!!S.pets[P.id];h+='<div class="item t-'+(P.tier||'common')+'">'+tierBadge(P)+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">'+esc(L(P.desc[0],P.desc[1]))+'</div>'+
-  (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')</div>'+(P.price?'<button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>':'<div class="sub">👑 '+L('Quest only','只限任務')+'</div>'))+'</div>';});
+  (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):!P.cond?'<div class="sub">💰 '+L('Coins only – save up!','只可用金幣購買——努力儲錢！')+'</div><div class="prog" style="width:100%"><i style="width:'+Math.min(100,Math.round(S.coins/P.price*100))+'%;background:linear-gradient(90deg,#FF9AA2,#FFD58A,#9EE0C0,#9DB8F0,#D9A8F0)"></i></div><div class="sub">🪙 '+Math.min(S.coins,P.price)+' / '+P.price+'</div><button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>🪙 '+P.price+'</button>':'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')</div>'+(P.price?'<button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>':'<div class="sub">👑 '+L('Quest only','只限任務')+'</div>'))+'</div>';});
  else{var list=shopTab==='quests'?ITEMS.filter(function(i){return i.quest;}):ITEMS.filter(function(it){return it.cat===shopTab&&it.id!=='w0';});
   list.sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier)||(a.sec?1:0)-(b.sec?1:0)||a.price-b.price;}).forEach(function(it){var has=isOwned(it),free=it.sec||it.quest;
    h+='<div class="item t-'+it.tier+(free&&!has?' locked':'')+'">'+tierBadge(it)+(has?'<span class="own">✓</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+esc(LL(it))+'</div><div class="sub">'+slotName(it.slot)+'</div>'+
@@ -2322,7 +2425,7 @@ var TROPHIES=[
  {id:'chap',e:'🏅',en:'Chapter Champion',zh:'單元冠軍',den:'Earn ★ in every part of a chapter',dzh:'在一個單元所有小節取得 ★',tier:2,f:function(){return [chapDone(),1];}},
  {id:'allstar',e:'🏆',en:'S1 Science Star',zh:'中一科學之星',den:'Get 3★ in every sub-topic',dzh:'在所有小節取得 3★',tier:3,f:function(){return [threeStars(),ALLSECS.length];}},
  {id:'match',e:'🃏',en:'Term Matcher',zh:'詞彙配對王',den:'Win 5 Term Match games',dzh:'贏 5 次詞彙配對',tier:1,f:function(){return [S.matchWins,5];}},
- {id:'pets12',e:'🏠',en:'Full Family',zh:'大家庭',den:'Adopt all 12 pets',dzh:'領養全部 12 隻寵物',tier:3,f:function(){return [petsCount(),PETS.length];}},
+ {id:'pets12',e:'🏠',en:'Full Family',zh:'大家庭',den:'Adopt every non-mythic pet',dzh:'領養所有非神話級寵物',tier:3,f:function(){return [PETS.filter(function(P){return P.tier!=='mythic'&&S.pets[P.id];}).length,PETS.filter(function(P){return P.tier!=='mythic';}).length];}},
  {id:'spec10',e:'🎀',en:'Treasure Hunter',zh:'尋寶獵人',den:'Unlock 10 special items',dzh:'解鎖 10 件特別物品',tier:2,f:function(){return [specialsOwned(),10];}},
  {id:'specall',e:'👑',en:'Complete Collector',zh:'完美收藏家',den:'Unlock every special item',dzh:'解鎖所有特別物品',tier:3,f:function(){return [specialsOwned(),specialsTotal()];}},
  {id:'spell',e:'✍️',en:'Spelling Star',zh:'串字之星',den:'Spell 100 words correctly in dictation',dzh:'默書中正確拼寫 100 個詞彙',tier:2,f:function(){return [(S.dict||{}).n||0,100];}},
@@ -2345,7 +2448,7 @@ function newPet(){return {xp:0,stage:1,energy:80,happy:80,eq:{hat:null,glasses:n
 function defaultState(){return {v:1,lang:'zh',coins:40,xpTotal:0,pets:{mochi:newPet()},active:'mochi',owned:{w0:1},
  room:{wall:'w0',prop:null},food:{onigiri:2,apple:1},streak:0,best:0,lastDay:null,shields:0,days:0,hist:[],
  secs:{},q:{},seen:{},mistakes:{},cleared:0,quizzes:0,perfect:0,studies:0,studyDay:{},matchWins:0,matchDay:{d:'',n:0},
- trophies:{},gift:'',vocabDay:{},dict:{n:0,miss:{},perf:0,days:0,dday:''},tc:0,bud:{own:{},act:null},ill:{lv:0,d:'',miss:0},say:{n:0,miss:{},rounds:0,perf:0},cures:0,illCure:null,specGot:{},mig4:1,lastTick:Date.now(),sfx:true,music:false,started:false};}
+ trophies:{},gift:'',vocabDay:{},dict:{n:0,miss:{},perf:0,days:0,dday:''},tc:0,bud:{own:{},act:null},ill:{lv:0,d:'',miss:0},say:{n:0,miss:{},rounds:0,perf:0},cures:0,illCure:null,buffs:{},sugar:null,dtask:null,qday:null,specGot:{},mig4:1,lastTick:Date.now(),sfx:true,music:false,started:false};}
 function upgradeState(o){if(!o.mig4){o.specGot={};for(var q in (o.secs||{}))if((o.secs[q].stars||0)>0)o.specGot[q]=1;o.mig4=1;}var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];if(o.dict&&o.dict.perf==null)o.dict.perf=0;if(o.dict&&o.dict.days==null){o.dict.days=0;o.dict.dday='';}return o;}
 function load(k){try{var r=localStorage.getItem(k||KEY);if(r){return upgradeState(JSON.parse(r));}}catch(e){}return null;}
 function save(){try{S.lastTick=Date.now();S.upd=Date.now();localStorage.setItem(storeKey(),JSON.stringify(S));}catch(e){}cloudSaveSoon();}
@@ -2372,11 +2475,11 @@ function markActive(){var t=today();if(S.lastDay===t)return;
  checkPetUnlocks();}
 
 /* ---------- rewards ---------- */
-function gain(coins,xp,why){var m=streakMult()*fedBonus();var c=Math.round(coins*m),x=Math.round(xp*m);
+function gain(coins,xp,why){var m=streakMult()*fedBonus();var c=Math.round(coins*m*buffMult('coin')),x=Math.round(xp*m*buffMult('xp'));
  var p=curPet();var before=petLevel(p.xp);S.coins+=c;p.xp+=x;S.xpTotal+=x;var after=petLevel(p.xp);
  if(after>before){setTimeout(function(){sfx('level');toast('⬆️ '+LL(petDef(S.active))+' '+L('reached Level ','升到 ')+after+L('!',' 級！'));confetti();},600);}
  checkTrophies();save();return {c:c,x:x,m:m};}
-function checkTrophies(){checkQuests();checkBuddies();TROPHIES.forEach(function(t){if(!S.trophies[t.id]){var v=t.f();if(v[0]>=v[1]){S.trophies[t.id]=today();S.coins+=20;
+function checkTrophies(){checkQuests();checkBuddies();dtCheck();TROPHIES.forEach(function(t){if(!S.trophies[t.id]){var v=t.f();if(v[0]>=v[1]){S.trophies[t.id]=today();S.coins+=20;
  setTimeout(function(){sfx('fanfare');toast('🏆 '+L('Trophy unlocked: ','解鎖獎盃：')+LL(t)+' (+20 🪙)');confetti();},1300);}}});}
 function condVal(k){if(k==='three')return threeStars();if(k==='dictn')return (S.dict||{}).n||0;return S[k]||0;}
 function checkPetUnlocks(){checkBuddies();PETS.forEach(function(p){if(p.cond&&!S.pets[p.id]&&condVal(p.cond.k)>=p.cond.n){S.pets[p.id]=newPet();
@@ -2496,6 +2599,7 @@ function streakPopup(kind,extra){var P=petDef(S.active),n=S.streak,pet='<div cla
   popup(h,'🌱 '+L('Start again','重新出發'),function(){curScreen='study';render();});}}
 function openingPopup(){var t=today();if(!S.lastDay||S.lastDay===t||S.streak<1)return;var gap=dayNum(t)-dayNum(S.lastDay);
  setTimeout(function(){if(gap===1)streakPopup('remind');else if(gap<=1+S.shields)streakPopup('shield');else streakPopup('broken');},700);}
+function petPopup(P){popup('<div class="pop-prize legend mythic"><div class="rays"></div><div class="prize-pic">'+petSVG(P.id,'joy',{stage:1,eq:{}})+'</div></div>'+tierBadge(P)+'<h2 style="margin-top:8px"><span class="emo">🌈</span> '+L('MYTHIC PET! ','神話級寵物！')+esc(LL(P))+'</h2><p style="font-size:14px">'+esc(L(P.desc[0],P.desc[1]))+'</p>',L('Welcome, ','歡迎你，')+esc(LL(P))+'!',null,'fx-mythic');setTimeout(confetti,1000);setTimeout(confetti,1800);}
 function specialPopup(it,preview){var eq=null;if(it.cat==='wear'){eq={hat:null,glasses:null,acc:null,hand:null};eq[it.slot]=it.id;}var t=it.tier||'rare';
  var why=it.sec?L('You got 3★ in <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b>!','你在 <b>'+it.sec+' '+esc(LL(secById(it.sec)))+'</b> 取得 3★！'):it.quest?L('Quest complete: <b>'+esc(it.quest.en)+'</b>','完成任務：<b>'+esc(it.quest.zh)+'</b>'):'';
  var h='<div class="pop-prize'+(t==='legendary'?' legend':t==='mythic'?' legend mythic':'')+'"><div class="rays"></div><div class="prize-pic">'+(eq?petSVG(S.active,'joy',{eq:eq}):itemPic(it))+'</div></div>'+tierBadge(it)+'<h2 style="margin-top:8px">'+(t==='legendary'?'<span class="emo">👑</span> '+L('LEGENDARY! ','傳說級！'):t==='mythic'?'<span class="emo">🌈</span> '+L('MYTHIC! ','神話級！'):'')+esc(LL(it))+'</h2><p>'+why+' '+L('This reward is yours forever.','這份獎勵永遠屬於你。')+'</p>';
@@ -2519,9 +2623,13 @@ function ears(t,b){var s='';var st=' stroke="'+O+'" stroke-width="3.5"';
  else if(t==='hedgehog'){var sp='';for(var i=0;i<11;i++){var a=Math.PI*(0.95+i*0.11),x1=100+76*Math.cos(a),y1=128+70*Math.sin(a),x2=100+96*Math.cos(a+0.05),y2=128+90*Math.sin(a+0.05),x3=100+76*Math.cos(a+0.1),y3=128+70*Math.sin(a+0.1);sp+=(i?'L':'M')+x1.toFixed(1)+' '+y1.toFixed(1)+' L'+x2.toFixed(1)+' '+y2.toFixed(1)+' L'+x3.toFixed(1)+' '+y3.toFixed(1)+' ';}s='<path d="'+sp+'Z" fill="#A9825E"'+st+' stroke-linejoin="round"/>';}
  else if(t==='koala')s='<circle cx="48" cy="84" r="26" fill="'+b+'"'+st+'/><circle cx="152" cy="84" r="26" fill="'+b+'"'+st+'/><circle cx="50" cy="86" r="14" fill="#fff"/><circle cx="150" cy="86" r="14" fill="#fff"/>';
  else if(t==='nova')s='<path d="M92 66 L100 20 L108 66Z" fill="#FBD46D"'+st+' stroke-linejoin="round"/><path d="M95 52 L105 48 M96 40 L104 36" stroke="#E0A33A" stroke-width="2"/><path d="M60 80 Q52 58 68 64Z M140 80 Q148 58 132 64Z" fill="'+b+'"'+st+'/>';
+ else if(t==='shark')s='<path d="M166 150 Q196 128 198 104 Q186 128 170 132Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M166 150 Q194 160 204 178 Q184 170 164 164Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M82 70 Q96 14 128 30 Q112 44 118 66Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M96 60 Q104 36 120 34" stroke="#fff" stroke-width="3" fill="none" opacity=".6"/>';
+ else if(t==='owl')s='<path d="M52 92 L46 46 L84 70Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M148 92 L154 46 L116 70Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M56 80 L52 56 L72 70Z M144 80 L148 56 L128 70Z" fill="#C9C2EE"/>';
  else if(t==='tuft')s='<path d="M100 64 C94 48 98 40 104 38 C102 46 104 54 100 64Z M100 64 C108 50 116 48 120 50 C112 54 106 60 100 64Z" fill="#F7D476"'+st+' stroke-linejoin="round"/>';
  return s;}
 function frontFeat(t){var s='';
+ if(t==='shark')s='<path d="M40 148 Q100 196 160 148 Q150 176 100 178 Q50 176 40 148Z" fill="#fff" opacity=".95"/><path d="M44 112 q-5 6 0 12 M52 108 q-5 7 0 14 M156 112 q5 6 0 12 M148 108 q5 7 0 14" stroke="#5C8DC2" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="128" cy="84" r="5" fill="#fff" opacity=".7"/><circle cx="138" cy="94" r="3" fill="#fff" opacity=".7"/>';
+ else if(t==='owl'){s='<circle cx="80" cy="116" r="18" fill="#FFF6D6" stroke="#C9C2EE" stroke-width="3"/><circle cx="120" cy="116" r="18" fill="#FFF6D6" stroke="#C9C2EE" stroke-width="3"/><path d="M93 88 a9 9 0 1 0 14 0 a7 7 0 1 1 -14 0Z" fill="#FBD46D"/>';[[82,150],[100,158],[118,150],[91,166],[109,166]].forEach(function(c){s+='<path d="M'+(c[0]-5)+' '+c[1]+' l5 5 l5 -5" stroke="#B9AEE6" stroke-width="2.5" fill="none" stroke-linecap="round"/>';});}
  if(t==='hamster')s='<ellipse cx="100" cy="76" rx="9" ry="10" fill="#E3AE6C" opacity=".8"/>';
  else if(t==='panda')s='<ellipse cx="80" cy="118" rx="13" ry="14" fill="#8A7E7C" transform="rotate(-20 80 118)"/><ellipse cx="120" cy="118" rx="13" ry="14" fill="#8A7E7C" transform="rotate(20 120 118)"/>';
  else if(t==='penguin')s='<ellipse cx="100" cy="126" rx="54" ry="46" fill="#fff"/>';
@@ -2530,7 +2638,7 @@ function frontFeat(t){var s='';
  else if(t==='sheep'){[60,74,88,100,112,126,140].forEach(function(x,i){s+='<circle cx="'+x+'" cy="'+(i%2?70:76)+'" r="14" fill="#fff" stroke="'+O+'" stroke-width="3"/>';});}
  return s;}
 function petSVG(id,mood,opts){opts=opts||{};var P=petDef(id),p=S.pets[id]||newPet(),b=P.body,st=opts.stage||p.stage,eq=opts.eq||p.eq;
- var s='<svg class="pet" viewBox="-10 0 220 200" role="img" aria-label="'+esc(LL(P))+'"><g class="bob">';var au=mood==='sick'?{back:'',front:''}:auraSVG(eq);s+=au.back;
+ var s='<svg class="pet" viewBox="-10 0 220 200" role="img" aria-label="'+esc(LL(P))+'"><g class="bob">';var au=mood==='sick'?{back:'',front:''}:auraSVG(P.tier==='mythic'&&!opts.plain?{hat:'__myth'}:eq);s+=au.back;
  if(st>=3){s+='<circle cx="100" cy="118" r="86" fill="#FFF1C5" opacity=".75"/><circle cx="100" cy="118" r="86" fill="none" stroke="#FBD46D" stroke-width="3" stroke-dasharray="4 10"/>';}
  s+='<ellipse cx="100" cy="182" rx="56" ry="8" fill="rgba(91,75,73,.12)"/>';
  s+=ears(P.ears,b);
@@ -2541,13 +2649,13 @@ function petSVG(id,mood,opts){opts=opts||{};var P=petDef(id),p=S.pets[id]||newPe
  s+='<ellipse cx="100" cy="152" rx="36" ry="20" fill="'+P.belly+'"/>';
  if(P.ears==='frog')s+='<circle cx="70" cy="70" r="7" fill="#fff"/><circle cx="130" cy="70" r="7" fill="#fff"/>';
  s+=frontFeat(P.ears);
- if(P.ears==='seal'||P.ears==='penguin')s+='<path d="M34 148 Q18 160 22 170 Q34 168 44 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/><path d="M166 148 Q182 160 178 170 Q166 168 156 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/>';
+ if(P.ears==='seal'||P.ears==='penguin'||P.ears==='shark'||P.ears==='owl')s+='<path d="M34 148 Q18 160 22 170 Q34 168 44 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/><path d="M166 148 Q182 160 178 170 Q166 168 156 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/>';
  else s+='<ellipse cx="40" cy="140" rx="9" ry="13" fill="'+b+'" stroke="'+O+'" stroke-width="3" transform="rotate(25 40 140)"/><ellipse cx="160" cy="140" rx="9" ry="13" fill="'+b+'" stroke="'+O+'" stroke-width="3" transform="rotate(-25 160 140)"/>';
  // cheeks
  s+='<ellipse cx="64" cy="132" rx="11" ry="6.5" fill="#FFB3C1" opacity=".75"/><ellipse cx="136" cy="132" rx="11" ry="6.5" fill="#FFB3C1" opacity=".75"/>';
  if(st>=2)s+='<path d="M140 118 l2 4 l4 .5 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -.5Z" fill="#FBD46D"/>';
  if(P.ears==='cat'||P.ears==='seal')s+='<path d="M52 124 L36 120 M52 130 L36 132 M148 124 L164 120 M148 130 L164 132" stroke="'+O+'" stroke-width="2" stroke-linecap="round"/>';
- s+=face(mood);
+ s+=face(mood);if(P.ears==='owl')s+='<path d="M94 122 L106 122 L100 132Z" fill="#F2A541" stroke="'+O+'" stroke-width="2" stroke-linejoin="round"/>';
  s+='</g>';
  if(mood==='sick')s+=sickBits(100,80,132,mood,1.6);
  else{
@@ -2631,13 +2739,13 @@ function homeHTML(){var P=petDef(S.active),p=curPet(),lv=petLevel(p.xp),into=p.x
  return '<div class="home"><div>'+roomHTML()+'</div><div class="grid">'+illBanner()+
  '<div class="card grid" style="gap:12px"><div class="petname"><h2>'+esc(LL(P))+'</h2><span class="tag">'+L(STAGE[p.stage][0],STAGE[p.stage][1])+'</span><span class="tag" style="background:var(--butter)">'+L(moodName[0],moodName[1])+'</span>'+(petsCount()>1?'<button class="btn small white" id="bSwitch" style="margin-left:auto">🔁 '+L('Switch','切換')+'</button>':'')+'</div>'+
  '<div class="stats">'+statRow('⚡ '+L('Energy','能量'),p.energy,'#FBD46D',Math.round(p.energy))+statRow('💗 '+L('Happiness','快樂'),p.happy,'#F7A9B5',Math.round(p.happy))+statRow('🧠 Lv '+lv,into/need*100,'#9BCB8E',into+'/'+need)+'</div>'+
- (fedBonus()>1?'<div class="muted" style="font-size:13px">🍀 '+L('Well-fed & happy: +20% rewards','飽飽又開心：獎勵 +20%')+'</div>':'<div class="muted" style="font-size:13px">💡 '+L('Keep Energy & Happiness ≥ 50 for +20% rewards','能量和快樂保持 50 以上，獎勵 +20%')+'</div>')+
+ (buffChips()?'<div>'+buffChips()+'</div>':'')+(fedBonus()>1?'<div class="muted" style="font-size:13px">🍀 '+L('Well-fed & happy: +20% rewards','飽飽又開心：獎勵 +20%')+'</div>':'<div class="muted" style="font-size:13px">💡 '+L('Keep Energy & Happiness ≥ 50 for +20% rewards','能量和快樂保持 50 以上，獎勵 +20%')+'</div>')+
  '<div class="actions"><button class="btn pink" id="bFeed"><span class="e">🍙</span>'+L('Feed','餵食')+'</button><button class="btn lav" id="bPlay"><span class="e">🃏</span>'+L('Play','玩耍')+'</button><button class="btn green" id="bStudy"><span class="e">📖</span>'+L('Study','溫習')+'</button><button class="btn white" id="bDress"><span class="e">👒</span>'+L('Dress up','換裝')+'</button>'+
  '<button class="btn" id="bEvo"'+(ev?'':' disabled')+'><span class="e">✨</span>'+(ev?L('Evolve','進化')+' (Lv'+ev.lv+')':L('Max stage','最終形態'))+'</button>'+
  '<button class="btn '+(gift?'pink':'white')+'" id="bGift"'+(gift?'':' disabled')+'><span class="e">🎁</span>'+(gift?L('Daily gift','每日禮物'):L('Come back tomorrow','明天再來'))+'</button></div></div>'+
  '<div class="card"><div class="streak"><span class="flame" aria-hidden="true">'+(S.streak>=7?'☄️':'🔥')+'</span><div style="min-width:0"><b style="font-size:18px">'+S.streak+' '+L('day streak','日連續溫習')+'</b><div class="muted" style="font-size:13px">'+L('Reward ×','獎勵 ×')+streakMult().toFixed(1)+' · 🛡️ '+S.shields+' · '+L('Best ','最佳 ')+S.best+'</div></div></div><div class="days" style="margin-top:10px">'+last7+'</div>'+
  (S.lastDay!==t?'<p class="muted" style="font-size:13px;margin:10px 0 0">'+L('Finish one study session or quiz today to keep the flame alive 🌱','今日完成一次溫習或測驗，讓火焰繼續燃燒 🌱')+'</p>':'<p style="font-size:13px;margin:10px 0 0">✅ '+L('Today counted! Your future self says thanks.','今日已計算！未來的你會多謝你。')+'</p>')+'</div>'+
- chatHTML()+buddyCardHTML()+leaderboardHTML()+nextStepCard()+'</div></div>';}
+ dtCardHTML()+chatHTML()+buddyCardHTML()+leaderboardHTML()+nextStepCard()+'</div></div>';}
 function nextStepCard(){var mc=Object.keys(S.mistakes).length;var s=null;
  for(var i=0;i<ALLSECS.length;i++){var st=(S.secs[ALLSECS[i].id]||{}).stars||0;if(st<3){s=ALLSECS[i];break;}}
  var txt,btn;
@@ -2730,7 +2838,7 @@ function answer(i){if(Q.answered)return;Q.answered=true;var qid=Q.ids[Q.i],q=qBy
  nb.scrollIntoView({block:'nearest',behavior:'smooth'});save();}
 function starsFor(n,tot){var r=tot?n/tot:0;return r>=14/15-1e-9?3:r>=0.7-1e-9?2:r>=0.5-1e-9?1:0;}
 function finishQuiz(){var n=Q.res.filter(Boolean).length,tot=Q.res.length,p=curPet(),html;
- if(Q.mode==='quiz'){var sec=secById(Q.sec),r=S.secs[Q.sec]||{stars:0,best:0,plays:0},st=starsFor(n,tot);
+ if(Q.mode==='quiz'){var sec=secById(Q.sec),r=S.secs[Q.sec]||{stars:0,best:0,plays:0},st=starsFor(n,tot);S.qday=S.qday&&S.qday.d===today()?S.qday:{d:today(),l:[]};S.qday.l.push([Q.sec,n,tot]);
   var spi0=specialFor(Q.sec),hadSp=isOwned(spi0);quizRec('done',st);r.plays++;r.best=Math.max(r.best,n);var newStar=st>r.stars;r.stars=Math.max(r.stars,st);S.secs[Q.sec]=r;S.quizzes++;if(n===tot)S.perfect++;
   p.energy=clamp(p.energy-8,5,100);p.happy=clamp(p.happy+(n>=tot*.6?6:-2),5,100);markActive();checkPetUnlocks();
   var g=gain(n*3+(n===tot?15:0),n*4);
@@ -2775,13 +2883,6 @@ function cupSVG(t){var col=t.tier===3?'#FBD46D':t.tier===2?'#D9DEE6':'#E8B98C';
  return '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M30 18 L70 18 L66 50 Q50 64 34 50Z" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><path d="M30 24 Q14 24 18 38 Q22 46 32 44 M70 24 Q86 24 82 38 Q78 46 68 44" fill="none" stroke="'+O+'" stroke-width="3"/><rect x="44" y="58" width="12" height="12" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><rect x="32" y="70" width="36" height="12" rx="4" fill="'+col+'" stroke="'+O+'" stroke-width="3"/><text x="50" y="44" text-anchor="middle" font-size="18">'+t.e+'</text></svg>';}
 
 /* FEED / DRESS / SWITCH / EVOLVE / PLAY */
-function openFeed(){var p=curPet();var h='<div class="sheet-h"><h2>🍙 '+L('Feed ','餵 ')+esc(LL(petDef(S.active)))+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><p class="muted" style="margin-top:0">⚡ '+Math.round(p.energy)+' · 💗 '+Math.round(p.happy)+'</p><div class="items">';
- FOODS.forEach(function(f){var n=S.food[f.id]||0;h+='<div class="item"><div class="pic" style="font-size:50px">'+f.e+'</div><div class="nm">'+esc(LL(f))+' ×'+n+'</div><div class="sub">⚡+'+f.en2+(f.hp?' 💗+'+f.hp:'')+'</div>'+(n?'<button class="btn small pink" data-eat="'+f.id+'">'+L('Feed','餵食')+'</button>':'<button class="btn small" data-buyeat="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>'+L('Buy & feed','購買並餵食')+' 🪙'+f.price+'</button>')+'</div>';});
- modal(h+'</div>');$('#xClose').onclick=closeModal;
- document.querySelectorAll('[data-eat],[data-buyeat]').forEach(function(b){b.onclick=function(){var id=b.dataset.eat||b.dataset.buyeat,f=FOODS.filter(function(x){return x.id===id;})[0];
-  if(b.dataset.buyeat){if(S.coins<f.price)return;S.coins-=f.price;}else S.food[id]--;
-  if(p.energy>=100&&!f.hp){toast(L('Too full! Maybe later 😊','太飽了！遲啲再食 😊'));if(b.dataset.eat)S.food[id]++;else S.coins+=f.price;return;}
-  p.energy=clamp(p.energy+f.en2,5,100);p.happy=clamp(p.happy+f.hp+2,5,100);sfx('eat');setTempMood('joy',2500);bubble=pick([L('Yum yum! Thank you!','好好味！多謝你！'),L('Energy recharged ⚡','能量充滿 ⚡'),L('Now I can study more!','而家可以溫更多書！')]);save();closeModal();};});}
 function openDress(){if(S.ill&&S.ill.lv){openSickDress();return;}var p=curPet();var h='<div class="sheet-h"><h2>👒 '+L('Dress up','換裝')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><div style="width:170px;margin:0 auto">'+petSVG(S.active,'joy')+'</div>';
  SLOTS.forEach(function(sl){var own=ITEMS.filter(function(i){return i.slot===sl&&isOwned(i);});h+='<h3 style="font-size:15px;margin:12px 0 6px">'+slotName(sl)+'</h3><div class="row">';
   h+='<button class="btn small '+(!p.eq[sl]?'green':'white')+'" data-unq="'+sl+'">'+L('None','無')+'</button>';
@@ -2816,7 +2917,7 @@ function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(f
 var B32='0123456789ABCDEFGHJKMNPQRSTVWXYZ',EPOCH=dayNum('2025-01-01');
 function wearIds(){return ITEMS.filter(function(i){return i.id!=='w0'&&!i.sec;}).map(function(i){return i.id;});}
 function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.round(v),Math.pow(2,n)-1));for(var i=n-1;i>=0;i--)bits.push((v>>i)&1);}
- w(7,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),4);
+ w(8,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),5);
  PETS.forEach(function(P){var p=S.pets[P.id];w(p?1:0,1);w(p?p.stage:0,2);w(p?p.xp/5:0,12);});
  var ids=wearIds();ids.forEach(function(id){w(S.owned[id]?1:0,1);});
  var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,7);});
@@ -2831,11 +2932,11 @@ function scramble(bits){var x=0x5EED1;for(var i=0;i<bits.length;i++){x=(x*110351
 function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1');var bits=[];
  for(var i=0;i<code.length;i++){var v=B32.indexOf(code[i]);if(v<0)return null;for(var k=4;k>=0;k--)bits.push((v>>k)&1);}
  scramble(bits);var pos=0;function r(n){var v=0;for(var i=0;i<n;i++){if(pos>=bits.length)throw 0;v=v*2+bits[pos++];}return v;}
- try{var o={};var ver=r(4);if(ver<1||ver>7)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:4);o.pets={};PETS.slice(0,v1?6:ver<4?12:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
+ try{var o={};var ver=r(4);if(ver<1||ver>8)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:ver<8?4:5);o.pets={};PETS.slice(0,v1?6:ver<4?12:ver<8?15:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
   o.owned={};wearIds().slice(0,ver<4?40:ver<5?59:ver<6?64:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
   o.wall=ver<4?(['w0','w1','w2','w3','w4','w5'][r(3)]||'w0'):(eqItems[r(7)]||'w0');var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
   o.streak=r(9);o.best=r(9);o.shields=r(2);var ld=r(13);o.lastDay=ld?fromDayNum(ld+EPOCH):null;o.days=r(10);o.quizzes=r(11);o.perfect=r(9);o.cleared=r(10);o.studies=r(10);o.matchWins=r(8);
-  o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:ver===3?22:ver<6?23:ver<7?30:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
+  o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:ver===3?22:ver<6?23:ver<7?30:ver<8?33:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
   if(ver>=7){o.bud={};BUDS.forEach(function(B){if(r(1))o.bud[B.id]=1;});o.budAct=r(5);o.ill=r(3);o.dn=r(12);o.dperf=r(8);o.ddays=r(9);o.sayn=r(12);o.tc=r(14);}
   var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
   if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
@@ -2886,7 +2987,7 @@ function bindScreen(){if(curScreen==='teacher')bindTeacher();
  var pt=$('#petTap');if(pt)pt.onclick=function(){var svg=pt.querySelector('.pet');svg.classList.remove('boing');void svg.getBoundingClientRect();svg.classList.add('boing');sfx('boing');var p=curPet();p.happy=clamp(p.happy+1,5,100);bubble=line(moodOf(S.active));if($('#chatText'))showChat('fact');var bb=$('.bubble');if(bb)bb.textContent=bubble;else render();};
  var m={bFeed:openFeed,bPlay:function(){var p=curPet();if(p.energy<12){bubble=L('Too tired to play… feed me first?','太攰玩唔到……可唔可以先餵我？');render();return;}openMatch();},bStudy:function(){curScreen='study';render();},bDress:openDress,bEvo:openEvolve,bSwitch:openSwitch,
   bGift:function(){S.gift=today();S.coins+=10;S.food.onigiri=(S.food.onigiri||0)+1;sfx('coin');confetti();toast('🎁 +10 🪙 · +1 🍙');save();render();},
-  bPractice:function(){startPractice(practiceFilter);},bBuddies:openBuddies,bClinic:openClinic,budTap:function(){var B=budDef(S.bud.act);if(!B)return;sfx('boing');bubble=S.ill&&S.ill.lv?L(B.en+' is feeling poorly too… 🥺',B.zh+'都唔舒服……🥺'):LL(B)+': '+L(B.fact[0],B.fact[1]);var bb=$('.bubble');if(bb)bb.textContent=bubble;else render();},bFact:function(){showChat('fact');},bHealth:function(){showChat('health');},bCheer:function(){showChat('cheer');}};
+  bPractice:function(){startPractice(practiceFilter);},bBuddies:openBuddies,bTask:function(){sfx('tap');dtGo(S.dtask);},bClinic:openClinic,budTap:function(){var B=budDef(S.bud.act);if(!B)return;sfx('boing');bubble=S.ill&&S.ill.lv?L(B.en+' is feeling poorly too… 🥺',B.zh+'都唔舒服……🥺'):LL(B)+': '+L(B.fact[0],B.fact[1]);var bb=$('.bubble');if(bb)bb.textContent=bubble;else render();},bFact:function(){showChat('fact');},bHealth:function(){showChat('health');},bCheer:function(){showChat('cheer');}};
  for(var k in m){var el=document.getElementById(k);if(el)el.onclick=m[k];}
  document.querySelectorAll('[data-studysec]').forEach(function(b){b.onclick=function(){openStudy(b.dataset.studysec);};});
  document.querySelectorAll('[data-dict]').forEach(function(b){b.onclick=function(){openDictSetup(b.dataset.dict||null);};});
@@ -2902,7 +3003,8 @@ function bindScreen(){if(curScreen==='teacher')bindTeacher();
  document.querySelectorAll('[data-buy]').forEach(function(b){b.onclick=function(){var it=item(b.dataset.buy);if(S.coins<it.price||S.owned[it.id])return;S.coins-=it.price;S.owned[it.id]=1;if(it.slot!=='sticker')equip(it.id);sfx('coin');toast('✨ '+LL(it));checkTrophies();save();render();};});
  document.querySelectorAll('main [data-equip]').forEach(function(b){b.onclick=function(){equip(b.dataset.equip);render();};});
  document.querySelectorAll('main [data-active]').forEach(function(b){b.onclick=function(){S.active=b.dataset.active;sfx('boing');save();render();};});
- document.querySelectorAll('[data-buypet]').forEach(function(b){b.onclick=function(){var P=petDef(b.dataset.buypet);if(S.coins<P.price||S.pets[P.id])return;S.coins-=P.price;S.pets[P.id]=newPet();S.active=P.id;sfx('fanfare');confetti();bubble=L('Nice to meet you!','很高興認識你！');bubblePet=P.id;checkTrophies();save();curScreen='home';render();};});}
+ document.querySelectorAll('[data-buypet]').forEach(function(b){b.onclick=function(){var P=petDef(b.dataset.buypet);if(S.coins<P.price||S.pets[P.id])return;function buy(){S.coins-=P.price;S.pets[P.id]=newPet();S.active=P.id;sfx('fanfare');confetti();bubble=L('Nice to meet you!','很高興認識你！');bubblePet=P.id;checkTrophies();save();curScreen='home';render();if(P.tier==='mythic')petPopup(P);}
+ if(P.tier==='mythic')confirmBox('🌈 '+esc(LL(P)),L('Spend '+P.price+' coins to adopt this mythic pet?','用 '+P.price+' 金幣領養這隻神話級寵物？'),'🪙 '+P.price,buy);else buy();};});}
 
 
 
@@ -3281,11 +3383,148 @@ function tierFX(t){return t==='mythic'?'fx-mythic':t==='legendary'?'fx-legend':'
 function previewFX(t){var list=questItems().filter(function(i){return i.tier===t;});var it=list.filter(function(i){return !S.owned[i.id];})[0]||list[0];if(it)specialPopup(it,true);}
 
 /* aura around a pet wearing mythic / legendary outfits */
-function auraSVG(eq){var best='';['hat','glasses','acc','hand'].forEach(function(sl){var it=eq&&eq[sl]?item(eq[sl]):null;if(it&&(it.tier==='mythic'||(it.tier==='legendary'&&best!=='mythic')))best=it.tier;});
+function auraSVG(eq){var best=eq&&eq.hat==='__myth'?'mythic':'';['hat','glasses','acc','hand'].forEach(function(sl){var it=eq&&eq[sl]?item(eq[sl]):null;if(it&&(it.tier==='mythic'||(it.tier==='legendary'&&best!=='mythic')))best=it.tier;});
  if(!best)return {back:'',front:''};
  if(best==='mythic')return {back:'<defs><linearGradient id="mythAura" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8FC0"/><stop offset=".25" stop-color="#FFD95F"/><stop offset=".5" stop-color="#7FE3A8"/><stop offset=".75" stop-color="#7FB6F0"/><stop offset="1" stop-color="#C9A6FF"/></linearGradient></defs><g class="aura"><circle cx="100" cy="118" r="88" fill="none" stroke="url(#mythAura)" stroke-width="5" stroke-dasharray="14 9" opacity=".85"/></g><circle class="auraglow" cx="100" cy="118" r="80" fill="url(#mythAura)" opacity=".16"/>',
   front:'<g class="orbit"><path d="M20 60 l3 7 l7 3 l-7 3 l-3 7 l-3 -7 l-7 -3 l7 -3Z" fill="#FF8FC0"/><path d="M182 90 l2.5 6 l6 2.5 l-6 2.5 l-2.5 6 l-2.5 -6 l-6 -2.5 l6 -2.5Z" fill="#7FB6F0"/><path d="M170 30 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2Z" fill="#FFD95F"/><path d="M26 150 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2Z" fill="#7FE3A8"/></g>'};
  return {back:'<circle class="auraglow" cx="100" cy="118" r="82" fill="#FBD46D" opacity=".18"/>',front:'<g class="spark"><path d="M24 64 l3 7 l7 3 l-7 3 l-3 7 l-3 -7 l-7 -3 l7 -3Z" fill="#F2C14E"/></g><g class="spark" style="animation-delay:.8s"><path d="M178 84 l2.5 6 l6 2.5 l-6 2.5 l-2.5 6 l-2.5 -6 l-6 -2.5 l6 -2.5Z" fill="#FBD46D"/></g><g class="spark" style="animation-delay:1.4s"><path d="M168 150 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2Z" fill="#F2C14E"/></g>'};}
+
+/* ---------- Food 2.0: more snacks, boosts, favourites and a sugar rule ---------- */
+// en2 = energy, hp = happiness, xp = instant XP for the pet, buff = timed reward boost, sugar = sweet treat
+FOODS.push(
+ {id:'toast',e:'🍞',en:'Butter toast',zh:'牛油多士',price:3,en2:10,hp:2,tip:['Bread gives carbohydrates – quick energy.','麵包提供碳水化合物——快速能量。']},
+ {id:'banana',e:'🍌',en:'Banana',zh:'香蕉',price:6,en2:16,hp:4,tip:['Bananas are rich in potassium for your muscles.','香蕉含豐富鉀質，對肌肉有益。']},
+ {id:'fishball',e:'🍢',en:'Curry fish balls',zh:'咖喱魚蛋',price:10,en2:14,hp:12,tip:['A Hong Kong street-food classic!','香港經典街頭小食！']},
+ {id:'siumai',e:'🥟',en:'Siu mai',zh:'燒賣',price:12,en2:20,hp:8,tip:['Pork and shrimp give protein for growth.','豬肉和蝦提供蛋白質，幫助生長。']},
+ {id:'lemontea',e:'🍋',en:'Iced lemon tea',zh:'凍檸茶',price:9,en2:6,hp:18,sugar:1,tip:['Tasty, but full of sugar – enjoy sometimes.','好味，但糖分高——偶爾享受就好。']},
+ {id:'eggtart',e:'🥧',en:'Egg tart',zh:'蛋撻',price:14,en2:12,hp:16,sugar:1,tip:['A sweet treat with eggs and pastry.','用蛋和酥皮做的甜點。']},
+ {id:'pineapplebun',e:'🥐',en:'Pineapple bun',zh:'菠蘿包',price:16,en2:18,hp:14,sugar:1,tip:['There is no pineapple inside – the top just looks like one!','裏面沒有菠蘿——只是表面像菠蘿！']},
+ {id:'mango',e:'🥭',en:'Mango pudding',zh:'芒果布甸',price:20,en2:10,hp:26,sugar:1,tip:['Mangoes have vitamin C, but pudding adds sugar.','芒果有維他命 C，但布甸加了糖。']},
+ {id:'salad',e:'🥗',en:'Rainbow salad',zh:'彩虹沙律',price:18,en2:22,hp:6,xp:15,tip:['Eat the rainbow: different colours give different vitamins.','吃出彩虹：不同顏色的蔬果提供不同維他命。']},
+ {id:'wonton',e:'🍜',en:'Wonton noodles',zh:'雲吞麵',price:25,en2:40,hp:10,tip:['A warm bowl with carbohydrates and protein.','一碗暖暖的碳水化合物和蛋白質。']},
+ {id:'blueberry',e:'🫐',en:'Brain blueberries',zh:'醒腦藍莓',price:40,en2:8,hp:8,buff:{k:'xp',m:1.3,mins:30},tip:['Blueberries contain antioxidants.','藍莓含抗氧化物。']},
+ {id:'greentea',e:'🍵',en:'Lucky green tea',zh:'幸運綠茶',price:45,en2:6,hp:10,buff:{k:'coin',m:1.3,mins:30},tip:['Tea leaves come from the Camellia plant.','茶葉來自山茶屬植物。']},
+ {id:'walnut',e:'🌰',en:'Genius walnuts',zh:'天才合桃',price:60,en2:10,hp:6,buff:{k:'xp',m:1.5,mins:30},tip:['Nuts have healthy fats – a small handful is enough.','果仁含健康脂肪——一小把就夠。']},
+ {id:'bento',e:'🍱',en:'Deluxe bento',zh:'豪華便當',price:70,en2:100,hp:20,tip:['A balanced meal: rice, vegetables and protein.','均衡的一餐：飯、蔬菜和蛋白質。']},
+ {id:'mooncake',e:'🥮',en:'Golden mooncake',zh:'金色月餅',price:200,en2:30,hp:40,sugar:1,buff:{k:'both',m:2,mins:20},tip:['A festival treat – rare and special!','節日小點——珍貴又特別！']}
+);
+var PET_FAV={mochi:'onigiri',matcha:'greentea',sakura:'mango',pudding:'eggtart',soda:'fishball',taro:'wonton',kinako:'walnut',goma:'bento',mikan:'lemontea',nori:'fishball',ume:'siumai',wata:'pineapplebun',hana:'blueberry',kuma:'salad',nova:'mooncake',finn:'fishball',luna:'blueberry'};
+function foodById(id){return FOODS.filter(function(f){return f.id===id;})[0];}
+function buffMult(k){var b=S.buffs||{},m=1;['xp','coin','both'].forEach(function(n){var x=b[n];if(x&&x.until>Date.now()&&(n===k||n==='both'))m=Math.max(m,x.m);});return m;}
+function buffChips(){var b=S.buffs||{},out=[];[['xp','🧠','XP'],['coin','🪙',L('coins','金幣')],['both','🌟',L('XP & coins','XP 及金幣')]].forEach(function(n){var x=b[n[0]];if(x&&x.until>Date.now())out.push('<span class="tag buff">'+n[1]+' '+n[2]+' ×'+x.m+' · '+Math.ceil((x.until-Date.now())/60000)+L(' min',' 分鐘')+'</span>');});return out.join(' ');}
+function foodFx(f,pet){var c=[];if(f.en2)c.push('⚡+'+(f.en2>=100?L('full','全滿'):f.en2));if(f.hp)c.push('💗+'+f.hp);if(f.xp)c.push('🧠+'+f.xp+' XP');
+ if(f.buff)c.push((f.buff.k==='xp'?'🧠 XP':f.buff.k==='coin'?'🪙':'🌟 XP+🪙')+' ×'+f.buff.m+' '+f.buff.mins+L('min','分鐘'));if(f.sugar)c.push('🍬 '+L('sugary','高糖'));
+ var fav=pet&&PET_FAV[pet]===f.id;return '<div class="fx">'+c.map(function(x){return '<span>'+x+'</span>';}).join('')+(fav?'<span class="fav">❤️ '+L('favourite','最愛')+'</span>':'')+'</div>';}
+// returns false if the pet refuses
+function eatFood(f){var p=curPet();var boost=f.buff||f.xp;if(p.energy>=100&&p.happy>=100&&!boost){toast(L('Too full! Maybe later 😊','太飽了！遲啲再食 😊'));return false;}
+ var fav=PET_FAV[S.active]===f.id,hp=f.hp*(fav?2:1);
+ p.energy=clamp(p.energy+f.en2,5,100);p.happy=clamp(p.happy+hp+2,5,100);
+ if(f.xp){var before=petLevel(p.xp);p.xp+=f.xp;S.xpTotal+=f.xp;if(petLevel(p.xp)>before)setTimeout(function(){sfx('level');toast('⬆️ '+LL(petDef(S.active))+' Lv '+petLevel(p.xp));confetti();},500);}
+ if(f.buff){S.buffs=S.buffs||{};var b=S.buffs[f.buff.k],base=b&&b.until>Date.now()?b.until:Date.now();S.buffs[f.buff.k]={m:Math.max(f.buff.m,b&&b.until>Date.now()?b.m:1),until:base+f.buff.mins*60000};}
+ var msg=fav?L('My FAVOURITE! Double happiness! 💖','我最愛食呢樣！快樂加倍！💖'):pick([L('Yum yum! Thank you!','好好味！多謝你！'),L('Energy recharged ⚡','能量充滿 ⚡'),L('Now I can study more!','而家可以溫更多書！')]);
+ if(f.buff)msg=L('I feel super smart! Rewards boosted for '+f.buff.mins+' minutes!','我覺得自己好聰明！'+f.buff.mins+' 分鐘內獎勵加成！');
+ if(f.sugar){var t=today();if(!S.sugar||S.sugar.d!==t)S.sugar={d:t,n:0};S.sugar.n++;
+  if(S.sugar.n>=3){p.energy=clamp(p.energy-15,5,100);msg=L('Too much sugar today… 😵 sugar crash! (−15 energy) Let\'s pick fruit or salad next time.','今日食太多糖……😵 血糖急降！（能量 −15）下次揀水果或沙律啦。');}}
+ sfx('eat');setTempMood('joy',2500);bubble=msg;save();return true;}
+function openFeed(){var p=curPet();var h='<div class="sheet-h"><h2>🍙 '+L('Feed ','餵 ')+esc(LL(petDef(S.active)))+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><p class="muted" style="margin-top:0">⚡ '+Math.round(p.energy)+' · 💗 '+Math.round(p.happy)+' · 🪙 '+S.coins+(buffChips()?'<br>'+buffChips():'')+'</p>'+
+ '<p class="muted" style="font-size:13px;margin:0 0 8px">❤️ '+L('Favourite food gives double happiness.','最愛的食物令快樂加倍。')+' 🍬 '+L('3 sugary snacks in one day = sugar crash!','一天吃 3 款高糖小食＝血糖急降！')+'</p><div class="items">';
+ FOODS.slice().sort(function(a,b){return (PET_FAV[S.active]===b.id)-(PET_FAV[S.active]===a.id)||a.price-b.price;}).forEach(function(f){var n=S.food[f.id]||0;h+='<div class="item food'+(PET_FAV[S.active]===f.id?' favf':'')+'"><div class="pic" style="font-size:48px">'+f.e+'</div><div class="nm">'+esc(LL(f))+' ×'+n+'</div>'+foodFx(f,S.active)+
+  (n?'<button class="btn small pink" data-eat="'+f.id+'">'+L('Feed','餵食')+'</button>':'<button class="btn small" data-buyeat="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>'+L('Buy & feed','購買並餵食')+' 🪙'+f.price+'</button>')+'</div>';});
+ modal(h+'</div>');$('#xClose').onclick=closeModal;
+ document.querySelectorAll('[data-eat],[data-buyeat]').forEach(function(b){b.onclick=function(){var id=b.dataset.eat||b.dataset.buyeat,f=foodById(id);
+  if(b.dataset.buyeat&&S.coins<f.price)return;if(!eatFood(f))return;if(b.dataset.buyeat)S.coins-=f.price;else S.food[id]--;save();closeModal();};});}
+
+/* ---------- Daily mission 今日任務: one per day, picked for what the student avoids or finds hardest ---------- */
+function secStars(id){return (S.secs[id]||{}).stars||0;}
+function secPlays(id){return (S.secs[id]||{}).plays||0;}
+function mistakesIn(id){var n=0;for(var k in S.mistakes)if(k.split('#')[0]===id)n++;return n;}
+function unitRatio(c){var got=0;c.sections.forEach(function(s){got+=secStars(s.id);});return got/(c.sections.length*3);}
+function weakInfo(){var played=ALLSECS.filter(function(s){return secPlays(s.id)>0&&secStars(s.id)<3;});
+ var ws=played.sort(function(a,b){return secStars(a.id)-secStars(b.id)||mistakesIn(b.id)-mistakesIn(a.id);})[0]||ALLSECS.filter(function(s){return secStars(s.id)<3;})[0]||ALLSECS[0];
+ var ms=ALLSECS.slice().sort(function(a,b){return mistakesIn(b.id)-mistakesIn(a.id);})[0];
+ var us=ALLSECS.filter(function(s){return !S.studyDay[s.id];})[0];
+ var ns=ALLSECS.filter(function(s){return !secPlays(s.id);})[0];
+ var ts=ALLSECS.filter(function(s){return secStars(s.id)===2;})[0];
+ var wu=CHAPTERS.slice().sort(function(a,b){return unitRatio(a)-unitRatio(b);})[0];
+ var vu=CHAPTERS.filter(function(c){return !(S.vocabDay||{})[c.id];})[0]||wu;
+ return {ws:ws,ms:mistakesIn(ms.id)?ms:null,us:us,ns:ns,ts:ts,wu:wu,vu:vu,mist:Object.keys(S.mistakes).length,dmiss:Object.keys(S.dict.miss).length,smiss:Object.keys(S.say.miss).length};}
+function secName(s){return s?s.id+' '+LL(s):'';}
+function unitName(c){return c?L('Unit ','第 ')+c.id+L(' '+c.en,' 單元 '+c.zh):'';}
+function qdayList(){return S.qday&&S.qday.d===today()?S.qday.l:[];}
+/* kinds: clear n · quiz sec stars · unit n · notes sec · nq sec (notes + quiz) · dict n · say rounds · vocab unit · match n · perfect · correct n */
+var DT=[
+ ['detective','🕵️','Detective Mochi','麻糬偵探','3 suspects are hiding in your 錯題本. Catch them by answering them right!','錯題本裏躲着 3 個疑犯，答對它們就能捉住！',function(w){return w.mist>=3?5:0;},{k:'clear',n:3}],
+ ['spring','🧹','Spring cleaning','大掃除','Your 錯題本 is getting dusty. Sweep away 5 mistakes today.','錯題本積滿灰塵了，今日清除 5 條錯題吧。',function(w){return w.mist>=6?5:0;},{k:'clear',n:5}],
+ ['boss','👾','Boss battle','魔王之戰','A boss is guarding {sec}. Beat it with ★★ or better!','魔王守在 {sec}，取得 ★★ 或以上擊敗它！',function(w){return secPlays(w.ws.id)?6:0;},{k:'quiz',sec:'ws',st:2}],
+ ['rematch','🥊','Rematch!','再戰一場！','Last time {sec} was tough. Rematch – any score counts, just try!','上次 {sec} 很難，再挑戰一次——任何分數都算，試就可以！',function(w){return secPlays(w.ws.id)?5:0;},{k:'quiz',sec:'ws',st:0}],
+ ['gold','🥇','Gold rush','淘金熱','{sec} is at ★★. Turn it into ★★★ gold today!','{sec} 現在是 ★★，今日把它變成 ★★★！',function(w){return w.ts?5:0;},{k:'quiz',sec:'ts',st:3}],
+ ['explorer','🧭','New land ahoy!','發現新大陸！','You have never tried {sec}. Be the first explorer – take its quiz!','你從未試過 {sec}。做第一個探險家——做它的測驗！',function(w){return w.ns?5:0;},{k:'quiz',sec:'ns',st:0}],
+ ['library','📚','Secret library','秘密圖書館','A secret page about {sec} was found. Read the notes!','找到一頁關於 {sec} 的秘密筆記，快去閱讀！',function(w){return w.us?4:0;},{k:'notes',sec:'us'}],
+ ['warmup','🔥','Warm-up then battle','熱身再出擊','Read the {sec} notes first, then take its quiz. Warm brains win!','先讀 {sec} 筆記，再做測驗。熱身過的腦袋才會贏！',function(w){return secStars(w.ws.id)<2?5:0;},{k:'nq',sec:'ws'}],
+ ['tour','🗺️','Unit tour','單元之旅','Visit two different sub-topics in {unit} with a quiz each.','在 {unit} 裏選兩個不同小節，各做一次測驗。',function(w){return unitRatio(w.wu)<0.8?4:0;},{k:'unit',unit:'wu',n:2}],
+ ['mapfix','🧩','Fix the map','修補地圖','{unit} has missing pieces. Complete one quiz there.','{unit} 的地圖缺了幾塊，去做一次測驗補回來。',function(w){return unitRatio(w.wu)<1?3:0;},{k:'unit',unit:'wu',n:1}],
+ ['spellbook','✍️','Lost spell book','遺失的咒語書','Your missed words escaped from the spell book! Spell 8 words correctly in dictation.','錯字從咒語書逃走了！在默書中正確拼寫 8 個詞彙。',function(w){return w.dmiss>=3?5:0;},{k:'dict',n:8}],
+ ['bee','🐝','Spelling bee','串字比賽','The spelling bee starts today! Spell 10 words correctly.','串字比賽今日開始！正確拼寫 10 個詞彙。',function(w){return (S.dict.n||0)<150?3:1;},{k:'dict',n:10}],
+ ['radio','📻','Radio host','電台主持','Be a science radio host: finish one Read-aloud round.','做一日科學電台主持：完成一輪朗讀練習。',function(w){return (S.say.rounds||0)<5?5:1;},{k:'say',n:1}],
+ ['tongue','👅','Tongue twister','繞口令挑戰','Your tricky words are tangled! Finish a Read-aloud round to untangle them.','難讀字打結了！完成一輪朗讀練習解開它們。',function(w){return w.smiss>=2?5:0;},{k:'say',n:1}],
+ ['echo','🗣️','Echo cave','回音洞','Say the words back to the echo: finish Listen & Repeat for {vunit}.','對着回音洞跟讀：完成 {vunit} 的聆聽跟讀。',function(w){return !(S.vocabDay||{})[w.vu.id]?4:1;},{k:'vocab',unit:'vu'}],
+ ['cards','🃏','Card master','配對大師','Win one Term Match game – match English and 中文 terms.','贏一次詞彙配對——配對英文和中文詞彙。',function(w){return (S.matchWins||0)<5?4:1;},{k:'match',n:1}],
+ ['perfect','💯','Perfect day','完美一天','Get full marks in any quiz today. You\'ve got this!','今日在任何測驗取得滿分，你做得到！',function(w){return threeStars()>=3?3:0;},{k:'perfect'}],
+ ['marathon','🏃','Brain marathon','腦力馬拉松','Answer 25 questions correctly today (quizzes or 錯題本).','今日答對 25 題（測驗或錯題本都算）。',function(w){return 3;},{k:'correct',n:25}],
+ ['sprint','⚡','Quick sprint','快速衝刺','Answer 12 questions correctly – even a short session counts!','答對 12 題——短時間溫習也算！',function(w){return 2;},{k:'correct',n:12}],
+ ['lab','🧪','Lab safety check','實驗室安全檢查','The lab inspector is coming! Get ★★ in 1.3 Safety in the laboratory.','實驗室督察要來了！在 1.3 實驗室安全取得 ★★。',function(w){return secStars('1.3')<2?4:0;},{k:'quiz',sec:'1.3',st:2}],
+ ['water','💧','Water rescue','拯救食水','The water treatment works needs help! Quiz a Unit 2 sub-topic you find hard.','濾水廠需要幫手！在第 2 單元選一個你覺得難的小節做測驗。',function(w){return unitRatio(CHAPTERS[1])<0.8?3:0;},{k:'unit',unit:2,n:1}],
+ ['zoo','🦋','Nature patrol','自然巡邏隊','Rangers need help identifying animals: quiz a Unit 3 sub-topic.','巡邏隊需要幫忙辨認動物：在第 3 單元做一次測驗。',function(w){return unitRatio(CHAPTERS[2])<0.8?3:0;},{k:'unit',unit:3,n:1}],
+ ['cell','🔬','Microscope mission','顯微鏡任務','Zoom in! Read the notes of a Unit 4 sub-topic you have not studied well.','放大觀察！閱讀一個你未溫熟的第 4 單元小節筆記。',function(w){return unitRatio(CHAPTERS[3])<0.8?3:0;},{k:'unitnotes',unit:4}],
+ ['power','🔌','Power cut!','停電了！','The lights went out! Restore power by quizzing a Unit 5 Energy sub-topic.','停電了！在第 5 單元能量做一次測驗恢復電力。',function(w){return unitRatio(CHAPTERS[4])<0.8?3:0;},{k:'unit',unit:5,n:1}],
+ ['particle','⚛️','Particle party','粒子派對','The particles are throwing a party – join them with a Unit 6 quiz.','粒子正在開派對——做一次第 6 單元測驗加入它們。',function(w){return unitRatio(CHAPTERS[5])<0.8?3:0;},{k:'unit',unit:6,n:1}],
+ ['teacher','👩‍🏫','Be the teacher','當小老師','Read the {sec} notes and explain one point out loud to someone at home.','閱讀 {sec} 筆記，然後向家人講解其中一點。',function(w){return 2;},{k:'notes',sec:'ws'}],
+ ['comeback','🌱','Comeback kid','捲土重來','{sec} was your hardest. Take the quiz again and beat your old score – mistakes are how brains grow.','{sec} 是你最難的小節。再做一次測驗，打破舊紀錄——錯誤令腦袋成長。',function(w){return secPlays(w.ws.id)&&secStars(w.ws.id)<=1?6:0;},{k:'quiz',sec:'ws',st:1}],
+ ['double','🎯','Double trouble','雙重挑戰','Clear 2 mistakes AND read one set of notes. Two small steps!','清除 2 條錯題，再閱讀一次筆記。兩小步！',function(w){return w.mist>=2?3:0;},{k:'clearnotes',n:2}],
+ ['dictwu','📝','Word hunt','詞彙獵人','Hunt the words of your weakest unit: spell 6 words correctly in dictation.','獵捕最弱單元的詞彙：在默書中正確拼寫 6 個詞彙。',function(w){return 3;},{k:'dict',n:6}],
+ ['starter','🚀','Launch day','發射日','Start your science rocket: read any notes and take any quiz today.','啟動科學火箭：今日閱讀任何筆記並做任何測驗。',function(w){return S.quizzes<3?8:1;},{k:'anyboth'}]
+];
+function dtPick(){var w=weakInfo(),cand=[],tot=0;DT.forEach(function(d){var wt=d[6](w);if(wt>0){cand.push([d,wt]);tot+=wt;}});
+ var seed=0,t=today()+(AUTH.user?AUTH.user.email:'');for(var i=0;i<t.length;i++)seed=(seed*31+t.charCodeAt(i))%100003;
+ var r=(seed%1000)/1000*tot,d=cand[0][0];for(var j=0;j<cand.length;j++){r-=cand[j][1];if(r<=0){d=cand[j][0];break;}}
+ var g=d[7],task={id:d[0],d:today(),base:{cleared:S.cleared,dict:S.dict.n||0,say:S.say.rounds||0,match:S.matchWins||0,perfect:S.perfect||0,tc:S.tc||0,studies:S.studies},done:false};
+ if(g.sec)task.sec=typeof g.sec==='string'&&w[g.sec]?w[g.sec].id:g.sec;
+ if(g.unit)task.unit=typeof g.unit==='number'?g.unit:(w[g.unit]||w.wu).id;
+ if(g.k==='unitnotes'){var c=CHAPTERS[task.unit-1],pick2=c.sections.filter(function(s){return secStars(s.id)<3;})[0]||c.sections[0];task.sec=pick2.id;task.k2='notes';}
+ return task;}
+function dtDef(id){return DT.filter(function(d){return d[0]===id;})[0];}
+function dtTask(){if(!S.dtask||S.dtask.d!==today()||!dtDef(S.dtask.id)){S.dtask=dtPick();save();}return S.dtask;}
+function dtProgress(t){var g=dtDef(t.id)[7],b=t.base,q=qdayList();
+ switch(g.k){
+  case 'clear':return [S.cleared-b.cleared,g.n];
+  case 'quiz':return [q.some(function(x){return x[0]===t.sec&&starsFor(x[1],x[2])>=(g.st||0);})?1:0,1];
+  case 'unit':var set={};q.forEach(function(x){if(x[0].split('.')[0]==String(t.unit))set[x[0]]=1;});return [Object.keys(set).length,g.n];
+  case 'notes':case 'unitnotes':return [S.studyDay[t.sec]===today()?1:0,1];
+  case 'nq':return [(S.studyDay[t.sec]===today()?1:0)+(q.some(function(x){return x[0]===t.sec;})?1:0),2];
+  case 'dict':return [(S.dict.n||0)-b.dict,g.n];
+  case 'say':return [(S.say.rounds||0)-b.say,g.n];
+  case 'vocab':return [(S.vocabDay||{})[t.unit]===today()?1:0,1];
+  case 'match':return [(S.matchWins||0)-b.match,g.n];
+  case 'perfect':return [(S.perfect||0)-b.perfect,1];
+  case 'correct':return [(S.tc||0)-b.tc,g.n];
+  case 'clearnotes':return [Math.min(S.cleared-b.cleared,2)+(S.studies>b.studies?1:0),3];
+  case 'anyboth':return [(S.studies>b.studies?1:0)+(q.length?1:0),2];}
+ return [0,1];}
+function dtText(t,s){var sec=t.sec?secById(t.sec):null,u=t.unit?CHAPTERS[t.unit-1]:null;return s.replace('{sec}',secName(sec)).replace('{unit}',unitName(u)).replace('{vunit}',unitName(u));}
+function dtCheck(){if(!S||!S.started||!S.dtask||S.dtask.d!==today()||S.dtask.done)return;var p=dtProgress(S.dtask);if(p[0]>=p[1]){S.dtask.done=true;
+ var d=dtDef(S.dtask.id),food=pick(['siumai','wonton','salad','blueberry','eggtart']);S.coins+=40;S.food[food]=(S.food[food]||0)+1;var f=foodById(food);
+ setTimeout(function(){popup('<div style="font-size:64px">'+d[1]+'</div><h2>🎉 '+L('Mission complete!','任務完成！')+'</h2><p><b>'+esc(L(d[2],d[3]))+'</b></p><p>+40 🪙 · +1 '+f.e+' '+esc(LL(f))+'</p><p class="muted" style="font-size:13px">'+L('You practised the part you usually skip. That is how champions are made! 💪','你練習了平時會避開的部分，冠軍就是這樣煉成的！💪')+'</p>');confetti();},1400);}}
+function dtGo(t){var g=dtDef(t.id)[7];
+ if(g.k==='clear'||g.k==='clearnotes'&&Object.keys(S.mistakes).length){curScreen='practice';render();return;}
+ if(g.k==='quiz'||g.k==='nq'&&S.studyDay[t.sec]===today()){startQuiz(t.sec,'quiz');return;}
+ if(g.k==='notes'||g.k==='unitnotes'||g.k==='nq'){openStudy(t.sec);return;}
+ if(g.k==='dict'){openDictSetup(null);return;}if(g.k==='say'){openSpeakSetup(null);return;}if(g.k==='vocab'){openVocab(t.unit);return;}
+ if(g.k==='match'){openMatch();return;}
+ curScreen='study';render();window.scrollTo(0,0);}
+function dtCardHTML(){var t=dtTask(),d=dtDef(t.id),p=dtProgress(t),pc=Math.min(100,Math.round(Math.min(p[0],p[1])/p[1]*100));
+ return '<div class="card dtask'+(t.done?' done':'')+'"><div class="dthead"><span class="dte">'+d[1]+'</span><div style="min-width:0"><div class="muted" style="font-size:12px;font-weight:800">📅 '+L('TODAY\'S MISSION','今日任務')+'</div><b style="font-size:17px">'+esc(L(d[2],d[3]))+'</b></div></div>'+
+ '<p style="margin:8px 0">'+esc(dtText(t,L(d[4],d[5])))+'</p><div class="prog" style="width:100%"><i style="width:'+pc+'%;background:'+(t.done?'var(--good)':'linear-gradient(90deg,#F7A9B5,#FBD46D)')+'"></i></div>'+
+ '<div class="row" style="margin-top:8px;justify-content:space-between;align-items:center"><span class="muted" style="font-size:13px">'+Math.min(p[0],p[1])+' / '+p[1]+' · 🎁 +40 🪙 + '+L('a snack','一份小食')+'</span>'+(t.done?'<span class="tag" style="background:#D8F3DC">✅ '+L('Done! See you tomorrow','完成！明天見')+'</span>':'<button class="btn small pink" id="bTask">🚀 '+L('Go!','出發！')+'</button>')+'</div></div>';}
 
 /* ---------- Dictation 默書 ---------- */
 var DQ=null,dictCfg={kind:'listen',unit:1,sec:'all'};
@@ -3512,7 +3751,7 @@ var hash=location.hash.replace('#','');
 render();
 if(hash&&hash.length>20){var det=document.querySelector('details');if(det){det.open=true;$('#inCode').value=hash;previewCode(hash);}}
 setInterval(function(){if(S.started&&curScreen==='home'&&!$('#ov')){render();}else if(S.started)decay();},60000);
-window.__game={LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;}};
+window.__game={dt:{DT:DT,pick:dtPick,card:dtCardHTML,prog:dtProgress},foods:FOODS,LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;}};
 })();
 
 </script>
