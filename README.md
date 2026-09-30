@@ -39,11 +39,19 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
 - **Story arc:** Murk, the Fog of Forgetting, has trapped two Science Pals. Students learn from six Nobel Prize winners to win six *Sparks of Discovery*.
 - **One chapter unlocks on the 1st of each month:** Marie Curie (Oct), Alexander Fleming (Nov), Charles Kao (Dec), Tu Youyou (Jan), Ernest Rutherford (Feb), Jennifer Doudna & Emmanuelle Charpentier (Mar). Chapters stay open once unlocked, so late starters can catch up.
 - **6 tasks per chapter:** story (4 scenes), reading (4 pages, about 370 words, with a quick check on each page and the other language one tap away), timeline, word vault, boss battle (8 questions), and a link to a textbook quiz (≥ 2★).
-- **Rewards (shown in full on the quest page to advertise it):** 3 Sparks → Perk 1 "Garden of Virtue": Petal the Blossom Fawn, Kai the Hong Kong newt, a scholar beret and a 「求知」 scroll. 6 Sparks → Perk 2 "Hall of Star Maps": Astra the Star-Map Pangolin, Romer's tree frog, a star-map cape and an armillary sphere.
+- **Rewards (shown in full on the quest page to advertise it):** 3 Sparks → Perk 1 "Garden of Virtue" in school blue (value: 立己立人, build yourself up and help others grow): Petal the Blossom Fawn, Kai the Hong Kong newt, a blue scholar beret and a 「立己立人」 scroll. 6 Sparks → Perk 2 "Hall of Star Maps" in maroon and white (value: dare as much as you are able; once a friend, always a friend): Astra the Star-Map Pangolin, Romer's tree frog, a maroon star-map cape and an armillary sphere with an AUDE banner.
+- **Cut-scenes and battles:** letterboxed cut-scenes with camera moves, scene effects and typewriter text; turn-based boss battles with a VS intro, projectile attacks, hit bursts, damage numbers, combos and critical hits, an enraged phase, and victory/defeat screens (keys 1–4 and Enter work on a keyboard).
 - **Advertising:** a glowing neon banner at the top of Home, a pop-up once before the season and once when each new chapter opens, and a red "!" on the Nobel tab.
 - **Teacher dashboard:** a separate 🏅 Nobel Quest tab (join rate, Sparks per chapter and per class, progress groups, task heat-map, students not started, per-student table) plus a "Nobel 諾貝爾" sheet in the Excel download. Needs the latest `server/Code.gs` deployed (it adds two columns to the progress sheet).
 - **Preview:** teacher accounts see every chapter; you can also add `#nobel-preview` to the web address.
 - Content lives in `nobeldata.js` (in the build) and progress is stored in save code v11.
+
+## 🧠 Learning rewards (anti-grinding)
+- **Fresh topics pay more:** 🌱 a never-tried sub-topic ×1.5, 🔁 not played for 7+ days ×1.25; the same quiz again within 20 hours pays ×0.5, then ×0.25, then ×0.1. The same applies to each dictation and read-aloud set ("missed words" practice always pays in full).
+- **New knowledge beats repeats:** 4 🪙 for a question answered correctly for the first time, 1 🪙 for one already known.
+- **No coins for guesses:** a correct answer given in under 2 s (true/false) or 3 s (multiple choice, +1 s with a picture) earns nothing, and 5 or more of these cap the quiz at 1★ ("Guess alert").
+- **"Why?" check:** after each quiz, students fill the key word in the explanation (or pick the right explanation) for 2 questions they got right. Correct = +5 🪙; wrong = the question goes to 錯題本, because the answer was remembered but not understood.
+- **Explorer of the week:** try 6 different sub-topics or dictation sets in a week for +60 🪙, with 3 "fresh picks" suggested on the Study page.
 
 ## Editing questions
 All content is in the `CHAPTERS` array near the top of the first `<script>`.
