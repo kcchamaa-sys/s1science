@@ -34,6 +34,15 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
 - **錯題本 Mistake Bank**: wrong answers are saved automatically; answer one right twice in a row to clear it (+6 coins).
 - **Saving**: auto-saves to `localStorage` key `s1SciencePals_v1`; 💾 gives a save code + share link (`…/#CODE`) to move devices, with preview and checksum. Codes from every earlier version (v1–v6) still load; the current format is v9.
 
+## 🏅 Nobel Time Quest (season event, Oct 2026 – Mar 2027)
+- A separate **Nobel** tab with its own dark neon style, holographic cards and synth music (a faster track for the boss battle).
+- **Story arc:** Murk, the Fog of Forgetting, has trapped two Science Pals. Students learn from six Nobel Prize winners to win six *Sparks of Discovery*.
+- **One chapter unlocks on the 1st of each month:** Marie Curie (Oct), Alexander Fleming (Nov), Charles Kao (Dec), Tu Youyou (Jan), Ernest Rutherford (Feb), Jennifer Doudna & Emmanuelle Charpentier (Mar). Chapters stay open once unlocked, so late starters can catch up.
+- **6 tasks per chapter:** story (4 scenes), reading (4 pages, about 370 words, with a quick check on each page and the other language one tap away), timeline, word vault, boss battle (8 questions), and a link to a textbook quiz (≥ 2★).
+- **Rewards:** 3 Sparks → Perk 1 (Pui Tak Canossian College): Petal the Blossom Fawn, Kai the Hong Kong newt, a scholar beret and a 「培德」 scroll. 6 Sparks → Perk 2 (Ricci Hall, HKU): Astra the Star-Map Pangolin, Romer's tree frog, a star-map cape and an armillary sphere.
+- **Preview:** teacher accounts see every chapter; you can also add `#nobel-preview` to the web address.
+- Content lives in `nobeldata.js` (in the build) and progress is stored in save code v11.
+
 ## Editing questions
 All content is in the `CHAPTERS` array near the top of the first `<script>`.
 - `M(bloom, qEN, qZH, [[correctEN,correctZH], [wrongEN,wrongZH], ...], explainEN, explainZH)` – first option is the correct one (shuffled in game).

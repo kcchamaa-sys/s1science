@@ -59,6 +59,9 @@ It must copy the format of my finished game **"Mochi Science Pals 麻糬科學�
 - **錯題本 Mistake Bank:** wrong answers are saved automatically; 2 correct in a row clears one (+6 🪙).
 - **Anti-guessing:** a wrong answer in under 3 s → "Too quick!" and a 4 s wait.
 
+### Season event (optional)
+- A separate tab for a time-limited story event, e.g. six famous scientists over six months, with one chapter unlocked per month by device date. Each chapter has a story, a long reading with quick checks, a timeline, a word match, a boss battle and a link to a textbook quiz. Every 3 chapters unlocks a reward pack (Science Pal + pet + outfit + decor). Give it its own intense art style and music.
+
 ## Language and pronunciation
 
 - 🌐 EN / 繁中 toggle everywhere.
