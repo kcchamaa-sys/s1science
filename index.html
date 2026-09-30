@@ -486,6 +486,134 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 .room .prop.d-nature::after,.room .prop.d-cosy::after{content:"";position:absolute;left:-8%;right:-8%;bottom:-3%;height:7%;min-height:4px;border-radius:3px;background:#C69C74;box-shadow:0 2px 0 #A8805C}
 .room .stk.d-sci{left:6%;top:6%}
 .room .stk.d-fun{left:34%;top:5%}
+
+/* ===== Nobel Time Quest ===== */
+.nq{--nqbg:#0E1233;--cy:#00C4FF;--gd:#FFD000;--mg:#FF2D55;position:relative;margin:4px -6px 0;padding:18px 16px 26px;border-radius:28px;color:#F4F6FF;overflow:hidden;
+ background:radial-gradient(120% 70% at 15% 0%,#2A1E6E 0%,transparent 60%),radial-gradient(90% 60% at 100% 30%,#0B4A73 0%,transparent 55%),linear-gradient(180deg,#12163E,#0B0E2A);box-shadow:0 12px 40px rgba(14,18,51,.35)}
+.nq-stars{position:absolute;inset:0;pointer-events:none;opacity:.7;background-image:radial-gradient(1.5px 1.5px at 20px 30px,#fff 50%,transparent 51%),radial-gradient(1px 1px at 120px 80px,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 220px 20px,#BFE9FF 50%,transparent 51%),radial-gradient(1px 1px at 300px 140px,#fff 50%,transparent 51%),radial-gradient(1.2px 1.2px at 60px 180px,#FFE9A8 50%,transparent 51%);background-size:340px 220px;animation:nqTw 6s linear infinite}
+@keyframes nqTw{50%{opacity:.35}}
+.nq>*{position:relative}
+.nq h1{font-size:28px;line-height:1.15;margin:2px 0 8px;font-weight:900;letter-spacing:.3px;background:linear-gradient(90deg,#fff,#BFE9FF 40%,#FFE680);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nq h2{color:#fff;font-size:19px;margin:10px 0}
+.nq p{color:#D8DEFF}
+.nq-kicker{font-size:12px;font-weight:900;letter-spacing:1.5px;color:var(--cy)!important;margin:0}
+.nq-hero{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center}
+.nq-hero .lan{filter:drop-shadow(0 0 18px rgba(255,208,0,.55));animation:nqFloat 4s ease-in-out infinite}
+@keyframes nqFloat{50%{transform:translateY(-6px)}}
+.nq-orbs{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.nq-orbs .orb{width:34px;height:34px;border-radius:50%;border:2px dashed rgba(255,255,255,.35);display:grid;place-items:center}
+.nq-orbs .orb.on{border:2px solid var(--c);box-shadow:0 0 14px var(--c);background:rgba(255,255,255,.08)}
+.nq-orbs .orb svg{width:26px}
+.nq-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:18px;padding:12px 20px;font:inherit;font-weight:900;font-size:16px;cursor:pointer;color:#1B1640;background:linear-gradient(180deg,#FFE35C,#FFC400);box-shadow:0 5px 0 #C08F00,0 0 22px rgba(255,208,0,.35);transition:transform .15s cubic-bezier(.3,1.6,.5,1)}
+.nq-btn:active{transform:scale(.95) translateY(3px);box-shadow:0 2px 0 #C08F00}
+.nq-btn.ghost{margin:14px 0 4px;background:rgba(255,255,255,.08);color:#fff;border:2px solid rgba(0,196,255,.6);box-shadow:0 0 16px rgba(0,196,255,.25)}
+.nq-back{background:none;border:0;color:#BFE9FF;font:inherit;font-weight:800;font-size:15px;cursor:pointer;padding:4px 0 10px}
+.nq-note{font-size:14px;color:#BFC8F5!important}
+.nq-h{margin-top:18px!important}
+.nq-bar{display:block;height:8px;border-radius:6px;background:rgba(255,255,255,.14);overflow:hidden}
+.nq-bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--cy),var(--gd),var(--mg))}
+.nq-perks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.nq-perk{display:grid;grid-template-columns:96px 1fr;gap:8px;align-items:center;padding:10px 12px;border-radius:20px;background:linear-gradient(135deg,rgba(255,45,85,.16),rgba(0,196,255,.14));border:1.5px solid rgba(255,255,255,.18)}
+.nq-perk.got{border-color:var(--gd);box-shadow:0 0 20px rgba(255,208,0,.3)}
+.nq-perk .pp{position:relative;height:88px}
+.nq-perk .pp-pal{position:absolute;left:0;top:0;width:80px}
+.nq-perk .pp-bud{position:absolute;right:-4px;bottom:0;width:42px}
+.nq-perk .sil svg,.sil2 svg{filter:brightness(0) drop-shadow(0 0 6px rgba(0,196,255,.9));opacity:.85}
+.nq-perk .pt{display:flex;flex-direction:column;gap:3px;font-size:13px;min-width:0}
+.nq-perk .pt b{font-size:15px;color:#fff}
+.nq-perk .pt span{font-weight:800;color:#FFE680}
+.nq-perk small{color:#BFC8F5}
+.nq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.holo{position:relative;--rx:0deg;--ry:0deg;--mx:50%;transform:perspective(700px) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
+.holo::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:color-dodge;opacity:.35;background:linear-gradient(115deg,transparent 20%,rgba(0,196,255,.55) 35%,rgba(255,45,85,.5) 50%,rgba(255,208,0,.55) 65%,transparent 80%);background-size:250% 250%;background-position:var(--mx) 50%;animation:nqFoil 6s linear infinite}
+@keyframes nqFoil{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.nq-card{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:12px 12px 14px;border-radius:22px;border:2px solid var(--c);background:linear-gradient(170deg,rgba(255,255,255,.12),rgba(255,255,255,.03) 50%),#171B4A;color:#fff;font:inherit;cursor:pointer;box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 8px 24px rgba(0,0,0,.35),0 0 18px color-mix(in srgb,var(--c) 35%,transparent)}
+.nq-card .mo{font-size:12px;font-weight:900;color:var(--c);letter-spacing:.5px}
+.nq-card .art{width:100%;max-width:120px;aspect-ratio:1;display:block;filter:drop-shadow(0 0 10px color-mix(in srgb,var(--c) 60%,transparent))}
+.nq-card b{font-size:16px;line-height:1.2}
+.nq-card .ti{font-size:13px;color:#D8DEFF;font-weight:700}
+.nq-card .pg{display:flex;flex-direction:column;gap:4px;width:100%;font-size:13px;font-weight:800;margin-top:4px}
+.nq-card.locked{cursor:default;filter:saturate(.3);opacity:.8}
+.nq-card.locked .art{filter:blur(3px) brightness(.6)}
+.nq-card .lock{font-size:13px;font-weight:800;color:#FFE680;margin-top:4px}
+.nq-card.done{border-color:var(--gd);box-shadow:0 0 26px rgba(255,208,0,.45)}
+.nq-chead{display:grid;grid-template-columns:130px 1fr;gap:14px;align-items:center;padding:14px;border-radius:24px;border:2px solid var(--c);background:#171B4A;box-shadow:0 0 24px color-mix(in srgb,var(--c) 35%,transparent)}
+.nq-chead .sp{font-weight:900;color:#FFE680!important}
+.nq-tasks{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px}
+.nq-task{display:flex;flex-direction:column;gap:3px;align-items:flex-start;text-align:left;padding:12px 14px;border-radius:18px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff;font:inherit;cursor:pointer;transition:transform .15s cubic-bezier(.3,1.6,.5,1)}
+.nq-task:active{transform:scale(.95)}
+.nq-task .ic{font-size:22px}
+.nq-task b{font-size:16px}
+.nq-task small{color:#BFC8F5;font-size:12.5px}
+.nq-task.done{border-color:#1BD17A;background:rgba(27,209,122,.12)}
+.nq-cine{text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+.nq-cine .scene{width:min(320px,100%);min-height:180px;display:grid;place-items:center;animation:nqIn .5s cubic-bezier(.3,1.4,.5,1)}
+.nq-cine .scene>svg{width:min(220px,70vw)}
+.nq-cine .big{width:min(240px,70vw)}
+.nq-cine .duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;align-items:end}
+.nq-cine .budbig{width:80%;margin:0 auto}
+.nq-cine .burst{display:flex;flex-wrap:wrap;justify-content:center;gap:4px}
+.nq-cine .burst svg{width:72px;animation:nqPulse 1.6s ease-in-out infinite}
+@keyframes nqPulse{50%{transform:scale(1.12)}}
+@keyframes nqIn{from{opacity:0;transform:scale(.9) translateY(10px)}}
+.nq-cine .line{max-width:560px;font-size:17px;line-height:1.6;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:18px;padding:14px 16px;color:#fff!important}
+.nq-read{max-width:720px;margin:0 auto}
+.nq-read .txt{font-size:17px;line-height:1.75;color:#EEF1FF!important}
+.nq-read .kw{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.nq-read .kw span{font-size:13px;padding:4px 10px;border-radius:12px;background:rgba(0,196,255,.14);border:1px solid rgba(0,196,255,.45)}
+.nq-read .alt{margin:6px 0 12px}
+.nq-read .alt summary{cursor:pointer;font-weight:800;color:#BFE9FF}
+.nq-read .alt p{font-size:15px;line-height:1.7}
+.nq-dots{display:flex;gap:6px;margin:6px 0}
+.nq-dots i{width:26px;height:6px;border-radius:4px;background:rgba(255,255,255,.2)}
+.nq-dots i.on{background:#1BD17A}.nq-dots i.cur{background:var(--gd)}
+.nq-q{margin-top:10px;padding:14px;border-radius:20px;background:rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.14)}
+.nq-q .qh{font-weight:900;color:var(--gd)!important;margin:0 0 4px}
+.nq-q .qq{font-size:17px;font-weight:800;color:#fff!important;margin:0 0 10px}
+.opts{display:grid;gap:8px;margin:8px 0 12px}
+.nq-opt{text-align:left;border-radius:16px;padding:12px 14px;font:inherit;font-weight:700;font-size:15px;color:#fff;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);cursor:pointer;transition:transform .12s}
+.nq-opt:active{transform:scale(.97)}
+.nq-opt.ok{border-color:#1BD17A;background:rgba(27,209,122,.22)}
+.nq-opt.bad{border-color:var(--mg);background:rgba(255,45,85,.2);animation:nqShake .35s}
+.nq-opt.sel{border-color:var(--cy);background:rgba(0,196,255,.22)}
+.nq-opt:disabled{cursor:default}
+@keyframes nqShake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.nq-line{list-style:none;padding:0 0 0 18px;margin:10px 0;border-left:3px solid rgba(0,196,255,.5)}
+.nq-line li{position:relative;padding:6px 0 6px 10px;display:flex;gap:10px;align-items:baseline;min-height:30px}
+.nq-line li::before{content:"";position:absolute;left:-27px;top:12px;width:14px;height:14px;border-radius:50%;background:#171B4A;border:3px solid rgba(255,255,255,.35)}
+.nq-line li.on::before{background:var(--gd);border-color:var(--gd);box-shadow:0 0 10px var(--gd)}
+.nq-line li b{color:var(--gd);font-size:17px;min-width:44px}
+.nq-match{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.nq-match>div{display:grid;gap:8px;align-content:start}
+.nq-match .nq-opt{text-align:center}
+.nq-boss .arena{position:relative;height:250px;border-radius:22px;overflow:hidden;background:radial-gradient(80% 90% at 70% 30%,rgba(106,91,168,.55),transparent 70%),linear-gradient(180deg,#1A1450,#0D0F2E);border:2px solid rgba(255,45,85,.45)}
+.nq-boss .hpwrap{position:absolute;top:10px;right:12px;left:42%;display:flex;gap:8px;align-items:center;font-size:13px;letter-spacing:1px;color:#FF9AB0;z-index:2}
+.nq-boss .hp{flex:1;height:12px;border-radius:8px;background:rgba(255,255,255,.15);overflow:hidden;border:1.5px solid rgba(255,255,255,.3)}
+.nq-boss .hp i{display:block;height:100%;background:linear-gradient(90deg,#FF2D55,#FF8A3D);transition:width .5s cubic-bezier(.3,1.4,.5,1)}
+.nq-boss .foe{position:absolute;right:4%;top:34px;width:52%;max-width:260px;animation:nqFloat 3s ease-in-out infinite}
+.nq-boss .foe.hit{animation:nqHitF .5s}
+@keyframes nqHitF{20%{transform:translateX(12px) scale(.94);filter:brightness(2.5)}60%{transform:translateX(-6px)}}
+.nq-boss .me{position:absolute;left:4%;bottom:6px;width:34%;max-width:150px}
+.nq-boss .hearts{display:flex;gap:4px;justify-content:center;font-size:20px;color:#FF2D55;text-shadow:0 0 8px #FF2D55}
+.nq-boss .hearts .lost{color:#4A4A6A;text-shadow:none}
+.nq-boss .beam{position:absolute;left:28%;right:22%;top:48%;height:10px;border-radius:8px;background:linear-gradient(90deg,#fff,var(--gd),var(--cy));box-shadow:0 0 20px var(--gd),0 0 40px var(--cy);transform-origin:left;animation:nqBeam .45s ease-out forwards}
+@keyframes nqBeam{0%{transform:scaleX(0) rotate(-8deg);opacity:1}70%{transform:scaleX(1) rotate(-8deg);opacity:1}100%{transform:scaleX(1) rotate(-8deg);opacity:0}}
+.nq.fx-hurt{animation:nqQuake .4s}
+.nq.fx-hurt::before{content:"";position:absolute;inset:0;background:rgba(255,45,85,.25);pointer-events:none;z-index:5;animation:nqFlash .5s forwards}
+@keyframes nqQuake{20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-3px,2px)}}
+@keyframes nqFlash{to{opacity:0}}
+.nq-res{text-align:center;padding:16px;margin-top:12px;border-radius:20px;background:rgba(0,0,0,.25)}
+.nq-res.win h2{color:var(--gd)}
+.big-stars{font-size:40px;letter-spacing:6px;margin:8px 0}
+.big-stars span{color:rgba(255,255,255,.2)}.big-stars span.on{color:var(--gd);text-shadow:0 0 12px var(--gd)}
+.nq-pop{display:grid;place-items:center;margin-bottom:6px}
+.nq-pop .nq-card{width:190px;cursor:default}
+.nq-perkitems{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}
+.nq-perkitems>div{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:700}
+.nq-perkitems svg,.nq-perkitems>div>div{width:100%;max-width:74px;aspect-ratio:1}
+.nav .badge.nqdot{background:#FF2D55}
+@media (max-width:560px){.nq{margin:4px -10px 0;padding:16px 12px 22px;border-radius:22px}.nq-hero{grid-template-columns:72px 1fr}.nq h1{font-size:23px}.nq-perks{grid-template-columns:1fr}.nq-grid{grid-template-columns:1fr 1fr;gap:10px}.nq-chead{grid-template-columns:90px 1fr}.nq-card b{font-size:14px}.nq-boss .arena{height:220px}}
+@media (prefers-reduced-motion:reduce){.nq-stars,.holo::after,.nq-hero .lan,.nq-boss .foe,.nq-cine .burst svg{animation:none}.holo{transform:none}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -1951,6 +2079,226 @@ var XQ3={
 };
 (function(){CHAPTERS.forEach(function(c){c.sections.forEach(function(s){if(XQ3[s.id])XQ3[s.id].forEach(function(q){s.qs.push(q);});});});})();
 
+/* ===== Nobel Time Quest: story + reading content (Oct 2026 – Mar 2027) ===== */
+var NQ_PROLOGUE=[
+ ["Midnight in the Science Pals' lab. On the top shelf, the old Nobel Time Lantern flickers… then slowly turns grey.","午夜，科學小夥伴的實驗室。最高那層架上，古老的諾貝爾時光燈閃了幾下……然後慢慢變成灰色。"],
+ ["A cold fog pours out and twists into a face with glowing eyes. “I am MURK, the Fog of Forgetting! Every time someone stops asking WHY, I grow stronger!”","一陣冰冷的霧湧出來，扭成一張眼睛發光的臉。「我是遺忘霧妖——默克！每當有人不再問『為甚麼』，我就會變得更強！」"],
+ ["Murk swallows two brave Science Pals. Petal the Blossom Fawn, who grows seedlings of virtue in the garden of Pui Tak Canossian College, is frozen in fog-ice. Astra the Star-Map Pangolin, who guards the old star charts of Ricci Hall at the University of Hong Kong, has her glowing scales scattered across the night sky.","默克吞噬了兩位勇敢的科學小夥伴：在培德書院花園裏培育「德行幼苗」的花鹿培培，被困在霧冰之中；在香港大學利瑪竇宿舍守護古老星圖的星圖穿山甲星星，發光的鱗片被吹散到夜空各處。"],
+ ["The Lantern whispers: “Six Nobel Prize winners hold the Sparks of Discovery. Each month I can open ONE door in time. Three Sparks will melt Petal's ice. Six Sparks will rebuild Astra's star map. Are you brave enough, young scientist?”","時光燈輕聲說：「六位諾貝爾獎得主手中握着『發現之火』。我每個月只能打開一道時光之門。集齊三團火，就能融化培培的霧冰；集齊六團火，就能重組星星的星圖。年輕的科學家，你有勇氣出發嗎？」"]
+];
+var NQ_FINALE=[
+ [ /* after 3 sparks */
+  ["CRACK! Three Sparks spin around the fog-ice. It shatters into glittering snow.","咔嚓！三團發現之火圍着霧冰旋轉，霧冰碎成閃閃發光的雪花。"],
+  ["Petal shakes her antlers and tiny seedlings burst into pink blossoms. “Thank you! Persistence, observation and imagination are seeds of virtue too. At Pui Tak we grow them every day.”","培培搖一搖鹿角，一棵棵小幼苗開出粉紅色的花。「謝謝你！堅毅、觀察和想像力，也是德行的種子。在培德，我們每天都悉心培育它們。」"],
+  ["A little Hong Kong newt climbs out of a stream and onto her hoof. “This is Kai, my friend from the hill streams. We'll help you save Astra!”","一條小小的香港瘰螈從山溪爬到她的蹄上。「這是我的山溪好朋友阿溪。我們會陪你一起拯救星星！」"]
+ ],
+ [ /* after 6 sparks */
+  ["The six Sparks fly up into the sky and join into a shining map of stars.","六團發現之火飛上夜空，連成一幅閃亮的星圖。"],
+  ["One by one, Astra's scales float back, each glowing with a constellation. She curls into a ball, then unrolls with a happy squeak!","星星的鱗片一片一片飛回來，每一片都閃着一個星座。她捲成一個球，再開心地吱一聲伸展開來！"],
+  ["“At Ricci Hall we remember Matteo Ricci, who shared maps, stars and geometry between East and West more than 400 years ago. Science grows when we share it.”","「在利瑪竇宿舍，我們紀念四百多年前把地圖、天文和幾何在東西方之間分享的利瑪竇。科學，要分享才會成長。」"],
+  ["A tiny Romer's tree frog hops onto her tail. “This is Romer, a frog found only in Hong Kong. Murk is gone… for as long as you keep asking WHY!”","一隻小小的盧氏小樹蛙跳上她的尾巴。「這是小盧，只在香港找得到的樹蛙。默克消失了……只要你一直問『為甚麼』，它就不會回來！」"]
+ ]
+];
+var NQ=[
+{id:'curie',month:'2026-10',link:'1.3',col:'#00C4FF',
+ who:['Marie Curie','居里夫人'],prize:['Physics 1903 · Chemistry 1911','1903 物理學獎 · 1911 化學獎'],
+ title:['The Glowing Notebook','發光的筆記簿'],spark:['Spark of Persistence','堅毅之火'],
+ story:[
+  ["The Lantern flashes and you land in a draughty wooden shed in Paris, 1898. Steam rises from huge iron pots.","時光燈一閃，你們降落在 1898 年巴黎一間漏風的木棚。巨大的鐵鍋冒着蒸氣。"],
+  ["A woman stirs a boiling pot with an iron rod almost as tall as she is. “I am Marie Curie. We must boil and separate tonnes of rock to find a tiny speck of a new element.”","一位女士用一支差不多跟她一樣高的鐵棒攪拌着沸騰的鍋。「我是居里夫人。我們要把幾噸礦石煮沸、分離，才能找到一點點新元素。」"],
+  ["Murk seeps under the door. “Give up! It's too much work. Nobody will remember!” The fog makes her notebook pages go blank.","默克從門縫滲進來：「放棄吧！太辛苦了，根本沒有人會記得！」霧氣令她筆記簿上的字消失了。"],
+  ["Marie smiles. “Then we write it again, carefully, every measurement.” As she writes, the pages glow a faint blue-green. A Spark lands in your hand: the Spark of Persistence!","居里夫人微笑：「那就再寫一次，仔細記下每一個量度。」她一邊寫，紙頁一邊發出淡淡的藍綠色光。一團火落在你手心——堅毅之火！"]],
+ read:[
+  {h:['A girl who loved learning','熱愛學習的女孩'],
+   p:["Maria Skłodowska was born in Warsaw, Poland, in 1867. At that time women were not allowed to study at the university in Warsaw, so Maria and her sister secretly joined classes of the “Flying University”, which moved from house to house. In 1891 she moved to Paris to study physics and mathematics at the Sorbonne. She was often so poor that she lived on bread, butter and tea, but she came first in her physics degree. In Paris she met Pierre Curie, a scientist who studied magnets and crystals. They married in 1895 and became one of the most famous teams in science.","瑪麗亞·斯克沃多夫斯卡 1867 年在波蘭華沙出生。當時華沙的大學不准女性入讀，於是她和姐姐秘密參加在不同住宅之間流動上課的「流動大學」。1891 年，她搬到巴黎，在索邦大學修讀物理和數學。她常常窮得只能吃麵包、牛油和喝茶，但物理學位考試卻考第一。在巴黎，她認識了研究磁鐵和晶體的科學家皮埃爾·居里。他們在 1895 年結婚，成為科學史上最著名的搭檔之一。"],
+   q:{q:['Why did Maria move to Paris?','瑪麗亞為甚麼搬到巴黎？'],o:[['To study at university, which women could not do in Warsaw','到大學讀書，因為華沙的大學不收女性'],['To open a bakery','開麵包店'],['To become a painter','成為畫家'],['To look for gold','尋找黃金']]}},
+  {h:['Strange invisible rays','奇怪的隱形射線'],
+   p:["In 1896 Henri Becquerel found that uranium gives out invisible rays. Marie wanted to know why. She measured the rays very carefully with an electrometer, an instrument that Pierre and his brother had invented. She discovered that a uranium ore called pitchblende gave out MORE rays than the uranium inside it could explain. Her hypothesis was bold: the ore must contain new, unknown elements. She named this ability to give out rays “radioactivity”, a word she invented herself.","1896 年，貝克勒爾發現鈾會放出看不見的射線。居里夫人想知道原因。她用皮埃爾和他哥哥發明的靜電計，非常仔細地量度這些射線，發現一種叫瀝青鈾礦的礦石，放出的射線比礦石裏的鈾應有的更多。她提出一個大膽的假說：礦石裏一定藏着未知的新元素。她把這種放出射線的能力命名為「放射性」——這是她自己創造的詞語。"],
+   q:{q:['What was Marie’s hypothesis?','居里夫人的假說是甚麼？'],o:[['Pitchblende contains new, unknown elements','瀝青鈾礦含有未知的新元素'],['Uranium is made of gold','鈾是由金造成的'],['Rays come from the Sun only','射線只來自太陽'],['The electrometer was broken','靜電計壞了']]}},
+  {h:['Tonnes of rock','幾噸礦石'],
+   p:["To test her idea, the Curies worked in a leaky shed. They ground, dissolved, filtered and crystallised tonnes of pitchblende. In 1898 they announced two new elements: polonium, named after Marie's homeland Poland, and radium, from the Latin word for “ray”. It took about four more years of hard work to collect just one tenth of a gram of pure radium chloride. In 1903 the Curies shared the Nobel Prize in Physics with Becquerel. In 1911 Marie won the Nobel Prize in Chemistry on her own. She is still the only person to win Nobel Prizes in two different sciences.","為了驗證這個想法，居里夫婦在一間漏水的棚屋裏工作，把幾噸瀝青鈾礦磨碎、溶解、過濾和結晶。1898 年，他們宣布發現兩種新元素：以居里夫人祖國波蘭命名的「釙」，以及名字來自拉丁文「射線」的「鐳」。之後再辛苦工作約四年，才收集到十分之一克純氯化鐳。1903 年，居里夫婦和貝克勒爾一同獲得諾貝爾物理學獎；1911 年，居里夫人獨自獲得諾貝爾化學獎。至今她仍是唯一在兩個不同科學範疇獲得諾貝爾獎的人。"],
+   q:{q:['Where does the name “polonium” come from?','「釙」(polonium) 這個名字來自哪裏？'],o:[['Poland, Marie’s homeland','居里夫人的祖國波蘭'],['The North Pole','北極'],['A kind of polish','一種擦亮劑'],['Pierre’s pet','皮埃爾的寵物']]}},
+  {h:['Science and safety','科學與安全'],
+   p:["Radium glows faintly in the dark, and at first nobody knew it was dangerous. Marie even carried samples in her pockets. Over many years the radiation damaged her health, and she died in 1934. Her notebooks are still radioactive today! They are kept in lead-lined boxes in Paris, and readers must wear protective clothing. During World War I, Marie also built mobile X-ray cars, nicknamed “little Curies”, to help doctors find bullets inside injured soldiers. Today we know how to work safely: hazard warning symbols, protective equipment and laboratory rules protect every scientist, including you.","鐳在黑暗中會發出微光，起初沒有人知道它是危險的。居里夫人甚至把樣本放在口袋裏。多年下來，輻射損害了她的健康，她在 1934 年離世。她的筆記簿到今天仍然有放射性！它們存放在巴黎的鉛盒裏，讀者必須穿上保護衣物才可以閱讀。第一次世界大戰期間，居里夫人還製造了流動 X 光車，人稱「小居里」，幫助醫生找出傷兵體內的子彈。今天我們懂得安全地工作：危險警告標誌、保護裝備和實驗室守則保護着每一位科學家——包括你。"],
+   q:{q:['Why are Marie’s notebooks kept in lead-lined boxes?','為甚麼居里夫人的筆記簿要放在鉛盒裏？'],o:[['They are still radioactive','它們仍然有放射性'],['They are very heavy','它們很重'],['Lead keeps paper warm','鉛可以令紙保暖'],['To hide them from Pierre','不想皮埃爾看到']]}}],
+ boss:[
+  [['In which city was Marie Curie born?','居里夫人在哪個城市出生？'],[['Warsaw','華沙'],['Paris','巴黎'],['London','倫敦'],['Vienna','維也納']]],
+  [['Which word did Marie Curie invent?','居里夫人創造了哪個詞語？'],[['radioactivity','放射性'],['electricity','電'],['gravity','萬有引力'],['photosynthesis','光合作用']]],
+  [['Which two elements did the Curies discover in 1898?','居里夫婦在 1898 年發現了哪兩種元素？'],[['Polonium and radium','釙和鐳'],['Oxygen and hydrogen','氧和氫'],['Gold and silver','金和銀'],['Carbon and iron','碳和鐵']]],
+  [['What record does Marie Curie still hold?','居里夫人至今仍保持哪項紀錄？'],[['Only person with Nobel Prizes in two different sciences','唯一在兩個不同科學範疇獲諾貝爾獎的人'],['First person to fly a plane','第一個駕駛飛機的人'],['Youngest Nobel winner','最年輕的諾貝爾獎得主'],['Inventor of the microscope','顯微鏡的發明者']]],
+  [['Which instrument did she use to measure the rays?','她用哪種儀器量度射線？'],[['An electrometer','靜電計'],['A thermometer','溫度計'],['A stopwatch','秒錶'],['A measuring cylinder','量筒']]],
+  [['What made Marie suspect a new element?','甚麼令居里夫人懷疑有新元素？'],[['Pitchblende gave out more rays than its uranium could explain','瀝青鈾礦放出的射線比鈾應有的多'],['Pitchblende smelled strange','瀝青鈾礦氣味奇怪'],['Pitchblende was very heavy','瀝青鈾礦很重'],['Pitchblende changed colour in water','瀝青鈾礦在水中變色']]],
+  [['What were the “little Curies”?','「小居里」是甚麼？'],[['Mobile X-ray cars used in World War I','一戰時使用的流動 X 光車'],['Radium toys','鐳玩具'],['Marie’s pet cats','居里夫人的寵物貓'],['Small telescopes','小型望遠鏡']]],
+  [['Which modern lab habit would have protected Marie?','哪個現代實驗室習慣可以保護居里夫人？'],[['Using protective equipment and following hazard labels','使用保護裝備及遵從危險標籤'],['Keeping samples in her pockets','把樣本放在口袋'],['Eating lunch at the bench','在實驗桌吃午餐'],['Removing all labels','撕走所有標籤']]]],
+ time:[[1867,'Maria is born in Warsaw','瑪麗亞在華沙出生'],[1891,'She moves to Paris to study','她搬到巴黎讀書'],[1898,'Polonium and radium are discovered','發現釙和鐳'],[1903,'Nobel Prize in Physics','獲諾貝爾物理學獎'],[1911,'Nobel Prize in Chemistry','獲諾貝爾化學獎']],
+ words:[['radioactivity','放射性'],['element','元素'],['radiation','輻射'],['hypothesis','假說'],['measurement','量度'],['protective equipment','保護裝備']]},
+
+{id:'fleming',month:'2026-11',link:'1.2',col:'#1BD17A',
+ who:['Alexander Fleming','弗萊明'],prize:['Physiology or Medicine 1945','1945 生理學或醫學獎'],
+ title:['The Mouldy Plate','發霉的培養皿'],spark:['Spark of Observation','觀察之火'],
+ story:[
+  ["London, September 1928. A messy laboratory at St Mary's Hospital. Stacks of glass dishes wait to be washed.","1928 年 9 月，倫敦聖瑪麗醫院一間凌亂的實驗室。一疊疊玻璃培養皿等着清洗。"],
+  ["Alexander Fleming holds one up to the light. “Look! A blob of mould, and all around it the bacteria have vanished. Most people would throw this away.”","弗萊明把其中一個培養皿舉向光。「你看！這裏長了一團霉，它周圍的細菌全都不見了。大部分人會直接把它丟掉。」"],
+  ["Murk hisses, “It's just dirt. Wash it and forget it!” Grey fog covers the dish.","默克嘶嘶地說：「只是污垢而已，洗掉它，忘記它！」灰霧蓋住了培養皿。"],
+  ["You wipe the glass and look closely, just as Fleming taught you. “Never ignore something strange. Observe it!” The fog pops like a bubble. Spark 2: the Spark of Observation!","你照弗萊明教的方法抹乾淨玻璃，仔細觀察。「千萬不要忽略奇怪的事，要觀察它！」霧氣像泡泡一樣爆開。第二團火：觀察之火！"]],
+ read:[
+  {h:['A doctor who hated infections','痛恨感染的醫生'],
+   p:["Alexander Fleming was born on a farm in Scotland in 1881. He became a doctor and a scientist who studied bacteria, tiny living things that can cause infections. During World War I he worked in army hospitals in France and saw many soldiers die, not from their wounds, but from infections in them. The antiseptics of the time killed bacteria on the skin but also harmed the body's own cells, and they could not reach deep wounds. Fleming wanted to find a substance that would kill harmful bacteria without hurting the patient.","弗萊明 1881 年在蘇格蘭一個農場出生。他成為醫生和研究細菌的科學家——細菌是會引起感染的微小生物。第一次世界大戰期間，他在法國的軍醫院工作，看見很多士兵不是死於傷口本身，而是死於傷口感染。當時的消毒劑雖然能殺死皮膚上的細菌，卻也會傷害身體細胞，而且無法到達深層傷口。弗萊明希望找到一種能殺死有害細菌、但不會傷害病人的物質。"],
+   q:{q:['What did Fleming want to find?','弗萊明想找到甚麼？'],o:[['A substance that kills harmful bacteria without hurting the patient','能殺死有害細菌但不傷害病人的物質'],['A faster way to wash dishes','更快清洗器皿的方法'],['A new kind of bandage colour','新顏色的繃帶'],['A cure for broken bones','治療骨折的方法']]}},
+  {h:['A lucky mess','幸運的凌亂'],
+   p:["In September 1928, Fleming returned from a holiday to his laboratory at St Mary's Hospital in London. Before leaving, he had stacked dishes of Staphylococcus bacteria on his bench. On one dish a blue-green mould had grown. Around the mould there was a clear ring where the bacteria had been destroyed. Many scientists would simply have cleaned the dish. Fleming instead asked a scientific question: what is the mould making, and why does it kill the bacteria? He grew the mould on its own and tested the liquid it produced.","1928 年 9 月，弗萊明度假後回到倫敦聖瑪麗醫院的實驗室。離開前，他把一些培養了葡萄球菌的培養皿疊在實驗桌上。其中一個培養皿長出了藍綠色的霉菌，而霉菌周圍出現了一圈透明的區域，那裏的細菌都被消滅了。很多科學家可能會直接把它洗掉，但弗萊明卻提出一個科學問題：這種霉菌製造了甚麼？為甚麼能殺死細菌？他把霉菌單獨培養，並測試它產生的液體。"],
+   q:{q:['What did Fleming notice around the mould?','弗萊明在霉菌周圍看到甚麼？'],o:[['A clear ring with no bacteria','一圈沒有細菌的透明區域'],['A rainbow','一道彩虹'],['Tiny insects','細小的昆蟲'],['Crystals of salt','鹽的晶體']]}},
+  {h:['Naming penicillin','命名青霉素'],
+   p:["The mould was a type of Penicillium, so Fleming called the substance “penicillin”. His tests showed it could stop many harmful bacteria, and it did not seem to harm white blood cells. He published his results in 1929. However, penicillin was unstable and very hard to purify, and Fleming did not have the chemistry skills or equipment to make enough of it for patients. For about ten years his discovery was almost forgotten. A great observation still needs teamwork and more investigation before it can help people.","這種霉菌屬於青霉菌屬，所以弗萊明把那種物質命名為「青霉素」（盤尼西林）。他的測試顯示青霉素可以抑制多種有害細菌，而且似乎不會傷害白血球。他在 1929 年發表了研究結果。可是，青霉素不穩定，很難提純，弗萊明也沒有足夠的化學技術和設備，為病人製造足夠的份量。在大約十年間，他的發現幾乎被遺忘。一個偉大的觀察，仍需要團隊合作和進一步研究，才能真正幫助人。"],
+   q:{q:['Why was penicillin not used as a medicine straight away?','為甚麼青霉素沒有立即成為藥物？'],o:[['It was very hard to purify and make in large amounts','很難提純和大量製造'],['Doctors thought it smelled bad','醫生覺得它很臭'],['It was too cheap','它太便宜'],['It only worked on plants','它只對植物有效']]}},
+  {h:['Teamwork saves millions','團隊合作拯救萬千生命'],
+   p:["Around 1940, Howard Florey and Ernst Chain at the University of Oxford found a way to purify penicillin. They tested it on mice and then on patients. Factories in the USA and Britain began mass-producing it in time to treat soldiers in World War II. In 1945, Fleming, Florey and Chain shared the Nobel Prize in Physiology or Medicine. In his Nobel lecture Fleming warned that if penicillin is misused, bacteria can become resistant to it. Today antibiotic resistance is a serious problem. Antibiotics do not work on viruses, so never take them for a cold, and always finish the course your doctor gives you.","大約在 1940 年，牛津大學的弗洛里和錢恩找到提純青霉素的方法，先在老鼠身上測試，再用於病人。美國和英國的工廠開始大量生產青霉素，及時救治二戰中的士兵。1945 年，弗萊明、弗洛里和錢恩共同獲得諾貝爾生理學或醫學獎。弗萊明在諾貝爾演講中警告：如果濫用青霉素，細菌可能會產生抗藥性。今天，抗生素抗藥性是嚴重的問題。抗生素對病毒無效，所以感冒時不要亂服；醫生處方的抗生素一定要按指示服完。"],
+   q:{q:['Why should you NOT take antibiotics for a cold caused by a virus?','為甚麼由病毒引起的感冒不應服用抗生素？'],o:[['Antibiotics do not work on viruses, and misuse causes resistance','抗生素對病毒無效，濫用更會引致抗藥性'],['Antibiotics taste too sweet','抗生素太甜'],['Colds are caused by mould','感冒是由霉菌引起的'],['Antibiotics make you sleepy forever','抗生素會令人永遠想睡']]}}],
+ boss:[
+  [['What makes penicillin?','青霉素是由甚麼製造的？'],[['A mould called Penicillium','一種叫青霉菌的霉菌'],['A virus','病毒'],['A plant root','植物的根'],['A jellyfish','水母']]],
+  [['In which year did Fleming notice the mould?','弗萊明在哪一年發現那團霉菌？'],[['1928','1928'],['1898','1898'],['1966','1966'],['2012','2012']]],
+  [['Which bacteria were growing on Fleming’s dish?','弗萊明的培養皿上培養的是甚麼細菌？'],[['Staphylococcus','葡萄球菌'],['Plasmodium','瘧原蟲'],['Yeast','酵母'],['Algae','藻類']]],
+  [['Who found a way to purify penicillin?','誰找到提純青霉素的方法？'],[['Howard Florey and Ernst Chain','弗洛里和錢恩'],['Marie and Pierre Curie','居里夫婦'],['Geiger and Marsden','蓋革和馬斯登'],['Doudna and Charpentier','杜德娜和夏彭蒂耶']]],
+  [['Antibiotics are used to kill…','抗生素用來殺死……'],[['bacteria','細菌'],['viruses','病毒'],['the body’s own cells','身體自己的細胞'],['insects','昆蟲']]],
+  [['Which scientific skill made Fleming’s discovery possible?','哪種科學技能令弗萊明有所發現？'],[['Careful observation of an unexpected result','仔細觀察意料之外的結果'],['Guessing without testing','不作測試只靠猜'],['Throwing away odd results','丟棄奇怪的結果'],['Copying a friend’s answer','抄朋友的答案']]],
+  [['What did Fleming warn about in his Nobel lecture?','弗萊明在諾貝爾演講中警告甚麼？'],[['Bacteria becoming resistant if penicillin is misused','濫用青霉素會令細菌產生抗藥性'],['Mould tasting bad','霉菌味道很差'],['Running out of glass dishes','玻璃器皿不夠用'],['Sunlight damaging books','陽光損壞書本']]],
+  [['Why did many soldiers die in World War I hospitals?','為甚麼一戰時很多士兵在醫院死去？'],[['Their wounds became infected','傷口受到感染'],['They ate too much','吃得太多'],['The hospitals were too quiet','醫院太安靜'],['They did too much exercise','做太多運動']]]],
+ time:[[1881,'Fleming is born in Scotland','弗萊明在蘇格蘭出生'],[1928,'He notices the mould on a dish','他發現培養皿上的霉菌'],[1929,'He publishes his penicillin paper','他發表青霉素論文'],[1940,'Florey and Chain purify penicillin','弗洛里和錢恩提純青霉素'],[1945,'The Nobel Prize is shared by all three','三人共同獲得諾貝爾獎']],
+ words:[['bacteria','細菌'],['mould','霉菌'],['antibiotic','抗生素'],['infection','感染'],['observation','觀察'],['resistance','抗藥性']]},
+
+{id:'kao',month:'2026-12',link:'5.1',col:'#FFD000',
+ who:['Charles Kao','高錕'],prize:['Physics 2009','2009 物理學獎'],
+ title:['Threads of Light','光之絲'],spark:['Spark of Imagination','想像之火'],
+ story:[
+  ["The Lantern drops you into an English laboratory in 1966. A young engineer is shining a beam of light down a strand of glass as thin as a hair.","時光燈把你們送到 1966 年英國的一間實驗室。一位年輕工程師正把一束光射進一條像頭髮一樣幼的玻璃絲。"],
+  ["“I am Charles Kao. Copper wires can only carry so many phone calls. But light in super-pure glass could carry millions!” Some scientists laugh at the idea.","「我是高錕。銅線能傳送的電話有限，但在超純淨玻璃裏傳送的光，可以同時傳送數以百萬計的電話！」有些科學家嘲笑這個想法。"],
+  ["Murk wraps the fibre in thick fog. “Impossible! Glass is too dirty. Stop dreaming!”","默克用濃霧包住玻璃絲：「不可能的！玻璃太髒了，別再發白日夢！」"],
+  ["Charles answers calmly, “Then we find what makes the light fade, and remove it.” A beam races through the fibre and melts the fog. Spark 3: the Spark of Imagination! Far away, Petal's ice begins to crack…","高錕冷靜地回答：「那麼我們就找出令光減弱的原因，再把它除去。」一道光在玻璃絲中飛馳，融化了霧氣。第三團火：想像之火！在遠方，培培的霧冰開始出現裂痕……"]],
+ read:[
+  {h:['A curious boy from Shanghai','來自上海的好奇男孩'],
+   p:["Charles Kao Kuen was born in Shanghai in 1933. As a boy he loved doing chemistry experiments at home and asking how things worked. His family moved to Hong Kong, where he studied at St. Joseph's College. He then went to England to study electrical engineering. In 1960 he joined Standard Telecommunication Laboratories, where engineers were searching for better ways to send telephone calls and information over long distances.","高錕 1933 年在上海出生。他小時候很喜歡在家做化學實驗，凡事都想知道背後的原理。後來他舉家移居香港，在聖若瑟書院讀書，之後到英國修讀電機工程。1960 年，他加入標準電訊實驗室，那裏的工程師正在研究如何更有效地把電話和資訊傳送到遠方。"],
+   q:{q:['Where did Charles Kao go to secondary school?','高錕在哪裏讀中學？'],o:[['St. Joseph’s College in Hong Kong','香港的聖若瑟書院'],['A school in Paris','巴黎的一間學校'],['He never went to school','他從沒上學'],['A school in New Zealand','新西蘭的一間學校']]}},
+  {h:['Light that follows glass','跟着玻璃走的光'],
+   p:["Light can travel along a thin strand of glass by total internal reflection. The light keeps bouncing off the inside walls of the fibre, like a ball zig-zagging down a tube, so it follows the fibre even when it bends. In the early 1960s, however, glass fibres lost almost all their light after only a few metres. Most scientists believed glass could never carry signals over long distances. In 1966 Kao and his colleague George Hockham published a paper showing that the real problem was impurities, tiny amounts of other substances in the glass, not the glass itself.","光可以透過全內反射在幼玻璃絲中傳播：光不斷在纖維內壁反射，好像球在管道中左右彈跳前進，所以即使纖維彎曲，光也會跟着走。可是在 1960 年代初，光在玻璃纖維中只走幾米就幾乎消失殆盡，大部分科學家都認為玻璃不可能把訊號傳到遠處。1966 年，高錕和同事霍克漢姆發表論文，指出真正的問題是玻璃中的雜質（混在玻璃裏的極少量其他物質），而不是玻璃本身。"],
+   q:{q:['What was the real problem with early glass fibres?','早期玻璃纖維真正的問題是甚麼？'],o:[['Impurities in the glass made the light fade','玻璃中的雜質令光減弱'],['The fibres were too long','纖維太長'],['Light travels too slowly','光走得太慢'],['Glass cannot bend','玻璃不能彎曲']]}},
+  {h:['A bold prediction','大膽的預言'],
+   p:["Kao calculated that if glass could be made pure enough to lose less than 99 per cent of its light over one kilometre, fibres could carry phone calls over long distances. That sounds like a lot to lose, but it was far better than the glass of his time! He travelled to glass factories around the world to persuade them to try. In 1970, the company Corning produced the first fibre that reached his target. Today optical fibres under oceans and streets carry most of the world's internet data, phone calls and videos, including the messages on your phone.","高錕計算出：只要玻璃純淨到每公里損失少於百分之九十九的光，光纖就能把電話傳到遠方。損失這麼多聽起來很誇張，但已經比當時的玻璃好得多！他走訪世界各地的玻璃廠，說服他們嘗試。1970 年，康寧公司製造出第一條達到他目標的光纖。今天，鋪設在海底和街道下的光纖，傳送着全世界大部分的互聯網數據、電話和影片——包括你手機上的訊息。"],
+   q:{q:['What carries most of the world’s internet data today?','今天全世界大部分互聯網數據靠甚麼傳送？'],o:[['Optical fibres','光纖'],['Carrier pigeons','信鴿'],['Copper coins','銅幣'],['Radio from the Moon','月球電台']]}},
+  {h:['Father of Fibre Optics','光纖之父'],
+   p:["In an optical fibre network, a laser changes electrical energy into light energy. The light carries the signal through the fibre, and at the other end a detector changes the light energy back into electrical energy. In 2009 Charles Kao won the Nobel Prize in Physics for his groundbreaking work on sending light through fibres for communication. He was Vice-Chancellor of The Chinese University of Hong Kong from 1987 to 1996, and an asteroid is named after him. His story shows that an idea other people laugh at can change the world when it is backed by careful calculation and experiments.","在光纖網絡中，激光器把電能轉換成光能；光在光纖中攜帶訊號，到了另一端，偵測器再把光能轉換回電能。2009 年，高錕因在光纖通訊中傳送光的突破性成就，獲得諾貝爾物理學獎。他在 1987 年至 1996 年出任香港中文大學校長，還有一顆小行星以他命名。他的故事告訴我們：一個被人取笑的想法，只要有仔細的計算和實驗支持，也能改變世界。"],
+   q:{q:['At the start of a fibre link, the laser changes electrical energy into…','在光纖線路的起點，激光器把電能轉換成……'],o:[['light energy','光能'],['sound energy','聲能'],['chemical energy','化學能'],['nuclear energy','核能']]}}],
+ boss:[
+  [['Where was Charles Kao born?','高錕在哪裏出生？'],[['Shanghai','上海'],['London','倫敦'],['Tokyo','東京'],['Warsaw','華沙']]],
+  [['How does light stay inside a glass fibre?','光怎樣留在玻璃纖維之內？'],[['Total internal reflection','全內反射'],['Magnetism','磁力'],['Evaporation','蒸發'],['Gravity','萬有引力']]],
+  [['Why did early glass fibres lose their light?','為甚麼早期玻璃纖維的光會減弱？'],[['Impurities in the glass','玻璃中的雜質'],['The light was the wrong colour','光的顏色錯了'],['The fibres were too cold','纖維太冷'],['Light gets tired','光會疲倦']]],
+  [['In which year did Kao and Hockham publish their famous paper?','高錕和霍克漢姆在哪一年發表著名的論文？'],[['1966','1966'],['1928','1928'],['1909','1909'],['2015','2015']]],
+  [['What do optical fibres carry today?','今天光纖傳送甚麼？'],[['Internet data, phone calls and videos','互聯網數據、電話和影片'],['Drinking water','食水'],['Natural gas','天然氣'],['Heat for cooking','煮食用的熱']]],
+  [['Which university did Kao lead as Vice-Chancellor?','高錕曾出任哪間大學的校長？'],[['The Chinese University of Hong Kong','香港中文大學'],['The University of Oxford','牛津大學'],['Harvard University','哈佛大學'],['The Sorbonne','索邦大學']]],
+  [['In a fibre link, which energy change happens at the receiving end?','在光纖線路的接收端，發生甚麼能量轉換？'],[['Light energy → electrical energy','光能 → 電能'],['Sound energy → heat energy','聲能 → 熱能'],['Chemical energy → light energy','化學能 → 光能'],['Kinetic energy → nuclear energy','動能 → 核能']]],
+  [['What is Charles Kao often called?','高錕常被稱為甚麼？'],[['The Father of Fibre Optics','光纖之父'],['The Father of Radium','鐳之父'],['The King of Mould','霉菌之王'],['The Master of Magnets','磁鐵大師']]]],
+ time:[[1933,'Kao is born in Shanghai','高錕在上海出生'],[1960,'He joins a telecom lab in England','他加入英國的電訊實驗室'],[1966,'He publishes the glass-fibre paper','他發表玻璃纖維論文'],[1970,'The first low-loss fibre is made','第一條低損耗光纖面世'],[2009,'He wins the Nobel Prize in Physics','他獲得諾貝爾物理學獎']],
+ words:[['optical fibre','光纖'],['impurity','雜質'],['reflection','反射'],['signal','訊號'],['light energy','光能'],['communication','通訊']]},
+
+{id:'tu',month:'2027-01',link:'2.4',col:'#FF2D55',
+ who:['Tu Youyou','屠呦呦'],prize:['Physiology or Medicine 2015','2015 生理學或醫學獎'],
+ title:['The Ancient Recipe','古老的藥方'],spark:['Spark of Wisdom','智慧之火'],
+ story:[
+  ["Beijing, 1971. Malaria is killing people in many hot countries, and the old medicines no longer work. A secret team called Project 523 is racing to find a cure.","1971 年，北京。瘧疾在很多炎熱的國家奪去人命，舊的藥物已經失效。一個名為「523 任務」的秘密團隊正爭分奪秒尋找新藥。"],
+  ["Scientist Tu Youyou reads a book written 1,600 years ago by Ge Hong: “Soak a handful of qinghao in water, wring out the juice and drink it.” She stops. “Wring it out… not boil it.”","科學家屠呦呦讀到一千六百年前葛洪寫的書：「青蒿一握，以水二升漬，絞取汁，盡服之。」她停了下來：「是絞汁……不是煮沸。」"],
+  ["Murk swirls through the lab. “Old books are useless! Just boil everything harder!”","默克在實驗室中打轉：「古書有甚麼用！把所有東西煮得更滾就是了！」"],
+  ["Tu Youyou shakes her head. “Heat may destroy the medicine. We will use a liquid that boils at a low temperature.” The extract works! Spark 4: the Spark of Wisdom: learn from the past, then test it with evidence.","屠呦呦搖頭：「高溫可能會破壞藥效。我們改用沸點低的液體。」提取物成功了！第四團火：智慧之火——向過去學習，再用證據驗證。"]],
+ read:[
+  {h:['A deadly disease','致命的疾病'],
+   p:["Malaria is a disease caused by a tiny parasite called Plasmodium. It spreads when an infected Anopheles mosquito bites a person. The parasites multiply in the liver and then attack red blood cells, causing high fever. By the 1960s, the malaria parasite had become resistant to the main medicine, chloroquine, and many people were dying. In 1967 China started a secret research programme called Project 523 to find new treatments. In 1969 a young scientist, Tu Youyou, was chosen to lead a research team.","瘧疾是由一種叫瘧原蟲的微小寄生蟲引起的疾病。當帶有瘧原蟲的按蚊叮人時，疾病就會傳播。瘧原蟲在肝臟內大量繁殖，然後攻擊紅血球，令人發高燒。到了 1960 年代，瘧原蟲已對主要藥物氯喹產生抗藥性，很多人因此死亡。1967 年，中國展開名為「523 任務」的秘密研究計劃，尋找新療法。1969 年，年輕科學家屠呦呦獲選帶領一個研究小組。"],
+   q:{q:['How does malaria spread?','瘧疾怎樣傳播？'],o:[['Through the bite of an infected mosquito','經帶菌蚊子叮咬'],['By shaking hands','握手'],['By eating fruit','吃水果'],['Through cold wind','吹冷風']]}},
+  {h:['Searching ancient books','翻查古籍'],
+   p:["Tu Youyou had studied both modern medicine and traditional Chinese medicine. Her team collected more than 2,000 traditional recipes and tested extracts from about 200 herbs on mice with malaria. One plant, sweet wormwood (qinghao), sometimes worked, but the results were not reliable. When an experiment gives different results each time, a good scientist asks what is changing. Tu Youyou went back to the old books and found a text by Ge Hong, written about 1,600 years ago: “Take a handful of qinghao, soak it in two litres of water, wring out the juice and drink it all.”","屠呦呦同時學過現代醫學和中醫。她的團隊收集了二千多條傳統藥方，並用約二百種草藥的提取物在患瘧疾的老鼠身上測試。其中青蒿有時有效，但結果並不可靠。當實驗每次結果都不同，好的科學家會問：到底是甚麼因素在改變？屠呦呦回頭翻查古籍，找到約一千六百年前葛洪所寫的一段文字：「青蒿一握，以水二升漬，絞取汁，盡服之。」"],
+   q:{q:['About how many traditional recipes did her team collect?','她的團隊收集了大約多少條傳統藥方？'],o:[['More than 2,000','二千多條'],['About 20','約二十條'],['Exactly 5','剛好五條'],['One million','一百萬條']]}},
+  {h:['A cool idea','「冷」靜的點子'],
+   p:["Tu Youyou noticed that Ge Hong did not tell people to boil the plant. She formed a hypothesis: high temperature might destroy the active ingredient. So she used ether, a liquid that boils at only about 35 °C, to extract the substance at a low temperature. In 1971, extract number 191 cleared the malaria parasites in mice and monkeys completely. Before testing on patients, Tu Youyou and her colleagues bravely took the extract themselves to check that it was safe. In 1972 her team isolated the pure active substance: artemisinin.","屠呦呦留意到，葛洪並沒有叫人把青蒿煮沸。她提出假說：高溫可能會破壞有效成分。於是她改用沸點只有約 35 °C 的乙醚，在低溫下提取物質。1971 年，第 191 號提取物完全清除了老鼠和猴子體內的瘧原蟲！在用於病人之前，屠呦呦和同事勇敢地親自服用提取物，確定它安全。1972 年，她的團隊分離出純淨的有效成分——青蒿素。"],
+   q:{q:['Why did Tu Youyou use ether instead of boiling water?','為甚麼屠呦呦用乙醚而不用沸水？'],o:[['It boils at a low temperature, so the medicine is not destroyed by heat','它沸點低，藥效不會被高溫破壞'],['It smells like flowers','它有花香'],['It is cheaper than water','它比水便宜'],['It makes plants grow faster','它令植物生長得更快']]}},
+  {h:['Saving millions of lives','拯救數以百萬計的生命'],
+   p:["Medicines based on artemisinin are now used all over the world and have saved millions of lives, especially in Africa. In 2015 Tu Youyou won the Nobel Prize in Physiology or Medicine. She was the first Chinese woman to win a Nobel Prize in science. Her story shows that old knowledge can be a treasure, but it must be tested with fair experiments and evidence. Soaking, filtering and evaporating (separation methods you learn in S1 Science) were all part of her work. Next time you filter muddy water in the lab, remember: the same skills helped defeat a deadly disease.","以青蒿素為基礎的藥物現在全球通用，拯救了數以百萬計的生命，尤其在非洲。2015 年，屠呦呦獲得諾貝爾生理學或醫學獎，成為第一位獲得諾貝爾科學獎項的中國女性。她的故事告訴我們：古老的知識可以是寶藏，但必須用公平測試和證據去驗證。浸泡、過濾、蒸發——這些你在中一科學學到的分離方法，都是她研究的一部分。下次你在實驗室過濾泥水時，記住：同樣的技能曾經幫助人類戰勝一種致命疾病。"],
+   q:{q:['What does Tu Youyou’s story teach us about old knowledge?','屠呦呦的故事教我們怎樣看待古老知識？'],o:[['It can be a treasure but must be tested with evidence','它可以是寶藏，但必須用證據驗證'],['It is always wrong','它一定是錯的'],['It never needs testing','它永遠不需要測試'],['Only new books matter','只有新書才重要']]}}],
+ boss:[
+  [['What causes malaria?','瘧疾由甚麼引起？'],[['A parasite called Plasmodium','一種叫瘧原蟲的寄生蟲'],['Eating too much sugar','吃太多糖'],['Cold weather','寒冷天氣'],['Loud noise','噪音']]],
+  [['Which animal spreads malaria?','哪種動物傳播瘧疾？'],[['The Anopheles mosquito','按蚊'],['The housefly','家蠅'],['The honeybee','蜜蜂'],['The butterfly','蝴蝶']]],
+  [['Which plant did Tu Youyou study?','屠呦呦研究哪種植物？'],[['Sweet wormwood (qinghao)','青蒿'],['Ginseng','人參'],['Tea','茶'],['Bamboo','竹']]],
+  [['Whose ancient book inspired her?','誰的古籍啟發了她？'],[['Ge Hong','葛洪'],['Confucius','孔子'],['Li Bai','李白'],['Zhang Heng','張衡']]],
+  [['Why did she extract the medicine at a low temperature?','為甚麼她要在低溫下提取藥物？'],[['High temperature might destroy the active ingredient','高溫可能破壞有效成分'],['To save electricity','為了省電'],['Because ether is blue','因為乙醚是藍色的'],['To make it taste better','令它更好味']]],
+  [['What medicine did her team isolate in 1972?','她的團隊在 1972 年分離出甚麼藥物？'],[['Artemisinin','青蒿素'],['Penicillin','青霉素'],['Aspirin','阿士匹靈'],['Insulin','胰島素']]],
+  [['What did Tu Youyou and her colleagues do before testing on patients?','屠呦呦和同事在用於病人前做了甚麼？'],[['Took the extract themselves to check it was safe','親自服用提取物確保安全'],['Skipped all testing','跳過所有測試'],['Tested it on plants only','只在植物上測試'],['Asked mosquitoes to try it','叫蚊子試用']]],
+  [['In which year did Tu Youyou win the Nobel Prize?','屠呦呦在哪一年獲得諾貝爾獎？'],[['2015','2015'],['1945','1945'],['2009','2009'],['1911','1911']]]],
+ time:[[1930,'Tu Youyou is born in Ningbo','屠呦呦在寧波出生'],[1967,'Project 523 begins','523 任務展開'],[1971,'Extract 191 cures malaria in animals','第 191 號提取物治好動物的瘧疾'],[1972,'Artemisinin is isolated','分離出青蒿素'],[2015,'She wins the Nobel Prize','她獲得諾貝爾獎']],
+ words:[['malaria','瘧疾'],['parasite','寄生蟲'],['extract','提取'],['boiling point','沸點'],['evaporation','蒸發'],['evidence','證據']]},
+
+{id:'rutherford',month:'2027-02',link:'6.1',col:'#B478FF',
+ who:['Ernest Rutherford','盧瑟福'],prize:['Chemistry 1908','1908 化學獎'],
+ title:['The Bouncing Bullets','反彈的子彈'],spark:['Spark of Curiosity','好奇之火'],
+ story:[
+  ["Manchester, 1909. In a dark room two young scientists stare at a small screen, counting tiny flashes of light.","1909 年，曼徹斯特。兩位年輕科學家在黑暗的房間裏盯着一塊小屏幕，數着一點點閃光。"],
+  ["Ernest Rutherford's voice booms: “We are firing alpha particles at gold foil thinner than paper. They should all fly straight through!”","盧瑟福聲如洪鐘：「我們正把 α 粒子射向比紙還薄的金箔。它們理應全部直穿過去！」"],
+  ["A flash appears where it shouldn't. A particle has bounced BACK! Murk hisses, “A mistake! Hide it! Forget it!”","一點閃光出現在不應出現的地方——有粒子反彈回來了！默克嘶嘶叫：「是錯誤！藏起來！忘記它！」"],
+  ["Rutherford laughs. “It's as if you fired a huge shell at tissue paper and it came back and hit you! A surprise is a clue!” The atom has a tiny, heavy centre: the nucleus. Spark 5: the Spark of Curiosity! High above Hong Kong, some of Astra's scales begin to glow.","盧瑟福大笑：「就好像你用巨型炮彈射向一張紙巾，炮彈卻反彈回來打中你！意外正是線索！」原子中心有一個細小而沉重的核心——原子核。第五團火：好奇之火！在香港的夜空上，星星的部分鱗片開始發光。"]],
+ read:[
+  {h:['From a farm in New Zealand','來自新西蘭的農場'],
+   p:["Ernest Rutherford was born in 1871 in New Zealand, one of twelve children in a farming family. He was so good at science that he won a scholarship to study at Cambridge University in England. He was famous for his loud voice, his big laugh and his simple but clever experiments. He studied the rays that Becquerel and the Curies had discovered and showed that there were different kinds. He named two of them alpha and beta radiation, names we still use today.","盧瑟福 1871 年在新西蘭出生，是農家十二個孩子之一。他的科學成績出眾，獲得獎學金到英國劍橋大學讀書。他以聲如洪鐘、笑聲爽朗，以及簡單卻聰明的實驗而聞名。他研究貝克勒爾和居里夫婦發現的射線，證明射線有不同種類，並把其中兩種命名為 α 輻射和 β 輻射——這些名稱沿用至今。"],
+   q:{q:['Which two kinds of radiation did Rutherford name?','盧瑟福為哪兩種輻射命名？'],o:[['Alpha and beta','α 和 β'],['Red and blue','紅和藍'],['Hot and cold','熱和冷'],['North and south','北和南']]}},
+  {h:['A Nobel Prize… in Chemistry!','諾貝爾獎……化學獎？！'],
+   p:["Rutherford and his team showed that radioactive elements slowly change into other elements, giving out radiation as they do. This was a shock: people had believed elements could never change. For this work he won the 1908 Nobel Prize in Chemistry. He joked that he had seen many transformations, but the quickest was his own transformation from a physicist into a chemist! He believed that great science often starts with a simple question and a well-designed test.","盧瑟福和團隊證明，放射性元素會慢慢變成其他元素，並在過程中放出輻射。這令人震驚——當時大家相信元素永遠不會改變。他因此獲得 1908 年諾貝爾化學獎。他開玩笑說，他見過很多「轉變」，但最快的一次，就是他自己由物理學家「變成」化學家！他相信偉大的科學往往始於一個簡單的問題和一個設計得好的測試。"],
+   q:{q:['Which Nobel Prize did Rutherford win in 1908?','盧瑟福在 1908 年獲得哪個諾貝爾獎？'],o:[['Chemistry','化學獎'],['Physics','物理學獎'],['Peace','和平獎'],['Literature','文學獎']]}},
+  {h:['The gold foil experiment','金箔實驗'],
+   p:["In 1909, in Manchester, Rutherford's team, Hans Geiger and Ernest Marsden, fired alpha particles at a very thin sheet of gold foil. At that time many scientists pictured the atom as a “plum pudding”: a soft ball of positive charge with tiny electrons dotted inside. If that was true, the alpha particles should all pass straight through. Most of them did. But about 1 in every 8,000 bounced back at a large angle! Rutherford said it was “as if you fired a 15-inch shell at a piece of tissue paper and it came back and hit you.”","1909 年，在曼徹斯特，盧瑟福團隊的蓋革和馬斯登把 α 粒子射向一片極薄的金箔。當時很多科學家把原子想像成「葡萄乾布甸」：一團帶正電的柔軟物質，裏面點綴着細小的電子。如果這是真的，α 粒子應該全部直穿過去。大部分的確如此，但大約每八千個中就有一個以大角度反彈回來！盧瑟福形容：「就好像你用 15 吋炮彈射向一張紙巾，炮彈卻反彈回來打中你。」"],
+   q:{q:['What was the surprising result?','實驗有甚麼令人意外的結果？'],o:[['A few alpha particles bounced back','少數 α 粒子反彈回來'],['The gold foil turned into silver','金箔變成銀'],['All the particles stopped','所有粒子都停下來'],['The room became hot','房間變得很熱']]}},
+  {h:['A new model of the atom','全新的原子模型'],
+   p:["In 1911 Rutherford explained the result. Almost all the mass of an atom is packed into a tiny, positively charged centre called the nucleus, and the rest of the atom is mostly empty space. If an atom were the size of a football stadium, the nucleus would be about the size of a pea in the middle! Later scientists improved the model, but the idea that matter is made of tiny particles, each atom with a nucleus, is still used today. Rutherford's story shows that a surprising result is not a mistake to hide. It is a clue to follow.","1911 年，盧瑟福解釋了結果：原子幾乎所有的質量都集中在中心一個細小、帶正電的部分，叫原子核；原子其餘大部分都是空間。如果一個原子有足球場那麼大，原子核就只有場中央一粒豌豆那麼小！後來的科學家不斷改良這個模型，但「物質由微小粒子組成，每個原子都有原子核」這個概念至今仍在使用。盧瑟福的故事告訴我們：意外的結果不是要隱藏的錯誤，而是值得追尋的線索。"],
+   q:{q:['What is at the centre of an atom?','原子的中心是甚麼？'],o:[['A tiny, heavy nucleus','細小而沉重的原子核'],['A drop of water','一滴水'],['Nothing at all','甚麼都沒有'],['A plum','一粒梅子']]}}],
+ boss:[
+  [['Where was Rutherford born?','盧瑟福在哪裏出生？'],[['New Zealand','新西蘭'],['Scotland','蘇格蘭'],['Poland','波蘭'],['Canada','加拿大']]],
+  [['Which metal was used in the famous foil experiment?','著名的金屬箔實驗用了哪種金屬？'],[['Gold','金'],['Copper','銅'],['Iron','鐵'],['Aluminium','鋁']]],
+  [['What did MOST alpha particles do?','大部分 α 粒子怎樣？'],[['Went straight through the foil','直穿金箔'],['Bounced back','反彈回來'],['Melted the foil','熔化金箔'],['Turned into light','變成光']]],
+  [['What did the old “plum pudding” model say?','舊的「葡萄乾布甸」模型怎樣描述原子？'],[['A soft ball of positive charge with electrons dotted inside','帶正電的柔軟物質，內有點點電子'],['Atoms are tiny cubes','原子是細小的立方體'],['Atoms have no charge','原子沒有電荷'],['Atoms are made of fruit','原子由水果組成']]],
+  [['What did Rutherford’s new model say?','盧瑟福的新模型說甚麼？'],[['A tiny, dense, positive nucleus with mostly empty space around it','細小、密度高、帶正電的原子核，周圍大部分是空間'],['Atoms are completely solid','原子完全是實心的'],['The nucleus fills the whole atom','原子核佔滿整個原子'],['Atoms are empty with no centre','原子是空的，沒有中心']]],
+  [['Rutherford’s 1908 Nobel Prize was in…','盧瑟福 1908 年的諾貝爾獎屬於……'],[['Chemistry','化學'],['Physics','物理'],['Medicine','醫學'],['Peace','和平']]],
+  [['If an atom were a football stadium, the nucleus would be like…','如果原子有足球場那麼大，原子核就像……'],[['a pea','一粒豌豆'],['a bus','一架巴士'],['the whole pitch','整個球場'],['a mountain','一座山']]],
+  [['What lesson does the gold foil experiment teach?','金箔實驗帶給我們甚麼啟示？'],[['A surprising result is a clue to follow','意外結果是值得追尋的線索'],['Always hide strange results','一定要隱藏奇怪的結果'],['Never repeat an experiment','永不重複實驗'],['Old models are always right','舊模型一定正確']]]],
+ time:[[1871,'Rutherford is born in New Zealand','盧瑟福在新西蘭出生'],[1895,'He goes to study at Cambridge','他到劍橋讀書'],[1908,'Nobel Prize in Chemistry','獲諾貝爾化學獎'],[1909,'The gold foil experiment','金箔實驗'],[1911,'The nuclear model of the atom','原子核模型']],
+ words:[['atom','原子'],['nucleus','原子核'],['particle','粒子'],['model','模型'],['alpha particle','α 粒子'],['empty space','空間']]},
+
+{id:'doudna',month:'2027-03',link:'4.6',col:'#00E5C0',
+ who:['Jennifer Doudna & Emmanuelle Charpentier','杜德娜與夏彭蒂耶'],prize:['Chemistry 2020','2020 化學獎'],
+ title:['The Genetic Scissors','基因剪刀'],spark:['Spark of Teamwork','團隊之火'],
+ story:[
+  ["San Juan, Puerto Rico, 2011. At a science conference, two scientists meet and go for a walk through the old town.","2011 年，波多黎各聖胡安。兩位科學家在一個科學會議上相遇，一起在舊城區散步。"],
+  ["Emmanuelle Charpentier: “Bacteria have a secret defence against viruses, called CRISPR.” Jennifer Doudna: “Let's work together and find out exactly how it cuts virus DNA!”","夏彭蒂耶：「細菌有一套對抗病毒的秘密防禦系統，叫 CRISPR。」杜德娜：「我們一起合作，查清楚它究竟怎樣剪斷病毒的 DNA！」"],
+  ["Murk, now huge and angry, roars: “Alone you are weak! Divide and forget!” It tries to push the two scientists apart.","默克變得巨大又憤怒，咆哮道：「單打獨鬥，你們不堪一擊！分開吧，忘記吧！」它想把兩位科學家推開。"],
+  ["The two scientists join their ideas like two halves of a key. A glowing pair of genetic scissors snips Murk's fog into harmless mist. Spark 6: the Spark of Teamwork!","兩位科學家把想法合而為一，就像兩半鎖匙拼在一起。一把發光的基因剪刀把默克的霧剪成無害的薄霧。第六團火：團隊之火！"]],
+ read:[
+  {h:['Two curious girls','兩個好奇的女孩'],
+   p:["Jennifer Doudna grew up in Hilo, Hawaii, in the USA. As a child she was fascinated by the unusual plants and insects around her. When she was about twelve, she read a book about how the structure of DNA was discovered, and she decided that she wanted to uncover nature's secrets too. Emmanuelle Charpentier grew up near Paris, France, and also decided as a young girl that she would study science. Both became experts in molecular biology, the science of the tiny molecules inside living cells, such as DNA, RNA and proteins.","杜德娜在美國夏威夷的希洛長大。小時候，她對身邊奇特的植物和昆蟲非常着迷。大約十二歲時，她讀了一本講述科學家如何發現 DNA 結構的書，決心也要揭開大自然的秘密。夏彭蒂耶在法國巴黎附近長大，同樣在小時候就決定要研究科學。兩人後來都成為分子生物學專家——分子生物學研究的是活細胞內的微小分子，例如 DNA、RNA 和蛋白質。"],
+   q:{q:['What does molecular biology study?','分子生物學研究甚麼？'],o:[['Tiny molecules inside living cells, such as DNA and proteins','活細胞內的微小分子，例如 DNA 和蛋白質'],['Rocks and volcanoes','岩石和火山'],['Stars and planets','恆星和行星'],['Weather patterns','天氣形態']]}},
+  {h:['Bacteria fight back','細菌的反擊'],
+   p:["Viruses attack bacteria too. Scientists noticed that many bacteria keep short pieces of virus DNA inside their own DNA, arranged in repeated patterns called CRISPR. It works like a gallery of “wanted posters”. If the same virus attacks again, the bacterium copies the poster into a guide molecule and sends a protein called Cas9 to search for matching virus DNA. When Cas9 finds a match, it cuts the virus DNA and stops the attack. Charpentier discovered an important RNA molecule that makes this system work in the bacterium Streptococcus pyogenes.","病毒也會攻擊細菌。科學家發現，很多細菌會把病毒 DNA 的短片段儲存在自己的 DNA 中，排列成重複的模式，稱為 CRISPR。這就像一個「通緝令」展覽館：當同一種病毒再次入侵，細菌就把通緝令複製成嚮導分子，派出一種叫 Cas9 的蛋白質去搜尋相符的病毒 DNA。Cas9 一旦找到目標，就會把病毒 DNA 剪斷，阻止攻擊。夏彭蒂耶在化膿性鏈球菌中，發現了令這套系統運作的一種重要 RNA 分子。"],
+   q:{q:['What does the Cas9 protein do?','Cas9 蛋白質有甚麼作用？'],o:[['It cuts matching virus DNA','剪斷相符的病毒 DNA'],['It makes bacteria glow','令細菌發光'],['It gives the cell energy','為細胞提供能量'],['It builds the cell wall','建造細胞壁']]}},
+  {h:['A walk that changed science','改變科學的一次散步'],
+   p:["In 2011 Charpentier and Doudna met at a conference in Puerto Rico and decided to work together, one team in Europe and one in the USA, sharing results across the ocean. In 2012 they showed that Cas9 can be given a guide RNA made in the lab, so it can be programmed to cut ANY chosen piece of DNA, not only virus DNA. They described it as a pair of “genetic scissors”. Soon scientists all over the world were using CRISPR-Cas9 to study and edit genes in plants, animals and microorganisms.","2011 年，夏彭蒂耶和杜德娜在波多黎各的一個會議上認識，決定合作：一隊在歐洲，一隊在美國，隔着大洋分享結果。2012 年，她們證明可以給 Cas9 配上在實驗室製造的嚮導 RNA，令它能被「編程」去剪斷任何選定的 DNA 片段，而不只是病毒 DNA。她們把它形容為一把「基因剪刀」。很快，全世界的科學家都用 CRISPR-Cas9 來研究和編輯植物、動物和微生物的基因。"],
+   q:{q:['What tells Cas9 where to cut?','甚麼告訴 Cas9 在哪裏剪？'],o:[['A guide RNA','嚮導 RNA'],['A magnet','磁鐵'],['A thermometer','溫度計'],['A map of Puerto Rico','波多黎各地圖']]}},
+  {h:['Great power, great responsibility','能力越大，責任越大'],
+   p:["In 2020 Charpentier and Doudna won the Nobel Prize in Chemistry. It was the first time a Nobel science prize was shared by two women alone. CRISPR is helping scientists develop crops that resist disease and new treatments for inherited diseases, such as sickle cell disease. But editing genes also raises serious questions about safety and fairness, especially if changes could be passed on to future generations. Doudna has called on scientists and the public to discuss how it should and should not be used. Heredity, how features pass from parents to offspring through genes, is exactly what you study in Unit 4!","2020 年，夏彭蒂耶和杜德娜獲得諾貝爾化學獎，這是首次由兩位女性獨享諾貝爾科學獎項。CRISPR 正幫助科學家培育抗病農作物，並研發鐮狀細胞病等遺傳病的新療法。可是，編輯基因也引起安全和公平的重大問題，尤其是如果改變會遺傳給下一代。杜德娜呼籲科學家和公眾一起討論這項技術應該及不應該怎樣使用。遺傳——特徵如何透過基因由父母傳給子女——正是你在第 4 單元學習的內容！"],
+   q:{q:['Why do people need to discuss rules for gene editing?','為甚麼大家需要討論基因編輯的規則？'],o:[['It raises serious questions about safety and fairness','它引起安全和公平的重大問題'],['Scissors are expensive','剪刀很貴'],['It only works in Puerto Rico','它只在波多黎各有效'],['Genes are not real','基因並不存在']]}}],
+ boss:[
+  [['What does CRISPR-Cas9 do?','CRISPR-Cas9 有甚麼作用？'],[['Cuts DNA at a chosen place','在選定位置剪斷 DNA'],['Makes cells glow','令細胞發光'],['Measures temperature','量度溫度'],['Kills all bacteria','殺死所有細菌']]],
+  [['Where did the CRISPR idea come from?','CRISPR 的概念來自哪裏？'],[['Bacteria’s defence against viruses','細菌對抗病毒的防禦系統'],['Volcanoes','火山'],['Human muscles','人類肌肉'],['Photosynthesis in leaves','葉子的光合作用']]],
+  [['What guides Cas9 to the right DNA?','甚麼引導 Cas9 找到正確的 DNA？'],[['A guide RNA','嚮導 RNA'],['A laser','激光'],['A compass','指南針'],['Sunlight','陽光']]],
+  [['In which year did they win the Nobel Prize?','她們在哪一年獲得諾貝爾獎？'],[['2020','2020'],['2012','2012'],['2015','2015'],['1945','1945']]],
+  [['Which Nobel Prize did they win?','她們獲得哪個諾貝爾獎？'],[['Chemistry','化學獎'],['Physics','物理學獎'],['Literature','文學獎'],['Peace','和平獎']]],
+  [['Where did the two scientists first meet to plan their work?','兩位科學家在哪裏首次見面並計劃合作？'],[['At a conference in Puerto Rico','波多黎各的一個會議'],['In a shed in Paris','巴黎的棚屋'],['In a lab in Manchester','曼徹斯特的實驗室'],['At a hospital in London','倫敦的醫院']]],
+  [['In animal and plant cells, most DNA is found in the…','在動物和植物細胞中，大部分 DNA 位於……'],[['nucleus','細胞核'],['cell wall','細胞壁'],['cell membrane','細胞膜'],['outside the cell','細胞外面']]],
+  [['Which is the most responsible attitude to gene editing?','對基因編輯最負責任的態度是哪一個？'],[['Discuss safety and fairness before using it','使用前先討論安全和公平'],['Edit any gene just for fun','為了好玩隨意編輯基因'],['Keep all results secret','把所有結果保密'],['Never share ideas with others','永不與人分享想法']]]],
+ time:[[1987,'Strange repeats (later called CRISPR) are spotted in bacteria','在細菌中發現奇怪的重複序列（後稱 CRISPR）'],[2011,'Charpentier and Doudna meet in Puerto Rico','夏彭蒂耶和杜德娜在波多黎各相遇'],[2012,'They publish the genetic scissors paper','她們發表基因剪刀論文'],[2020,'Nobel Prize in Chemistry','獲諾貝爾化學獎'],[2023,'The first CRISPR medicine is approved','首款 CRISPR 藥物獲批准']],
+ words:[['DNA','DNA（脫氧核糖核酸）'],['gene','基因'],['heredity','遺傳'],['protein','蛋白質'],['virus','病毒'],['cell','細胞']]}
+];
+
 /* ===== Dictation data: short English definitions + picture cues ===== */
 var DEF={
 'science':'The study of phenomena and events in Nature.',
@@ -2657,7 +3005,7 @@ function newPet(){return {xp:0,stage:1,energy:80,happy:80,eq:{hat:null,glasses:n
 function defaultState(){return {v:1,lang:'zh',coins:40,xpTotal:0,pets:{mochi:newPet()},active:'mochi',owned:{w0:1},
  room:{wall:'w0',dec:{}},food:{onigiri:2,apple:1},streak:0,best:0,lastDay:null,shields:0,days:0,hist:[],
  secs:{},q:{},seen:{},mistakes:{},cleared:0,quizzes:0,perfect:0,studies:0,studyDay:{},matchWins:0,matchDay:{d:'',n:0},
- trophies:{},gift:'',vocabDay:{},dict:{n:0,miss:{},perf:0,days:0,dday:''},tc:0,bud:{own:{},act:null},ill:{lv:0,d:'',miss:0},say:{n:0,miss:{},rounds:0,perf:0},cures:0,illCure:null,buffs:{},sugar:null,dtask:null,qday:null,specGot:{},mig4:1,lastTick:Date.now(),sfx:true,music:false,started:false};}
+ trophies:{},gift:'',vocabDay:{},dict:{n:0,miss:{},perf:0,days:0,dday:''},tc:0,bud:{own:{},act:null},ill:{lv:0,d:'',miss:0},say:{n:0,miss:{},rounds:0,perf:0},cures:0,illCure:null,buffs:{},sugar:null,dtask:null,qday:null,specGot:{},nobel:{t:{},seen:{},perk:{}},mig4:1,lastTick:Date.now(),sfx:true,music:false,started:false};}
 function upgradeState(o){if(o.room)migrateRoom(o.room,o.owned,o.specGot);if(!o.mig4){o.specGot={};for(var q in (o.secs||{}))if((o.secs[q].stars||0)>0)o.specGot[q]=1;o.mig4=1;}var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];if(o.dict&&o.dict.perf==null)o.dict.perf=0;if(o.dict&&o.dict.days==null){o.dict.days=0;o.dict.dday='';}return o;}
 function load(k){try{var r=localStorage.getItem(k||KEY);if(r){return upgradeState(JSON.parse(r));}}catch(e){}return null;}
 function save(){try{S.lastTick=Date.now();S.upd=Date.now();localStorage.setItem(storeKey(),JSON.stringify(S));}catch(e){}cloudSaveSoon();}
@@ -2690,7 +3038,7 @@ function gain(coins,xp,why){var m=streakMult()*fedBonus();var c=Math.round(coins
  checkTrophies();save();return {c:c,x:x,m:m};}
 function checkTrophies(){checkQuests();checkBuddies();dtCheck();checkRoutes();TROPHIES.forEach(function(t){if(!S.trophies[t.id]){var v=t.f();if(v[0]>=v[1]){S.trophies[t.id]=today();S.coins+=20;
  setTimeout(function(){sfx('fanfare');toast('🏆 '+L('Trophy unlocked: ','解鎖獎盃：')+LL(t)+' (+20 🪙)');confetti();},1300);}}});}
-function condVal(k){if(k==='three')return threeStars();if(k==='dictn')return (S.dict||{}).n||0;return S[k]||0;}
+function condVal(k){if(k==='three')return threeStars();if(k==='nobel')return nobelDone();if(k==='dictn')return (S.dict||{}).n||0;return S[k]||0;}
 function checkPetUnlocks(){checkBuddies();PETS.forEach(function(p){if(p.cond&&!S.pets[p.id]&&condVal(p.cond.k)>=p.cond.n){S.pets[p.id]=newPet();
  setTimeout(function(){sfx('fanfare');toast('🎁 '+L('New Science Pal unlocked: ','新科學小夥伴解鎖：')+LL(p)+'!');confetti();},1800);}});}
 
@@ -2712,9 +3060,9 @@ var SFX={
 };
 function sfx(n){if(S&&S.sfx&&SFX[n])try{SFX[n]();}catch(e){}}
 var musicTimer=null;
-function startMusic(){stopMusic();if(!S.music||!ac())return;var notes=[523,659,784,659,587,698,880,698,523,659,784,1047,988,784,659,587];var i=0;
+function startMusic(){stopMusic();if(!S.music||!ac())return;musicMode='main';var notes=[523,659,784,659,587,698,880,698,523,659,784,1047,988,784,659,587];var i=0;
  musicTimer=setInterval(function(){if(document.hidden)return;var f=notes[i%notes.length];tone(f,0,.9,'sine',.045);if(i%4===0)tone(f/2,0,1.4,'triangle',.03);i++;},420);}
-function stopMusic(){if(musicTimer)clearInterval(musicTimer);musicTimer=null;}
+function stopMusic(){if(musicTimer)clearInterval(musicTimer);musicTimer=null;nqStopMusic();musicMode=null;}
 
 /* ---------- UI bits ---------- */
 function toast(msg){var n=document.querySelectorAll('.toast').length;var d=document.createElement('div');d.className='toast';d.style.marginTop=(n*56)+'px';d.setAttribute('role','status');d.textContent=msg;document.body.appendChild(d);setTimeout(function(){d.remove();},2600);}
@@ -2820,7 +3168,9 @@ function moodOf(id){var p=S.pets[id];if(tempMood&&id===S.active)return tempMood;
 var tempMood=null,tempTimer=null;
 function setTempMood(m,ms){tempMood=m;clearTimeout(tempTimer);if(ms)tempTimer=setTimeout(function(){tempMood=null;if(curScreen==='home')render();},ms);}
 function ears(t,b){var s='';var st=' stroke="'+O+'" stroke-width="3.5"';
- if(t==='bear')s='<circle cx="60" cy="76" r="15" fill="'+b+'"'+st+'/><circle cx="140" cy="76" r="15" fill="'+b+'"'+st+'/><circle cx="60" cy="76" r="7" fill="#FFD1DA"/><circle cx="140" cy="76" r="7" fill="#FFD1DA"/>';
+ if(t==='fawn')s='<ellipse cx="50" cy="86" rx="20" ry="9" fill="'+b+'"'+st+' transform="rotate(-28 50 86)"/><ellipse cx="150" cy="86" rx="20" ry="9" fill="'+b+'"'+st+' transform="rotate(28 150 86)"/><ellipse cx="50" cy="86" rx="11" ry="4" fill="#FFD1DA" transform="rotate(-28 50 86)"/><ellipse cx="150" cy="86" rx="11" ry="4" fill="#FFD1DA" transform="rotate(28 150 86)"/><path d="M84 68 Q78 46 70 30 M77 50 Q66 46 58 38 M116 68 Q122 46 130 30 M123 50 Q134 46 142 38" stroke="#8A5F3C" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="63" cy="30" rx="8" ry="4" fill="#8CCB7A" transform="rotate(-35 63 30)"/><ellipse cx="54" cy="40" rx="7" ry="3.5" fill="#8CCB7A" transform="rotate(20 54 40)"/><ellipse cx="137" cy="30" rx="8" ry="4" fill="#8CCB7A" transform="rotate(35 137 30)"/><ellipse cx="146" cy="40" rx="7" ry="3.5" fill="#8CCB7A" transform="rotate(-20 146 40)"/><circle cx="71" cy="26" r="6" fill="#FFB3C1" stroke="'+O+'" stroke-width="1.5"/><circle cx="71" cy="26" r="2" fill="#FFD000"/><circle cx="129" cy="26" r="6" fill="#FFB3C1" stroke="'+O+'" stroke-width="1.5"/><circle cx="129" cy="26" r="2" fill="#FFD000"/>';
+ else if(t==='pangolin')s='<circle cx="62" cy="80" r="9" fill="'+b+'"'+st+'/><circle cx="138" cy="80" r="9" fill="'+b+'"'+st+'/><path d="M156 162 Q198 164 198 128 Q196 102 172 108 Q186 118 184 134 Q180 150 154 146Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M166 158 q6 -6 0 -12 M178 154 q6 -6 2 -14 M188 142 q4 -8 -2 -14" stroke="#3E4C96" stroke-width="2.5" fill="none"/><circle cx="190" cy="124" r="2.2" fill="#FFD000"/>';
+ else if(t==='bear')s='<circle cx="60" cy="76" r="15" fill="'+b+'"'+st+'/><circle cx="140" cy="76" r="15" fill="'+b+'"'+st+'/><circle cx="60" cy="76" r="7" fill="#FFD1DA"/><circle cx="140" cy="76" r="7" fill="#FFD1DA"/>';
  else if(t==='bunny')s='<ellipse cx="76" cy="44" rx="13" ry="32" fill="'+b+'"'+st+' transform="rotate(-12 76 44)"/><ellipse cx="124" cy="44" rx="13" ry="32" fill="'+b+'"'+st+' transform="rotate(12 124 44)"/><ellipse cx="76" cy="46" rx="6" ry="22" fill="#FFB9C8" transform="rotate(-12 76 46)"/><ellipse cx="124" cy="46" rx="6" ry="22" fill="#FFB9C8" transform="rotate(12 124 46)"/>';
  else if(t==='cat')s='<path d="M50 96 L56 50 L90 70Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M150 96 L144 50 L110 70Z" fill="'+b+'"'+st+' stroke-linejoin="round"/><path d="M58 84 L61 60 L80 72Z M142 84 L139 60 L120 72Z" fill="#F7C6D4"/>';
  else if(t==='frog')s='<circle cx="70" cy="70" r="17" fill="'+b+'"'+st+'/><circle cx="130" cy="70" r="17" fill="'+b+'"'+st+'/>';
@@ -2837,7 +3187,9 @@ function ears(t,b){var s='';var st=' stroke="'+O+'" stroke-width="3.5"';
  else if(t==='tuft')s='<path d="M100 64 C94 48 98 40 104 38 C102 46 104 54 100 64Z M100 64 C108 50 116 48 120 50 C112 54 106 60 100 64Z" fill="#F7D476"'+st+' stroke-linejoin="round"/>';
  return s;}
 function frontFeat(t){var s='';
- if(t==='shark')s='<path d="M40 148 Q100 196 160 148 Q150 176 100 178 Q50 176 40 148Z" fill="#fff" opacity=".95"/><path d="M44 112 q-5 6 0 12 M52 108 q-5 7 0 14 M156 112 q5 6 0 12 M148 108 q5 7 0 14" stroke="#5C8DC2" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="128" cy="84" r="5" fill="#fff" opacity=".7"/><circle cx="138" cy="94" r="3" fill="#fff" opacity=".7"/>';
+ if(t==='fawn')s='<circle cx="60" cy="100" r="4.5" fill="#fff" opacity=".85"/><circle cx="71" cy="89" r="3.2" fill="#fff" opacity=".85"/><circle cx="140" cy="100" r="4.5" fill="#fff" opacity=".85"/><circle cx="129" cy="89" r="3.2" fill="#fff" opacity=".85"/><circle cx="52" cy="114" r="3" fill="#fff" opacity=".85"/><circle cx="148" cy="114" r="3" fill="#fff" opacity=".85"/>';
+ else if(t==='pangolin')s=(function(){var r='';[[72,84,100,116,128],[62,76,90,110,124,138]].forEach(function(row,j){row.forEach(function(x,i){var y=j?88:74;if(j===0&&(i===0||i===4))y=78;r+='<path d="M'+(x-9)+' '+y+' Q'+x+' '+(y+15)+' '+(x+9)+' '+y+'Z" fill="#4E5FAE" stroke="'+O+'" stroke-width="2" stroke-linejoin="round"/>'+((i+j)%2?'<circle cx="'+x+'" cy="'+(y+5)+'" r="1.8" fill="#FFD000"/>':'');});});return r;})();
+ else if(t==='shark')s='<path d="M40 148 Q100 196 160 148 Q150 176 100 178 Q50 176 40 148Z" fill="#fff" opacity=".95"/><path d="M44 112 q-5 6 0 12 M52 108 q-5 7 0 14 M156 112 q5 6 0 12 M148 108 q5 7 0 14" stroke="#5C8DC2" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="128" cy="84" r="5" fill="#fff" opacity=".7"/><circle cx="138" cy="94" r="3" fill="#fff" opacity=".7"/>';
  else if(t==='owl'){s='<circle cx="80" cy="116" r="18" fill="#FFF6D6" stroke="#C9C2EE" stroke-width="3"/><circle cx="120" cy="116" r="18" fill="#FFF6D6" stroke="#C9C2EE" stroke-width="3"/><path d="M93 88 a9 9 0 1 0 14 0 a7 7 0 1 1 -14 0Z" fill="#FBD46D"/>';[[82,150],[100,158],[118,150],[91,166],[109,166]].forEach(function(c){s+='<path d="M'+(c[0]-5)+' '+c[1]+' l5 5 l5 -5" stroke="#B9AEE6" stroke-width="2.5" fill="none" stroke-linecap="round"/>';});}
  if(t==='hamster')s='<ellipse cx="100" cy="76" rx="9" ry="10" fill="#E3AE6C" opacity=".8"/>';
  else if(t==='panda')s='<ellipse cx="80" cy="118" rx="13" ry="14" fill="#8A7E7C" transform="rotate(-20 80 118)"/><ellipse cx="120" cy="118" rx="13" ry="14" fill="#8A7E7C" transform="rotate(20 120 118)"/>';
@@ -2919,18 +3271,18 @@ function render(){var a=$('#app');if(!S.started){a.innerHTML=welcomeHTML();bindW
  '<button class="iconbtn" id="bSave" aria-label="Save code">💾</button></header>';
  var body='';
  if(curScreen==='teacher'&&!(AUTH.user&&AUTH.user.teacher))curScreen='home';
- if(curScreen==='teacher')body=teacherHTML();else if(curScreen==='home')body=homeHTML();else if(curScreen==='study')body=studyHTML();else if(curScreen==='practice')body=practiceHTML();else if(curScreen==='shop')body=shopHTML();else body=colHTML();
- var tabs=[['home','🏠',L('Home','小窩')],['study','📚',L('Study','溫習')],['practice','📓',L('Mistakes','錯題本')],['shop','🛍️',L('Shop','商店')],['col','🏆',L('Collection','收藏')]];if(AUTH.user&&AUTH.user.teacher)tabs.push(['teacher','📊',L('Teacher','老師')]);
- var nav='<nav class="nav" aria-label="Main"><div class="nav-in" style="grid-template-columns:repeat('+tabs.length+',1fr)">'+tabs.map(function(t){return '<button data-nav="'+t[0]+'"'+(curScreen===t[0]?' aria-current="page"':'')+'><span class="ni">'+t[1]+'</span>'+t[2]+(t[0]==='practice'&&mCount?'<span class="badge">'+mCount+'</span>':'')+'</button>';}).join('')+'</div></nav>';
+ if(curScreen==='teacher')body=teacherHTML();else if(curScreen==='home')body=homeHTML();else if(curScreen==='study')body=studyHTML();else if(curScreen==='practice')body=practiceHTML();else if(curScreen==='shop')body=shopHTML();else if(curScreen==='nobel')body=nobelHTML();else body=colHTML();
+ var tabs=[['home','🏠',L('Home','小窩')],['nobel','🏅',L('Nobel','諾貝爾')],['study','📚',L('Study','溫習')],['practice','📓',L('Mistakes','錯題本')],['shop','🛍️',L('Shop','商店')],['col','🏆',L('Collection','收藏')]];if(AUTH.user&&AUTH.user.teacher)tabs.push(['teacher','📊',L('Teacher','老師')]);
+ var nav='<nav class="nav" aria-label="Main"><div class="nav-in" style="grid-template-columns:repeat('+tabs.length+',1fr)">'+tabs.map(function(t){return '<button data-nav="'+t[0]+'"'+(curScreen===t[0]?' aria-current="page"':'')+'><span class="ni">'+t[1]+'</span>'+t[2]+(t[0]==='practice'&&mCount?'<span class="badge">'+mCount+'</span>':'')+(t[0]==='nobel'&&nqNew()?'<span class="badge nqdot">!</span>':'')+'</button>';}).join('')+'</div></nav>';
  a.innerHTML='<div class="app">'+top+'<main>'+body+'</main><p class="foot">'+L('Fan-inspired original art · made for HK S1 Science revision · progress saves on this device','原創角色（靈感來自日系可愛風）· 為香港中一科學溫習而設 · 進度儲存在此裝置')+'</p></div>'+nav;
- bindCommon();bindScreen();}
+ bindCommon();bindScreen();musicSync();}
 function miniLogo(){return '<svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><circle cx="11" cy="12" r="6" fill="#fff" stroke="'+O+'" stroke-width="2.5"/><circle cx="29" cy="12" r="6" fill="#fff" stroke="'+O+'" stroke-width="2.5"/><ellipse cx="20" cy="23" rx="16" ry="14" fill="#fff" stroke="'+O+'" stroke-width="2.5"/><circle cx="14" cy="22" r="2" fill="'+O+'"/><circle cx="26" cy="22" r="2" fill="'+O+'"/><ellipse cx="10" cy="27" rx="3" ry="2" fill="#FFB3C1"/><ellipse cx="30" cy="27" rx="3" ry="2" fill="#FFB3C1"/></svg>';}
 function bindCommon(){
  $('#bLang').onclick=function(){S.lang=S.lang==='en'?'zh':'en';bubble=null;sfx('tap');save();render();};
  $('#bSfx').onclick=function(){S.sfx=!S.sfx;save();render();sfx('tap');};
  $('#bMusic').onclick=function(){S.music=!S.music;save();if(S.music)startMusic();else stopMusic();render();};
  $('#bSave').onclick=function(){sfx('tap');openSave();};$('#bAcct').onclick=function(){sfx('tap');openAccount();};
- document.querySelectorAll('[data-nav]').forEach(function(b){b.onclick=function(){curScreen=b.dataset.nav;sfx('tap');render();window.scrollTo(0,0);};});}
+ document.querySelectorAll('[data-nav]').forEach(function(b){b.onclick=function(){curScreen=b.dataset.nav;if(curScreen==='nobel')NQV={ch:null,task:null};sfx('tap');render();window.scrollTo(0,0);};});}
 
 /* HOME */
 function roomHTML(){if(bubblePet!==S.active){bubble=null;bubblePet=S.active;}var p=curPet(),m=moodOf(S.active);var dec=S.room.dec||{};function di(c){var it=dec[c]&&item(dec[c]);return it&&isOwned(it)?it:null;}
@@ -3124,7 +3476,7 @@ function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(f
 var B32='0123456789ABCDEFGHJKMNPQRSTVWXYZ',EPOCH=dayNum('2025-01-01');
 function wearIds(){return ITEMS.filter(function(i){return i.id!=='w0'&&!i.sec;}).map(function(i){return i.id;});}
 function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.round(v),Math.pow(2,n)-1));for(var i=n-1;i>=0;i--)bits.push((v>>i)&1);}
- w(10,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),5);
+ w(11,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),5);
  PETS.forEach(function(P){var p=S.pets[P.id];w(p?1:0,1);w(p?p.stage:0,2);w(p?p.xp/5:0,12);});
  var ids=wearIds();ids.forEach(function(id){w(S.owned[id]?1:0,1);});
  var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,7);});
@@ -3135,26 +3487,28 @@ function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.roun
  BUDS.forEach(function(B){w(S.bud.own[B.id]?1:0,1);});w(S.bud.act?BUDS.indexOf(budDef(S.bud.act))+1:0,5);w(S.ill.lv,3);var dd=S.dict||{};w(dd.n||0,12);w(dd.perf||0,8);w(dd.days||0,9);w(S.say.n||0,12);w(S.tc||0,14);
  PETS.forEach(function(P){var pp=S.pets[P.id];w(pp&&pp.rt?ROUTE_IDS.indexOf(pp.rt)+1:0,2);});
  DECATS.slice(1).forEach(function(c){w(dec[c[0]]?eqItems.indexOf(dec[c[0]])+1:0,7);});
+ NQ.forEach(function(c){w(nqMask(c.id),6);});
  var sum=0;for(var i=0;i<bits.length;i++)sum=(sum*31+bits[i]*(i%7+1))%1021;w(sum,10);
  while(bits.length%5)bits.push(0);scramble(bits);var out='';for(var j=0;j<bits.length;j+=5){var v=0;for(var k=0;k<5;k++)v=v*2+bits[j+k];out+=B32[v];}return out;}
 function scramble(bits){var x=0x5EED1;for(var i=0;i<bits.length;i++){x=(x*1103515245+12345)&0x7fffffff;bits[i]^=(x>>16)&1;}}
 function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1');var bits=[];
  for(var i=0;i<code.length;i++){var v=B32.indexOf(code[i]);if(v<0)return null;for(var k=4;k>=0;k--)bits.push((v>>k)&1);}
  scramble(bits);var pos=0;function r(n){var v=0;for(var i=0;i<n;i++){if(pos>=bits.length)throw 0;v=v*2+bits[pos++];}return v;}
- try{var o={};var ver=r(4);if(ver<1||ver>10)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:ver<8?4:5);o.pets={};PETS.slice(0,v1?6:ver<4?12:ver<8?15:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
-  o.owned={};wearIds().slice(0,ver<4?40:ver<5?59:ver<6?64:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
+ try{var o={};var ver=r(4);if(ver<1||ver>11)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:ver<8?4:5);o.pets={};PETS.slice(0,v1?6:ver<4?12:ver<8?15:ver<11?V10.pets:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
+  o.owned={};wearIds().slice(0,ver<4?40:ver<5?59:ver<6?64:ver<11?V10.wear:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
   o.wall=ver<4?(['w0','w1','w2','w3','w4','w5'][r(3)]||'w0'):(eqItems[r(7)]||'w0');var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
   o.streak=r(9);o.best=r(9);o.shields=r(2);var ld=r(13);o.lastDay=ld?fromDayNum(ld+EPOCH):null;o.days=r(10);o.quizzes=r(11);o.perfect=r(9);o.cleared=r(10);o.studies=r(10);o.matchWins=r(8);
-  o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:ver===3?22:ver<6?23:ver<7?30:ver<8?33:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
-  if(ver>=7){o.bud={};BUDS.forEach(function(B){if(r(1))o.bud[B.id]=1;});o.budAct=r(5);o.ill=r(3);o.dn=r(12);o.dperf=r(8);o.ddays=r(9);o.sayn=r(12);o.tc=r(14);}
-  if(ver>=9){o.routes={};PETS.forEach(function(P){var v=r(2);if(v)o.routes[P.id]=ROUTE_IDS[v-1];});}
+  o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:ver===3?22:ver<6?23:ver<7?30:ver<8?33:ver<11?V10.tro:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
+  if(ver>=7){o.bud={};BUDS.slice(0,ver<11?V10.buds:BUDS.length).forEach(function(B){if(r(1))o.bud[B.id]=1;});o.budAct=r(5);o.ill=r(3);o.dn=r(12);o.dperf=r(8);o.ddays=r(9);o.sayn=r(12);o.tc=r(14);}
+  if(ver>=9){o.routes={};PETS.slice(0,ver<11?V10.pets:PETS.length).forEach(function(P){var v=r(2);if(v)o.routes[P.id]=ROUTE_IDS[v-1];});}
   if(ver>=10){o.dec={};DECATS.slice(1).forEach(function(c){var v=r(7);if(v&&eqItems[v-1])o.dec[c[0]]=eqItems[v-1];});}
+  if(ver>=11){o.nq={};NQ.forEach(function(c){var v=r(6);if(v)o.nq[c.id]=v;});}
   var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
   if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
 function applyCode(o){if(!AUTH.mode)AUTH.mode='guest';var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
  S.coins=o.coins;S.pets={};PETS.forEach(function(P,i){if(o.pets[P.id]){var p=newPet();p.stage=o.pets[P.id].st;p.xp=o.pets[P.id].xp;S.pets[P.id]=p;}});
  S.active=PETS[o.active]&&S.pets[PETS[o.active].id]?PETS[o.active].id:Object.keys(S.pets)[0];S.pets[S.active].eq=o.eq;
- S.owned=o.owned;S.owned.w0=1;if(!S.pets[S.active])S.active=Object.keys(S.pets)[0];S.room=o.dec?{wall:o.wall,dec:o.dec}:migrateRoom({wall:o.wall,prop:o.prop},o.owned);['streak','best','shields','lastDay','days','quizzes','perfect','cleared','studies','matchWins'].forEach(function(k){S[k]=o[k];});
+ S.owned=o.owned;S.owned.w0=1;if(!S.pets[S.active])S.active=Object.keys(S.pets)[0];S.room=o.dec?{wall:o.wall,dec:o.dec}:migrateRoom({wall:o.wall,prop:o.prop},o.owned);S.nobel={t:o.nq||{},seen:{pro:o.nq?1:0},perk:{}};NQ_PERKS.forEach(function(P,i){if(nobelDone()>=P.n)S.nobel.perk[i+1]=today();});['streak','best','shields','lastDay','days','quizzes','perfect','cleared','studies','matchWins'].forEach(function(k){S[k]=o[k];});
  ALLSECS.forEach(function(s){if(o.stars[s.id]){S.secs[s.id]={stars:o.stars[s.id],best:o.stars[s.id]+2,plays:1};S.specGot[s.id]=1;}});
  for(var t in o.tro)S.trophies[t]=today();if(S.lastDay)S.hist=[S.lastDay];
  if(o.bud){BUDS.forEach(function(B){if(o.bud[B.id])S.bud.own[B.id]=today();});var ba=BUDS[o.budAct-1];S.bud.act=ba&&S.bud.own[ba.id]?ba.id:(Object.keys(S.bud.own)[0]||null);S.ill={lv:Math.min(4,o.ill||0),d:o.ill?today():'',miss:0};S.dict.n=o.dn;S.dict.perf=o.dperf;S.dict.days=o.ddays;S.say.n=o.sayn;S.tc=o.tc;}
@@ -3195,7 +3549,7 @@ function bindWelcome(){document.querySelectorAll('[data-lang]').forEach(function
  var ck=$('#chk');if(ck)ck.onclick=function(){previewCode($('#inCode').value);};}
 
 /* bind per screen */
-function bindScreen(){if(curScreen==='teacher')bindTeacher();
+function bindScreen(){if(curScreen==='teacher')bindTeacher();if(curScreen==='nobel')bindNobel();
  var pt=$('#petTap');if(pt)pt.onclick=function(){var svg=pt.querySelector('.pet');svg.classList.remove('boing');void svg.getBoundingClientRect();svg.classList.add('boing');sfx('boing');var p=curPet();p.happy=clamp(p.happy+1,5,100);bubble=line(moodOf(S.active));if($('#chatText'))showChat('fact');var bb=$('.bubble');if(bb)bb.textContent=bubble;else render();};
  var m={bFeed:openFeed,bPlay:function(){var p=curPet();if(p.energy<12){bubble=L('Too tired to play… feed me first?','太攰玩唔到……可唔可以先餵我？');render();return;}openMatch();},bStudy:function(){curScreen='study';render();},bDress:openDress,bEvo:openEvolve,bSwitch:openSwitch,
   bGift:function(){S.gift=today();S.coins+=10;S.food.onigiri=(S.food.onigiri||0)+1;sfx('coin');confetti();toast('🎁 +10 🪙 · +1 🍙');save();render();},
@@ -3291,8 +3645,8 @@ var BUDS=[
 var BUD_KIND={cat:['Cat','貓'],dog:['Dog','狗'],fly:['Butterfly','蝴蝶']};
 function palName(){return LL(petDef(S.active));}
 function budDef(id){return BUDS.filter(function(b){return b.id===id;})[0];}
-function budVal(k){var d=S.dict||{};if(k==='best')return S.best||0;if(k==='dictn')return d.n||0;if(k==='dperf')return d.perf||0;if(k==='ddays')return d.days||0;return 0;}
-function budCondText(c){var n=c[1];return {best:[n+'-day study streak','連續溫習 '+n+' 日'],dictn:['Spell '+n+' words in dictation','默書正確拼寫 '+n+' 個詞彙'],dperf:[n+' perfect dictation rounds','默書全對 '+n+' 次'],ddays:['Do dictation on '+n+' different days','在 '+n+' 個不同日子默書']}[c[0]];}
+function budVal(k){var d=S.dict||{};if(k==='nobel')return nobelDone();if(k==='best')return S.best||0;if(k==='dictn')return d.n||0;if(k==='dperf')return d.perf||0;if(k==='ddays')return d.days||0;return 0;}
+function budCondText(c){var n=c[1];return {best:[n+'-day study streak','連續溫習 '+n+' 日'],dictn:['Spell '+n+' words in dictation','默書正確拼寫 '+n+' 個詞彙'],dperf:[n+' perfect dictation rounds','默書全對 '+n+' 次'],ddays:['Do dictation on '+n+' different days','在 '+n+' 個不同日子默書'],nobel:['Collect '+n+' Nobel Sparks','收集 '+n+' 團諾貝爾發現之火']}[c[0]];}
 function budOwned(){return Object.keys(S.bud.own).length;}
 function checkBuddies(){if(!S||!S.bud)return;BUDS.forEach(function(B){if(S.bud.own[B.id])return;if(B.cond.every(function(c){return budVal(c[0])>=c[1];})){S.bud.own[B.id]=today();if(!S.bud.act)S.bud.act=B.id;setTimeout(function(){buddyPopup(B);if(curScreen==='home'&&!$('#ov'))render();},2000);}});}
 
@@ -3372,7 +3726,7 @@ function flyParts(o,mood){var w=o.w,s='',fore,hind,pat='',bodyC;
  if(mood!=='sick'||!S.ill||S.ill.lv<2)s+='<path d="M57 52 q3 3 6 0" stroke="'+O+'" stroke-width="1.6" fill="none" stroke-linecap="round"/>';
  return s+sickBits(60,28,52,mood,.6);}
 function buddySVG(id,mood,cls){var B=budDef(id);if(!B)return '';mood=mood||'happy';
- var inner=B.kind==='cat'?catParts(B.look,mood):B.kind==='dog'?dogParts(B.look,mood):flyParts(B.look,mood);
+ var inner=B.kind==='cat'?catParts(B.look,mood):B.kind==='dog'?dogParts(B.look,mood):B.kind==='newt'?newtParts(B.look,mood):B.kind==='frog'?frogParts(B.look,mood):flyParts(B.look,mood);
  return '<svg class="bud '+(B.kind==='fly'?'fly ':'')+(cls||'')+'" viewBox="0 0 120 120" role="img" aria-label="'+esc(LL(B))+'"><ellipse cx="60" cy="116" rx="30" ry="3.5" fill="rgba(91,75,73,.12)"/><g class="bob">'+inner+'</g></svg>';}
 function budMood(){return S.ill&&S.ill.lv?'sick':'happy';}
 
@@ -3949,6 +4303,214 @@ var MED_ART={
  m4:'<path d="M24 16 Q24 10 30 10 H34 Q40 10 40 16 V20" stroke="#5B4B49" stroke-width="3" fill="none"/><rect x="8" y="20" width="48" height="34" rx="7" fill="#E0505A" stroke="#5B4B49" stroke-width="2.5"/><path d="M8 30 H56" stroke="#B83A45" stroke-width="2"/><rect x="28" y="33" width="8" height="16" rx="1.5" fill="#fff"/><rect x="24" y="37" width="16" height="8" rx="1.5" fill="#fff"/><path d="M50 8 Q60 16 56 30 Q52 44 44 48" stroke="#3E4652" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M44 8 Q36 16 42 24" stroke="#3E4652" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="44" cy="50" r="5" fill="#C9D1DA" stroke="#3E4652" stroke-width="2.2"/>'
 };
 function medIcon(M,cls){var a=MED_ART[M.id];return a?'<span class="foodico'+(cls?' '+cls:'')+'"><svg viewBox="0 0 64 64" class="foodsvg" role="img" aria-hidden="true">'+a+'</svg></span>':M.e;}
+
+/* ---------- Nobel Time Quest 諾貝爾時光大冒險 (Oct 2026 – Mar 2027) ---------- */
+/* counts before the Nobel rewards were added: older save codes (v10 and below) hold exactly these */
+var V10={pets:PETS.length,buds:BUDS.length,wear:wearIds().length,tro:TROPHIES.length};
+var NQ_TASKS=[['story','🎬','Story','故事'],['read','📖','Reading','閱讀'],['time','🧩','Timeline','時間線'],['words','🔤','Word vault','詞彙寶庫'],['boss','⚔️','Fog battle','霧妖之戰'],['link','🔬','Lab link','課本連結']];
+var NQ_ALL=63,NQ_COINS=80;
+var NQV={ch:null,task:null};
+
+/* ----- rewards: perk 1 (Pui Tak Canossian College) and perk 2 (Ricci Hall, HKU) ----- */
+PETS.push({id:'petal',en:'Petal',zh:'培培',body:'#E9B98A',belly:'#FFF3E4',ears:'fawn',price:0,tier:'mythic',
+  desc:['A Blossom Fawn from the garden of Pui Tak Canossian College. The seedlings on her antlers bloom whenever someone learns something kind or clever.','來自培德書院花園的花鹿。每當有人學到善良或聰明的事，她鹿角上的幼苗就會開花。'],
+  cond:{k:'nobel',n:3,en:'Collect 3 Nobel Sparks',zh:'收集 3 團諾貝爾發現之火'}},
+ {id:'astra',en:'Astra',zh:'星星',body:'#6C7FD1',belly:'#F6EBD9',ears:'pangolin',price:0,tier:'mythic',
+  desc:['A Star-Map Pangolin who guards the old star charts of Ricci Hall, HKU. Every scale on her back is a tiny constellation.','守護香港大學利瑪竇宿舍古老星圖的星圖穿山甲。她背上每一片鱗都是一個小星座。'],
+  cond:{k:'nobel',n:6,en:'Collect all 6 Nobel Sparks',zh:'收集全部 6 團諾貝爾發現之火'}});
+BUDS.push({id:'n_newt',kind:'newt',tier:'mythic',en:'Kai',zh:'阿溪',sp:['Hong Kong newt','香港瘰螈'],
+  story:['Kai lives in a cool, clear hill stream on Hong Kong Island. In winter he walks down to quiet pools to lay eggs, then climbs back into the leaf litter. He only lives where the water is clean, so seeing him is a sign of a healthy stream. He became Petal’s friend when she stopped to help him across a path.','阿溪住在港島一條清涼的山溪裏。冬天，他會走到平靜的水潭產卵，之後再爬回落葉堆中。他只會在乾淨的水中生活，所以見到他代表溪流很健康。有一次培培停下來幫他橫過小路，他們就成了好朋友。'],
+  fact:['Science: the Hong Kong newt was named after Hong Kong and is a protected species. The bright orange spots on its belly warn predators that it tastes bad.','科學小知識：香港瘰螈以香港命名，是受保護物種。牠腹部鮮橙色的斑點是警告色，提醒捕食者牠味道很差。'],
+  cond:[['nobel',3]]},
+ {id:'n_frog',kind:'frog',tier:'mythic',en:'Romer',zh:'小盧',sp:['Romer’s tree frog','盧氏小樹蛙'],
+  story:['Romer is smaller than your thumbnail! His family was first discovered in 1952 on Lamma Island by a naturalist called John Romer, and they are found nowhere else in the world except Hong Kong. When new roads and buildings threatened them, scientists carefully moved some frogs to safe new homes. Romer likes to sit on Astra’s tail and count the stars.','小盧比你的指甲還要小！他的家族在 1952 年由博物學家盧文在南丫島首次發現，全世界只有香港才找得到。當新道路和建築威脅牠們的家園時，科學家小心地把部分樹蛙搬到安全的新家。小盧最喜歡坐在星星的尾巴上數星星。'],
+  fact:['Science: Romer’s tree frog is only about 1.5–2 cm long. Scientists track rare species like it to protect biodiversity.','科學小知識：盧氏小樹蛙只有約 1.5 至 2 厘米長。科學家追蹤這些稀有物種，以保護生物多樣性。'],
+  cond:[['nobel',6]]});
+function nqQuest(n){return {en:n===3?'Collect 3 Nobel Sparks':'Collect all 6 Nobel Sparks',zh:n===3?'收集 3 團諾貝爾發現之火':'收集全部 6 團諾貝爾發現之火',f:function(){return [nobelDone(),n];}};}
+[QI('h_puitak','wear','hat','Pui Tak scholar beret','培德學人貝雷帽','mythic',nqQuest(3),'<ellipse cx="100" cy="58" rx="48" ry="17" fill="#2E3F7F" '+SW3+' transform="rotate(-6 100 58)"/><path d="M58 66 Q100 80 144 62" stroke="#F4C542" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="96" cy="41" r="5" fill="#2E3F7F" stroke="#O" stroke-width="2.5"/><path d="M132 60 L132 44" stroke="#5E9B4E" stroke-width="3" stroke-linecap="round"/><ellipse cx="126" cy="46" rx="7" ry="4" fill="#9BCB8E" stroke="#O" stroke-width="2" transform="rotate(-30 126 46)"/><ellipse cx="138" cy="44" rx="7" ry="4" fill="#9BCB8E" stroke="#O" stroke-width="2" transform="rotate(30 138 44)"/><circle cx="132" cy="40" r="4" fill="#FFB3C1" stroke="#O" stroke-width="1.5"/>'),
+ QI('p_ptscroll','room','prop','“培德” calligraphy scroll','「培德」書法掛軸','mythic',nqQuest(3),'<svg viewBox="0 0 100 100"><path d="M36 10 L50 2 L64 10" stroke="#8A6A4A" stroke-width="2" fill="none"/><rect x="18" y="8" width="64" height="7" rx="3.5" fill="#8A5A3C" stroke="#O" stroke-width="2.5"/><rect x="26" y="15" width="48" height="70" fill="#FFF8E7" stroke="#O" stroke-width="2.5"/><rect x="30" y="19" width="40" height="62" fill="none" stroke="#D9A441" stroke-width="1.5"/><text x="50" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#3A2A20" font-family="serif">培</text><text x="50" y="70" text-anchor="middle" font-size="22" font-weight="700" fill="#3A2A20" font-family="serif">德</text><rect x="58" y="72" width="7" height="7" fill="#D6453D"/><rect x="18" y="85" width="64" height="7" rx="3.5" fill="#8A5A3C" stroke="#O" stroke-width="2.5"/></svg>'),
+ QI('a_riccicape','wear','acc','Ricci Hall star-map cape','利瑪竇宿舍星圖斗篷','mythic',nqQuest(6),'<path d="M52 132 Q30 158 36 188 L74 188 Q62 162 68 140Z" fill="#23306B" '+SW3+' stroke-linejoin="round"/><path d="M148 132 Q170 158 164 188 L126 188 Q138 162 132 140Z" fill="#23306B" '+SW3+' stroke-linejoin="round"/><path d="M46 160 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z M154 164 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z" fill="#FFD000"/><circle cx="56" cy="178" r="2" fill="#FFF1A8"/><circle cx="146" cy="150" r="2" fill="#FFF1A8"/><path d="M60 180 L50 170 M140 152 L150 160" stroke="#8FB3E0" stroke-width="1.2"/><path d="M68 138 Q100 154 132 138" stroke="#F4C542" stroke-width="3.5" fill="none"/><path d="M100 140 l3 6 l6 1 l-4 4 l1 6 l-6 -3 l-6 3 l1 -6 l-4 -4 l6 -1Z" fill="#FFD000" stroke="#O" stroke-width="1.5"/>'),
+ QI('p_armillary','room','prop','Ricci armillary sphere','利瑪竇渾天儀','mythic',nqQuest(6),'<svg viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="24" ry="5" fill="#8A5A3C" stroke="#O" stroke-width="2.5"/><path d="M50 88 L50 72" stroke="#B98B64" stroke-width="5"/><circle cx="50" cy="44" r="28" fill="none" stroke="#D9A441" stroke-width="4"/><ellipse cx="50" cy="44" rx="28" ry="9" fill="none" stroke="#E8C15A" stroke-width="3"/><ellipse cx="50" cy="44" rx="28" ry="9" fill="none" stroke="#C9942E" stroke-width="3" transform="rotate(60 50 44)"/><ellipse cx="50" cy="44" rx="9" ry="28" fill="none" stroke="#E8C15A" stroke-width="2.5"/><circle cx="50" cy="44" r="8" fill="#5E9FD0" stroke="#O" stroke-width="2"/><path d="M47 42 q3 -3 6 0 q-1 4 -4 3Z" fill="#9BCB8E"/><path d="M50 10 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z" fill="#FFD000"/></svg>')
+].forEach(function(it){ITEMS.push(it);});
+DECAT_OF.p_ptscroll='cosy';DECAT_OF.p_armillary='lab';
+TROPHIES.push({id:'nobel3',e:'🔥',en:'Spark Keeper',zh:'火種守護者',den:'Collect 3 Nobel Sparks',dzh:'收集 3 團諾貝爾發現之火',tier:2,f:function(){return [nobelDone(),3];}},
+ {id:'nobel6',e:'🏅',en:'Nobel Time Hero',zh:'諾貝爾時光英雄',den:'Collect all 6 Nobel Sparks',dzh:'收集全部 6 團諾貝爾發現之火',tier:3,f:function(){return [nobelDone(),6];}});
+BUD_KIND.newt=['Newt','蠑螈'];BUD_KIND.frog=['Frog','蛙'];
+var NQ_PERKS=[{n:3,pet:'petal',bud:'n_newt',items:['h_puitak','p_ptscroll'],theme:['Pui Tak Canossian College','培德書院']},
+ {n:6,pet:'astra',bud:'n_frog',items:['a_riccicape','p_armillary'],theme:['Ricci Hall, The University of Hong Kong','香港大學利瑪竇宿舍']}];
+
+/* ----- state helpers ----- */
+function nqS(){if(!S.nobel)S.nobel={t:{},seen:{},perk:{}};return S.nobel;}
+function nqMask(id){return S&&S.nobel&&S.nobel.t[id]||0;}
+function nqHas(id,k){return !!(nqMask(id)&(1<<k));}
+function nobelDone(){if(!S||!S.nobel)return 0;var n=0;NQ.forEach(function(c){if(nqMask(c.id)===NQ_ALL)n++;});return n;}
+function nqPreview(){return !!((AUTH.user&&AUTH.user.teacher)||/nobel-preview/.test(location.hash));}
+function nqOpen(i){return nqPreview()||today()>=NQ[i].month+'-01';}
+function nqDate(i,long){var p=NQ[i].month.split('-'),mo=+p[1]-1;return L((long?'1 ':'')+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][mo]+' '+p[0],p[0]+' 年 '+(mo+1)+' 月'+(long?' 1 日':''));}
+function nqDaysTo(i){return Math.max(0,dayNum(NQ[i].month+'-01')-dayNum(today()));}
+function nqNew(){if(!S||!S.started)return false;for(var i=NQ.length-1;i>=0;i--)if(nqOpen(i))return nqMask(NQ[i].id)!==NQ_ALL;return false;}
+function nqTaskName(k){var t=NQ_TASKS[k];return t[1]+' '+L(t[2],t[3]);}
+function nqSet(ch,k){var st=nqS(),c=NQ[ch],before=st.t[c.id]||0;if(before&(1<<k))return;st.t[c.id]=before|(1<<k);S.coins+=10;
+ if(st.t[c.id]===NQ_ALL){S.coins+=NQ_COINS;save();nqSparkPopup(ch);nqPerks();}else{toast('✅ '+nqTaskName(k)+' · +10 🪙');save();}checkTrophies();}
+function nqLinkCheck(){NQ.forEach(function(c,i){if(nqOpen(i)&&!nqHas(c.id,5)&&((S.secs[c.link]||{}).stars||0)>=2)nqSet(i,5);});}
+function nqPerks(){var st=nqS(),n=nobelDone();NQ_PERKS.forEach(function(P,i){if(n<P.n||st.perk[i+1])return;st.perk[i+1]=today();
+  if(!S.pets[P.pet])S.pets[P.pet]=newPet();if(!S.bud.own[P.bud]){S.bud.own[P.bud]=today();if(!S.bud.act)S.bud.act=P.bud;}P.items.forEach(function(id){S.owned[id]=1;});
+  save();NQV={ch:null,task:'finale',f:i,pg:0};setTimeout(function(){if(curScreen==='nobel')render();},400);});}
+
+/* ----- art (original drawings, card style) ----- */
+function nqArt(id,sz){var s='',g='<defs><radialGradient id="ng_'+id+'" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><circle cx="60" cy="60" r="52" fill="url(#ng_'+id+')"/>';
+ var K='#1B1640';
+ if(id==='curie')s='<rect x="16" y="70" width="44" height="34" rx="3" fill="#F5E9CF" stroke="'+K+'" stroke-width="2.5" transform="rotate(-10 38 87)"/><path d="M22 80 L52 75 M23 86 L53 81 M24 92 L46 88" stroke="#7CFFCB" stroke-width="2" transform="rotate(-10 38 87)"/><path d="M62 18 L78 18 L78 44 L98 90 Q100 100 90 100 L50 100 Q40 100 42 90 L62 44Z" fill="rgba(255,255,255,.25)" stroke="'+K+'" stroke-width="3" stroke-linejoin="round"/><path d="M52 74 L88 74 L96 92 Q97 98 90 98 L50 98 Q43 98 45 92Z" fill="#7CFFCB"/><circle cx="70" cy="86" r="20" fill="#7CFFCB" opacity=".35"/><circle cx="62" cy="84" r="3" fill="#fff"/><circle cx="78" cy="90" r="2.5" fill="#fff"/><circle cx="72" cy="64" r="3" fill="#7CFFCB"/><circle cx="66" cy="52" r="2" fill="#7CFFCB"/><path d="M60 16 L80 16" stroke="'+K+'" stroke-width="4" stroke-linecap="round"/>';
+ else if(id==='fleming')s='<ellipse cx="60" cy="66" rx="46" ry="34" fill="rgba(255,255,255,.3)" stroke="'+K+'" stroke-width="3"/><ellipse cx="60" cy="66" rx="40" ry="28" fill="#FFE9A8"/>'+[[32,56],[28,72],[40,84],[84,52],[92,70],[80,86],[46,46],[70,90],[88,60],[36,64]].map(function(p){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3" fill="#F2A541"/>';}).join('')+'<ellipse cx="62" cy="64" rx="20" ry="15" fill="#FFF8E0"/><path d="M52 64 q4 -10 10 -4 q6 -8 10 2 q6 2 0 8 q-4 6 -10 2 q-6 4 -10 -2 q-4 -2 0 -6Z" fill="#6CC47A" stroke="#2E7D46" stroke-width="2"/><circle cx="58" cy="62" r="2" fill="#2E7D46"/><circle cx="66" cy="66" r="2" fill="#2E7D46"/><ellipse cx="62" cy="64" rx="20" ry="15" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="3 3"/>';
+ else if(id==='kao')s='<rect x="8" y="50" width="22" height="20" rx="4" fill="#5C6BC0" stroke="'+K+'" stroke-width="2.5"/><path d="M30 60 C54 60 50 28 76 30 C100 32 96 86 112 88" stroke="#B8E6FF" stroke-width="10" fill="none" stroke-linecap="round" opacity=".55"/><path d="M30 60 C54 60 50 28 76 30 C100 32 96 86 112 88" stroke="'+K+'" stroke-width="2" fill="none"/><path d="M32 58 L40 64 L46 52 L54 44 L60 36 L68 32 L78 30 L86 36 L92 48 L96 60 L100 72 L106 82 L112 88" stroke="#FFD000" stroke-width="3" fill="none" stroke-linejoin="round"/><circle cx="112" cy="88" r="6" fill="#FFD000" opacity=".8"/><path d="M104 96 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z" fill="#FFF1A8"/>';
+ else if(id==='tu')s='<path d="M40 104 L40 30" stroke="#4E8A3E" stroke-width="3"/>'+[[40,36,-40],[40,46,40],[40,56,-40],[40,66,40],[40,76,-40],[40,86,40]].map(function(l){return '<path d="M'+l[0]+' '+l[1]+' q'+(l[2]>0?16:-16)+' -8 '+(l[2]>0?26:-26)+' -2" stroke="#7CC46A" stroke-width="5" fill="none" stroke-linecap="round"/>';}).join('')+'<path d="M76 40 L90 40 L90 60 L104 96 Q106 104 98 104 L68 104 Q60 104 62 96 L76 60Z" fill="rgba(255,255,255,.25)" stroke="'+K+'" stroke-width="3" stroke-linejoin="round"/><path d="M68 84 L98 84 L103 97 Q104 102 98 102 L68 102 Q62 102 63 97Z" fill="#C8F07A"/><text x="83" y="30" text-anchor="middle" font-size="12" font-weight="800" fill="#FF2D55">35°C</text>';
+ else if(id==='rutherford')s='<rect x="70" y="14" width="10" height="92" rx="2" fill="#FFD000" stroke="'+K+'" stroke-width="2.5"/><path d="M72 20 L78 26 M72 44 L78 50 M72 70 L78 76" stroke="#FFF1A8" stroke-width="2"/>'+[26,42,60,78,94].map(function(y){return '<path d="M10 '+y+' L108 '+y+'" stroke="#B478FF" stroke-width="2.5" stroke-dasharray="6 4"/><circle cx="108" cy="'+y+'" r="3.5" fill="#B478FF"/>';}).join('')+'<path d="M10 60 L68 60 L22 30" stroke="#FF2D55" stroke-width="3.5" fill="none" stroke-linejoin="round"/><circle cx="22" cy="30" r="5" fill="#FF2D55"/><circle cx="75" cy="60" r="3" fill="#FF2D55"/>';
+ else if(id==='doudna'){for(var i=0;i<9;i++){var y=12+i*11,x1=40+22*Math.sin(i*0.8),x2=80-22*Math.sin(i*0.8);s+='<path d="M'+x1.toFixed(1)+' '+y+' L'+x2.toFixed(1)+' '+y+'" stroke="'+(i%2?'#FF2D55':'#FFD000')+'" stroke-width="3"/>';}
+  var a='',b='';for(var j=0;j<=40;j++){var yy=12+j*2.2,xa=40+22*Math.sin(j*0.2),xb=80-22*Math.sin(j*0.2);a+=(j?'L':'M')+xa.toFixed(1)+' '+yy.toFixed(1);b+=(j?'L':'M')+xb.toFixed(1)+' '+yy.toFixed(1);}
+  s+='<path d="'+a+'" stroke="#00E5C0" stroke-width="4" fill="none"/><path d="'+b+'" stroke="#7FB2FF" stroke-width="4" fill="none"/><g transform="translate(86 56) rotate(-20)"><circle cx="-6" cy="16" r="7" fill="none" stroke="#fff" stroke-width="3.5"/><circle cx="10" cy="16" r="7" fill="none" stroke="#fff" stroke-width="3.5"/><path d="M-4 10 L18 -18 M8 10 L-12 -18" stroke="#fff" stroke-width="4" stroke-linecap="round"/></g>';}
+ return '<svg viewBox="0 0 120 120" width="'+(sz||'100%')+'" aria-hidden="true">'+g+s+'</svg>';}
+function murkSVG(hp){var o=hp==null?1:0.45+hp/6*0.55;
+ return '<svg viewBox="0 0 200 170" class="murk" role="img" aria-label="Murk"><g opacity="'+o.toFixed(2)+'"><path d="M30 120 Q10 90 36 72 Q30 34 70 36 Q84 8 116 22 Q150 10 162 44 Q196 50 184 86 Q200 118 166 128 Q150 156 116 142 Q94 162 68 144 Q34 150 30 120Z" fill="#4A3F7A"/><path d="M44 112 Q30 92 50 80 Q48 52 78 52 Q92 30 116 40 Q144 32 150 58 Q176 64 168 90 Q176 112 152 118 Q138 138 112 128 Q94 142 74 130 Q50 132 44 112Z" fill="#6A5BA8"/></g><ellipse cx="80" cy="84" rx="15" ry="11" fill="#FFD000"/><ellipse cx="126" cy="84" rx="15" ry="11" fill="#FFD000"/><ellipse cx="82" cy="86" rx="5" ry="8" fill="#1B1640"/><ellipse cx="124" cy="86" rx="5" ry="8" fill="#1B1640"/><path d="M62 70 L96 78 M144 70 L110 78" stroke="#1B1640" stroke-width="5" stroke-linecap="round"/><path d="M74 112 L84 104 L94 114 L104 104 L114 114 L124 104 L134 112" stroke="#FF2D55" stroke-width="4" fill="none" stroke-linejoin="round"/></svg>';}
+function lanternSVG(on){var c=on?'#FFD000':'#9C98B5';
+ return '<svg viewBox="0 0 120 150" role="img" aria-label="Nobel Time Lantern"><circle cx="60" cy="80" r="52" fill="'+c+'" opacity="'+(on?'.25':'.08')+'"/><path d="M48 14 Q60 2 72 14" stroke="#C9A24A" stroke-width="4" fill="none"/><rect x="40" y="16" width="40" height="10" rx="4" fill="#C9A24A"/><path d="M36 28 L84 28 L90 118 L30 118Z" fill="rgba(255,255,255,.12)" stroke="#C9A24A" stroke-width="4" stroke-linejoin="round"/><path d="M60 28 L60 118 M46 28 L42 118 M74 28 L78 118" stroke="#C9A24A" stroke-width="2" opacity=".6"/><path d="M60 58 Q76 76 66 96 Q60 104 54 96 Q44 76 60 58Z" fill="'+c+'"/><path d="M60 72 Q68 84 62 94 Q58 98 56 92 Q52 82 60 72Z" fill="#fff" opacity=".7"/><rect x="26" y="118" width="68" height="12" rx="5" fill="#C9A24A"/></svg>';}
+function sparkSVG(col){return '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="40" fill="'+col+'" opacity=".22"/><path d="M50 8 Q58 36 84 44 Q60 52 56 90 Q46 60 18 56 Q44 44 50 8Z" fill="'+col+'"/><path d="M50 26 Q54 42 66 46 Q54 50 52 70 Q46 54 34 52 Q48 46 50 26Z" fill="#fff" opacity=".85"/></svg>';}
+
+/* ----- companion art for the new pet kinds ----- */
+function newtParts(o,mood){var sick=mood==='sick',K='#3A2A20',b='#6B4A33',sp='#FF8A3D';
+ return '<path d="M30 74 Q10 70 6 52 Q18 64 34 66Z" fill="'+b+'" stroke="'+K+'" stroke-width="2.5" stroke-linejoin="round"/><ellipse cx="56" cy="76" rx="30" ry="13" fill="'+b+'" stroke="'+K+'" stroke-width="2.5"/><path d="M40 86 l-6 12 M50 88 l-2 12 M70 86 l4 12 M78 84 l8 10" stroke="'+K+'" stroke-width="4" stroke-linecap="round"/><ellipse cx="90" cy="70" rx="18" ry="13" fill="'+b+'" stroke="'+K+'" stroke-width="2.5"/>'+
+  [[40,84],[52,86],[64,86],[76,82],[30,78]].map(function(p){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.2" fill="'+sp+'"/>';}).join('')+'<path d="M40 70 q6 -3 12 0 q6 -3 12 0" stroke="#8C6A50" stroke-width="2" fill="none"/>'+
+  (sick?'<path d="M92 64 q4 3 8 0" stroke="'+K+'" stroke-width="2.5" fill="none"/>':'<circle cx="96" cy="64" r="4.5" fill="'+K+'"/><circle cx="97.5" cy="62.5" r="1.6" fill="#fff"/>')+'<path d="M98 76 q5 3 9 -1" stroke="'+K+'" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="94" cy="73" rx="4" ry="2.4" fill="#FFB3C1" opacity=".8"/>';}
+function frogParts(o,mood){var sick=mood==='sick',K='#3A2A20',b='#C89B6D';
+ return '<ellipse cx="60" cy="82" rx="32" ry="24" fill="'+b+'" stroke="'+K+'" stroke-width="2.5"/><path d="M46 70 L60 82 L74 70 M50 96 L60 84 L70 96" stroke="#8A5F3C" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="44" cy="54" r="12" fill="'+b+'" stroke="'+K+'" stroke-width="2.5"/><circle cx="76" cy="54" r="12" fill="'+b+'" stroke="'+K+'" stroke-width="2.5"/>'+
+  (sick?'<path d="M38 54 q6 4 12 0 M70 54 q6 4 12 0" stroke="'+K+'" stroke-width="2.5" fill="none"/>':'<circle cx="44" cy="54" r="6" fill="'+K+'"/><circle cx="76" cy="54" r="6" fill="'+K+'"/><circle cx="46" cy="52" r="2" fill="#fff"/><circle cx="78" cy="52" r="2" fill="#fff"/>')+
+  '<path d="M50 74 Q60 82 70 74" stroke="'+K+'" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="40" cy="72" rx="5" ry="3" fill="#FFB3C1" opacity=".8"/><ellipse cx="80" cy="72" rx="5" ry="3" fill="#FFB3C1" opacity=".8"/>'+
+  [[30,104],[38,106],[82,106],[90,104]].map(function(p){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.5" fill="#E7C49A" stroke="'+K+'" stroke-width="1.5"/>';}).join('');}
+
+/* ----- music: an upbeat synth theme for the quest, faster for the fog battle ----- */
+var NQM={t:null,mode:null,step:0,next:0,nb:null},musicMode=null;
+function nqNoise(a){if(NQM.nb)return NQM.nb;var n=a.sampleRate*0.3,b=a.createBuffer(1,n,a.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=Math.random()*2-1;return NQM.nb=b;}
+function nqVoice(a,t,f,dur,type,vol,cut,slide){var o=a.createOscillator(),g=a.createGain(),fl=a.createBiquadFilter();o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(slide,t+dur);
+ fl.type='lowpass';fl.frequency.value=cut||4000;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.connect(fl);fl.connect(g);g.connect(a.destination);o.start(t);o.stop(t+dur+0.05);}
+function nqHit(a,t,hp,vol,dur){var s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=nqNoise(a);f.type=hp>2000?'highpass':'bandpass';f.frequency.value=hp;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);s.connect(f);f.connect(g);g.connect(a.destination);s.start(t);s.stop(t+dur+0.02);}
+var NQ_SONGS={
+ quest:{bpm:122,chords:[[174.6,220,261.6,329.6],[196,246.9,293.7,370],[164.8,196,246.9,293.7],[130.8,164.8,196,246.9]],lead:[0,2,3,2,1,3,2,0]},
+ boss:{bpm:138,chords:[[146.8,174.6,220,261.6],[130.8,164.8,196,246.9],[116.5,146.8,174.6,220],[130.8,164.8,196,233.1]],lead:[3,2,3,1,2,0,2,3]}};
+function nqTick(){var a=AC;if(!a||!NQM.mode)return;var song=NQ_SONGS[NQM.mode],six=60/song.bpm/4;
+ while(NQM.next<a.currentTime+0.12){var t=NQM.next,st=NQM.step%64,bar=Math.floor(st/16),ch=song.chords[bar],b=st%16,boss=NQM.mode==='boss';
+  if(!document.hidden){
+   if(b%4===0)nqVoice(a,t,150,0.18,'sine',0.32,800,42);
+   if(boss&&b%4===2)nqVoice(a,t,120,0.12,'sine',0.12,800,40);
+   if(b%8===4){nqHit(a,t,1800,0.12,0.14);nqVoice(a,t,220,0.08,'triangle',0.05,3000);}
+   if(b%2===1)nqHit(a,t,8000,boss?0.05:0.035,0.04);
+   if(b%4===0||b%4===3)nqVoice(a,t,ch[0]/2,six*1.6,'sawtooth',0.07,420);
+   nqVoice(a,t,ch[(b+(boss?1:0))%4]*2,six*0.9,'square',0.016,2600);
+   if(b===0)ch.forEach(function(f){nqVoice(a,t,f,six*15,'triangle',0.018,1400);});
+   if(b%4===0&&(st>=32||boss)){var n=song.lead[(st/4)%8];nqVoice(a,t,ch[n]*4,six*3,'sine',0.028,5000);}
+  }
+  NQM.next+=six;NQM.step++;}}
+function nqMusic(mode){nqStopMusic();var a=ac();if(!a)return;NQM.mode=mode;NQM.step=0;NQM.next=a.currentTime+0.05;NQM.t=setInterval(nqTick,40);musicMode=mode;}
+function nqStopMusic(){if(NQM.t)clearInterval(NQM.t);NQM.t=null;NQM.mode=null;}
+function musicSync(){var want=!S.music?null:curScreen==='nobel'?(NQV.task==='boss'?'boss':'quest'):'main';if(want===musicMode)return;
+ if(want==='main'){nqStopMusic();startMusic();}else if(want){stopMusic();nqMusic(want);}else{stopMusic();nqStopMusic();musicMode=null;}}
+SFX.beam=function(){var a=ac();if(!a)return;var t=a.currentTime;nqVoice(a,t,1400,0.35,'sawtooth',0.08,5000,200);nqHit(a,t+0.05,1200,0.2,0.25);};
+SFX.hurt=function(){var a=ac();if(!a)return;var t=a.currentTime;nqVoice(a,t,110,0.3,'square',0.1,600,60);nqHit(a,t,400,0.18,0.3);};
+SFX.shatter=function(){var a=ac();if(!a)return;var t=a.currentTime;[1568,2093,2637,3136].forEach(function(f,i){nqVoice(a,t+i*0.06,f,0.5,'sine',0.06,8000);});nqHit(a,t,6000,0.15,0.6);};
+
+/* ----- screens ----- */
+function nqBack(label){return '<button class="nq-back" data-nqback="1">‹ '+label+'</button>';}
+function nobelHTML(){nqLinkCheck();var h='<div class="nq'+(NQV.fx?' fx-'+NQV.fx:'')+'"><div class="nq-stars" aria-hidden="true"></div>';
+ if(NQV.task==='prologue'||NQV.task==='finale')h+=nqCinemaHTML();
+ else if(NQV.ch!=null&&NQV.task)h+=nqTaskHTML();
+ else if(NQV.ch!=null)h+=nqChapterHTML();
+ else h+=nqHubHTML();
+ return h+'</div>';}
+function nqOrbs(){var h='<div class="nq-orbs" role="img" aria-label="'+nobelDone()+' / 6 Sparks">';NQ.forEach(function(c){var on=nqMask(c.id)===NQ_ALL;h+='<span class="orb'+(on?' on':'')+'" style="--c:'+c.col+'">'+(on?sparkSVG(c.col):'')+'</span>';});return h+'</div>';}
+function nqPerkCard(i){var P=NQ_PERKS[i],got=!!nqS().perk[i+1],n=Math.min(nobelDone(),P.n);
+ return '<div class="nq-perk'+(got?' got':'')+'"><div class="pp">'+'<div class="pp-pal'+(got?'':' sil')+'">'+petSVG(P.pet,'happy',{stage:1,eq:{},plain:true})+'</div><div class="pp-bud'+(got?'':' sil')+'">'+buddySVG(P.bud,'happy')+'</div></div><div class="pt"><b>'+(got?'🔓 ':'🔒 ')+L('Perk '+(i+1),'獎勵 '+(i+1))+'</b><span>'+esc(L(P.theme[0],P.theme[1]))+'</span><small>'+(got?L('Science Pal · pet · outfit · decor unlocked!','科學小夥伴 · 寵物 · 服飾 · 裝飾已解鎖！'):L('Science Pal · pet · outfit · decor','科學小夥伴 · 寵物 · 服飾 · 裝飾'))+'</small><div class="nq-bar"><i style="width:'+(n/P.n*100)+'%"></i></div><small>🔥 '+n+' / '+P.n+'</small></div></div>';}
+function nqHubHTML(){var h='<section class="nq-hero"><div class="lan">'+lanternSVG(nobelDone()>0||nqOpen(0))+'</div><div><p class="nq-kicker">'+L('SEASON EVENT · OCT 2026 – MAR 2027','限定活動 · 2026 年 10 月 – 2027 年 3 月')+'</p><h1>'+L('Nobel Time Quest','諾貝爾時光大冒險')+'</h1><p>'+L('Learn from six Nobel Prize winners, win their Sparks of Discovery and rescue two Science Pals from Murk, the Fog of Forgetting. A new door in time opens every month.','向六位諾貝爾獎得主學習，贏取「發現之火」，從遺忘霧妖默克手中救出兩位科學小夥伴。每個月都會打開一道新的時光之門。')+'</p>'+nqOrbs()+'</div></section>';
+ if(nqPreview())h+='<p class="nq-note">👀 '+L('Preview mode: every chapter is open.','預覽模式：所有章節已開放。')+'</p>';
+ h+='<button class="nq-btn ghost" data-nqpro="1">🎬 '+(nqS().seen.pro?L('Replay the prologue','重溫序章'):L('Start here: the prologue','由這裏開始：序章'))+'</button>';
+ h+='<div class="nq-perks">'+nqPerkCard(0)+nqPerkCard(1)+'</div><h2 class="nq-h">'+L('The six doors in time','六道時光之門')+'</h2><div class="nq-grid">';
+ NQ.forEach(function(c,i){var open=nqOpen(i),m=nqMask(c.id),n=0;for(var k=0;k<6;k++)if(m&(1<<k))n++;var done=m===NQ_ALL;
+  h+='<button class="nq-card holo'+(open?'':' locked')+(done?' done':'')+'" style="--c:'+c.col+'" '+(open?'data-nqch="'+i+'"':'disabled aria-disabled="true"')+'><span class="mo">'+L('Chapter '+(i+1),'第 '+(i+1)+' 章')+' · '+nqDate(i)+'</span><span class="art">'+nqArt(c.id)+'</span><b>'+esc(L(c.who[0],c.who[1]))+'</b><span class="ti">'+esc(L(c.title[0],c.title[1]))+'</span>'+
+   (open?'<span class="pg"><span class="nq-bar"><i style="width:'+(n/6*100)+'%"></i></span>'+(done?'🔥 '+L('Spark won!','已贏得火種！'):n+' / 6')+'</span>':'<span class="lock">🔒 '+L('Opens ','開放日期：')+nqDate(i,true)+'<br><small>'+L('in '+nqDaysTo(i)+' days','還有 '+nqDaysTo(i)+' 日')+'</small></span>')+'</button>';});
+ return h+'</div>';}
+function nqChapterHTML(){var i=NQV.ch,c=NQ[i],sec=secById(c.link),h=nqBack(L('All chapters','所有章節'));
+ h+='<section class="nq-chead holo" style="--c:'+c.col+'"><div class="art">'+nqArt(c.id)+'</div><div><p class="nq-kicker">'+L('Chapter '+(i+1),'第 '+(i+1)+' 章')+' · '+esc(L(c.prize[0],c.prize[1]))+'</p><h1>'+esc(L(c.title[0],c.title[1]))+'</h1><p><b>'+esc(L(c.who[0],c.who[1]))+'</b></p><p class="sp">🔥 '+L('Reward: ','獎勵：')+esc(L(c.spark[0],c.spark[1]))+' + '+NQ_COINS+' 🪙</p></div></section><div class="nq-tasks">';
+ NQ_TASKS.forEach(function(t,k){var d=nqHas(c.id,k),sub=[L('4 scenes','4 個場景'),L('4 pages + checks','4 頁 + 小測'),L('Order 5 events','排列 5 件事'),L('Match 6 words','配對 6 個詞彙'),L('Defeat Murk','打敗默克'),(sec?sec.id+' '+esc(LL(sec))+' ≥ 2★':'')][k];
+  h+='<button class="nq-task'+(d?' done':'')+'" data-nqtask="'+t[0]+'"><span class="ic">'+(d?'✅':t[1])+'</span><b>'+L(t[2],t[3])+'</b><small>'+sub+'</small></button>';});
+ return h+'</div><p class="nq-note">'+L('Finish all 6 tasks to win the Spark. Every task gives +10 🪙.','完成全部 6 項任務即可贏得火種。每項任務 +10 🪙。')+'</p>';}
+function nqCinemaHTML(){var fin=NQV.task==='finale',P=fin?NQ_PERKS[NQV.f]:null,panels=fin?NQ_FINALE[NQV.f]:NQ_PROLOGUE,pg=NQV.pg||0,t=panels[pg],art;
+ if(!fin)art=[lanternSVG(false),'<div class="big">'+murkSVG()+'</div>','<div class="duo"><div class="sil2">'+petSVG('petal','sleepy',{stage:1,eq:{},plain:true})+'</div><div class="sil2">'+petSVG('astra','sleepy',{stage:1,eq:{},plain:true})+'</div></div>',lanternSVG(true)][pg];
+ else if(NQV.f===0)art=['<div class="burst">'+sparkSVG('#00C4FF')+sparkSVG('#1BD17A')+sparkSVG('#FFD000')+'</div>','<div class="big">'+petSVG('petal','joy',{stage:1,eq:{},plain:true})+'</div>','<div class="duo"><div>'+petSVG('petal','happy',{stage:1,eq:{},plain:true})+'</div><div class="budbig">'+buddySVG('n_newt','happy')+'</div></div>'][pg];
+ else art=['<div class="burst">'+NQ.map(function(c){return sparkSVG(c.col);}).join('')+'</div>','<div class="big">'+petSVG('astra','joy',{stage:1,eq:{},plain:true})+'</div>','<div class="big">'+nqArtMap()+'</div>','<div class="duo"><div>'+petSVG('astra','happy',{stage:1,eq:{},plain:true})+'</div><div class="budbig">'+buddySVG('n_frog','happy')+'</div></div>'][pg];
+ return (fin?'':nqBack(L('Back','返回')))+'<section class="nq-cine"><p class="nq-kicker">'+(fin?L('RESCUE!','救援成功！'):L('PROLOGUE','序章'))+' · '+(pg+1)+' / '+panels.length+'</p><div class="scene">'+art+'</div><p class="line">'+esc(L(t[0],t[1]))+'</p><button class="nq-btn" data-nqnext="1">'+(pg<panels.length-1?L('Next ▶','下一頁 ▶'):fin?L('Claim my rewards! 🎁','領取獎勵！🎁'):L('Let’s go! 🔥','出發！🔥'))+'</button></section>';}
+function nqArtMap(){var s='';for(var i=0;i<26;i++){var x=(i*37)%190+5,y=(i*53)%110+5;s+='<circle cx="'+x+'" cy="'+y+'" r="'+(i%4?1.5:2.8)+'" fill="#FFF1A8"/>';}
+ return '<svg viewBox="0 0 200 120" aria-hidden="true"><ellipse cx="100" cy="60" rx="96" ry="54" fill="#23306B" stroke="#D9A441" stroke-width="3"/><path d="M40 50 Q60 30 80 44 Q86 64 64 70 Q44 70 40 50Z M104 36 Q130 28 150 40 Q160 60 138 72 Q116 74 108 60Z M90 80 Q104 76 112 88 Q104 98 92 94Z" fill="#9BCB8E" opacity=".75"/><path d="M4 60 L196 60 M100 6 L100 114" stroke="#D9A441" stroke-width="1" opacity=".5"/>'+s+'<path d="M30 30 L56 22 L78 34 M124 90 L150 84 L170 96" stroke="#FFF1A8" stroke-width="1.2" fill="none"/></svg>';}
+
+/* ----- tasks ----- */
+function nqTaskHTML(){var c=NQ[NQV.ch],t=NQV.task,h=nqBack(L(c.title[0],c.title[1]));
+ if(t==='story'){var pg=NQV.pg||0,line=c.story[pg],art=[lanternSVG(true),nqArt(c.id),murkSVG(),'<div class="burst">'+sparkSVG(c.col)+'</div>'][pg];
+  return h+'<section class="nq-cine" style="--c:'+c.col+'"><p class="nq-kicker">🎬 '+L('Story','故事')+' · '+(pg+1)+' / 4</p><div class="scene">'+art+'</div><p class="line">'+esc(L(line[0],line[1]))+'</p><button class="nq-btn" data-nqnext="1">'+(pg<3?L('Next ▶','下一頁 ▶'):L('Take the Spark! 🔥','接住火種！🔥'))+'</button></section>';}
+ if(t==='read'){var p=NQV.pg||0,r=c.read[p],txt=L(r.p[0],r.p[1]),other=S.lang==='en'?r.p[1]:r.p[0];
+  var kw=c.words.filter(function(w){return r.p[0].toLowerCase().indexOf(w[0].toLowerCase())>=0;});
+  if(!NQV.opts)NQV.opts=shuffle(r.q.o.map(function(o,i){return i;}));
+  h+='<section class="nq-read" style="--c:'+c.col+'"><p class="nq-kicker">📖 '+L('Reading','閱讀')+' · '+L('page','第')+' '+(p+1)+' / 4'+L('','頁')+'</p><div class="nq-dots">'+[0,1,2,3].map(function(k){return '<i class="'+(k<p?'on':k===p?'cur':'')+'"></i>';}).join('')+'</div><h2>'+esc(L(r.h[0],r.h[1]))+'</h2><p class="txt">'+esc(txt)+'</p>'+
+   (kw.length?'<div class="kw">'+kw.map(function(w){return '<span><b>'+esc(w[0])+'</b> '+esc(w[1])+'</span>';}).join('')+'</div>':'')+'<details class="alt"><summary>'+L('中文版本','English version')+'</summary><p>'+esc(other)+'</p></details>'+
+   '<div class="nq-q"><p class="qh">⚡ '+L('Quick check','小測驗')+'</p><p class="qq">'+esc(L(r.q.q[0],r.q.q[1]))+'</p><div class="opts">'+NQV.opts.map(function(i){var o=r.q.o[i],cls=NQV.ans==null?'':i===0?' ok':i===NQV.ans?' bad':'';return '<button class="nq-opt'+cls+'" data-nqans="'+i+'"'+(NQV.ans===0?' disabled':'')+'>'+esc(L(o[0],o[1]))+'</button>';}).join('')+'</div>'+
+   (NQV.ans===0?'<button class="nq-btn" data-nqnext="1">'+(p<3?L('Next page ▶','下一頁 ▶'):L('Finish reading ✅','完成閱讀 ✅'))+'</button>':NQV.ans!=null?'<p class="nq-note">🔁 '+L('Not quite. Read the page again and try another answer.','差少少！再讀一次，試另一個答案。')+'</p>':'')+'</div></section>';
+  return h;}
+ if(t==='time'){if(!NQV.order){NQV.order=shuffle(c.time.map(function(e,i){return i;}));NQV.placed=[];}
+  var sorted=c.time.map(function(e,i){return i;}).sort(function(a,b){return c.time[a][0]-c.time[b][0];});
+  h+='<section class="nq-read" style="--c:'+c.col+'"><p class="nq-kicker">🧩 '+L('Timeline','時間線')+'</p><h2>'+L('Tap the events from EARLIEST to LATEST','由最早到最遲，依次點選事件')+'</h2><ol class="nq-line">'+sorted.map(function(i,k){var e=c.time[i],on=k<NQV.placed.length;return '<li class="'+(on?'on':'')+'"><b>'+(on?e[0]:'????')+'</b><span>'+(on?esc(L(e[1],e[2])):'')+'</span></li>';}).join('')+'</ol><div class="opts">'+
+   NQV.order.filter(function(i){return NQV.placed.indexOf(i)<0;}).map(function(i){var e=c.time[i];return '<button class="nq-opt'+(NQV.wrong===i?' bad':'')+'" data-nqev="'+i+'">'+esc(L(e[1],e[2]))+'</button>';}).join('')+'</div>'+
+   (NQV.placed.length===c.time.length?'<button class="nq-btn" data-nqnext="1">'+L('Lock the timeline ✅','鎖定時間線 ✅')+'</button>':'')+'</section>';return h;}
+ if(t==='words'){if(!NQV.L){NQV.L=shuffle([0,1,2,3,4,5]);NQV.R=shuffle([0,1,2,3,4,5]);NQV.got=[];NQV.sel=null;}
+  h+='<section class="nq-read" style="--c:'+c.col+'"><p class="nq-kicker">🔤 '+L('Word vault','詞彙寶庫')+'</p><h2>'+L('Match each English word with its Chinese meaning','把英文詞彙與中文意思配對')+'</h2><div class="nq-match"><div>'+
+   NQV.L.map(function(i){var g=NQV.got.indexOf(i)>=0;return '<button class="nq-opt'+(g?' ok':NQV.sel===i?' sel':'')+'" data-nqwl="'+i+'"'+(g?' disabled':'')+'>'+esc(c.words[i][0])+'</button>';}).join('')+'</div><div>'+
+   NQV.R.map(function(i){var g=NQV.got.indexOf(i)>=0;return '<button class="nq-opt'+(g?' ok':NQV.wrong===i?' bad':'')+'" data-nqwr="'+i+'"'+(g?' disabled':'')+'>'+esc(c.words[i][1])+'</button>';}).join('')+'</div></div>'+
+   (NQV.got.length===6?'<button class="nq-btn" data-nqnext="1">'+L('Open the vault ✅','打開寶庫 ✅')+'</button>':'<p class="nq-note">'+L('Tap an English word, then its meaning.','先點英文詞彙，再點它的意思。')+'</p>')+'</section>';return h;}
+ if(t==='boss'){var B=NQV.b;if(!B)B=NQV.b={qs:shuffle([0,1,2,3,4,5,6,7]),i:0,hp:6,hearts:3,ans:null};
+  h+='<section class="nq-boss" style="--c:'+c.col+'"><div class="arena"><div class="hpwrap"><b>'+L('MURK','默克')+'</b><div class="hp"><i style="width:'+(B.hp/6*100)+'%"></i></div></div><div class="foe'+(NQV.fx==='hit'?' hit':'')+'">'+murkSVG(B.hp)+'</div><div class="me"><div class="pal">'+petSVG(S.active,B.hp===0?'joy':'happy',{})+'</div><div class="hearts">'+[0,1,2].map(function(k){return '<span class="'+(k<B.hearts?'':'lost')+'">❤</span>';}).join('')+'</div></div>'+(NQV.fx==='hit'?'<div class="beam"></div>':'')+'</div>';
+  if(B.hp===0)return h+'<div class="nq-res win"><h2>🏆 '+L('Murk is driven back!','默克被擊退了！')+'</h2><p>'+L('Your knowledge was stronger than the fog.','你的知識比濃霧更強大。')+'</p><button class="nq-btn" data-nqnext="1">'+L('Claim victory ✅','領取勝利 ✅')+'</button></div></section>';
+  if(B.hearts===0)return h+'<div class="nq-res lose"><h2>🌫️ '+L('The fog was too thick…','霧太濃了……')+'</h2><p>'+L('Re-read the story pages, then try again. Every scientist fails before they succeed!','重溫閱讀頁，再試一次。每位科學家都是在失敗中成功的！')+'</p><button class="nq-btn" data-nqretry="1">'+L('Try again ⚔️','再戰一次 ⚔️')+'</button></div></section>';
+  var q=c.boss[B.qs[B.i%8]];if(!NQV.opts)NQV.opts=shuffle([0,1,2,3]);
+  h+='<div class="nq-q"><p class="qh">⚔️ '+L('Answer to fire a Spark beam!','答對就能發射火種光束！')+'</p><p class="qq">'+esc(L(q[0][0],q[0][1]))+'</p><div class="opts">'+NQV.opts.map(function(i){var o=q[1][i],cls=B.ans==null?'':i===0?' ok':i===B.ans?' bad':'';return '<button class="nq-opt'+cls+'" data-nqboss="'+i+'"'+(B.ans!=null?' disabled':'')+'>'+esc(L(o[0],o[1]))+'</button>';}).join('')+'</div>'+
+   (B.ans!=null?'<button class="nq-btn" data-nqbnext="1">'+L('Next ▶','下一題 ▶')+'</button>':'')+'</div></section>';return h;}
+ if(t==='link'){var sec=secById(c.link),st=(S.secs[c.link]||{}).stars||0,ok=nqHas(c.id,5);
+  return h+'<section class="nq-read" style="--c:'+c.col+'"><p class="nq-kicker">🔬 '+L('Lab link','課本連結')+'</p><h2>'+esc(sec.id+' '+LL(sec))+'</h2><p class="txt">'+L('Show what you learnt in class! Score at least 2★ in this textbook quiz. Your best score counts.','展示你在課堂學到的知識！在這個課本測驗取得最少 2★，以最佳成績計算。')+'</p><p class="big-stars">'+[1,2,3].map(function(k){return '<span class="'+(k<=st?'on':'')+'">★</span>';}).join('')+'</p>'+
+   (ok?'<p class="nq-note">✅ '+L('Done! Well played.','完成！做得好。')+'</p>':'<button class="nq-btn" data-nqquiz="'+c.link+'">✏️ '+L('Go to the quiz','前往測驗')+'</button>')+'</section>';}
+ return h;}
+function nqSparkPopup(i){var c=NQ[i];sfx('shatter');
+ popup('<div class="nq-pop" style="--c:'+c.col+'"><div class="nq-card holo done big"><span class="art">'+nqArt(c.id)+'</span><b>'+esc(L(c.who[0],c.who[1]))+'</b><span class="ti">'+esc(L(c.spark[0],c.spark[1]))+'</span></div></div><h2>🔥 '+L('Spark won!','贏得火種！')+'</h2><p>'+esc(L(c.spark[0],c.spark[1]))+' · +'+NQ_COINS+' 🪙</p><p class="muted">'+L('Sparks: ','火種：')+nobelDone()+' / 6</p>',L('Awesome!','太好了！'),null,'fx-legend');}
+function nqPerkPopup(i){var P=NQ_PERKS[i];
+ popup('<div class="pop-prize legend mythic"><div class="rays"></div><div class="prize-pic">'+petSVG(P.pet,'joy',{stage:1,eq:{}})+'</div></div><h2 style="margin-top:8px"><span class="emo">🌈</span> '+L('Perk '+(i+1)+' unlocked!','獎勵 '+(i+1)+' 已解鎖！')+'</h2><p><b>'+esc(L(P.theme[0],P.theme[1]))+'</b></p><div class="nq-perkitems">'+
+  '<div>'+petSVG(P.pet,'happy',{stage:1,eq:{},plain:true})+'<small>'+esc(LL(petDef(P.pet)))+'</small></div><div>'+buddySVG(P.bud,'happy')+'<small>'+esc(LL(budDef(P.bud)))+'</small></div>'+P.items.map(function(id){var it=item(id);return '<div>'+itemPic(it)+'<small>'+esc(LL(it))+'</small></div>';}).join('')+'</div>',L('Amazing! 🎉','太棒了！🎉'),function(){curScreen='col';render();},'fx-mythic');}
+
+function bindNobel(){var root=$('.nq');if(!root)return;
+ function go(){NQV.fx=null;render();}
+ root.querySelectorAll('[data-nqch]').forEach(function(b){b.onclick=function(){sfx('tap');NQV={ch:+b.dataset.nqch,task:null};go();window.scrollTo(0,0);};});
+ root.querySelectorAll('[data-nqback]').forEach(function(b){b.onclick=function(){sfx('tap');NQV=NQV.task&&NQV.ch!=null?{ch:NQV.ch,task:null}:{ch:null,task:null};go();};});
+ root.querySelectorAll('[data-nqpro]').forEach(function(b){b.onclick=function(){sfx('tap');NQV={ch:null,task:'prologue',pg:0};go();};});
+ root.querySelectorAll('[data-nqtask]').forEach(function(b){b.onclick=function(){sfx('tap');NQV={ch:NQV.ch,task:b.dataset.nqtask,pg:0};go();window.scrollTo(0,0);};});
+ root.querySelectorAll('[data-nqquiz]').forEach(function(b){b.onclick=function(){startQuiz(b.dataset.nqquiz,'quiz');};});
+ root.querySelectorAll('[data-nqnext]').forEach(function(b){b.onclick=function(){var t=NQV.task;sfx('tap');
+  if(t==='prologue'){if(NQV.pg<NQ_PROLOGUE.length-1)NQV.pg++;else{nqS().seen.pro=1;save();NQV={ch:null,task:null};}}
+  else if(t==='finale'){var f=NQV.f;if(NQV.pg<NQ_FINALE[f].length-1)NQV.pg++;else{NQV={ch:null,task:null};sfx('shatter');nqPerkPopup(f);}}
+  else if(t==='story'){if(NQV.pg<3)NQV.pg++;else{var ch=NQV.ch;NQV={ch:ch,task:null};nqSet(ch,0);}}
+  else if(t==='read'){if(NQV.pg<3){NQV.pg++;NQV.ans=null;NQV.opts=null;window.scrollTo(0,0);}else{var ch2=NQV.ch;NQV={ch:ch2,task:null};nqSet(ch2,1);}}
+  else{var ch3=NQV.ch,k={time:2,words:3,boss:4}[t];NQV={ch:ch3,task:null};nqSet(ch3,k);}
+  go();};});
+ root.querySelectorAll('[data-nqans]').forEach(function(b){b.onclick=function(){var i=+b.dataset.nqans;NQV.ans=i;sfx(i===0?'right':'wrong');go();};});
+ root.querySelectorAll('[data-nqev]').forEach(function(b){b.onclick=function(){var c=NQ[NQV.ch],i=+b.dataset.nqev,left=c.time.map(function(e,j){return j;}).filter(function(j){return NQV.placed.indexOf(j)<0;}),min=left.reduce(function(a,j){return c.time[j][0]<c.time[a][0]?j:a;},left[0]);
+  if(i===min){NQV.placed.push(i);NQV.wrong=null;sfx('right');}else{NQV.wrong=i;sfx('wrong');}go();};});
+ root.querySelectorAll('[data-nqwl]').forEach(function(b){b.onclick=function(){NQV.sel=+b.dataset.nqwl;NQV.wrong=null;sfx('tap');go();};});
+ root.querySelectorAll('[data-nqwr]').forEach(function(b){b.onclick=function(){var i=+b.dataset.nqwr;if(NQV.sel==null){sfx('wrong');return;}if(i===NQV.sel){NQV.got.push(i);NQV.sel=null;NQV.wrong=null;sfx('right');}else{NQV.wrong=i;sfx('wrong');}go();};});
+ root.querySelectorAll('[data-nqboss]').forEach(function(b){b.onclick=function(){var B=NQV.b,i=+b.dataset.nqboss;B.ans=i;if(i===0){B.hp--;sfx('beam');NQV.fx='hit';}else{B.hearts--;sfx('hurt');NQV.fx='hurt';}render();setTimeout(function(){NQV.fx=null;},700);};});
+ root.querySelectorAll('[data-nqbnext]').forEach(function(b){b.onclick=function(){var B=NQV.b;B.i++;B.ans=null;NQV.opts=null;go();};});
+ root.querySelectorAll('[data-nqretry]').forEach(function(b){b.onclick=function(){NQV.b=null;NQV.opts=null;go();};});
+ root.querySelectorAll('.holo').forEach(function(el){el.addEventListener('pointermove',function(e){var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;el.style.setProperty('--rx',((0.5-y)*10).toFixed(1)+'deg');el.style.setProperty('--ry',((x-0.5)*12).toFixed(1)+'deg');el.style.setProperty('--mx',(x*100).toFixed(0)+'%');});
+  el.addEventListener('pointerleave',function(){el.style.setProperty('--rx','0deg');el.style.setProperty('--ry','0deg');});});}
 
 /* ---------- Dictation 默書 ---------- */
 var DQ=null,dictCfg={kind:'listen',unit:1,sec:'all'};
