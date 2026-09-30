@@ -50,3 +50,7 @@ Class sign-in needs three things: your **Google Sheet** (name list + records), a
 - **"Access blocked" for students:** your school's Google Workspace may block new apps. Ask IT to mark the Client ID as **Trusted** in Admin console → Security → API controls.
 - **Updating Code.gs:** Deploy → **Manage deployments** → ✏️ → Version: **New version**. The /exec URL stays the same.
 - **Guests** play without an account. Their progress stays on their own device and is not recorded.
+
+## Updating the server later
+
+When `Code.gs` changes (for example, the class leaderboard was added), replace ALL the code in the Apps Script editor, save, then choose **Deploy → Manage deployments → ✏️ Edit → Version: New version → Deploy**. The web app URL stays the same.

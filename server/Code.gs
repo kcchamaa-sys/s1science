@@ -22,7 +22,8 @@ var REC_HEAD = ['記錄時間 Timestamp', '練習編號 Session ID', '電郵 Ema
   '開始時間 Start', '結束時間 End', '題目 Question IDs', '答錯題目 Wrong IDs'];
 var PROG_HEAD = ['電郵 Email', '更新時間 Updated', '連續日數 Streak', '最佳連續 Best streak', '星星 Stars', '寵物等級 Pet level',
   '金幣 Coins', '寵物 Pet', '測驗次數 Quizzes', '待清除錯題 Mistakes', '已清除錯題 Cleared', '獎盃 Trophies',
-  '最後溫習日 Last study day', '進度資料 Data (do not edit)'];
+  '最後溫習日 Last study day', '進度資料 Data (do not edit)', '總經驗 Total XP', '收藏 Collection', '傳說 Legendary', '神話 Mythic'];
+var DATA_COL = 14; // column N holds the saved game data
 var MODES = { quiz: '測驗 Quiz', practice: '錯題練習 Mistake practice', study: '溫習筆記 Study notes', vocab: '詞彙跟讀 Vocab', match: '詞彙配對 Term Match',
   dict_listen: '默書（聽音）Dictation – listen', dict_meaning: '默書（看義／圖）Dictation – meaning/picture',
   speak: '朗讀 Read aloud' };
@@ -43,6 +44,7 @@ function doPost(e) {
       case 'login': return out({ ok: true, user: user, progress: getProgress(user.email) });
       case 'save': saveProgress(user, body.state, body.summary || {}); return out({ ok: true });
       case 'record': return out({ ok: true, saved: appendRecords(user, body.records || []) });
+      case 'board': return out(board(user, body.scope === 'all' ? 'all' : 'class'));
       case 'stats':
         if (!user.teacher) return out({ ok: false, error: 'forbidden' });
         return out(stats());
@@ -143,7 +145,11 @@ function saveProgress(u, state, s) {
   try {
     var sh = sheet(PROG, PROG_HEAD);
     var row = [u.email, new Date(), num(s.streak), num(s.best), num(s.stars), num(s.level), num(s.coins), clean(s.pet, 20),
-      num(s.quizzes), num(s.mistakes), num(s.cleared), num(s.trophies), clean(s.lastDay, 12), state];
+      num(s.quizzes), num(s.mistakes), num(s.cleared), num(s.trophies), clean(s.lastDay, 12), state,
+      num(s.xp), num(s.col), num(s.leg), num(s.myth)];
+    if (sh.getLastColumn() < PROG_HEAD.length) {
+      sh.getRange(1, 1, 1, PROG_HEAD.length).setValues([PROG_HEAD]).setFontWeight('bold').setBackground('#FFF1C5');
+    }
     var r = findRow(sh, u.email);
     if (r < 0) r = sh.getLastRow() + 1;
     sh.getRange(r, 13).setNumberFormat('@');
@@ -154,7 +160,7 @@ function getProgress(email) {
   var sh = book().getSheetByName(PROG);
   if (!sh) return null;
   var r = findRow(sh, email);
-  return r < 0 ? null : String(sh.getRange(r, PROG_HEAD.length).getValue() || '') || null;
+  return r < 0 ? null : String(sh.getRange(r, DATA_COL).getValue() || '') || null;
 }
 
 function stats() {
@@ -178,10 +184,64 @@ function stats() {
   }
   var progress = {}, ps = ss.getSheetByName(PROG);
   if (ps && ps.getLastRow() > 1) {
-    ps.getRange(2, 1, ps.getLastRow() - 1, PROG_HEAD.length - 1).getValues().forEach(function (r) {
+    ps.getRange(2, 1, ps.getLastRow() - 1, DATA_COL - 1).getValues().forEach(function (r) {
       progress[String(r[0]).toLowerCase()] = { upd: r[1] instanceof Date ? r[1].toISOString() : '', streak: r[2], best: r[3], stars: r[4],
         level: r[5], coins: r[6], pet: r[7], quizzes: r[8], mistakes: r[9], cleared: r[10], trophies: r[11], lastDay: String(r[12] || '') };
     });
   }
   return { ok: true, students: students, records: records, progress: progress };
+}
+
+/** Class leaderboard: top 20 students for effort (XP), current streak and collection.
+ *  Names are shortened (陳大文 → 陳＊文) so classmates never see full names. */
+function maskName(zh, en) {
+  zh = String(zh || '').trim();
+  if (zh.length >= 3) return zh.charAt(0) + '＊' + zh.charAt(zh.length - 1);
+  if (zh.length === 2) return zh.charAt(0) + '＊';
+  var p = String(en || '').trim().split(/\s+/);
+  return p[0] ? p[0].charAt(0).toUpperCase() + '.' + (p.length > 1 ? ' ' + p[p.length - 1].charAt(0).toUpperCase() + '.' : '') : '?';
+}
+function boardRows() {
+  var cache = CacheService.getScriptCache(), hit = cache.get('board_rows');
+  if (hit) return JSON.parse(hit);
+  var ss = book(), rows = [];
+  var uv = ss.getSheetByName(PROPS.getProperty('USERS_SHEET') || USERS_DEFAULT).getDataRange().getValues();
+  var info = {};
+  for (var i = 1; i < uv.length; i++) {
+    if (!uv[i][0] || isStaffRole(String(uv[i][1] || ''))) continue;
+    info[String(uv[i][0]).trim().toLowerCase()] = { n: maskName(uv[i][2], uv[i][3]), c: String(uv[i][4] || '') };
+  }
+  var ps = ss.getSheetByName(PROG);
+  if (ps && ps.getLastRow() > 1) {
+    var n = ps.getLastRow() - 1;
+    var a = ps.getRange(2, 1, n, DATA_COL - 1).getValues();
+    var b = ps.getLastColumn() > DATA_COL ? ps.getRange(2, DATA_COL + 1, n, 4).getValues() : [];
+    var tz = Session.getScriptTimeZone() || 'Asia/Hong_Kong';
+    var yest = Utilities.formatDate(new Date(Date.now() - 864e5), tz, 'yyyy-MM-dd');
+    a.forEach(function (r, k) {
+      var em = String(r[0]).toLowerCase(), u = info[em];
+      if (!u) return;
+      var x = b[k] || [];
+      var last = String(r[12] || '');
+      rows.push({ e: em, n: u.n, c: u.c, p: String(r[7] || ''), xp: Number(x[0]) || 0,
+        st: last >= yest ? Number(r[2]) || 0 : 0, col: Number(x[1]) || 0, g: Number(x[2]) || 0, m: Number(x[3]) || 0 });
+    });
+  }
+  cache.put('board_rows', JSON.stringify(rows), 300);
+  return rows;
+}
+function board(user, scope) {
+  var rows = boardRows().filter(function (r) { return scope === 'all' || r.c === user.cls; });
+  function cat(key, extra) {
+    var list = rows.filter(function (r) { return r[key] > 0; }).sort(function (x, y) { return y[key] - x[key] || y.xp - x.xp; });
+    var top = list.slice(0, 20).map(function (r) {
+      var o = { n: r.n, c: r.c, p: r.p, v: r[key], me: r.e === user.email };
+      if (extra) { o.g = r.g; o.m = r.m; }
+      return o;
+    });
+    var me = null;
+    for (var i = 0; i < list.length; i++) if (list[i].e === user.email) { me = { rank: i + 1, v: list[i][key] }; break; }
+    return { top: top, me: me };
+  }
+  return { ok: true, scope: scope, cats: { xp: cat('xp'), streak: cat('st'), col: cat('col', true) } };
 }
