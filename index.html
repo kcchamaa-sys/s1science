@@ -56,7 +56,10 @@ h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance}
 .h-sec{font-size:20px;font-weight:800;margin-block:18px 10px;display:flex;align-items:center;gap:8px}
 /* home */
 .home{display:grid;gap:16px;margin-top:14px}
-@media (min-width:880px){.home{grid-template-columns:1.15fr 1fr;align-items:start}}
+.homeL,.homeR{display:contents}
+.home .o1{order:1}.home .o2{order:2}.home .o3{order:3}.home .o4{order:4}.home .o5{order:5}.home .o6{order:6}.home .o7{order:7}
+.home .o2,.home .o7{display:grid;gap:16px}
+@media (min-width:880px){.home{grid-template-columns:1.1fr 1fr;align-items:start}.homeL,.homeR{display:grid;gap:16px;align-content:start}}
 .room{position:relative;border-radius:28px;overflow:hidden;aspect-ratio:4/3.3;max-width:100%;box-shadow:var(--shadow);border:3px solid #fff}
 .room .wall{position:absolute;inset:0 0 24% 0}
 .room .floor{position:absolute;left:0;right:0;bottom:0;height:24%;background:linear-gradient(#EFD9C3,#E6CBB0);border-top:3px solid #D9BA9C}
@@ -422,6 +425,35 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 .dtask.done{border-style:solid;border-color:#9BCB8E;background:linear-gradient(135deg,#EEF9F1,#FFFFFF)}
 .dthead{display:flex;gap:10px;align-items:center}
 .dte{font-size:36px;line-height:1;flex:none}
+
+/* evolution routes */
+.routes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.route{display:grid;gap:4px;justify-items:center;text-align:center;background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 6px;font:inherit;color:inherit;cursor:pointer;min-width:0}
+.route b{font-size:13px;line-height:1.3}
+.route .sub{font-size:11.5px;line-height:1.35;color:#8A7E7C}
+.route.on{border-color:var(--rose,#E8AEB7);box-shadow:0 0 0 3px #FFE5EC}
+.route.locked{cursor:not-allowed;opacity:.85}
+.route .rpic{width:100%;max-width:110px}
+.route.secret .rpic{filter:brightness(0) opacity(.3)}
+.route .prog{height:6px}
+
+/* teacher charts */
+.vzgrid{display:grid;gap:14px;margin-top:10px}
+@media (min-width:900px){.vzgrid{grid-template-columns:1fr 1fr}}
+.vzcard{min-width:0}
+.vzcard h3{margin:0;font-size:17px}
+.vzwhat{font-size:13px;margin:4px 0 8px}
+.vz{width:100%;height:auto;display:block;font-family:inherit}
+.vzins{margin:8px 0 0;font-size:14px;background:var(--butter);border-radius:12px;padding:8px 10px}
+.vzhit{cursor:pointer}
+.vzhit:hover rect,.vzhit:hover path,.vzhit.on rect,.vzhit.on path{filter:brightness(1.1)}
+.vzdonut{display:grid;grid-template-columns:minmax(110px,170px) minmax(0,1fr);gap:12px;align-items:center}
+.vzlegs{display:grid;gap:6px;min-width:0}
+.vzleg{display:flex;align-items:center;gap:8px;font-size:13px;color:#3E3534;min-width:0}
+.vzleg i{width:12px;height:12px;border-radius:4px;flex:none}
+.vzleg b{margin-left:auto}
+.vzlegrow{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:6px}
+.vztip{position:fixed;z-index:99;display:none;background:#3E3534;color:#fff;font-size:13px;font-weight:700;padding:6px 10px;border-radius:10px;pointer-events:none;max-width:260px;box-shadow:0 6px 18px rgba(0,0,0,.2)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -2479,7 +2511,7 @@ function gain(coins,xp,why){var m=streakMult()*fedBonus();var c=Math.round(coins
  var p=curPet();var before=petLevel(p.xp);S.coins+=c;p.xp+=x;S.xpTotal+=x;var after=petLevel(p.xp);
  if(after>before){setTimeout(function(){sfx('level');toast('⬆️ '+LL(petDef(S.active))+' '+L('reached Level ','升到 ')+after+L('!',' 級！'));confetti();},600);}
  checkTrophies();save();return {c:c,x:x,m:m};}
-function checkTrophies(){checkQuests();checkBuddies();dtCheck();TROPHIES.forEach(function(t){if(!S.trophies[t.id]){var v=t.f();if(v[0]>=v[1]){S.trophies[t.id]=today();S.coins+=20;
+function checkTrophies(){checkQuests();checkBuddies();dtCheck();checkRoutes();TROPHIES.forEach(function(t){if(!S.trophies[t.id]){var v=t.f();if(v[0]>=v[1]){S.trophies[t.id]=today();S.coins+=20;
  setTimeout(function(){sfx('fanfare');toast('🏆 '+L('Trophy unlocked: ','解鎖獎盃：')+LL(t)+' (+20 🪙)');confetti();},1300);}}});}
 function condVal(k){if(k==='three')return threeStars();if(k==='dictn')return (S.dict||{}).n||0;return S[k]||0;}
 function checkPetUnlocks(){checkBuddies();PETS.forEach(function(p){if(p.cond&&!S.pets[p.id]&&condVal(p.cond.k)>=p.cond.n){S.pets[p.id]=newPet();
@@ -2637,7 +2669,7 @@ function frontFeat(t){var s='';
  else if(t==='nova')s='<path d="M56 110 l2 4 l4 .5 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -.5Z M144 110 l2 4 l4 .5 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -.5Z" fill="#C9B6EA"/><path d="M70 70 Q100 56 130 70" stroke="#FFB3C1" stroke-width="4" fill="none" opacity=".7"/>';
  else if(t==='sheep'){[60,74,88,100,112,126,140].forEach(function(x,i){s+='<circle cx="'+x+'" cy="'+(i%2?70:76)+'" r="14" fill="#fff" stroke="'+O+'" stroke-width="3"/>';});}
  return s;}
-function petSVG(id,mood,opts){opts=opts||{};var P=petDef(id),p=S.pets[id]||newPet(),b=P.body,st=opts.stage||p.stage,eq=opts.eq||p.eq;
+function petSVG(id,mood,opts){opts=opts||{};var P=petDef(id),p=S.pets[id]||newPet(),b=P.body,st=opts.stage||p.stage,eq=opts.eq||p.eq;var RT=opts.route!==undefined?opts.route:p.rt,RC=routeColors(P,RT,st);b=RC.body;
  var s='<svg class="pet" viewBox="-10 0 220 200" role="img" aria-label="'+esc(LL(P))+'"><g class="bob">';var au=mood==='sick'?{back:'',front:''}:auraSVG(P.tier==='mythic'&&!opts.plain?{hat:'__myth'}:eq);s+=au.back;
  if(st>=3){s+='<circle cx="100" cy="118" r="86" fill="#FFF1C5" opacity=".75"/><circle cx="100" cy="118" r="86" fill="none" stroke="#FBD46D" stroke-width="3" stroke-dasharray="4 10"/>';}
  s+='<ellipse cx="100" cy="182" rx="56" ry="8" fill="rgba(91,75,73,.12)"/>';
@@ -2646,7 +2678,7 @@ function petSVG(id,mood,opts){opts=opts||{};var P=petDef(id),p=S.pets[id]||newPe
  var sc=st===1?1:st===2?1.04:1.08;
  s+='<g transform="translate(100 176) scale('+sc+') translate(-100 -176)">';
  s+='<path d="M100 62 C148 62 170 98 170 130 C170 164 140 178 100 178 C60 178 30 164 30 130 C30 98 52 62 100 62Z" fill="'+b+'" stroke="'+O+'" stroke-width="3.5"/>';
- s+='<ellipse cx="100" cy="152" rx="36" ry="20" fill="'+P.belly+'"/>';
+ s+='<ellipse cx="100" cy="152" rx="36" ry="20" fill="'+RC.belly+'"/>';
  if(P.ears==='frog')s+='<circle cx="70" cy="70" r="7" fill="#fff"/><circle cx="130" cy="70" r="7" fill="#fff"/>';
  s+=frontFeat(P.ears);
  if(P.ears==='seal'||P.ears==='penguin'||P.ears==='shark'||P.ears==='owl')s+='<path d="M34 148 Q18 160 22 170 Q34 168 44 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/><path d="M166 148 Q182 160 178 170 Q166 168 156 156" fill="'+b+'" stroke="'+O+'" stroke-width="3"/>';
@@ -2655,7 +2687,7 @@ function petSVG(id,mood,opts){opts=opts||{};var P=petDef(id),p=S.pets[id]||newPe
  s+='<ellipse cx="64" cy="132" rx="11" ry="6.5" fill="#FFB3C1" opacity=".75"/><ellipse cx="136" cy="132" rx="11" ry="6.5" fill="#FFB3C1" opacity=".75"/>';
  if(st>=2)s+='<path d="M140 118 l2 4 l4 .5 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -.5Z" fill="#FBD46D"/>';
  if(P.ears==='cat'||P.ears==='seal')s+='<path d="M52 124 L36 120 M52 130 L36 132 M148 124 L164 120 M148 130 L164 132" stroke="'+O+'" stroke-width="2" stroke-linecap="round"/>';
- s+=face(mood);if(P.ears==='owl')s+='<path d="M94 122 L106 122 L100 132Z" fill="#F2A541" stroke="'+O+'" stroke-width="2" stroke-linejoin="round"/>';
+ s+=face(mood);s+=routeMarks(RT,st);if(P.ears==='owl')s+='<path d="M94 122 L106 122 L100 132Z" fill="#F2A541" stroke="'+O+'" stroke-width="2" stroke-linejoin="round"/>';
  s+='</g>';
  if(mood==='sick')s+=sickBits(100,80,132,mood,1.6);
  else{
@@ -2731,21 +2763,23 @@ function roomHTML(){if(bubblePet!==S.active){bubble=null;bubblePet=S.active;}var
  return '<div class="room"><div class="wall" style="background:'+WALLS[S.room.wall||'w0']+'"></div><div class="window">'+winSVG()+'</div>'+sh+'<div class="floor"></div>'+(prop?'<div class="prop">'+prop.svg()+'</div>':'')+
  '<div class="petwrap" id="petTap">'+petSVG(S.active,m)+'</div>'+(S.bud&&S.bud.act&&budDef(S.bud.act)?'<div class="budroom'+(budDef(S.bud.act).kind==='fly'?' flying':'')+'" id="budTap">'+buddySVG(S.bud.act,budMood())+'</div>':'')+(bubble?'<div class="bubble" aria-live="polite">'+esc(bubble)+'</div>':'')+'</div>';}
 function statRow(label,v,col,txt){return '<div class="stat"><span>'+label+'</span><div class="bar" role="progressbar" aria-valuenow="'+Math.round(v)+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+clamp(v,0,100)+'%;background:'+col+'"></i></div><span class="num">'+txt+'</span></div>';}
-function homeHTML(){var P=petDef(S.active),p=curPet(),lv=petLevel(p.xp),into=p.xp-lvXP(lv),need=lvXP(lv+1)-lvXP(lv);
+function homeHTML(){var h=homeParts(),P=h.split('<!--S-->');
+ return '<div class="home"><div class="homeL"><div class="o1">'+P[0]+'</div><div class="o3">'+P[2]+'</div><div class="o4">'+P[3]+'</div><div class="o6">'+P[5]+'</div></div><div class="homeR"><div class="o2">'+P[1]+'</div><div class="o5">'+P[4]+'</div><div class="o7">'+P[6]+'</div></div></div>';}
+function homeParts(){var P=petDef(S.active),p=curPet(),lv=petLevel(p.xp),into=p.xp-lvXP(lv),need=lvXP(lv+1)-lvXP(lv);
  var ev=EVO[p.stage+1];var canEvo=ev&&lv>=ev.lv;
  var t=today();var gift=S.gift!==t;
  var last7='';for(var i=6;i>=0;i--){var d=fromDayNum(dayNum(t)-i);var on=S.hist.indexOf(d)>=0;var wd=new Date(d+'T12:00:00').getDay();last7+='<span class="'+(on?'on':'')+'" title="'+d+'">'+(on?'✓':L('SMTWTFS'[wd],'日一二三四五六'[wd]))+'</span>';}
  var mood=moodOf(S.active);var moodName={happy:['Happy','開心'],joy:['Overjoyed','超開心'],sleepy:['Sleepy','好睏'],hungry:['Hungry','肚餓'],sad:['Lonely','寂寞'],study:['Studying','溫習中']}[mood];if(mood==='sick'){var I_=ILL[S.ill.lv];moodName=[I_.e+' '+I_.en,I_.e+' '+I_.zh];}
- return '<div class="home"><div>'+roomHTML()+'</div><div class="grid">'+illBanner()+
+ return roomHTML()+'<!--S-->'+illBanner()+
  '<div class="card grid" style="gap:12px"><div class="petname"><h2>'+esc(LL(P))+'</h2><span class="tag">'+L(STAGE[p.stage][0],STAGE[p.stage][1])+'</span><span class="tag" style="background:var(--butter)">'+L(moodName[0],moodName[1])+'</span>'+(petsCount()>1?'<button class="btn small white" id="bSwitch" style="margin-left:auto">🔁 '+L('Switch','切換')+'</button>':'')+'</div>'+
  '<div class="stats">'+statRow('⚡ '+L('Energy','能量'),p.energy,'#FBD46D',Math.round(p.energy))+statRow('💗 '+L('Happiness','快樂'),p.happy,'#F7A9B5',Math.round(p.happy))+statRow('🧠 Lv '+lv,into/need*100,'#9BCB8E',into+'/'+need)+'</div>'+
  (buffChips()?'<div>'+buffChips()+'</div>':'')+(fedBonus()>1?'<div class="muted" style="font-size:13px">🍀 '+L('Well-fed & happy: +20% rewards','飽飽又開心：獎勵 +20%')+'</div>':'<div class="muted" style="font-size:13px">💡 '+L('Keep Energy & Happiness ≥ 50 for +20% rewards','能量和快樂保持 50 以上，獎勵 +20%')+'</div>')+
  '<div class="actions"><button class="btn pink" id="bFeed"><span class="e">🍙</span>'+L('Feed','餵食')+'</button><button class="btn lav" id="bPlay"><span class="e">🃏</span>'+L('Play','玩耍')+'</button><button class="btn green" id="bStudy"><span class="e">📖</span>'+L('Study','溫習')+'</button><button class="btn white" id="bDress"><span class="e">👒</span>'+L('Dress up','換裝')+'</button>'+
- '<button class="btn" id="bEvo"'+(ev?'':' disabled')+'><span class="e">✨</span>'+(ev?L('Evolve','進化')+' (Lv'+ev.lv+')':L('Max stage','最終形態'))+'</button>'+
+ '<button class="btn" id="bEvo"><span class="e">'+(ev?'✨':'🌈')+'</span>'+(ev?L('Evolve','進化')+' (Lv'+ev.lv+')':p.rt?L('Change look','轉換外觀'):L('Pick route','選擇路線'))+'</button>'+
  '<button class="btn '+(gift?'pink':'white')+'" id="bGift"'+(gift?'':' disabled')+'><span class="e">🎁</span>'+(gift?L('Daily gift','每日禮物'):L('Come back tomorrow','明天再來'))+'</button></div></div>'+
- '<div class="card"><div class="streak"><span class="flame" aria-hidden="true">'+(S.streak>=7?'☄️':'🔥')+'</span><div style="min-width:0"><b style="font-size:18px">'+S.streak+' '+L('day streak','日連續溫習')+'</b><div class="muted" style="font-size:13px">'+L('Reward ×','獎勵 ×')+streakMult().toFixed(1)+' · 🛡️ '+S.shields+' · '+L('Best ','最佳 ')+S.best+'</div></div></div><div class="days" style="margin-top:10px">'+last7+'</div>'+
+ '<!--S--><div class="card"><div class="streak"><span class="flame" aria-hidden="true">'+(S.streak>=7?'☄️':'🔥')+'</span><div style="min-width:0"><b style="font-size:18px">'+S.streak+' '+L('day streak','日連續溫習')+'</b><div class="muted" style="font-size:13px">'+L('Reward ×','獎勵 ×')+streakMult().toFixed(1)+' · 🛡️ '+S.shields+' · '+L('Best ','最佳 ')+S.best+'</div></div></div><div class="days" style="margin-top:10px">'+last7+'</div>'+
  (S.lastDay!==t?'<p class="muted" style="font-size:13px;margin:10px 0 0">'+L('Finish one study session or quiz today to keep the flame alive 🌱','今日完成一次溫習或測驗，讓火焰繼續燃燒 🌱')+'</p>':'<p style="font-size:13px;margin:10px 0 0">✅ '+L('Today counted! Your future self says thanks.','今日已計算！未來的你會多謝你。')+'</p>')+'</div>'+
- dtCardHTML()+chatHTML()+buddyCardHTML()+leaderboardHTML()+nextStepCard()+'</div></div>';}
+ '<!--S-->'+dtCardHTML()+'<!--S-->'+chatHTML()+'<!--S-->'+buddyCardHTML()+'<!--S-->'+leaderboardHTML()+nextStepCard();}
 function nextStepCard(){var mc=Object.keys(S.mistakes).length;var s=null;
  for(var i=0;i<ALLSECS.length;i++){var st=(S.secs[ALLSECS[i].id]||{}).stars||0;if(st<3){s=ALLSECS[i];break;}}
  var txt,btn;
@@ -2838,7 +2872,7 @@ function answer(i){if(Q.answered)return;Q.answered=true;var qid=Q.ids[Q.i],q=qBy
  nb.scrollIntoView({block:'nearest',behavior:'smooth'});save();}
 function starsFor(n,tot){var r=tot?n/tot:0;return r>=14/15-1e-9?3:r>=0.7-1e-9?2:r>=0.5-1e-9?1:0;}
 function finishQuiz(){var n=Q.res.filter(Boolean).length,tot=Q.res.length,p=curPet(),html;
- if(Q.mode==='quiz'){var sec=secById(Q.sec),r=S.secs[Q.sec]||{stars:0,best:0,plays:0},st=starsFor(n,tot);S.qday=S.qday&&S.qday.d===today()?S.qday:{d:today(),l:[]};S.qday.l.push([Q.sec,n,tot]);
+ if(Q.mode==='quiz'){var sec=secById(Q.sec),r=S.secs[Q.sec]||{stars:0,best:0,plays:0},st=starsFor(n,tot);S.qday=S.qday&&S.qday.d===today()?S.qday:{d:today(),l:[]};S.qday.l.push([Q.sec,n,tot]);p.rq=(p.rq||0)+1;
   var spi0=specialFor(Q.sec),hadSp=isOwned(spi0);quizRec('done',st);r.plays++;r.best=Math.max(r.best,n);var newStar=st>r.stars;r.stars=Math.max(r.stars,st);S.secs[Q.sec]=r;S.quizzes++;if(n===tot)S.perfect++;
   p.energy=clamp(p.energy-8,5,100);p.happy=clamp(p.happy+(n>=tot*.6?6:-2),5,100);markActive();checkPetUnlocks();
   var g=gain(n*3+(n===tot?15:0),n*4);
@@ -2895,10 +2929,6 @@ function openDress(){if(S.ill&&S.ill.lv){openSickDress();return;}var p=curPet();
 function openSwitch(){var h='<div class="sheet-h"><h2>🔁 '+L('Choose your study buddy','選擇溫習拍檔')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><div class="items">';
  PETS.forEach(function(P){var p=S.pets[P.id];if(!p)return;h+='<button class="item" data-active="'+P.id+'" style="border:2px solid '+(S.active===P.id?'var(--rose)':'transparent')+'"><div class="pic">'+petSVG(P.id,moodOf(P.id))+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">Lv '+petLevel(p.xp)+' · ⚡'+Math.round(p.energy)+' 💗'+Math.round(p.happy)+'</div></button>';});
  modal(h+'</div>');$('#xClose').onclick=closeModal;document.querySelectorAll('#ov [data-active]').forEach(function(b){b.onclick=function(){S.active=b.dataset.active;sfx('boing');save();closeModal();};});}
-function openEvolve(){var p=curPet(),P=petDef(S.active),ev=EVO[p.stage+1];if(!ev)return;var lv=petLevel(p.xp),ok=lv>=ev.lv&&S.coins>=ev.cost;
- modal('<div class="sheet-h"><h2>✨ '+L('Evolve ','進化 ')+esc(LL(P))+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><div class="row" style="justify-content:center;flex-wrap:nowrap"><div style="width:120px">'+petSVG(S.active,'happy')+'</div><b style="font-size:26px">→</b><div style="width:130px">'+petSVG(S.active,'joy',{stage:p.stage+1})+'</div></div>'+
- '<p style="text-align:center"><b>'+L(STAGE[p.stage][0],STAGE[p.stage][1])+' → '+L(STAGE[p.stage+1][0],STAGE[p.stage+1][1])+'</b></p><ul class="notes"><li><span>'+(lv>=ev.lv?'✅':'⬜')+' '+L('Reach Level ','達到等級 ')+ev.lv+' ('+L('now ','現在 ')+lv+')</span></li><li><span>'+(S.coins>=ev.cost?'✅':'⬜')+' 🪙 '+ev.cost+'</span></li></ul><div class="row" style="justify-content:center;margin-top:14px"><button class="btn pink" id="doEvo"'+(ok?'':' disabled')+'>✨ '+L('Evolve now','立即進化')+'</button></div>'+(lv<ev.lv?'<p class="muted" style="text-align:center">'+L('Quizzes and study sessions give XP.','測驗和溫習會給予經驗值。')+'</p>':''));
- $('#xClose').onclick=closeModal;$('#doEvo').onclick=function(){S.coins-=ev.cost;p.stage++;sfx('fanfare');confetti();checkTrophies();save();bubble=L('I feel brand new!!','我煥然一新了！！');setTempMood('joy',4000);closeModal();};}
 function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(function(s){s.terms.forEach(function(t){pool.push(t);});});var pairs=shuffle(pool).slice(0,6);
  var cards=[];pairs.forEach(function(t,i){cards.push({p:i,txt:t[0],en:1});cards.push({p:i,txt:t[1]});});cards=shuffle(cards);var open=[],done=0,moves=0,lock=false,mt0=Date.now();
  var t=today();if(S.matchDay.d!==t)S.matchDay={d:t,n:0};
@@ -2917,7 +2947,7 @@ function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(f
 var B32='0123456789ABCDEFGHJKMNPQRSTVWXYZ',EPOCH=dayNum('2025-01-01');
 function wearIds(){return ITEMS.filter(function(i){return i.id!=='w0'&&!i.sec;}).map(function(i){return i.id;});}
 function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.round(v),Math.pow(2,n)-1));for(var i=n-1;i>=0;i--)bits.push((v>>i)&1);}
- w(8,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),5);
+ w(9,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),5);
  PETS.forEach(function(P){var p=S.pets[P.id];w(p?1:0,1);w(p?p.stage:0,2);w(p?p.xp/5:0,12);});
  var ids=wearIds();ids.forEach(function(id){w(S.owned[id]?1:0,1);});
  var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,7);});
@@ -2926,18 +2956,20 @@ function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.roun
  ALLSECS.forEach(function(s){w((S.secs[s.id]||{}).stars||0,2);});
  TROPHIES.forEach(function(t){w(S.trophies[t.id]?1:0,1);});
  BUDS.forEach(function(B){w(S.bud.own[B.id]?1:0,1);});w(S.bud.act?BUDS.indexOf(budDef(S.bud.act))+1:0,5);w(S.ill.lv,3);var dd=S.dict||{};w(dd.n||0,12);w(dd.perf||0,8);w(dd.days||0,9);w(S.say.n||0,12);w(S.tc||0,14);
+ PETS.forEach(function(P){var pp=S.pets[P.id];w(pp&&pp.rt?ROUTE_IDS.indexOf(pp.rt)+1:0,2);});
  var sum=0;for(var i=0;i<bits.length;i++)sum=(sum*31+bits[i]*(i%7+1))%1021;w(sum,10);
  while(bits.length%5)bits.push(0);scramble(bits);var out='';for(var j=0;j<bits.length;j+=5){var v=0;for(var k=0;k<5;k++)v=v*2+bits[j+k];out+=B32[v];}return out;}
 function scramble(bits){var x=0x5EED1;for(var i=0;i<bits.length;i++){x=(x*1103515245+12345)&0x7fffffff;bits[i]^=(x>>16)&1;}}
 function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1');var bits=[];
  for(var i=0;i<code.length;i++){var v=B32.indexOf(code[i]);if(v<0)return null;for(var k=4;k>=0;k--)bits.push((v>>k)&1);}
  scramble(bits);var pos=0;function r(n){var v=0;for(var i=0;i<n;i++){if(pos>=bits.length)throw 0;v=v*2+bits[pos++];}return v;}
- try{var o={};var ver=r(4);if(ver<1||ver>8)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:ver<8?4:5);o.pets={};PETS.slice(0,v1?6:ver<4?12:ver<8?15:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
+ try{var o={};var ver=r(4);if(ver<1||ver>9)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:ver<8?4:5);o.pets={};PETS.slice(0,v1?6:ver<4?12:ver<8?15:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
   o.owned={};wearIds().slice(0,ver<4?40:ver<5?59:ver<6?64:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
   o.wall=ver<4?(['w0','w1','w2','w3','w4','w5'][r(3)]||'w0'):(eqItems[r(7)]||'w0');var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
   o.streak=r(9);o.best=r(9);o.shields=r(2);var ld=r(13);o.lastDay=ld?fromDayNum(ld+EPOCH):null;o.days=r(10);o.quizzes=r(11);o.perfect=r(9);o.cleared=r(10);o.studies=r(10);o.matchWins=r(8);
   o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:ver===3?22:ver<6?23:ver<7?30:ver<8?33:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
   if(ver>=7){o.bud={};BUDS.forEach(function(B){if(r(1))o.bud[B.id]=1;});o.budAct=r(5);o.ill=r(3);o.dn=r(12);o.dperf=r(8);o.ddays=r(9);o.sayn=r(12);o.tc=r(14);}
+  if(ver>=9){o.routes={};PETS.forEach(function(P){var v=r(2);if(v)o.routes[P.id]=ROUTE_IDS[v-1];});}
   var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
   if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
 function applyCode(o){if(!AUTH.mode)AUTH.mode='guest';var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
@@ -2947,6 +2979,7 @@ function applyCode(o){if(!AUTH.mode)AUTH.mode='guest';var keep={lang:S.lang,sfx:
  ALLSECS.forEach(function(s){if(o.stars[s.id]){S.secs[s.id]={stars:o.stars[s.id],best:o.stars[s.id]+2,plays:1};S.specGot[s.id]=1;}});
  for(var t in o.tro)S.trophies[t]=today();if(S.lastDay)S.hist=[S.lastDay];
  if(o.bud){BUDS.forEach(function(B){if(o.bud[B.id])S.bud.own[B.id]=today();});var ba=BUDS[o.budAct-1];S.bud.act=ba&&S.bud.own[ba.id]?ba.id:(Object.keys(S.bud.own)[0]||null);S.ill={lv:Math.min(4,o.ill||0),d:o.ill?today():'',miss:0};S.dict.n=o.dn;S.dict.perf=o.dperf;S.dict.days=o.ddays;S.say.n=o.sayn;S.tc=o.tc;}
+ if(o.routes)for(var rk in o.routes)if(S.pets[rk])S.pets[rk].rt=o.routes[rk];
  save();}
 function openSave(){var code=packState();var grouped=code.match(/.{1,5}/g).join('-');var link=location.href.split('#')[0]+'#'+code;
  modal('<div class="sheet-h"><h2>💾 '+L('Save & transfer','儲存及轉移')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
@@ -3417,7 +3450,7 @@ function foodFx(f,pet){var c=[];if(f.en2)c.push('⚡+'+(f.en2>=100?L('full','全
  var fav=pet&&PET_FAV[pet]===f.id;return '<div class="fx">'+c.map(function(x){return '<span>'+x+'</span>';}).join('')+(fav?'<span class="fav">❤️ '+L('favourite','最愛')+'</span>':'')+'</div>';}
 // returns false if the pet refuses
 function eatFood(f){var p=curPet();var boost=f.buff||f.xp;if(p.energy>=100&&p.happy>=100&&!boost){toast(L('Too full! Maybe later 😊','太飽了！遲啲再食 😊'));return false;}
- var fav=PET_FAV[S.active]===f.id,hp=f.hp*(fav?2:1);
+ var fav=PET_FAV[S.active]===f.id,hp=f.hp*(fav?2:1);if(f.buff)p.fb=(p.fb||0)+1;else if(!f.sugar&&f.en2>0)p.fh=(p.fh||0)+1;
  p.energy=clamp(p.energy+f.en2,5,100);p.happy=clamp(p.happy+hp+2,5,100);
  if(f.xp){var before=petLevel(p.xp);p.xp+=f.xp;S.xpTotal+=f.xp;if(petLevel(p.xp)>before)setTimeout(function(){sfx('level');toast('⬆️ '+LL(petDef(S.active))+' Lv '+petLevel(p.xp));confetti();},500);}
  if(f.buff){S.buffs=S.buffs||{};var b=S.buffs[f.buff.k],base=b&&b.until>Date.now()?b.until:Date.now();S.buffs[f.buff.k]={m:Math.max(f.buff.m,b&&b.until>Date.now()?b.m:1),until:base+f.buff.mins*60000};}
@@ -3525,6 +3558,146 @@ function dtCardHTML(){var t=dtTask(),d=dtDef(t.id),p=dtProgress(t),pc=Math.min(1
  return '<div class="card dtask'+(t.done?' done':'')+'"><div class="dthead"><span class="dte">'+d[1]+'</span><div style="min-width:0"><div class="muted" style="font-size:12px;font-weight:800">📅 '+L('TODAY\'S MISSION','今日任務')+'</div><b style="font-size:17px">'+esc(L(d[2],d[3]))+'</b></div></div>'+
  '<p style="margin:8px 0">'+esc(dtText(t,L(d[4],d[5])))+'</p><div class="prog" style="width:100%"><i style="width:'+pc+'%;background:'+(t.done?'var(--good)':'linear-gradient(90deg,#F7A9B5,#FBD46D)')+'"></i></div>'+
  '<div class="row" style="margin-top:8px;justify-content:space-between;align-items:center"><span class="muted" style="font-size:13px">'+Math.min(p[0],p[1])+' / '+p[1]+' · 🎁 +40 🪙 + '+L('a snack','一份小食')+'</span>'+(t.done?'<span class="tag" style="background:#D8F3DC">✅ '+L('Done! See you tomorrow','完成！明天見')+'</span>':'<button class="btn small pink" id="bTask">🚀 '+L('Go!','出發！')+'</button>')+'</div></div>';}
+
+/* ---------- Evolution routes 進化路線: same pet, three colour variations ---------- */
+var ROUTES={
+ leaf:{e:'🌿',en:'Scholar route',zh:'學者路線',tint:'#8FD17E',
+  how:['Finish 8 quizzes with this pet as your buddy','以這隻寵物作拍檔完成 8 次測驗'],v:function(p){return [p.rq||0,8];}},
+ ocean:{e:'🌊',en:'Ocean route',zh:'海洋路線',tint:'#7DB9EE',
+  how:['Feed this pet 10 healthy meals (not sugary, not boost food)','餵這隻寵物 10 份健康餐（非高糖、非加成食物）'],v:function(p){return [p.fh||0,10];}},
+ galaxy:{e:'🌌',en:'Secret galaxy route',zh:'秘密銀河路線',tint:'#8D78DE',secret:1,
+  how:['Feed 3 brain-boost foods AND reach a 5-day streak','餵 3 份醒腦加成食物，並達到連續溫習 5 日'],hint:['??? Hint: food for the brain + study every day','??? 提示：給腦袋的食物＋每天溫習'],
+  v:function(p){return [Math.min(p.fb||0,3)+Math.min(S.best||0,5),8];}}
+};
+var ROUTE_IDS=['leaf','ocean','galaxy'];
+function routeOpen(p,r){var v=ROUTES[r].v(p);return v[0]>=v[1];}
+function hexMix(a,b,t){function c(h,i){return parseInt(h.slice(1+i*2,3+i*2),16);}var o='#';for(var i=0;i<3;i++){var v=Math.round(c(a,i)*(1-t)+c(b,i)*t);o+=('0'+v.toString(16)).slice(-2);}return o;}
+function routeColors(P,rt,st){if(!rt||!ROUTES[rt]||st<2)return {body:P.body,belly:P.belly};var t=st>=3?0.6:0.42,tint=ROUTES[rt].tint;return {body:hexMix(P.body,tint,t),belly:hexMix(P.belly,tint,t*0.35)};}
+function routeMarks(rt,st){if(!rt||st<2)return '';var s='';
+ if(rt==='leaf')s='<path d="M100 62 C98 50 100 44 102 40" stroke="#4E8F45" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M101 46 C88 36 80 44 84 52 C92 54 98 50 101 46Z" fill="#8FD17E" stroke="'+O+'" stroke-width="2"/><path d="M102 44 C114 32 124 40 120 48 C112 52 106 48 102 44Z" fill="#A9E09B" stroke="'+O+'" stroke-width="2"/>';
+ else if(rt==='ocean')s='<circle cx="156" cy="70" r="7" fill="#DDF0FB" stroke="#5E9FD0" stroke-width="2"/><circle cx="168" cy="54" r="4.5" fill="#DDF0FB" stroke="#5E9FD0" stroke-width="1.8"/><circle cx="160" cy="42" r="3" fill="#DDF0FB" stroke="#5E9FD0" stroke-width="1.5"/><path d="M58 150 q6 -5 12 0 t12 0" stroke="#5E9FD0" stroke-width="2.5" fill="none" stroke-linecap="round"/>';
+ else if(rt==='galaxy'){s='<path d="M92 60 L96 48 L100 58 L104 48 L108 60Z" fill="#FBD46D" stroke="'+O+'" stroke-width="2" stroke-linejoin="round"/>';[[70,96],[132,92],[120,160],[76,158],[146,132]].forEach(function(c,i){s+='<path d="M'+c[0]+' '+(c[1]-4)+' l1.3 2.7 l2.7 1.3 l-2.7 1.3 l-1.3 2.7 l-1.3 -2.7 l-2.7 -1.3 l2.7 -1.3Z" fill="#fff" opacity="'+(i%2?.7:.95)+'"/>';});}
+ if(st>=3)s+='<g class="spark"><circle cx="30" cy="100" r="3" fill="'+ROUTES[rt].tint+'"/></g>';
+ return s;}
+function routeCard(p,r,sel,pid){var R=ROUTES[r],open=routeOpen(p,r),v=R.v(p),hide=R.secret&&!open;
+ return '<button type="button" class="route'+(sel?' on':'')+(open?'':' locked')+(hide?' secret':'')+'" data-route="'+r+'"'+(open?'':' disabled')+'><div class="rpic">'+petSVG(pid,'happy',{stage:Math.max(2,p.stage),route:r,eq:{},plain:1})+'</div>'+
+  '<b>'+(hide?'❓ '+L('Secret route','秘密路線'):R.e+' '+esc(L(R.en,R.zh)))+'</b><span class="sub">'+esc(hide?L(R.hint[0],R.hint[1]):L(R.how[0],R.how[1]))+'</span>'+
+  '<div class="prog" style="width:100%"><i style="width:'+Math.min(100,Math.round(v[0]/v[1]*100))+'%"></i></div><span class="sub">'+(open?'✅ '+L('Unlocked','已解鎖'):Math.min(v[0],v[1])+' / '+v[1])+'</span></button>';}
+function openEvolve(){var p=curPet(),P=petDef(S.active),ev=EVO[p.stage+1],pickOnly=p.stage>=2&&!ev,RESTYLE=p.rt?150:0;if(!ev&&p.stage<2)return;
+ var lv=petLevel(p.xp),choose=true,sel=S.evoSel||p.rt||ROUTE_IDS.filter(function(r){return routeOpen(p,r);})[0]||null;if(sel&&!routeOpen(p,sel))sel=null;
+ var h='<div class="sheet-h"><h2>✨ '+(pickOnly?L('Choose an evolution route','選擇進化路線'):L('Evolve ','進化 ')+esc(LL(P)))+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>';
+ if(choose){h+='<p style="margin:0 0 10px">'+L('Your pet can grow into one of three colour variations. Each route opens with a different challenge – one is a secret!','你的寵物可以進化成三種顏色變化之一。每條路線要完成不同挑戰——其中一條是秘密路線！')+'</p><div class="routes">'+ROUTE_IDS.map(function(r){return routeCard(p,r,sel===r,S.active);}).join('')+'</div>';}
+ else h+='<div class="row" style="justify-content:center;flex-wrap:nowrap"><div style="width:120px">'+petSVG(S.active,'happy')+'</div><b style="font-size:26px">→</b><div style="width:130px">'+petSVG(S.active,'joy',{stage:p.stage+1})+'</div></div><p style="text-align:center">'+ROUTES[p.rt||'leaf'].e+' '+esc(L(ROUTES[p.rt||'leaf'].en,ROUTES[p.rt||'leaf'].zh))+'</p>';
+ if(pickOnly){h+='<div class="row" style="justify-content:center;margin-top:14px"><button class="btn pink" id="doEvo"'+(sel&&sel!==p.rt&&S.coins>=RESTYLE?'':' disabled')+'>🌈 '+(RESTYLE?L('Change look','轉換外觀')+' · 🪙 '+RESTYLE:L('Use this route (free)','使用這條路線（免費）'))+'</button></div>';}
+ else{var ok=lv>=ev.lv&&S.coins>=ev.cost&&(!choose||sel);
+  h+='<p style="text-align:center"><b>'+L(STAGE[p.stage][0],STAGE[p.stage][1])+' → '+L(STAGE[p.stage+1][0],STAGE[p.stage+1][1])+'</b></p><ul class="notes">'+(choose?'<li><span>'+(sel?'✅':'⬜')+' '+L('Unlock and choose a route','解鎖並選擇一條路線')+'</span></li>':'')+'<li><span>'+(lv>=ev.lv?'✅':'⬜')+' '+L('Reach Level ','達到等級 ')+ev.lv+' ('+L('now ','現在 ')+lv+')</span></li><li><span>'+(S.coins>=ev.cost?'✅':'⬜')+' 🪙 '+ev.cost+'</span></li></ul><div class="row" style="justify-content:center;margin-top:14px"><button class="btn pink" id="doEvo"'+(ok?'':' disabled')+'>✨ '+L('Evolve now','立即進化')+'</button></div>'+(lv<ev.lv?'<p class="muted" style="text-align:center">'+L('Quizzes and study sessions give XP.','測驗和溫習會給予經驗值。')+'</p>':'');}
+ modal(h);$('#xClose').onclick=closeModal;
+ document.querySelectorAll('#ov [data-route]').forEach(function(b){b.onclick=function(){S.evoSel=b.dataset.route;sfx('tap');openEvolve();};});
+ $('#doEvo').onclick=function(){if(choose){if(!sel)return;if(pickOnly&&RESTYLE){if(S.coins<RESTYLE||sel===p.rt)return;S.coins-=RESTYLE;}p.rt=sel;}if(!pickOnly){S.coins-=ev.cost;p.stage++;}S.evoSel=null;sfx('fanfare');confetti();checkTrophies();save();bubble=L('I feel brand new!!','我煥然一新了！！');setTempMood('joy',4000);closeModal();
+  if(p.rt==='galaxy')popup('<div style="width:150px;margin:0 auto">'+petSVG(S.active,'joy')+'</div><h2><span class="emo">🌌</span> '+L('Galaxy form!','銀河形態！')+'</h2><p>'+L('You found the secret route. Very few students ever see this form!','你找到了秘密路線，很少同學能見到這個形態！')+'</p>',null,null,'fx-mythic');};}
+// reveal the secret route once its challenge is done
+function checkRoutes(){for(var id in S.pets){var p=S.pets[id];if(!p.gx&&routeOpen(p,'galaxy')){p.gx=1;var pid=id;setTimeout(function(){popup('<div style="width:140px;margin:0 auto;filter:brightness(0) opacity(.35)">'+petSVG(pid,'happy',{stage:2,route:'galaxy',eq:{},plain:1})+'</div><h2>❓→🌌 '+L('Secret route revealed!','秘密路線現身了！')+'</h2><p>'+esc(LL(petDef(pid)))+L(' can now take its Galaxy form. Choose it the next time you open ✨ Evolve!',' 現在可以變成銀河形態。下次打開 ✨ 進化時選擇它吧！')+'</p>');},1600);}}}
+
+/* ---------- Teacher charts 圖表 (inline SVG, validated categorical palette, light mode) ---------- */
+var VZ={series:['#2a78d6','#eb6834','#1baf7a','#eda100','#e87ba4','#008300','#4a3aa7','#e34948'],seq:['#86b6ef','#3987e5','#256abf','#184f95'],ink:'#3E3534',ink2:'#6B5F5D',grid:'#E9E2DA',muted:'#C9C2BB'};
+function vzEsc(s){return esc(String(s));}
+function vzTip(t){return ' data-tip="'+vzEsc(t)+'"';}
+function classesOf(D){var c={};D.students.forEach(function(s){if(s.cls)c[s.cls]=1;});return Object.keys(c).sort();}
+function classColor(all,c){var i=all.indexOf(c);return i>=0&&i<8?VZ.series[i]:VZ.muted;}
+function monthKey(t){return String(t).slice(0,7);}
+function lastMonths(n){var out=[],d=new Date();d.setDate(1);for(var i=n-1;i>=0;i--){var x=new Date(d.getFullYear(),d.getMonth()-i,1);out.push(x.getFullYear()+'-'+('0'+(x.getMonth()+1)).slice(-2));}return out;}
+function monthLabel(k){var m=+k.slice(5);return S.lang==='en'?['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m-1]:m+'月';}
+/* horizontal bars: items [{label,v,tip,color}] , max value, unit */
+function vzBarsH(items,max,unit){var rowH=34,w=VZW,lx=w<420?58:96,rx=50,bw=w-lx-rx,h=items.length*rowH+8,s='';
+ [0,.5,1].forEach(function(f){var x=lx+bw*f;s+='<line x1="'+x+'" y1="4" x2="'+x+'" y2="'+(h-4)+'" stroke="'+VZ.grid+'" stroke-width="1"/>';});
+ items.forEach(function(it,i){var y=i*rowH+8,len=max?Math.max(it.v>0?4:0,bw*it.v/max):0;
+  s+='<text x="'+(lx-8)+'" y="'+(y+15)+'" text-anchor="end" font-size="13" font-weight="700" fill="'+VZ.ink+'">'+vzEsc(it.label)+'</text>';
+  s+='<g class="vzhit"'+vzTip(it.tip)+'><rect x="'+lx+'" y="'+(y-2)+'" width="'+bw+'" height="'+(rowH-6)+'" fill="transparent"/><rect x="'+lx+'" y="'+(y+2)+'" width="'+len.toFixed(1)+'" height="18" rx="4" fill="'+(it.color||VZ.series[0])+'"/></g>';
+  s+='<text x="'+(lx+len+6)+'" y="'+(y+15)+'" font-size="12.5" font-weight="800" fill="'+VZ.ink+'">'+vzEsc(it.v==null?'–':it.v+(unit||''))+'</text>';});
+ return '<svg class="vz" viewBox="0 0 '+w+' '+h+'" role="img">'+s+'</svg>';}
+/* vertical bars (single series) */
+function vzBarsV(items,max,unit){var w=VZW,h=220,l=36,b=30,t=16,pw=w-l-8,ph=h-b-t,n=items.length,gap=pw/n,bw=Math.min(46,gap*0.6),s='';
+ [0,.25,.5,.75,1].forEach(function(f){var y=t+ph*(1-f);s+='<line x1="'+l+'" y1="'+y+'" x2="'+(w-8)+'" y2="'+y+'" stroke="'+VZ.grid+'"/><text x="'+(l-6)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="'+VZ.ink2+'">'+Math.round(max*f)+(unit||'')+'</text>';});
+ items.forEach(function(it,i){var x=l+gap*i+(gap-bw)/2,hh=max&&it.v?Math.max(4,ph*it.v/max):0,y=t+ph-hh;
+  s+='<g class="vzhit"'+vzTip(it.tip)+'><rect x="'+(l+gap*i)+'" y="'+t+'" width="'+gap+'" height="'+ph+'" fill="transparent"/>'+(hh?'<path d="M'+x+' '+(t+ph)+' V'+(y+4)+' Q'+x+' '+y+' '+(x+4)+' '+y+' H'+(x+bw-4)+' Q'+(x+bw)+' '+y+' '+(x+bw)+' '+(y+4)+' V'+(t+ph)+'Z" fill="'+(it.color||VZ.series[0])+'"/>':'')+'</g>';
+  if(it.v!=null)s+='<text x="'+(x+bw/2)+'" y="'+(y-5)+'" text-anchor="middle" font-size="12" font-weight="800" fill="'+VZ.ink+'">'+it.v+(unit||'')+'</text>';
+  s+='<text x="'+(x+bw/2)+'" y="'+(h-10)+'" text-anchor="middle" font-size="12" font-weight="700" fill="'+VZ.ink+'">'+vzEsc(it.label)+'</text>';});
+ s+='<line x1="'+l+'" y1="'+(t+ph)+'" x2="'+(w-8)+'" y2="'+(t+ph)+'" stroke="'+VZ.ink2+'"/>';
+ return '<svg class="vz" viewBox="0 0 '+w+' '+h+'" role="img">'+s+'</svg>';}
+/* lines: series [{name,color,vals[]}], x labels */
+function vzLines(series,xl,unit){var w=VZW,h=240,l=40,r=w<420?52:74,b=28,t=14,pw=w-l-r,ph=h-b-t,max=1,s='';series.forEach(function(se){se.vals.forEach(function(v){if(v>max)max=v;});});max=Math.ceil(max*1.1);
+ var X=function(i){return l+(xl.length<2?pw/2:pw*i/(xl.length-1));},Y=function(v){return t+ph*(1-v/max);};
+ [0,.5,1].forEach(function(f){var y=t+ph*(1-f);s+='<line x1="'+l+'" y1="'+y+'" x2="'+(l+pw)+'" y2="'+y+'" stroke="'+VZ.grid+'"/><text x="'+(l-6)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="'+VZ.ink2+'">'+Math.round(max*f)+'</text>';});
+ xl.forEach(function(k,i){s+='<text x="'+X(i)+'" y="'+(h-8)+'" text-anchor="middle" font-size="12" font-weight="700" fill="'+VZ.ink+'">'+vzEsc(monthLabel(k))+'</text>';});
+ var ends=[];series.forEach(function(se){s+='<path d="'+se.vals.map(function(v,i){return (i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1);}).join(' ')+'" stroke="'+se.color+'" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>';
+  se.vals.forEach(function(v,i){s+='<g class="vzhit"'+vzTip(se.name+' · '+monthLabel(xl[i])+': '+v+(unit||''))+'><circle cx="'+X(i)+'" cy="'+Y(v)+'" r="12" fill="transparent"/><circle cx="'+X(i)+'" cy="'+Y(v)+'" r="4.5" fill="'+se.color+'" stroke="#fff" stroke-width="2"/></g>';});
+  ends.push({y:Y(se.vals[se.vals.length-1]),name:se.name,color:se.color});});
+ if(series.length<=4){ends.sort(function(a,b){return a.y-b.y;});for(var i=1;i<ends.length;i++)if(ends[i].y-ends[i-1].y<14)ends[i].y=ends[i-1].y+14;
+  ends.forEach(function(e){s+='<text x="'+(l+pw+8)+'" y="'+(e.y+4)+'" font-size="12" font-weight="800" fill="'+VZ.ink+'"><tspan fill="'+e.color+'">● </tspan>'+vzEsc(e.name)+'</text>';});}
+ return '<svg class="vz" viewBox="0 0 '+w+' '+h+'" role="img">'+s+'</svg>';}
+/* donut with legend: slices [{label,v,color}] */
+function vzDonut(slices,center){var tot=0;slices.forEach(function(x){tot+=x.v;});var cx=90,cy=90,R=78,r=48,a=-Math.PI/2,s='';
+ if(!tot)return '<p class="muted">'+L('No data yet.','暫時未有數據。')+'</p>';
+ slices.forEach(function(x){if(!x.v)return;var f=x.v/tot,a2=a+f*Math.PI*2-(f<1?0.02:0),big=f>0.5?1:0;
+  var p=f>=0.999?'<circle cx="'+cx+'" cy="'+cy+'" r="'+((R+r)/2)+'" fill="none" stroke="'+x.color+'" stroke-width="'+(R-r)+'"/>':'<path d="M'+(cx+R*Math.cos(a))+' '+(cy+R*Math.sin(a))+' A'+R+' '+R+' 0 '+big+' 1 '+(cx+R*Math.cos(a2))+' '+(cy+R*Math.sin(a2))+' L'+(cx+r*Math.cos(a2))+' '+(cy+r*Math.sin(a2))+' A'+r+' '+r+' 0 '+big+' 0 '+(cx+r*Math.cos(a))+' '+(cy+r*Math.sin(a))+'Z" fill="'+x.color+'"/>';
+  s+='<g class="vzhit"'+vzTip(x.label+': '+x.v+' ('+Math.round(f*100)+'%)')+'>'+p+'</g>';a=a+f*Math.PI*2;});
+ s+='<text x="'+cx+'" y="'+(cy-2)+'" text-anchor="middle" font-size="22" font-weight="800" fill="'+VZ.ink+'">'+vzEsc(center[0])+'</text><text x="'+cx+'" y="'+(cy+16)+'" text-anchor="middle" font-size="11" fill="'+VZ.ink2+'">'+vzEsc(center[1])+'</text>';
+ var leg=slices.filter(function(x){return x.v;}).map(function(x){return '<div class="vzleg"><i style="background:'+x.color+'"></i><span>'+vzEsc(x.label)+'</span><b>'+Math.round(x.v/tot*100)+'%</b></div>';}).join('');
+ return '<div class="vzdonut"><svg class="vz" viewBox="0 0 180 180" role="img">'+s+'</svg><div class="vzlegs">'+leg+'</div></div>';}
+function vzCard(title,what,chart,insight){return '<div class="card vzcard"><h3>'+title+'</h3><p class="muted vzwhat">'+what+'</p>'+chart+(insight?'<p class="vzins">💡 '+insight+'</p>':'')+'</div>';}
+/* data prep */
+function chartData(){var D=TD.data,since=TD.period==='all'?0:Date.now()-(+TD.period)*864e5,cls=classesOf(D),byEmail={};D.students.forEach(function(s){byEmail[s.email]=s;});
+ var inCls=function(s){return TD.cls==='all'||s.cls===TD.cls;};
+ var per={};cls.forEach(function(c){per[c]={ans:0,cor:0,act:{},n:0};});D.students.forEach(function(s){if(per[s.cls])per[s.cls].n++;});
+ var modes={},units={},months=lastMonths(6),mon={};cls.forEach(function(c){mon[c]={};months.forEach(function(m){mon[c][m]=0;});});
+ var lastSeen={};
+ D.records.forEach(function(r){var s=byEmail[r.email];if(!s)return;var tm=Date.parse(r.t);if(!lastSeen[r.email]||tm>lastSeen[r.email])lastSeen[r.email]=tm;
+  var q=r.mode==='quiz'||r.mode==='practice';
+  if(q&&mon[s.cls]&&mon[s.cls][monthKey(r.t)]!=null)mon[s.cls][monthKey(r.t)]+=+r.cor||0;
+  if(tm<since)return;
+  if(per[s.cls]){per[s.cls].act[r.email]=1;if(q){per[s.cls].ans+=+r.ans||0;per[s.cls].cor+=+r.cor||0;}}
+  if(!inCls(s))return;
+  modes[r.mode]=(modes[r.mode]||0)+1;
+  if(r.mode==='quiz'){var u=String(r.sec).split('.')[0];units[u]=units[u]||{ans:0,cor:0};units[u].ans+=+r.ans||0;units[u].cor+=+r.cor||0;}});
+ var act=[0,0,0,0],now=Date.now();D.students.forEach(function(s){if(!inCls(s))return;var t=lastSeen[s.email];if(!t)act[3]++;else if(now-t<=7*864e5)act[0]++;else if(now-t<=30*864e5)act[1]++;else act[2]++;});
+ return {cls:cls,per:per,modes:modes,units:units,months:months,mon:mon,act:act};}
+var VZW=560;
+function chartsHTML(){VZW=window.innerWidth<700?Math.max(320,Math.min(420,window.innerWidth-40)):560;var C=chartData(),h='<div class="vzgrid">';
+ // 1 class comparison – accuracy
+ var acc=C.cls.map(function(c){var p=C.per[c];return {label:c,v:p.ans?Math.round(p.cor/p.ans*100):null,tip:c+': '+(p.ans?Math.round(p.cor/p.ans*100)+'% ('+p.cor+'/'+p.ans+')':L('no answers yet','未有作答')),color:classColor(C.cls,c)};});
+ var withA=acc.filter(function(x){return x.v!=null;}).sort(function(a,b){return b.v-a.v;});
+ h+=vzCard('🏫 '+L('Accuracy by class','各班準確率'),L('Percentage of quiz and 錯題本 answers that were correct, in the chosen period.','所選時段內，測驗及錯題本答對的百分比。'),acc.length?vzBarsH(acc.map(function(x){return {label:x.label,v:x.v==null?0:x.v,tip:x.tip,color:x.color};}),100,'%'):'<p class="muted">–</p>',
+  withA.length>1?L('Highest: <b>'+withA[0].label+'</b> ('+withA[0].v+'%). Needs most support: <b>'+withA[withA.length-1].label+'</b> ('+withA[withA.length-1].v+'%).','最高：<b>'+withA[0].label+'</b>（'+withA[0].v+'%）。最需要支援：<b>'+withA[withA.length-1].label+'</b>（'+withA[withA.length-1].v+'%）。'):'');
+ // 2 class comparison – participation
+ var part=C.cls.map(function(c){var p=C.per[c],a=Object.keys(p.act).length;return {label:c,v:p.n?Math.round(a/p.n*100):0,tip:c+': '+a+' / '+p.n+L(' students active',' 位學生有使用'),color:classColor(C.cls,c)};});
+ var lowP=part.slice().sort(function(a,b){return a.v-b.v;})[0];
+ h+=vzCard('🙋 '+L('Students taking part','參與學生比例'),L('Share of students in each class who used the game in the chosen period.','所選時段內，各班有使用遊戲的學生比例。'),part.length?vzBarsH(part,100,'%'):'<p class="muted">–</p>',
+  lowP&&part.length>1?L('Lowest participation: <b>'+lowP.label+'</b> ('+lowP.v+'%) – a class reminder may help.','參與率最低：<b>'+lowP.label+'</b>（'+lowP.v+'%）——可以在班上提醒一下。'):'');
+ // 3 monthly progress per class
+ var ser=C.cls.slice(0,8).map(function(c){return {name:c,color:classColor(C.cls,c),vals:C.months.map(function(m){return C.mon[c][m];})};});
+ var tot=C.months.map(function(m,i){var s=0;ser.forEach(function(se){s+=se.vals[i];});return s;});
+ var trend=tot.length>1?tot[tot.length-1]-tot[tot.length-2]:0;
+ h+=vzCard('📈 '+L('Monthly progress by class','各班每月進度'),L('Correct answers each month (last 6 months). Hover or tap a dot for the number.','過去 6 個月每月答對的題數。把滑鼠移到或點按圓點可看數字。'),ser.length?vzLines(ser,C.months,'')+'<div class="vzlegrow">'+ser.map(function(se){return '<span class="vzleg"><i style="background:'+se.color+'"></i>'+vzEsc(se.name)+'</span>';}).join('')+'</div>':'<p class="muted">–</p>',
+  L('This month so far: <b>'+tot[tot.length-1]+'</b> correct answers ('+(trend>=0?'+':'')+trend+' vs last month).','本月至今：<b>'+tot[tot.length-1]+'</b> 題答對（比上月 '+(trend>=0?'+':'')+trend+'）。'));
+ // 4 accuracy by unit
+ var un=CHAPTERS.map(function(c){var u=C.units[c.id]||{ans:0,cor:0};return {label:L('U','單元')+c.id,v:u.ans?Math.round(u.cor/u.ans*100):0,tip:L('Unit ','第 ')+c.id+L(' '+c.en,' 單元 '+c.zh)+': '+(u.ans?Math.round(u.cor/u.ans*100)+'% ('+u.ans+L(' answers',' 題')+')':L('no quizzes yet','未有測驗'))};});
+ var tried=un.filter(function(x,i){return (C.units[CHAPTERS[i].id]||{}).ans;}),weakU=tried.slice().sort(function(a,b){return a.v-b.v;})[0];
+ h+=vzCard('📚 '+L('Accuracy by unit','各單元準確率'),L('Quiz accuracy for each unit – find the topic to re-teach.','每個單元的測驗準確率——找出需要重教的課題。'),vzBarsV(un,100,'%'),weakU?L('Weakest unit: <b>'+weakU.label+'</b> ('+weakU.v+'%).','最弱單元：<b>'+weakU.label+'</b>（'+weakU.v+'%）。'):'');
+ // 5 how students practise (pie)
+ var MODEC=[['quiz',L('Quizzes','測驗')],['practice',L('錯題本','錯題本')],['study',L('Notes','筆記')],['dict',L('Dictation','默書')],['speak',L('Read aloud','朗讀')],['other',L('Other','其他')]];
+ var mc={};Object.keys(C.modes).forEach(function(k){var key=k.indexOf('dict')===0?'dict':['quiz','practice','study','speak'].indexOf(k)>=0?k:'other';mc[key]=(mc[key]||0)+C.modes[k];});
+ var totalS=0;for(var k in mc)totalS+=mc[k];
+ var sl=MODEC.map(function(m,i){return {label:m[1],v:mc[m[0]]||0,color:m[0]==='other'?VZ.muted:VZ.series[i]};});
+ var top=sl.slice().sort(function(a,b){return b.v-a.v;})[0],least=sl.filter(function(x){return x.label!==L('Other','其他');}).sort(function(a,b){return a.v-b.v;})[0];
+ h+=vzCard('🥧 '+L('How students practise','學生的練習方式'),L('Share of all study sessions by activity.','各種活動佔所有溫習次數的比例。'),vzDonut(sl,[totalS,L('sessions','次')]),totalS?L('Most used: <b>'+top.label+'</b>. Least used: <b>'+least.label+'</b> – worth encouraging.','最常用：<b>'+top.label+'</b>。最少用：<b>'+least.label+'</b>——值得多鼓勵。'):'');
+ // 6 activity levels (pie)
+ var al=[{label:L('Active this week','本週有使用'),v:C.act[0],color:VZ.seq[2]},{label:L('Active this month','本月有使用'),v:C.act[1],color:VZ.seq[0]},{label:L('Not for 30+ days','超過 30 日沒有使用'),v:C.act[2],color:'#eda100'},{label:L('Never started','從未開始'),v:C.act[3],color:VZ.muted}];
+ var nTot=C.act[0]+C.act[1]+C.act[2]+C.act[3];
+ h+=vzCard('🟢 '+L('Who is active?','誰在使用？'),L('Students grouped by when they last used the game.','按最近一次使用時間把學生分組。'),vzDonut(al,[nTot,L('students','位學生')]),nTot?L('<b>'+(C.act[2]+C.act[3])+'</b> students have not practised for a month or never started – see the Students table.','<b>'+(C.act[2]+C.act[3])+'</b> 位學生超過一個月沒有練習或從未開始——請查看學生表。'):'');
+ return h+'</div><div id="vztip" class="vztip" role="tooltip"></div>';}
+function bindCharts(){var tip=$('#vztip');if(!tip)return;
+ document.querySelectorAll('.vzhit').forEach(function(g){function show(e){tip.textContent=g.getAttribute('data-tip');tip.style.display='block';var x=(e.touches?e.touches[0].clientX:e.clientX),y=(e.touches?e.touches[0].clientY:e.clientY);tip.style.left=Math.min(window.innerWidth-tip.offsetWidth-8,x+12)+'px';tip.style.top=(y-tip.offsetHeight-12)+'px';g.classList.add('on');}
+  g.addEventListener('mousemove',show);g.addEventListener('click',show);g.addEventListener('mouseleave',function(){tip.style.display='none';g.classList.remove('on');});});}
 
 /* ---------- Dictation 默書 ---------- */
 var DQ=null,dictCfg={kind:'listen',unit:1,sec:'all'};
@@ -3703,6 +3876,8 @@ function teacherHTML(){var h='<h1 class="h-sec">📊 '+L('Teacher dashboard','�
   '<button class="btn small white" id="tdRe">🔄 '+L('Refresh','更新')+'</button><button class="btn small green" id="tdXl">⬇️ '+L('Download Excel','下載 Excel')+'</button><span class="muted" style="font-size:12px">'+L('Updated ','更新於 ')+fmtT(TD.at)+'</span></div>';
  var tiles=[[X.active+' / '+X.tot,L('Active students','活躍學生')],[X.ans,L('Questions answered','已答題數')],[X.ans?pct(X.cor,X.ans)+'%':'–',L('Accuracy','準確率')],[X.dans?pct(X.dcor,X.dans)+'%':'–',L('Dictation accuracy','默書準確率')],[X.mins,L('Minutes studied','溫習分鐘')],[X.avgStreak,L('Avg streak (days)','平均連續日數')]];
  h+='<div class="tiles">'+tiles.map(function(t){return '<div class="tile"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';}).join('')+'</div>';
+ h+='<div class="tabs" role="tablist" style="margin:14px 0 4px"><button role="tab" data-tdv="charts" aria-selected="'+(TD.view!=='tables')+'">📈 '+L('Charts','圖表')+'</button><button role="tab" data-tdv="tables" aria-selected="'+(TD.view==='tables')+'">📋 '+L('Tables & details','表格及詳情')+'</button></div>';
+ if(TD.view!=='tables')return h+chartsHTML();
  var cols=[['no',L('Class/No.','班別/號')],['name',L('Name','姓名')],['last',L('Last active','最近活動')],['sess',L('Sessions','次數')],['ans',L('Answered','答題')],['acc',L('Accuracy','準確率')],['dict',L('Dictation','默書')],['stars','★'],['streak','🔥'],['weak',L('Weakest','最弱小節')]];
  var rows=X.rows.slice();var key=TD.sort,dir=TD.dir;var val=function(r){return key==='no'?r.s.cls+String(r.s.no).padStart(3,'0'):key==='name'?(r.s.en||r.s.zh):key==='last'?r.last:key==='sess'?r.sess:key==='ans'?r.ans:key==='acc'?(r.acc==null?-1:r.acc):key==='dict'?(r.dans?r.dcor/r.dans:-1):key==='stars'?+(r.prog.stars||0):key==='streak'?+(r.prog.streak||0):(r.weak?r.weak.p:2);};
  rows.sort(function(a,b){var x=val(a),y=val(b);return (x<y?-1:x>y?1:0)*dir;});
@@ -3714,7 +3889,7 @@ function teacherHTML(){var h='<h1 class="h-sec">📊 '+L('Teacher dashboard','�
  h+='<h2 class="h-sec">✍️ '+L('Most-misspelled words','最常拼錯的詞彙')+'</h2>'+(X.spell.length?'<div class="row" style="gap:8px">'+X.spell.map(function(x){return '<span class="term">'+esc(x.w)+' <span>×'+x.n+'</span></span>';}).join('')+'</div>':'<p class="muted">'+L('No dictation mistakes recorded in this period.','此時段沒有默書錯字記錄。')+'</p>');
  h+='<h2 class="h-sec">🎤 '+L('Hardest words to say','最難讀的詞彙')+'</h2><p class="muted" style="margin-top:-6px">'+L('Read aloud: ','朗讀：')+X.scor+' / '+X.sans+L(' words said correctly',' 個詞彙讀對')+'</p>'+(X.say.length?'<div class="row" style="gap:8px">'+X.say.map(function(x){return '<span class="term">'+esc(x.w)+' <span>×'+x.n+'</span></span>';}).join('')+'</div>':'<p class="muted">'+L('No read-aloud mistakes recorded in this period.','此時段沒有朗讀錯誤記錄。')+'</p>');
  return h;}
-function bindTeacher(){var c=$('#tdCls');if(c)c.onchange=function(){TD.cls=c.value;render();};var p=$('#tdPer');if(p)p.onchange=function(){TD.period=p.value;render();};
+function bindTeacher(){document.querySelectorAll('[data-tdv]').forEach(function(b){b.onclick=function(){TD.view=b.dataset.tdv;sfx('tap');render();};});bindCharts();var c=$('#tdCls');if(c)c.onchange=function(){TD.cls=c.value;render();};var p=$('#tdPer');if(p)p.onchange=function(){TD.period=p.value;render();};
  var re=$('#tdRe');if(re)re.onclick=function(){TD.data=null;TD.err='';loadStats();render();};
  var xl=$('#tdXl');if(xl)xl.onclick=downloadExcel;
  document.querySelectorAll('[data-sort]').forEach(function(b){b.onclick=function(){if(TD.sort===b.dataset.sort)TD.dir=-TD.dir;else{TD.sort=b.dataset.sort;TD.dir=b.dataset.sort==='no'||b.dataset.sort==='name'?1:-1;}render();};});
