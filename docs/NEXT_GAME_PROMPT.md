@@ -30,10 +30,11 @@ It must copy the format of my finished game **"Mochi Science Pals 麻糬科學�
 
 - Organise by **unit → sub-topic**. Every sub-topic gets:
   - 📖 study notes: 4–6 bilingual key points, key-term list, a picture gallery where useful, and a 💡 "Did you know?" fact
-  - ✏️ a 5-question quiz that climbs Bloom levels 1–6 and skips recently seen questions
-- **12+ questions per sub-topic**, tagged by Bloom level (Remember → Create), multiple choice and true/false, each with a bilingual explanation.
+  - ✏️ a 15-question quiz that climbs Bloom levels 1–6 and skips recently seen questions (★★★ = 14–15 correct)
+- **18+ questions per sub-topic**, tagged by Bloom level (Remember → Create), multiple choice and true/false, each with a bilingual explanation.
 - **Context boxes** (📋 情境) for any question about an experiment, so questions are standalone. Never write a question that depends on a previous question.
 - **Picture questions** wherever the textbook uses a diagram (apparatus, labelled parts, graphs, symbols). Use letters (A, B, P, Q, 1, 2…) as labels so the picture never gives the answer away.
+- **Study-note pictures:** place each diagram directly under the note point it explains, with a caption and a letter key (EN + 中文) and tap-to-enlarge. Every label line must end in a dot ON the part it names – check each diagram visually.
 - **Pictures:** draw my own SVG illustrations that look very similar to the textbook / revision-note style (same colours, layout and label style). **Never copy publisher images.** Use the school's version of symbols (e.g. the red / yellow / black-and-white hazard diamonds, not GHS).
 - Only **append** new questions and items to the end of lists, so saved progress stays valid.
 
