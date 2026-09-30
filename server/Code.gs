@@ -193,23 +193,20 @@ function stats() {
 }
 
 /** Class leaderboard: top 20 students for effort (XP), current streak and collection.
- *  Names are shortened (陳大文 → 陳＊文) so classmates never see full names. */
-function maskName(zh, en) {
+ *  Shows each student's full name (Chinese name, or English name if blank). */
+function fullName(zh, en) {
   zh = String(zh || '').trim();
-  if (zh.length >= 3) return zh.charAt(0) + '＊' + zh.charAt(zh.length - 1);
-  if (zh.length === 2) return zh.charAt(0) + '＊';
-  var p = String(en || '').trim().split(/\s+/);
-  return p[0] ? p[0].charAt(0).toUpperCase() + '.' + (p.length > 1 ? ' ' + p[p.length - 1].charAt(0).toUpperCase() + '.' : '') : '?';
+  return zh || String(en || '').trim() || '?';
 }
 function boardRows() {
-  var cache = CacheService.getScriptCache(), hit = cache.get('board_rows');
+  var cache = CacheService.getScriptCache(), hit = cache.get('board_rows2');
   if (hit) return JSON.parse(hit);
   var ss = book(), rows = [];
   var uv = ss.getSheetByName(PROPS.getProperty('USERS_SHEET') || USERS_DEFAULT).getDataRange().getValues();
   var info = {};
   for (var i = 1; i < uv.length; i++) {
     if (!uv[i][0] || isStaffRole(String(uv[i][1] || ''))) continue;
-    info[String(uv[i][0]).trim().toLowerCase()] = { n: maskName(uv[i][2], uv[i][3]), c: String(uv[i][4] || '') };
+    info[String(uv[i][0]).trim().toLowerCase()] = { n: fullName(uv[i][2], uv[i][3]), c: String(uv[i][4] || '') };
   }
   var ps = ss.getSheetByName(PROG);
   if (ps && ps.getLastRow() > 1) {
@@ -227,7 +224,7 @@ function boardRows() {
         st: last >= yest ? Number(r[2]) || 0 : 0, col: Number(x[1]) || 0, g: Number(x[2]) || 0, m: Number(x[3]) || 0 });
     });
   }
-  cache.put('board_rows', JSON.stringify(rows), 300);
+  cache.put('board_rows2', JSON.stringify(rows), 300);
   return rows;
 }
 function board(user, scope) {

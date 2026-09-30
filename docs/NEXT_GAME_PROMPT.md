@@ -51,7 +51,7 @@ It must copy the format of my finished game **"Mochi Science Pals 麻糬科學�
 - **Companion pets:** 12 real cat / dog / butterfly species (many from Hong Kong) with background stories, unlocked only by dictation challenges and streaks.
 - **Pet health:** a broken streak makes the pets hungry → cold → fever → very sick; students buy medicine (different prices) at a clinic; dress-up stays locked and the pet gives encouraging messages until they are cured.
 - **Health tips** from the pet based on the device time (water, breakfast, exercise, sleep early on school nights, breaks after 40 minutes).
-- **Class leaderboard** (signed-in only, server-side `board` action): top 20 for effort (XP), streak and collection; masked names (陳＊文); own rank shown.
+- **Class leaderboard** (signed-in only, server-side `board` action): top 20 for effort (XP), streak and collection; full names (visible only to signed-in students); own rank shown.
 - **Epic unlock effects** for legendary (gold) and mythic (aurora + holographic rainbow) items, with a preview button and an aura on the pet when worn.
 - Include a few **Hong Kong / Gen Z** items (e.g. pineapple-bun hat, egg-waffle cone, ding-ding tram, neon street wallpaper, 「好正！」 sticker).
 - **Retention:** daily streak with multiplier (up to ×1.5) and shields; daily gift; ~24 trophies; collection gallery with tier counts; animated streak pop-ups (new day, reminder, shield, welcome back); special-item unlock pop-ups.

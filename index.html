@@ -2798,7 +2798,7 @@ function lbInner(n){if(AUTH.mode!=='google')return '<p style="margin:0">'+L('Sig
  if(n<20&&c.top.length>n)h+='<div class="row" style="margin-top:8px"><button class="btn small" id="lbAll">🏆 '+L('See top 20','查看頭 20 名')+'</button></div>';
  return h;}
 function leaderboardHTML(){lbLoad();return '<div class="card lbcard"><div class="h-sec" style="margin:0 0 8px;font-size:17px">🏆 '+L('Class leaderboard','班級龍虎榜')+'</div><div id="lbBox">'+lbInner(5)+'</div></div>';}
-function openBoard(){modal('<div class="sheet-h"><h2>🏆 '+L('Top 20','頭 20 名')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><p class="muted" style="margin:0 0 8px;font-size:13px">'+L('We celebrate effort, not just marks. Names are shortened to protect privacy.','我們表揚努力，而不只是分數。為保障私隱，姓名會部分隱藏。')+'</p><div id="lbBox">'+lbInner(20)+'</div>');$('#xClose').onclick=closeModal;bindLB();}
+function openBoard(){modal('<div class="sheet-h"><h2>🏆 '+L('Top 20','頭 20 名')+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div><p class="muted" style="margin:0 0 8px;font-size:13px">'+L('We celebrate effort, not just marks. Cheer each other on! 📣','我們表揚努力，而不只是分數。一齊為彼此打氣！📣')+'</p><div id="lbBox">'+lbInner(20)+'</div>');$('#xClose').onclick=closeModal;bindLB();}
 function bindLB(){document.querySelectorAll('[data-lbcat]').forEach(function(b){b.onclick=function(){LB.cat=b.dataset.lbcat;sfx('tap');lbRefresh();};});
  document.querySelectorAll('[data-lbscope]').forEach(function(b){b.onclick=function(){LB.scope=b.dataset.lbscope;sfx('tap');lbLoad();lbRefresh();};});
  document.querySelectorAll('[data-lbre]').forEach(function(b){b.onclick=function(){sfx('tap');lbLoad(true);lbRefresh();};});
