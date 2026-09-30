@@ -40,7 +40,7 @@ It must copy the format of my finished game **"Mochi Science Pals 麻糬科學�
 
 ## Game
 
-- **Pets:** original Chiikawa × Sumikko-style SVG pets with Energy, Happiness and Level; moods (overjoyed, happy, sleepy, hungry, lonely, studying); 3 evolution stages; 15 pets.
+- **Science Pals (main characters, not called "pets"):** original Chiikawa × Sumikko-style SVG characters with Energy, Happiness and Level; moods (overjoyed, happy, sleepy, hungry, lonely, studying); 3 evolution stages; 15 pets.
 - **Care loop:** feed snacks, Term Match mini-game (EN ↔ 中文), dress-up, room decoration.
 - **Pet chat card:** fun subject facts (with Hong Kong examples) and personal encouragement (streak, mistakes waiting, next sub-topic). It rotates every ~20 s and has 💡 Fun fact / 💪 Cheer me on buttons.
 - **Rarity tiers:** Common / ✦ Rare / 💎 Epic / 👑 Legendary / 🌈 Mythic.
@@ -49,7 +49,7 @@ It must copy the format of my finished game **"Mochi Science Pals 麻糬科學�
   - Epic unit rewards need 3★ in every sub-topic of a unit.
   - Legendary items and a legendary pet need very hard milestones (all 3★, 30-day streak, master 300 questions, clear 100 mistakes, spell 300 words, 20 perfect dictations, 20 trophies, 60 study days).
   - A 🎯 Quests tab shows progress bars.
-- **Companion pets:** 12 real cat / dog / butterfly species (many from Hong Kong) with background stories, unlocked only by dictation challenges and streaks.
+- **Pets for the Science Pal:** 12 real cat / dog / butterfly species (many from Hong Kong) with background stories, unlocked only by dictation challenges and streaks.
 - **Pet health:** a broken streak makes the pets hungry → cold → fever → very sick; students buy medicine (different prices) at a clinic; dress-up stays locked and the pet gives encouraging messages until they are cured.
 - **Health tips** from the pet based on the device time (water, breakfast, exercise, sleep early on school nights, breaks after 40 minutes).
 - **Class leaderboard** (signed-in only, server-side `board` action): top 20 for effort (XP), streak and collection; full names (visible only to signed-in students); own rank shown.
