@@ -4,7 +4,7 @@ A bilingual (English / 繁體中文) pet-raising revision game for Hong Kong **S
 Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images – all pets and items are SVG).
 
 ## What's inside
-- **6 units → 29 sub-topics → 557 questions** (Units 1–6 incl. Energy and Matter as particles; at least 18 per sub-topic, 120 with pictures), tagged by Bloom level (Remember → Create). Each quiz = **15 questions** that climb Bloom levels. Stars: ★★★ = 14–15 correct, ★★ = 11+, ★ = 8+.
+- **6 units → 29 sub-topics → 650 questions** (Units 1–6 incl. Energy and Matter as particles; Unit 1 has **45 per sub-topic**, others at least 18; 142 with pictures), tagged by Bloom level (Remember → Create). Each quiz = **15 questions in random order**; the last 30 seen are skipped, so 3 visits to a Unit 1 sub-topic cover all 45. Stars: ★★★ = 14–15 correct, ★★ = 11+, ★ = 8+.
 - **Study notes** per sub-topic (key points + bilingual key terms); a 20-second read with your pet earns coins + XP (once per sub-topic per day).
 - **Science Pals 科學小夥伴** (the main characters): 12 original pets (Mochi, Matcha, Sakura, Pudding, Soda, Taro, Kinako, Goma, Mikan, Nori, Ume, Wata) with Energy, Happiness and Level; moods (overjoyed, happy, sleepy, hungry, lonely, studying); 3 evolution stages.
 - **Care loop**: feed snacks, play *Term Match* (EN ↔ 中文), dress up, decorate the room.
