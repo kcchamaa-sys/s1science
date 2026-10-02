@@ -21,6 +21,31 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
 - **Class login**: students on the school name list sign in with Google; progress syncs to the cloud and every quiz/study session is recorded. Teachers (教職員) get a 📊 dashboard with a 📈 Charts view (accuracy by class, students taking part, monthly progress by class, accuracy by unit, a pie chart of how students practise and a pie chart of who is active – each with a one-line 💡 insight and tap/hover numbers), a 📋 Tables view with class and individual statistics, and an Excel export. Guests can still play offline. Setup: `server/SETUP.md` (server code: `server/Code.gs`). Student names are never stored in this repo.
 - **🐾 Pets for your Science Pal** (12 companion pets based on real species, each with a bilingual background story and a science fact): Hong Kong shop cat, British Shorthair, Ragdoll, Maine Coon, Shiba Inu, Hong Kong local dog (唐狗), Pembroke Welsh Corgi, Golden Retriever (guide dog), and Hong Kong butterflies – Plain Tiger, Paris Peacock, Orange Oakleaf and Common Birdwing. They are unlocked **only** by dictation challenges (words spelled, perfect rounds, dictation days) and long study streaks. The chosen pet lives in Mochi's room.
 - **Phone layout fixes**: tab rows (shop, collection, teacher views) wrap onto extra lines instead of hiding off-screen; the bottom nav shares the width evenly however many tabs it has (fits 360 px phones); the home Science Pal advert's buttons wrap; teacher data tables turn into one card per row on phones (every column labelled, sort buttons shown as chips), so nothing is cut off.
+- **Fog battle 2.0 (Nobel Quest boss)**:
+  - **Knowledge Points**: a right answer earns 1 KP (max 5). On your turn, spend them: Quick Strike (1 KP, 100), Mend (2 KP, +1 heart) or the chapter's Heavy Blast (3 KP, 300, e.g. Radium Radiance). Or save them. Wrong answers heal Murk and cost a heart; answering in under 2.5 s is "dodged".
+  - **Pal stances** (chosen before the battle): Striker (3-combo Nobel-winner assist), Protector (your pal absorbs the next 2 wrong-answer hits) or Scholar (one wrong option fades on every other question).
+  - **Chapter rewards are now battle gear** (equip 2):
+    - Radium vial: damage over time.
+    - Lead-lined box: blocks the first hit.
+    - Mould and qinghao items: halve Murk's healing.
+    - Culture kit and herb jar: cheaper Mend.
+    - Fibre items: extra countdown time; the fibre lamp also clears 2 wrong options once.
+    - Alpha sticker: weakens the shield.
+    - Gold foil: stronger Heavy Blast.
+    - Gene scissors: stronger Quick Strike.
+    - DNA helix: extra KP on combos.
+  - **Phase 2 at half HP**: Murk raises a Fog Shield (half damage) that only cracks with "Shield Breaker" science questions, and a countdown timer starts (time-out = wrong). Murk can't skip this phase.
+  - **Murk absorbs the task you leave for last**:
+    - Illusion Fog: trick true/false + timer from the start.
+    - Chrono Murk: date questions, all timed.
+    - Babel Murk: word questions, heals +150.
+    - Brute Murk: 1,200 HP.
+    - Mirror Murk: thicker shield.
+    - Textbook Murk: S1 textbook questions.
+  - **Opening bonus from your first task in a chapter**: Storyteller (+1 KP), Speed Reader (+6 s), Chronologist / Articulate / Textbook Ace (1.5× damage after date / word / science questions), Field Experience (an extra pal heart), Sharp Eye (first wrong answer doesn't heal Murk). The chapter page shows both your bonus and the Murk you'll meet.
+  - **Knowledge as keys in the Story**: if you did the Timeline first, its dates glow in the story (tap for the event + 5 coins). The scientist also remembers whether you've done the Lab mission or Word Vault.
+  - **Question pool**: 90–110 per chapter instead of 16. The 16 originals, plus 48 new bilingual science-concept questions (8 per chapter, used as Shield Breakers), plus the linked S1 textbook section, plus date, timeline-order, word (EN↔中) and true/false questions generated fresh each battle with new distractors. Option order is shuffled and recently seen questions are pushed to the back.
+  - **Fixes**: the VS intro no longer covers the names or your pal; HP/hearts sit in a bar above the arena so they never cover Murk; lost hearts now visibly grey out.
 - **❄️ Streak Freeze 連勝凍結** (shop tab right after Science Pals):
   - Every student starts with **3**; after that **1 free freeze refills each new month** (never above 3).
   - Extra freezes cost **150 🪙** each, so they stay precious.

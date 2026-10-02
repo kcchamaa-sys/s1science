@@ -1733,6 +1733,97 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .tcard .tw>img.tsimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block}
 .tcard.reveal .tsimg{animation:rvZoomI 1.2s .65s cubic-bezier(.2,1.4,.4,1) both;transform-origin:28% 62%}
 @keyframes rvZoomI{0%,18%{transform:scale(1.8)}100%{transform:scale(1)}}
+
+/* ===== Fog battle 2.0 ===== */
+/* HUD above the arena (nothing covers Murk or your pal any more) */
+.rpg2 .bhud{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.rpg2 .bhud .hp{padding:8px 12px 9px;border-radius:14px;background:linear-gradient(180deg,rgba(20,24,70,.95),rgba(10,12,40,.95));border:2px solid rgba(255,255,255,.3);box-shadow:0 4px 0 rgba(0,0,0,.35);color:#fff;min-width:0}
+.rpg2 .bhud .pn{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.rpg2 .bhud .pn b{font-size:16px;letter-spacing:1px}.rpg2 .bhud .pn small{font-size:12px;opacity:.85}
+.rpg2 .bhud .hpb{position:relative;height:12px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden;margin:6px 0 3px}
+.rpg2 .bhud .hpb i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;transition:width .45s ease}
+.rpg2 .bhud .hpb .ghost{background:#FF6B6B;transition:width .8s .3s ease}.rpg2 .bhud .hpb .fill{background:linear-gradient(90deg,#2BD67B,#A6F05A)}
+.rpg2 .bhud .hpn{font-size:12.5px;text-align:right;opacity:.9}
+.rpg2 .dotc{background:#7CFFCB;color:#0B3B2A;border-radius:999px;padding:0 6px;font-weight:800;margin-left:4px}
+.rpg2 .fshield{display:flex;align-items:center;gap:4px;margin-top:4px;font-size:11px;letter-spacing:1px;color:#BFE8FF}
+.rpg2 .fshield i{width:16px;height:9px;border-radius:3px;background:rgba(191,232,255,.2);border:1px solid #BFE8FF}.rpg2 .fshield i.on{background:#8FD3FF;box-shadow:0 0 6px #8FD3FF}
+.rpg2 .hearts{display:flex;gap:4px;margin-top:5px;align-items:center;flex-wrap:wrap}
+.rpg2 .hrt{display:inline-flex;width:24px;height:24px}.rpg2 .hrt svg.ic{width:24px;height:24px}
+.rpg2 .hrt.lost svg{filter:grayscale(1) brightness(.55);opacity:.45}
+.rpg2 .hrt.pal svg.ic{width:21px;height:21px}
+.rpg2 .kprow{display:flex;align-items:center;gap:6px;margin-top:5px;font-size:12px}
+.rpg2 .kp{display:inline-flex;gap:3px}.rpg2 .kp i{width:13px;height:13px;transform:rotate(45deg);border-radius:3px;background:rgba(255,255,255,.14);border:1px solid rgba(255,227,92,.6)}
+.rpg2 .kp i.on{background:linear-gradient(135deg,#FFF3A0,#FFC800);box-shadow:0 0 6px #FFD000}
+.rpg2 .kprow b{color:#FFE35C}
+.rpg2 .combo{font-size:12px;margin-top:3px;opacity:.6}.rpg2 .combo.on{opacity:1;color:#FFE35C}
+/* arena units */
+.rpg2 .unit.foe.form-lab .body{transform:scale(1.12)}
+.rpg2 .unit.foe.form-read .body svg{filter:hue-rotate(60deg)}.rpg2 .unit.foe.form-time .body svg{filter:hue-rotate(-40deg) saturate(1.2)}
+.rpg2 .unit.foe.form-words .body svg{filter:hue-rotate(120deg)}.rpg2 .unit.foe.form-claim .body svg{filter:hue-rotate(180deg) saturate(.8)}.rpg2 .unit.foe.form-link .body svg{filter:hue-rotate(-90deg)}
+.rpg2 .fogdome{position:absolute;inset:-6% -8%;border-radius:50%;z-index:3;pointer-events:none;background:radial-gradient(circle,rgba(191,232,255,.05) 55%,rgba(191,232,255,.35) 72%,rgba(191,232,255,0) 78%);border:2px solid rgba(191,232,255,.55);box-shadow:0 0 18px rgba(143,211,255,.6) inset}
+.rpg2 .palguard{position:absolute;inset:-4% -6%;border-radius:50%;z-index:3;pointer-events:none;border:2px dashed rgba(124,255,203,.7)}
+/* VS intro: pal and scientist side by side, names underneath (no overlap) */
+.rpg .vsl,.rpg .vsr{padding:0 4%}
+.rpg .vsl{padding-right:20%}.rpg .vsr{padding-left:20%}
+.rpg .vsl .vsduo{display:flex;align-items:flex-end;justify-content:center;gap:4%;width:100%}
+.rpg .vsl .vsduo .por{width:min(120px,48%)}
+.rpg .vsl .vsduo .por2{position:static;width:min(100px,40%)}
+.rpg .vsl b,.rpg .vsr b{font-size:clamp(13px,2.6vw,20px);text-align:center;line-height:1.25;max-width:100%}
+.rpg .vsr .por{width:min(150px,70%)}
+.rpg .bstart{bottom:4%}
+/* command panel */
+.rpg2 .turn{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.rpg2 .turn .ic{width:20px;height:20px}
+.rpg2 .qcat{font-size:11px;font-weight:900;letter-spacing:1px;border-radius:999px;padding:2px 8px;background:rgba(255,255,255,.14);color:#fff}
+.rpg2 .brk{font-size:11px;font-weight:900;letter-spacing:1px;border-radius:999px;padding:2px 8px;background:linear-gradient(90deg,#8FD3FF,#E6FBFF);color:#0D3B5C;animation:brkP 1.2s ease-in-out infinite}
+@keyframes brkP{50%{box-shadow:0 0 10px #8FD3FF}}
+.rpg2 .tbar{height:8px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden;margin:6px 0 2px}
+.rpg2 .tbar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#FF5A5A,#FFC800 40%,#2BD67B);transform-origin:left;animation:tbar linear forwards}
+@keyframes tbar{to{transform:scaleX(0)}}
+.rpg2 .opts.two{grid-template-columns:1fr 1fr}
+.rpg2 .nq-opt.gone{opacity:.25}
+.rpg2 .fbline{border-radius:12px;padding:8px 12px;margin:8px 0;font-size:14px;line-height:1.4}
+.rpg2 .fbline.good{background:rgba(43,214,123,.18);border:1px solid rgba(43,214,123,.5)}.rpg2 .fbline.bad{background:rgba(255,90,90,.16);border:1px solid rgba(255,90,90,.5)}
+.rpg2 .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.rpg2 .skill{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 12px;border-radius:14px;background:linear-gradient(180deg,#2E3A8C,#1E2766);border:2px solid #5C73E6;color:#fff;text-align:left;box-shadow:0 4px 0 #11163F;cursor:pointer}
+.rpg2 .skill b{font-size:15px}.rpg2 .skill small{font-size:12px;opacity:.85}
+.rpg2 .skill.heavy{background:linear-gradient(180deg,#8C5A00,#5E3B00);border-color:#FFC800}.rpg2 .skill.mend{background:linear-gradient(180deg,#0F6B4E,#0A4433);border-color:#2BD67B}
+.rpg2 .skill.save{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.35)}
+.rpg2 .skill:disabled{opacity:.38;cursor:not-allowed}
+.rpg2 .skill:not(:disabled):active{transform:translateY(3px);box-shadow:none}
+.nq-btn.ghost.sm{font-size:13px;padding:6px 12px;margin-top:6px;background:rgba(255,255,255,.1)}
+/* prep screen */
+.nq-prep{color:#fff;display:grid;gap:12px}
+.nq-prep h2{margin:4px 0}
+.nq-prep .pcard{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:center;padding:12px;border-radius:18px;background:linear-gradient(135deg,rgba(40,20,90,.9),rgba(14,16,50,.9));border:2px solid rgba(255,255,255,.2)}
+.nq-prep .pcard h3{margin:2px 0 4px}.nq-prep .pcard p{margin:0 0 4px;font-size:14px}
+.nq-prep .pcard .tip{font-size:12.5px;opacity:.8}
+.nq-prep .pcard .pic{width:96px}.nq-prep .pcard .pic.big .ic{width:56px;height:56px;display:block;margin:auto}
+.nq-prep .foeform.form-read .pic svg{filter:hue-rotate(60deg)}.nq-prep .foeform.form-time .pic svg{filter:hue-rotate(-40deg)}.nq-prep .foeform.form-words .pic svg{filter:hue-rotate(120deg)}.nq-prep .foeform.form-claim .pic svg{filter:hue-rotate(180deg)}.nq-prep .foeform.form-link .pic svg{filter:hue-rotate(-90deg)}
+.nq-prep .psub{margin:6px 0 0;font-size:16px}
+.nq-prep .pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.nq-prep .pchoice{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.22);color:#fff;cursor:pointer}
+.nq-prep .pchoice b{display:flex;align-items:center;gap:6px;font-size:15px}.nq-prep .pchoice b .ic{width:20px;height:20px}
+.nq-prep .pchoice small{font-size:12.5px;opacity:.88;line-height:1.35}
+.nq-prep .pchoice.on{border-color:#FFE35C;background:rgba(255,227,92,.14);box-shadow:0 0 0 2px rgba(255,227,92,.35)}
+.nq-prep .pchoice .gp{width:44px;height:44px;display:block}.nq-prep .pchoice .gp svg{width:100%;height:100%}
+.nq-prep .muted2{opacity:.8;font-size:14px;margin:0}
+.nq-prep .rules{padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.06);font-size:13.5px}.nq-prep .rules ul{margin:6px 0 0;padding-left:18px}.nq-prep .rules li{margin:3px 0}
+.nq-btn.big{font-size:18px;padding:12px 22px;justify-self:start;display:inline-flex;gap:8px;align-items:center}
+.nq-btn.big .ic{width:22px;height:22px}
+/* chapter strategy + story extras */
+.nq-strat{display:grid;gap:8px;margin-top:12px}
+.nq-strat>div{display:grid;gap:2px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:13.5px}
+.nq-strat b{display:flex;align-items:center;gap:6px}.nq-strat .ic{width:18px;height:18px}
+.nq-keys{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0;color:#fff}
+.nq-keys>b{display:flex;align-items:center;gap:6px;width:100%;font-size:14px}.nq-keys .ic{width:18px;height:18px}
+.nq-keys .kchip{display:flex;gap:6px;align-items:center;padding:6px 12px;border-radius:999px;background:rgba(255,227,92,.15);border:2px solid #FFE35C;color:#fff;font-size:13px;animation:kglow 1.6s ease-in-out infinite;cursor:pointer;text-align:left}
+.nq-keys .kchip b{color:#FFE35C}.nq-keys .kchip.got{animation:none;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.08)}
+@keyframes kglow{50%{box-shadow:0 0 12px rgba(255,227,92,.7)}}
+.nq-mem{display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px;align-items:center;margin:12px 0;padding:10px;border-radius:16px;background:rgba(255,255,255,.08);color:#fff;font-size:14px}
+.nq-mem .mp svg{width:60px;height:auto}.nq-mem p{margin:0}
+@media (max-width:560px){.rpg2 .bhud{gap:6px}.rpg2 .bhud .hp{padding:6px 8px}.rpg2 .bhud .pn b{font-size:14px}.rpg2 .hrt,.rpg2 .hrt svg.ic{width:20px;height:20px}.rpg2 .skills{grid-template-columns:1fr 1fr}.nq-prep .pcard{grid-template-columns:70px minmax(0,1fr)}.nq-prep .pcard .pic{width:70px}}
+@media (prefers-reduced-motion:reduce){.rpg2 .brk,.nq-keys .kchip,.rpg2 .tbar i{animation:none}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -8247,7 +8338,265 @@ function trophyGrid(){tcDefs2();var order={open:0,near:1,glass:2,mid:3,secret:4}
 document.addEventListener('pointerdown',function(e){var g=e.target.closest&&e.target.closest('.tinspect .tcard:not(.locked) .tpal');if(!g)return;var a=g.querySelector('.tpa');if(!a)return;a.classList.remove('flinch');void a.getBoundingClientRect();a.classList.add('flinch');sfx('boing');
  var c=g.closest('.tcard');if(!c)return;var w=c.querySelector('.tw'),r=w.getBoundingClientRect(),d=document.createElement('span');d.className='tpop';d.style.left=(e.clientX-r.left)+'px';d.style.top=(e.clientY-r.top)+'px';d.innerHTML='<i></i><i></i><i></i><i></i><i></i><i></i>';w.appendChild(d);setTimeout(function(){d.remove();},700);},true);
 
-window.__game={dt:{DT:DT,pick:dtPick,card:dtCardHTML,prog:dtProgress},foods:FOODS,LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},sci:function(a,b){return sciSVG(a,b);},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},pick:pickQs,AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;},leg:{dmCount:dmCount,dmNeed:dmNeed,dmTotal:dmTotal,dmHit:dmHit,evoReq:evoReq,palBuff:palBuff,gain:function(c,x,ctx){gainCtx=ctx;return gain(c,x);},chk:checkPetUnlocks,PETS:PETS,dict:function(u){openDictSetup(u);},evo:function(){openEvolve();},get DQ(){return DQ;}}};
+/* ---------- Fog battle question bank 2.0: new science-concept questions (shield breakers) per chapter; option 0 is correct ---------- */
+var NQ_EXTRA={
+ curie:[
+  [['Why should radioactive sources be picked up with tongs, not fingers?','為甚麼要用鉗子而不是手指拿起放射源？'],[['Keeping distance reduces the radiation reaching your body','保持距離可減少身體受到的輻射'],['Radioactive sources are always very hot','放射源一定很熱'],['Tongs make the source less radioactive','鉗子會令放射源的放射性減弱'],['So the source does not get dirty','以免放射源弄髒']]],
+  [['Which material is used to line boxes that store radioactive sources?','儲存放射源的盒子內層通常用甚麼物料？'],[['Lead','鉛'],['Paper','紙'],['Plastic','塑膠'],['Aluminium foil','鋁箔']]],
+  [['What does a Geiger counter detect?','蓋革計數器探測甚麼？'],[['Radiation from radioactive substances','放射性物質發出的輻射'],['Temperature changes','溫度變化'],['Sound waves','聲波'],['The mass of an object','物體的質量']]],
+  [['A chemical splashes into your eye in the lab. What should you do first?','實驗時化學品濺入眼睛，首先應該怎樣做？'],[['Wash the eye with plenty of running water and tell the teacher','用大量流動的清水沖洗眼睛並告訴老師'],['Rub the eye hard','用力揉眼睛'],['Wait to see if it hurts','等一會看看會不會痛'],['Cover it with a tissue and carry on','用紙巾蓋着繼續做實驗']]],
+  [['Why should long hair be tied back when using a Bunsen burner?','使用本生燈時為甚麼要把長頭髮束起？'],[['It could catch fire','頭髮可能着火'],['So you can see the board','方便看黑板'],['To keep the hair clean','保持頭髮清潔'],['It makes the flame hotter','可令火焰更熱']]],
+  [['Which equipment protects your eyes in the laboratory?','在實驗室裏哪種裝備可保護眼睛？'],[['Safety goggles','安全護目鏡'],['A lab coat','實驗袍'],['Sunglasses','太陽眼鏡'],['Rubber gloves','橡膠手套']]],
+  [['Which habit reduces your exposure to radiation?','哪個習慣可減少受到的輻射？'],[['Spending as little time as possible near the source','盡量縮短在放射源附近的時間'],['Keeping the source in your pocket','把放射源放在口袋'],['Eating snacks next to the source','在放射源旁邊吃零食'],['Holding the source close to read its label','把放射源拿近看標籤']]],
+  [['Marie Curie’s notebooks are still radioactive today. What does this show?','居里夫人的筆記簿到今天仍有放射性，這說明甚麼？'],[['Some radioactive substances stay radioactive for a very long time','有些放射性物質可以維持放射性很長時間'],['Paper creates radiation by itself','紙張本身會產生輻射'],['Radioactivity always stops after one year','放射性一年後一定會停止'],['Her ink was made of gold','她的墨水是用金造的']]]],
+ fleming:[
+  [['Fleming noticed that bacteria did not grow around a mould. Which step of science is this?','弗萊明留意到黴菌周圍沒有細菌生長，這是科學探究的哪一步？'],[['Observation','觀察'],['Conclusion','結論'],['Publication','發表'],['Prediction','預測']]],
+  [['Which statement is a hypothesis?','哪一句是假說？'],[['The mould makes a substance that kills bacteria','黴菌製造了一種能殺死細菌的物質'],['There is mould on the dish','培養皿上有黴菌'],['The dish is round','培養皿是圓形的'],['Bacteria are very small','細菌非常細小']]],
+  [['In a fair test, how many variables should you change?','在公平測試中，應該改變多少個變量？'],[['Only one','只改變一個'],['All of them','全部'],['None','一個也不改變'],['Two at the same time','同時改變兩個']]],
+  [['Antibiotics such as penicillin are used to treat infections caused by…','青霉素等抗生素用來醫治由甚麼引起的感染？'],[['bacteria','細菌'],['viruses, such as the common cold','病毒，例如傷風'],['allergies','敏感'],['broken bones','骨折']]],
+  [['Why do scientists repeat an experiment several times?','科學家為甚麼要重複實驗幾次？'],[['To make the results more reliable','令結果更可靠'],['To make it take longer','令實驗做得更久'],['To change the answer they want','改成他們想要的答案'],['Because the first result is always wrong','因為第一次的結果一定是錯的']]],
+  [['Penicillium mould belongs to which group of living things?','青霉菌屬於哪一類生物？'],[['Fungi','真菌'],['Bacteria','細菌'],['Plants','植物'],['Animals','動物']]],
+  [['What is the job of a control set-up in an experiment?','實驗中對照組的作用是甚麼？'],[['To compare with the test set-up','與實驗組作比較'],['To make the experiment dangerous','令實驗變得危險'],['To replace the hypothesis','取代假說'],['To decorate the laboratory','裝飾實驗室']]],
+  [['Florey and Chain shared the 1945 prize with Fleming. What did they do?','弗洛里和錢恩與弗萊明分享了 1945 年的獎項，他們做了甚麼？'],[['Found a way to purify penicillin and make it into a medicine','找到提純青霉素並製成藥物的方法'],['Discovered bacteria for the first time','首次發現細菌'],['Invented the microscope','發明顯微鏡'],['Named the mould after Fleming','以弗萊明的名字為黴菌命名']]]],
+ kao:[
+  [['Light travels along an optical fibre by…','光沿着光纖傳播是靠……'],[['total internal reflection','全內反射'],['absorption','吸收'],['magnetism','磁力'],['evaporation','蒸發']]],
+  [['An optical fibre is mainly made of…','光纖主要由甚麼造成？'],[['very pure glass','非常純淨的玻璃'],['copper','銅'],['rubber','橡膠'],['paper','紙']]],
+  [['In optical-fibre communication, information is carried by…','在光纖通訊中，信息是由甚麼攜帶的？'],[['pulses of light','光脈衝'],['sound waves in the air','空氣中的聲波'],['flowing water','流水'],['electric sparks','電火花']]],
+  [['Which energy change happens in a solar cell?','太陽能電池中發生甚麼能量轉換？'],[['Light energy → electrical energy','光能 → 電能'],['Electrical energy → light energy','電能 → 光能'],['Sound energy → heat energy','聲能 → 熱能'],['Chemical energy → sound energy','化學能 → 聲能']]],
+  [['A torch changes the chemical energy in its battery mainly into…','電筒主要把電池的化學能轉換成……'],[['light energy (and some heat)','光能（及一些熱能）'],['kinetic energy','動能'],['sound energy','聲能'],['nuclear energy','核能']]],
+  [['Why are optical fibres better than copper wires for long-distance internet?','為甚麼長途互聯網用光纖比銅線好？'],[['They carry much more information with less signal loss','能攜帶多得多的信息，訊號損失較少'],['They are heavier','它們比較重'],['They work only at night','它們只在晚上運作'],['They need no light at all','它們完全不需要光']]],
+  [['When energy changes from one form to another, the total amount of energy…','能量由一種形式轉換成另一種形式時，能量總量會……'],[['stays the same','保持不變'],['increases','增加'],['disappears','消失'],['doubles','加倍']]],
+  [['Charles Kao won the 2009 Nobel Prize in Physics for work on…','高錕因哪方面的研究獲得 2009 年諾貝爾物理學獎？'],[['sending light through fibres for communication','利用光纖傳送光來通訊'],['inventing the light bulb','發明電燈泡'],['discovering the electron','發現電子'],['building space rockets','建造太空火箭']]]],
+ tu:[
+  [['Tu Youyou extracted artemisinin from sweet wormwood. What does “extract” mean?','屠呦呦從青蒿中提取青蒿素。「提取」是甚麼意思？'],[['To get a wanted substance out of a mixture','從混合物中取出想要的物質'],['To make a new element','製造新元素'],['To heat something until it disappears','把東西加熱至消失'],['To grow a new plant','種植新的植物']]],
+  [['Why did Tu’s team use a LOW-temperature method?','為甚麼屠呦呦的團隊使用低溫方法？'],[['High heat destroyed the active substance','高溫會破壞有效成分'],['Plants grow faster when cold','植物在寒冷時生長得更快'],['Water boils at 0 °C','水在 0 °C 沸騰'],['Only to save money','只是為了省錢']]],
+  [['Malaria is spread to humans by…','瘧疾透過甚麼傳播給人類？'],[['mosquito bites','蚊子叮咬'],['drinking milk','喝牛奶'],['strong sunlight','強烈陽光'],['cold weather','寒冷天氣']]],
+  [['Which method separates sand from water?','哪種方法可把沙從水中分離？'],[['Filtration','過濾'],['Distillation of the sand','蒸餾沙'],['Using a magnet','用磁石'],['Chromatography','色層分析']]],
+  [['Which method gets pure water from sea water?','哪種方法可從海水中取得純水？'],[['Distillation','蒸餾'],['Filtration','過濾'],['Sieving','篩選'],['Decanting','傾析']]],
+  [['Which method gets salt crystals from salt solution?','哪種方法可從鹽溶液中得到鹽的晶體？'],[['Evaporation and crystallisation','蒸發及結晶'],['Filtration','過濾'],['Sieving','篩選'],['Using a magnet','用磁石']]],
+  [['Why did Tu’s team test the medicine on themselves first?','為甚麼屠呦呦的團隊先在自己身上測試藥物？'],[['To check it was safe before giving it to patients','在給病人使用前確認它安全'],['Because medicine needs no testing','因為藥物不需要測試'],['Because they disliked rules','因為他們不喜歡規則'],['To make the medicine taste better','令藥物更好味']]],
+  [['An ancient text gave Tu a clue. What did she do with the old idea?','一本古書給了屠呦呦線索，她怎樣處理這個舊想法？'],[['Tested it with careful experiments','用嚴謹的實驗去測試'],['Believed it without testing','不經測試便相信'],['Ignored it completely','完全不理會'],['Copied it and stopped working','照抄之後便停止研究']]]],
+ rutherford:[
+  [['In the gold foil experiment, most alpha particles…','在金箔實驗中，大部分 α 粒子……'],[['went straight through the foil','直接穿過金箔'],['bounced straight back','直接反彈回來'],['turned into gold','變成了金'],['stopped in the air','在空氣中停下']]],
+  [['What did Rutherford conclude about the atom?','盧瑟福對原子作出甚麼結論？'],[['It has a tiny, dense nucleus and is mostly empty space','它有一個細小而密度高的原子核，大部分是空間'],['It is a solid ball with no gaps','它是一個沒有空隙的實心球'],['It has no electric charge at all','它完全沒有電荷'],['It is bigger than a cell','它比細胞還要大']]],
+  [['Particle theory says that the particles in a gas…','粒子理論指出，氣體中的粒子……'],[['are far apart and move quickly in all directions','相距很遠，並向各方向快速移動'],['are packed tightly in rows','整齊緊密地排列'],['do not move at all','完全不移動'],['are bigger than the particles in a solid','比固體中的粒子大']]],
+  [['When a solid melts, its particles…','固體熔化時，它的粒子……'],[['gain energy and can move past each other','獲得能量，可以互相滑過'],['become bigger','變大'],['disappear','消失'],['stop moving','停止移動']]],
+  [['Why can a gas be compressed easily?','為甚麼氣體容易被壓縮？'],[['There are large spaces between its particles','它的粒子之間有很大的空隙'],['Its particles shrink when pushed','粒子被推時會縮小'],['Gases have no particles','氣體沒有粒子'],['Its particles are soft like sponge','它的粒子像海綿一樣軟']]],
+  [['Rutherford’s 1908 Nobel Prize was in which subject?','盧瑟福 1908 年的諾貝爾獎屬於哪個科目？'],[['Chemistry','化學'],['Physics','物理'],['Medicine','醫學'],['Literature','文學']]],
+  [['Most of the mass of an atom is found in its…','原子的大部分質量集中在……'],[['nucleus','原子核'],['electrons','電子'],['empty space','空間'],['outer edge','外緣']]],
+  [['A smell of perfume slowly spreads across a room. This is evidence that particles…','香水味慢慢散佈整個房間，這證明粒子……'],[['are always moving','一直在移動'],['never move','從不移動'],['get bigger when warm','受熱時會變大'],['are made of perfume','由香水造成']]]],
+ doudna:[
+  [['Genetic information is stored in…','遺傳信息儲存在……'],[['DNA','DNA'],['blood sugar','血糖'],['bones only','只有骨骼'],['the surface of the skin','皮膚表面']]],
+  [['CRISPR-Cas9 is called “genetic scissors” because it can…','CRISPR-Cas9 被稱為「基因剪刀」，因為它可以……'],[['cut DNA at a chosen place','在選定的位置剪開 DNA'],['cut hair neatly','整齊地剪頭髮'],['split atoms','分裂原子'],['make paper','製造紙張']]],
+  [['CRISPR was first discovered as part of…','CRISPR 最初是在甚麼中被發現的？'],[['a defence system that bacteria use against viruses','細菌用來抵抗病毒的防禦系統'],['the roots of a plant','植物的根部'],['a type of rock','一種岩石'],['human blood cells','人類的血細胞']]],
+  [['Differences between individuals of the same species are called…','同一物種個體之間的差異稱為……'],[['variation','變異'],['heredity','遺傳'],['fertilisation','受精'],['classification','分類']]],
+  [['Which of these is an inherited characteristic?','以下哪一項是遺傳特徵？'],[['Natural eye colour','天生的眼睛顏色'],['A scar on the knee','膝蓋上的疤痕'],['Dyed hair','染了色的頭髮'],['Being able to ride a bike','會踏單車']]],
+  [['Which of these variations is caused by the environment?','以下哪一種變異由環境引起？'],[['A suntan','曬黑的皮膚'],['Blood group','血型'],['Natural hair colour','天生的頭髮顏色'],['Shape of the earlobe','耳垂的形狀']]],
+  [['Doudna and Charpentier won the 2020 Nobel Prize in…','杜德納和夏彭蒂耶獲得 2020 年諾貝爾哪個獎項？'],[['Chemistry','化學獎'],['Physics','物理學獎'],['Literature','文學獎'],['Peace','和平獎']]],
+  [['Why must gene editing be used carefully?','為甚麼使用基因編輯時必須小心？'],[['Changes can be passed on and have unexpected effects, so ethics matter','改變可能遺傳下去並帶來意想不到的影響，所以要考慮倫理'],['It is always completely harmless','它一定完全無害'],['It only works on rocks','它只對岩石有效'],['It has no effect on living things','它對生物沒有影響']]]]};
+
+/* ---------- Fog battle 2.0: Knowledge Points + skills, Mochi stances, chapter gear, Fog Shield phase,
+   Murk absorbs the task you leave for last, opening bonuses, and a big randomised question pool ---------- */
+var NQ_GEAR={
+ s_nq_radium:{e:'dot',n:['Radium glow','鐳光'],d:['Correct answers make Murk glow: −50 HP for 2 turns.','答對令默克發光：連續 2 回合各 −50 HP。']},
+ p_nq_leadbox:{e:'guard',n:['Lead shield','鉛盾'],d:['Blocks the first hit from a wrong answer.','擋下第一次答錯的攻擊。']},
+ w_nq_curie:{e:'kp1',n:['Head start','先發制人'],d:['Start the battle with 1 Knowledge Point.','開局獲得 1 點知識點。']},
+ s_nq_mould:{e:'noheal',n:['Mould barrier','黴菌屏障'],d:['Murk heals only half as much from wrong answers.','答錯時默克只回復一半 HP。']},
+ p_nq_petri:{e:'mend',n:['Culture kit','培養套裝'],d:['Mend costs 1 KP instead of 2.','治療只需 1 點知識點（原本 2 點）。']},
+ w_nq_penicillin:{e:'time',n:['Calm bloom','從容之花'],d:['+6 seconds on every countdown.','每次倒數多 6 秒。']},
+ s_nq_fibre:{e:'time',n:['Light speed','光速'],d:['+6 seconds on every countdown.','每次倒數多 6 秒。']},
+ p_nq_fibrelamp:{e:'hint',n:['Light path','光之路'],d:['Once per battle: clear away 2 wrong options.','每場戰鬥一次：移除 2 個錯誤選項。']},
+ w_nq_kao:{e:'kp1',n:['Head start','先發制人'],d:['Start the battle with 1 Knowledge Point.','開局獲得 1 點知識點。']},
+ s_nq_wormwood:{e:'heal',n:['Qinghao tonic','青蒿補劑'],d:['+1 heart when the Fog Shield appears.','霧盾出現時 +1 心。']},
+ p_nq_herbjar:{e:'mend',n:['Herbal remedy','草本療方'],d:['Mend costs 1 KP instead of 2.','治療只需 1 點知識點（原本 2 點）。']},
+ w_nq_qinghao:{e:'noheal',n:['Field of calm','寧靜田野'],d:['Murk heals only half as much from wrong answers.','答錯時默克只回復一半 HP。']},
+ s_nq_alpha:{e:'pierce',n:['Alpha punch','α 穿透'],d:['The Fog Shield needs 1 fewer crack to break.','霧盾少需 1 次擊破。']},
+ p_nq_goldfoil:{e:'heavy',n:['Gold foil focus','金箔聚焦'],d:['Heavy Blast deals +80 damage.','重擊傷害 +80。']},
+ w_nq_gold:{e:'heavy',n:['Gold foil focus','金箔聚焦'],d:['Heavy Blast deals +80 damage.','重擊傷害 +80。']},
+ s_nq_scissors:{e:'crit',n:['Precise cut','精準剪接'],d:['Quick Strike deals 150 instead of 100.','快攻傷害由 100 增至 150。']},
+ p_nq_helix:{e:'combo',n:['Double helix','雙螺旋'],d:['Every 3-answer combo gives +1 extra KP.','每 3 連擊額外 +1 知識點。']},
+ w_nq_helix:{e:'combo',n:['Double helix','雙螺旋'],d:['Every 3-answer combo gives +1 extra KP.','每 3 連擊額外 +1 知識點。']}};
+var NQ_OPEN={story:{n:['Storyteller','說書人'],d:['Start the battle with +1 KP.','開局 +1 知識點。']},
+ read:{n:['Speed Reader','速讀者'],d:['+6 seconds on every countdown.','每次倒數多 6 秒。']},
+ time:{n:['Chronologist','年代學家'],d:['Attacks right after a date question deal 1.5× damage.','答對年份題後的攻擊造成 1.5 倍傷害。'],cat:['date','order']},
+ words:{n:['Articulate','辯才'],d:['Attacks right after a word question deal 1.5× damage.','答對詞彙題後的攻擊造成 1.5 倍傷害。'],cat:['word']},
+ lab:{n:['Field Experience','實戰經驗'],d:['Your Science Pal gets an extra heart that absorbs one hit.','科學小夥伴多一顆心，可擋一次攻擊。']},
+ claim:{n:['Sharp Eye','銳眼'],d:['Your first wrong answer does not heal Murk.','第一次答錯不會令默克回血。']},
+ link:{n:['Textbook Ace','課本高手'],d:['Attacks right after a science question deal 1.5× damage.','答對科學題後的攻擊造成 1.5 倍傷害。'],cat:['sci']}};
+var MURK_FORMS={
+ story:{n:['Murk','默克'],hp:800,d:['The classic Fog of Forgetting.','經典的遺忘霧妖。']},
+ read:{n:['Illusion Fog','幻象霧'],hp:800,timer:18,w:{claim:3,read:3},d:['It absorbed the Reading: trick true-or-false questions and a countdown from the very start.','它吸收了「閱讀」：陷阱真假題，而且一開始就要倒數。']},
+ time:{n:['Chrono Murk','時光默克'],hp:800,timer:22,w:{date:4,order:3},d:['It absorbed the Timeline: lots of date questions, and every question is timed.','它吸收了「時間線」：大量年份題，每題都要計時。']},
+ words:{n:['Babel Murk','巴別默克'],hp:800,heal:150,w:{word:4},d:['It absorbed the Word Vault: lots of word questions, and wrong answers heal it +150.','它吸收了「詞彙寶庫」：大量詞彙題，答錯令它回復 150 HP。']},
+ lab:{n:['Brute Murk','蠻力默克'],hp:1200,d:['It absorbed the Lab Mission: a mutated brute with 1,200 HP. Save KP for Heavy Blasts!','它吸收了「實驗任務」：變成擁有 1,200 HP 的蠻力怪物。儲起知識點用重擊！']},
+ claim:{n:['Mirror Murk','鏡像默克'],hp:800,cracks:3,w:{claim:4},d:['It absorbed the Claim Check: true-or-false traps and a thicker Fog Shield.','它吸收了「真假偵探」：真假陷阱題，而且霧盾更厚。']},
+ link:{n:['Textbook Murk','課本默克'],hp:800,w:{sci:4},d:['It absorbed the Lab Link: lots of S1 textbook questions.','它吸收了「課本連結」：大量中一課本題目。']}};
+var NQ_STANCE={striker:{n:['Striker','攻擊型'],d:['Every 3 correct answers in a row: the Nobel winner joins in for a 150-damage assist.','連續答對 3 題：諾貝爾得主加入援助，造成 150 傷害。']},
+ protector:{n:['Protector','守護型'],d:['Your Science Pal takes the next 2 wrong-answer hits for you. No assists.','科學小夥伴替你擋下接下來 2 次答錯的攻擊。沒有援助。']},
+ scholar:{n:['Scholar','學者型'],d:['On every other question, one wrong option fades away. No assists.','每隔一題，會自動移除一個錯誤選項。沒有援助。']}};
+function nqbGear(B,e){return (B.gear||[]).some(function(id){return NQ_GEAR[id]&&NQ_GEAR[id].e===e;});}
+/* Murk takes the form of the task you leave for last: an unfinished one, or the one you finished last */
+function nqbForm(ch){var c=NQ[ch],m=nqMask(c.id),undone=NQ_ORDER.filter(function(k){return k!==4&&!(m&(1<<k));});
+ if(undone.length)return NQ_TASKS[undone[undone.length-1]][0];var o=((nqS().ord||{})[c.id])||[],last=o.filter(function(k){return k!==4;}).pop();return last!=null?NQ_TASKS[last][0]:'story';}
+function nqbOpen(ch){return ((nqS().first||{})[NQ[ch].id])||null;}
+/* record the first task (opening) and the finishing order */
+(function(){var set0=nqSet;nqSet=function(ch,k,lg,g){var st=nqS(),c=NQ[ch],m=st.t[c.id]||0;if(!(m&(1<<k))){st.first=st.first||{};st.ord=st.ord||{};if(!m&&k!==4&&!st.first[c.id])st.first[c.id]=NQ_TASKS[k][0];(st.ord[c.id]=st.ord[c.id]||[]).push(k);}return set0.apply(this,arguments);};})();
+
+/* ---- question pool: hand-written + generated each battle (fresh distractors and order every time) ---- */
+function nqbYears(y,all){var s={},out=[];s[y]=1;shuffle(all.slice()).forEach(function(v){if(out.length<2&&!s[v]){s[v]=1;out.push(v);}});while(out.length<3){var v=y+(Math.random()<.5?-1:1)*(1+Math.floor(Math.random()*14));if(!s[v]&&v<2031){s[v]=1;out.push(v);}}return out;}
+function nqbPool(ch){var c=NQ[ch],P=[],all=[];NQ.forEach(function(x){all=all.concat(x.words);});var yrs=c.time.map(function(e){return e[0];});
+ c.boss.forEach(function(b,i){P.push({id:'f'+i,cat:'fact',q:b[0],o:b[1],ok:0});});
+ (NQ_EXTRA[c.id]||[]).forEach(function(b,i){P.push({id:'x'+i,cat:'sci',q:b[0],o:b[1],ok:0});});
+ var sec=secById(c.link);if(sec)sec.qs.forEach(function(q,i){if(q.fig||q.ce)return;if(q.t==='mc'&&q.o&&q.o.length>=3)P.push({id:'l'+i,cat:'sci',q:[q.en,q.zh],o:q.o,ok:0,tb:1});else if(q.t==='tf')P.push({id:'l'+i,cat:'sci',q:[q.en,q.zh],o:[[TF_EN[0],TF_ZH[0]],[TF_EN[1],TF_ZH[1]]],ok:q.a?0:1,tb:1,tf:1});});
+ c.time.forEach(function(e,i){var ys=[e[0]].concat(nqbYears(e[0],yrs));P.push({id:'d'+i,cat:'date',q:['In which year did this happen? “'+e[1]+'”','這件事在哪一年發生？「'+e[2]+'」'],o:ys.map(function(y){return [String(y),String(y)];}),ok:0});});
+ for(var k=0;k<3;k++){var ev=shuffle(c.time.slice()).slice(0,4),first=ev.reduce(function(a,e,j){return e[0]<ev[a][0]?j:a;},0);P.push({id:'o'+k,cat:'order',q:['Which of these happened FIRST?','以下哪件事最早發生？'],o:ev.map(function(e){return [e[1],e[2]];}),ok:first});}
+ c.words.forEach(function(w,i){var ds=shuffle(all.filter(function(x){return x[0]!==w[0];})).slice(0,3);
+  P.push({id:'w'+i,cat:'word',q:['Which Chinese term matches “'+w[0]+'”?','「'+w[1]+'」的英文是甚麼？'],o:[[w[1],w[0]]].concat(ds.map(function(x){return [x[1],x[0]];})),ok:0});
+  P.push({id:'v'+i,cat:'word',q:['Which English word matches “'+w[1]+'”?','「'+w[0]+'」的中文是甚麼？'],o:[[w[0],w[1]]].concat(ds.map(function(x){return [x[0],x[1]];})),ok:0});});
+ c.claims.forEach(function(x,i){P.push({id:'c'+i,cat:'claim',q:['True or false? '+x.s[0],'是真是假？'+x.s[1]],o:[[TF_EN[0],TF_ZH[0]],[TF_EN[1],TF_ZH[1]]],ok:x.t?0:1,tf:1});});
+ c.read.forEach(function(r,i){[['r',r.q],['s',r.q2]].forEach(function(x){var R=x[1];if(R&&R.q&&R.o)P.push({id:x[0]+i,cat:'read',q:R.q,o:R.o,ok:0});});});
+ return P;}
+/* weighted shuffle: form weights + recently-seen questions pushed to the back */
+function nqbDeck(ch,form){var c=NQ[ch],P=nqbPool(ch),W={fact:3,sci:3,date:1.4,order:.8,word:1.3,claim:1.2,read:1.1},fw=(MURK_FORMS[form]||{}).w||{},seen=((nqS().qseen||{})[c.id])||[];
+ return P.map(function(q){var w=(W[q.cat]||1)*(fw[q.cat]||1)*(q.tb?.6:1)*(seen.indexOf(q.id)>=0?.25:1);return {q:q,k:-Math.log(Math.random())/w};}).sort(function(a,b){return a.k-b.k;}).map(function(x){return x.q;});}
+function nqbSeen(ch,id){var st=nqS(),c=NQ[ch];st.qseen=st.qseen||{};var a=st.qseen[c.id]=st.qseen[c.id]||[];var j=a.indexOf(id);if(j>=0)a.splice(j,1);a.push(id);if(a.length>70)a.splice(0,a.length-70);}
+function nqbQ(B){if(B.cur&&B.cur.i===B.i)return B.cur.q;var q=null;
+ if(B.shield>0&&B.i%2===0){for(var j=0;j<B.deck.length;j++)if(B.deck[j].cat==='sci'){q=B.deck.splice(j,1)[0];break;}}
+ if(!q){if(!B.deck.length)B.deck=nqbDeck(NQV.ch,B.form);q=B.deck.shift();}
+ nqbSeen(NQV.ch,q.id);B.cur={i:B.i,q:q,brk:B.shield>0&&q.cat==='sci'};return q;}
+
+/* ---- battle state ---- */
+function nqbNew(ch){var st=nqS(),c=NQ[ch],form=nqbForm(ch),F=MURK_FORMS[form],last=st.load||{};
+ return {st:'prep',form:form,open:nqbOpen(ch),stance:last.stance||'striker',gear:(last.gear||[]).filter(function(id){return S.owned[id];}).slice(0,2),mx:F.hp,hp:F.hp,hearts:3,kp:0,combo:0,maxc:0,wrong:0,i:0,deck:[],shield:0,phase:1,palH:0,dot:0,log:[]};}
+function nqbStart(B){var F=MURK_FORMS[B.form];nqS().load={stance:B.stance,gear:B.gear.slice()};save();
+ B.deck=nqbDeck(NQV.ch,B.form);B.st='q';B.intro=1;B.kp=(nqbGear(B,'kp1')?1:0)+(B.open==='story'?1:0);
+ B.palH=(B.stance==='protector'?2:0)+(B.open==='lab'?1:0);B.timer=F.timer||0;B.cracks=Math.max(1,(F.cracks||2)-(nqbGear(B,'pierce')?1:0));B.hintLeft=nqbGear(B,'hint')?1:0;NQV.t0=Date.now();NQV.na=0;}
+function nqbSecs(B){return (B.timer||20)+(B.open==='read'?6:0)+(nqbGear(B,'time')?6:0);}
+function nqbTimed(B){return !!B.timer||B.phase>=2;}
+function nqbHeavy(c){var a=NQ_ASSIST[c.id];return a?a[0]:['Heavy Blast','重擊'];}
+function nqbHit(B,d){var floor=B.phase===1?Math.ceil(B.mx/2):0;B.hp=Math.max(floor,B.hp-d);if(B.phase===1&&B.hp===floor)B.hp=Math.max(0,floor);}
+function nqbDmg(B,base){var o=NQ_OPEN[B.open],dbl=o&&o.cat&&B.lastOk&&o.cat.indexOf(B.lastCat)>=0;var d=Math.round(base*(dbl?1.5:1)/10)*10;if(B.shield>0)d=Math.round(d/20)*10;return {d:d,dbl:dbl,half:B.shield>0};}
+
+/* ---- UI pieces ---- */
+function nqbHearts(B){var h='';for(var k=0;k<3;k++)h+='<span class="hrt'+(k<B.hearts?'':' lost')+'">'+IC('heart')+'</span>';
+ for(var j=0;j<B.palH;j++)h+='<span class="hrt pal" title="'+esc(L('Pal shield','小夥伴護盾'))+'">'+IC('shield')+'</span>';return h;}
+function nqbKP(B){var s='';for(var k=0;k<5;k++)s+='<i class="'+(k<B.kp?'on':'')+'"></i>';return s;}
+function nqbShield(B){if(!B.shield)return '';var s='';for(var k=0;k<B.cracks;k++)s+='<i class="'+(k<B.shield?'on':'')+'"></i>';return '<div class="fshield"><b>'+L('FOG SHIELD','霧盾')+'</b>'+s+'</div>';}
+function nqbHud(c,B){var F=MURK_FORMS[B.form],hpw=(B.hp/B.mx*100).toFixed(1)+'%';
+ return '<div class="bhud"><div class="hp hpfoe"><div class="pn"><b>'+esc(L(F.n[0],F.n[1]))+'</b><small>'+L('Fog of Forgetting','遺忘霧妖')+' · Lv.'+((NQV.ch+1)*10)+(B.phase>=2?' · <span class="rg">'+L('PHASE 2','第二階段')+'</span>':'')+'</small></div><div class="hpb"><i class="ghost" style="width:'+hpw+'"></i><i class="fill" id="hpfill" style="width:'+hpw+'"></i></div><div class="hpn">HP <b id="hpnum">'+B.hp+'</b> / '+B.mx+(B.dot?' <span class="dotc">'+L('glowing','發光中')+' ×'+B.dot+'</span>':'')+'</div>'+nqbShield(B)+'</div>'+
+  '<div class="hp hpme"><div class="pn"><b>'+esc(LL(petDef(S.active)))+'</b><small>'+esc(L(NQ_STANCE[B.stance].n[0],NQ_STANCE[B.stance].n[1]))+'</small></div><div class="hearts" id="hearts">'+nqbHearts(B)+'</div><div class="kprow"><span>'+L('Knowledge','知識點')+'</span><span class="kp" id="kp">'+nqbKP(B)+'</span><b id="kpn">'+B.kp+'</b></div><div class="combo'+(B.combo>1?' on':'')+'" id="combo">'+L('COMBO','連擊')+' ×<b>'+B.combo+'</b></div></div></div>';}
+function nqbPrep(c,B){var F=MURK_FORMS[B.form],O=B.open?NQ_OPEN[B.open]:null,gearOwned=Object.keys(NQ_GEAR).filter(function(id){return S.owned[id];});
+ var h='<section class="nq-prep" style="--c:'+c.col+'"><h2>'+L('Battle prep','戰前準備')+'</h2>';
+ h+='<div class="pcard foeform form-'+B.form+'"><div class="pic">'+murkSVG()+'</div><div><p class="nq-kicker">'+L('Your opponent','你的對手')+'</p><h3>'+esc(L(F.n[0],F.n[1]))+' · '+B.mx+' HP</h3><p>'+esc(L(F.d[0],F.d[1]))+'</p><p class="tip">'+L('Murk absorbs the task you leave for last. Change your order next time to meet a different Murk!','默克會吸收你留到最後的任務。下次改變次序，就會遇到不同的默克！')+'</p></div></div>';
+ h+='<div class="pcard open"><div class="pic big">'+IC(O?'sparkle':'lock')+'</div><div><p class="nq-kicker">'+L('Opening bonus','開局加成')+'</p>'+(O?'<h3>'+esc(L(O.n[0],O.n[1]))+'</h3><p>'+esc(L(O.d[0],O.d[1]))+'</p>':'<p>'+L('Your first task in a chapter decides a bonus for this battle (for example Word Vault first = “Articulate”). It starts from the next chapter you begin.','章節中第一個完成的任務會決定這場戰鬥的加成（例如先做詞彙寶庫 =「辯才」）。由你下一個開始的章節起生效。')+'</p>')+'</div></div>';
+ h+='<h3 class="psub">'+L('1 · Choose your pal’s stance','1 · 選擇小夥伴的戰鬥姿態')+'</h3><div class="pgrid">'+Object.keys(NQ_STANCE).map(function(k){var s=NQ_STANCE[k];return '<button class="pchoice'+(B.stance===k?' on':'')+'" data-nqbst="'+k+'"><b>'+IC(k==='striker'?'bolt':k==='protector'?'shield':'bulb')+esc(L(s.n[0],s.n[1]))+'</b><small>'+esc(L(s.d[0],s.d[1]))+'</small></button>';}).join('')+'</div>';
+ h+='<h3 class="psub">'+L('2 · Equip up to 2 chapter rewards','2 · 最多裝備 2 件章節獎勵')+'</h3>'+(gearOwned.length?'<div class="pgrid gear">'+gearOwned.map(function(id){var G=NQ_GEAR[id],it=item(id),on=B.gear.indexOf(id)>=0;return '<button class="pchoice g'+(on?' on':'')+'" data-nqbgear="'+id+'"><span class="gp">'+(it?itemPic(it):'')+'</span><b>'+esc(L(G.n[0],G.n[1]))+'</b><small>'+esc(L(G.d[0],G.d[1]))+'</small></button>';}).join('')+'</div>':'<p class="muted2">'+L('No gear yet. Finish Reading, Lab mission and the Fog battle in any chapter to earn stickers, props and wallpapers. Each one works as battle gear!','暫時沒有裝備。完成任何章節的閱讀、實驗任務和霧妖之戰，就能獲得貼紙、擺設和牆紙，每件都可作為戰鬥裝備！')+'</p>');
+ h+='<div class="rules"><b>'+L('How the battle works','戰鬥規則')+'</b><ul><li>'+L('Right answer = +1 Knowledge Point (KP). Then choose: <b>Quick Strike</b> (1 KP), <b>Mend</b> (2 KP, +1 heart) or <b>'+esc(nqbHeavy(c)[0])+'</b> (3 KP, 300 damage). Or save KP for later.','答對 = +1 知識點。然後選擇：<b>快攻</b>（1 點）、<b>治療</b>（2 點，+1 心）或<b>'+esc(nqbHeavy(c)[1])+'</b>（3 點，300 傷害），或者儲起來。')+'</li><li>'+L('Wrong answer = Murk heals and strikes you (−1 heart). Answering in under 2.5 s = dodged.','答錯 = 默克回血並攻擊你（−1 心）。少於 2.5 秒作答 = 被閃避。')+'</li><li>'+L('At half HP Murk raises a <b>Fog Shield</b> (half damage) and a countdown starts. Answer <b>Shield Breaker</b> science questions to crack it.','默克剩一半 HP 時會升起<b>霧盾</b>（傷害減半），並開始倒數。答對<b>破盾</b>科學題就能擊破它。')+'</li></ul></div>';
+ return h+'<button class="nq-btn big" data-nqbgo="1">'+IC('bolt')+' '+L('Start battle','開始戰鬥')+'</button></section>';}
+
+/* ---- main render (replaces the old boss screen) ---- */
+function nqBossHTML(c,h){var B=NQV.b;if(!B||!B.form)B=NQV.b=nqbNew(NQV.ch);
+ if(B.st==='prep')return h+nqbPrep(c,B);
+ var intro=B.intro;B.intro=0;var F=MURK_FORMS[B.form];
+ h+='<section class="nq-boss rpg rpg2'+(B.phase>=2?' rage':'')+'" style="--c:'+c.col+'">'+nqbHud(c,B)+'<div class="arena" id="arena"><div class="bgl sky"></div><div class="bgl ring"></div><div class="bgl fog f1"></div><div class="bgl fog f2"></div><div class="bgl floor"></div><div class="motes">'+nqMotes(16)+'</div>'+
+  '<div class="unit foe form-'+B.form+(B.hp===0?' gone':'')+(B.shield?' shielded':'')+'" id="foe"><div class="aura"></div><div class="body">'+murkSVG(B.hp)+'</div>'+(B.shield?'<div class="fogdome"></div>':'')+'<div class="shadow"></div></div>'+
+  '<div class="unit me'+(B.hearts===0?' faint':'')+'" id="me"><div class="shadow"></div><div class="body">'+petSVG(S.active,B.hp===0?'joy':B.hearts===0?'sad':'happy',{})+'</div>'+(B.palH?'<div class="palguard"></div>':'')+'</div>'+
+  '<div class="fxl" id="fxl"></div><div class="vign" id="vign"></div>'+
+  (intro?'<div class="vs" aria-hidden="true"><div class="vsl"><div class="vsduo"><div class="por">'+petSVG(S.active,'joy',{})+'</div><div class="por2">'+sciSVG(c.id,'joy')+'</div></div><b>'+esc(LL(petDef(S.active)))+' & '+esc(nqNames(c).sci)+'</b></div><div class="vsr"><div class="por">'+murkSVG()+'</div><b>'+esc(L(F.n[0],F.n[1]))+'</b></div><div class="vstxt">VS</div><div class="bstart">'+L('BATTLE START!','戰鬥開始！')+'</div></div>':'')+'</div>';
+ if(B.hp===0)return h+'<div class="nq-res win rpgres"><div class="big">'+L('VICTORY!','勝利！')+'</div><p>'+L('Murk is driven back! Your knowledge was stronger than the fog.','默克被擊退了！你的知識比濃霧更強大。')+'</p><div class="rstats"><span>'+L('Best combo','最高連擊')+' ×'+B.maxc+'</span><span>'+IC('heart')+' '+B.hearts+' / 3</span><span>'+L('Wrong','答錯')+' '+B.wrong+'</span><span>'+L('Questions','題目')+' '+B.i+'</span></div><button class="nq-btn" data-nqnext="1">'+L('Claim victory','領取勝利')+'</button></div></section>';
+ if(B.hearts===0){var lk=nqLocked(NQV.ch,4);return h+'<div class="nq-res lose rpgres"><div class="big">'+L('DEFEATED…','落敗……')+'</div><p>'+L('Murk grew stronger from every guess. Re-read the chapter, try a different stance or gear, then come back.','每一次亂估都令默克變得更強。重溫這一章，試試另一種姿態或裝備，再來挑戰。')+'</p><p class="lk">'+L('The Lantern is recharging: ','時光燈正在充能：')+'<b data-lockt="'+lk+'">'+fmtSecs(lk)+'</b></p><button class="nq-btn" data-nqback="1">'+L('Back to the chapter','返回章節')+'</button></div></section>';}
+ var q=nqbQ(B),n=q.o.length;
+ if(B.st==='q'){if(!NQV.opts||NQV.opts.length!==n){NQV.opts=shuffle(q.o.map(function(_,k){return k;}));B.hide=[];if(B.stance==='scholar'&&B.i%2===0&&n>2){var wr=NQV.opts.filter(function(k){return k!==q.ok;});B.hide=[wr[Math.floor(Math.random()*wr.length)]];}}
+  if(B.shownI!==B.i){B.shownI=B.i;B.shown=Date.now()+(intro?2200:0);B.deadline=nqbTimed(B)?B.shown+nqbSecs(B)*1000:0;}}
+ var brk=B.cur&&B.cur.brk,catN={fact:['Nobel fact','諾貝爾知識'],sci:['Science','科學'],date:['Date','年份'],order:['Timeline','時間線'],word:['Word','詞彙'],claim:['True or false','真或假'],read:['Reading','閱讀']}[q.cat];
+ h+='<div class="cmd'+(intro?' late':'')+'"><div class="turn">'+IC('bolt')+' '+(B.st==='q'?L('YOUR TURN','你的回合'):L('CHOOSE A SKILL','選擇技能'))+' <span class="qcat">'+esc(L(catN[0],catN[1]))+'</span>'+(brk?'<span class="brk">'+L('SHIELD BREAKER','破盾題')+'</span>':'')+'<small>'+L('Question ','第 ')+(B.i+1)+L('',' 題')+'</small></div>';
+ if(B.deadline&&B.st==='q')h+='<div class="tbar"><i id="tbar" style="animation-duration:'+((B.deadline-Date.now())/1000).toFixed(1)+'s"></i></div>';
+ h+='<p class="qq">'+esc(L(q.q[0],q.q[1]))+'</p><div class="opts'+(n===2?' two':'')+'">'+NQV.opts.map(function(i,k){if(B.hide&&B.hide.indexOf(i)>=0&&B.st==='q')return '<button class="nq-opt cmdopt gone" disabled><kbd>'+(k+1)+'</kbd><span>—</span></button>';var cls=B.ans==null?'':i===q.ok?' ok':i===B.ans?' bad':'';return '<button class="nq-opt cmdopt'+cls+'" data-nqboss="'+i+'"'+(B.ans!=null||B.st!=='q'?' disabled':'')+'><kbd>'+(k+1)+'</kbd><span>'+esc(L(q.o[i][0],q.o[i][1]))+'</span></button>';}).join('')+'</div>';
+ if(B.st==='q'&&B.hintLeft)h+='<button class="nq-btn ghost sm" data-nqbhint="1">'+IC('bulb')+' '+L('Light path: clear 2 wrong options (once)','光之路：移除 2 個錯誤選項（一次）')+'</button>';
+ if(B.st==='act'){var hv=nqbHeavy(c),qd=nqbDmg(B,nqbGear(B,'crit')?150:100),hd=nqbDmg(B,300+(nqbGear(B,'heavy')?80:0)),mc=nqbGear(B,'mend')?1:2;
+  h+='<div class="fbline '+(B.lastOk?'good':'bad')+'">'+B.msg+'</div><div class="skills">'+
+   '<button class="skill" data-nqsk="quick"'+(B.kp<1?' disabled':'')+'><b>'+L('Quick Strike','快攻')+'</b><small>1 KP · '+qd.d+' '+L('dmg','傷害')+(qd.dbl?' ×1.5':'')+'</small></button>'+
+   '<button class="skill mend" data-nqsk="mend"'+(B.kp<mc||B.hearts>=3?' disabled':'')+'><b>'+L('Mend','治療')+'</b><small>'+mc+' KP · +1 '+L('heart','心')+'</small></button>'+
+   '<button class="skill heavy" data-nqsk="heavy"'+(B.kp<3?' disabled':'')+'><b>'+esc(L(hv[0],hv[1]))+'</b><small>3 KP · '+hd.d+' '+L('dmg','傷害')+(hd.dbl?' ×1.5':'')+'</small></button>'+
+   '<button class="skill save" data-nqbnext="1"><b>'+(B.kp?L('Save KP','儲起知識點'):L('Next question','下一題'))+'</b><small>'+L('Enter ▶','Enter ▶')+'</small></button></div>';}
+ return h+'<div id="bnext"></div></div></section>';}
+
+/* ---- answering ---- */
+function nqBossAnswer(i){var B=NQV.b,c=NQ[NQV.ch];if(!B||B.st!=='q'||B.busy||B.ans!=null||B.hp===0||B.hearts===0)return;var q=nqbQ(B),ok=i===q.ok,dt=(Date.now()-(B.shown||0))/1000,rushed=ok&&dt<2.5;
+ B.ans=i;B.busy=1;NQV.na=(NQV.na||0)+1;B.lastCat=q.cat;B.lastOk=ok&&!rushed;
+ document.querySelectorAll('[data-nqboss]').forEach(function(b){b.disabled=true;var k=+b.dataset.nqboss;if(k===q.ok)b.classList.add('ok');else if(k===i)b.classList.add('bad');});
+ var ar=$('#arena'),me=$('#me'),foe=$('#foe'),slow=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&ar&&me&&foe,m=slow?rpgPos(me.querySelector('.body'),ar):null,f=slow?rpgPos(foe.querySelector('.body'),ar):null;
+ function done(){B.busy=0;B.st='act';render();}
+ if(rushed){B.combo=0;B.msg=L('Dodged! You answered too fast – read the question first. No KP this time.','被閃避了！你答得太快——先讀題目。今次沒有知識點。');if(!slow){done();return;}rpgAnim(me,'lunge');setTimeout(function(){rpgAnim(foe,'dodge');rpgFx('dmg miss',f.x,f.y-30,L('DODGED!','閃避！'),1200);sfx('whoosh');},380);setTimeout(done,1100);return;}
+ if(ok){B.combo++;B.maxc=Math.max(B.maxc,B.combo);var gain=1,extra='';if(B.combo%3===0&&nqbGear(B,'combo')){gain++;extra=L(' Double helix: +1 extra KP!',' 雙螺旋：額外 +1 知識點！');}
+  B.kp=Math.min(5,B.kp+gain);if(nqbGear(B,'dot'))B.dot=2;
+  var brk=B.cur&&B.cur.brk;if(brk){B.shield=Math.max(0,B.shield-1);}
+  B.msg=L('Correct! +'+gain+' KP.','答對！+'+gain+' 知識點。')+extra+(brk?(B.shield?L(' The Fog Shield cracks!',' 霧盾出現裂痕！'):L(' The Fog Shield SHATTERS!',' 霧盾碎裂了！')):'');sfx('right');
+  var assist=B.stance==='striker'&&B.combo%3===0;
+  if(!slow){if(assist){var a0=nqbDmg(B,150);nqbHit(B,a0.d);}done();return;}
+  var kpEl=$('#kp');if(kpEl){kpEl.innerHTML=nqbKP(B);rpgAnim(kpEl,'pop');}var kn=$('#kpn');if(kn)kn.textContent=B.kp;
+  rpgFx('dmg heal',m.x,m.y-50,'+'+gain+' KP',1000);
+  if(brk){rpgBurst(f.x,f.y,'#BFE8FF',20);rpgShake('shake1');rpgBanner(B.shield?L('SHIELD CRACKED!','霧盾裂開！'):L('SHIELD SHATTERED!','霧盾碎裂！'),'gold');sfx('shatter');}
+  if(assist){setTimeout(function(){laureateAssist(c,f,function(){var a=nqbDmg(B,150);nqbHit(B,a.d);rpgAnim(foe,'hit');rpgBurst(f.x,f.y,'#FFD000',26);rpgShake('shake2');rpgFx('dmg crit',f.x,f.y-30,'<small>'+L('ASSIST!','援助！')+'</small>-'+a.d,1200);nqbHpUi(B);if(B.hp===0){nqbWin(f);return;}setTimeout(done,700);});},500);}
+  else setTimeout(done,brk?1100:650);return;}
+ /* wrong or timed out */
+ B.combo=0;B.wrong++;var heal=(MURK_FORMS[B.form].heal||100);if(nqbGear(B,'noheal'))heal=Math.round(heal/2);if(B.open==='claim'&&!B.eyeUsed){B.eyeUsed=1;heal=0;}B.hp=Math.min(B.mx,B.hp+heal);
+ var who=B.palH>0?'pal':(nqbGear(B,'guard')&&!B.guardUsed)?'guard':'me';if(who==='pal')B.palH--;else if(who==='guard')B.guardUsed=1;else B.hearts--;
+ B.msg=(i<0?L('Time’s up! ','時間到！'):L('Not quite. ','答錯了。'))+L('The right answer is: ','正確答案：')+'<b>'+esc(L(q.o[q.ok][0],q.o[q.ok][1]))+'</b>. '+(heal?L('Murk heals +'+heal+' HP. ','默克回復 '+heal+' HP。'):L('Sharp Eye: Murk could not heal! ','銳眼：默克無法回血！'))+(who==='pal'?L('Your pal took the hit for you!','小夥伴替你擋下了攻擊！'):who==='guard'?L('The lead shield blocked the hit!','鉛盾擋下了攻擊！'):L('You lost a heart.','你失去了一顆心。'));
+ sfx('wrong');if(!slow){if(!B.hearts)nqbLose();done();return;}
+ setTimeout(function(){if(heal)rpgFx('dmg heal',f.x,f.y-50,'+'+heal+' HP',1200);nqbHpUi(B);sfx('enrage');},150);
+ setTimeout(function(){murkAttack(m,f,function(){if(who==='me'){rpgAnim(me,'hurt');rpgShake('shake2');sfx('hurt');rpgAnim($('#vign'),'on');rpgFx('dmg bad',m.x,m.y-40,'-1',1200);}else{rpgFx('dmg miss',m.x,m.y-40,who==='pal'?L('BLOCKED!','擋住了！'):L('LEAD SHIELD!','鉛盾！'),1200);sfx('beamhit');}
+  var hs=$('#hearts');if(hs)hs.innerHTML=nqbHearts(B);
+  if(B.hearts===0){nqbLose();setTimeout(function(){me.classList.add('faint');rpgBanner(L('DEFEATED…','落敗……'),'grey');},450);setTimeout(function(){B.busy=0;render();},2200);return;}
+  setTimeout(done,600);});},650);}
+function nqbHpUi(B){var ar=$('#arena'),w=(B.hp/B.mx*100)+'%',fill=$('#hpfill'),num=$('#hpnum'),gh=document.querySelector('.bhud .ghost');if(fill)fill.style.width=w;if(num)num.textContent=B.hp;setTimeout(function(){if(gh)gh.style.width=w;},500);}
+function nqbLose(){nqLog(NQV.ch,4,nqLg(NQV.na,0),'quit');nqLock(NQV.ch,4,NQ_LOCKS.boss);}
+function nqbWin(f){var B=NQV.b;setTimeout(function(){var foe=$('#foe');rpgAnim(foe,'dissolve');if(f){rpgBurst(f.x,f.y,'#B478FF',34);rpgBurst(f.x,f.y,'#FFD000',24);}rpgShake('shake2');sfx('shatter');},350);setTimeout(function(){rpgBanner(L('VICTORY!','勝利！'),'gold');sfx('victory');},1000);setTimeout(function(){B.busy=0;NQV.opts=null;render();},2400);}
+/* end of a turn: Radium glow ticks, phase 2 check, next question */
+function nqbEndTurn(after){var B=NQV.b,dot=0;if(B.dot>0&&B.hp>0){dot=50;B.dot--;nqbHit(B,dot);}
+ if(B.hp===0){after(true);return;}
+ if(B.phase===1&&B.hp<=B.mx/2){B.phase=2;B.shield=B.cracks;if(nqbGear(B,'heal')&&B.hearts<3)B.hearts++;B.phaseNew=1;}
+ after(false,dot);}
+function nqbNext(){var B=NQV.b;if(!B||B.st!=='act'||B.busy)return;sfx('tap');nqbEndTurn(function(won,dot){if(won){B.busy=1;nqbWin(null);return;}nqbAdvance(dot);});}
+function nqbAdvance(dot){var B=NQV.b;B.i++;B.ans=null;B.st='q';NQV.opts=null;B.cur=null;render();
+ setTimeout(function(){var ar=$('#arena');if(!ar)return;var f=rpgPos($('#foe .body'),ar);if(dot){rpgFx('dmg',f.x,f.y-20,'-'+dot+'<small>'+L('radium glow','鐳光')+'</small>',1100);}
+  if(B.phaseNew){B.phaseNew=0;rpgBanner(L('FOG SHIELD! Countdown starts','霧盾！開始倒數'),'red');sfx('enrage');rpgShake('shake2');}},60);}
+function nqbSkill(k){var B=NQV.b,c=NQ[NQV.ch];if(!B||B.st!=='act'||B.busy)return;var mc=nqbGear(B,'mend')?1:2,cost=k==='quick'?1:k==='heavy'?3:mc;if(B.kp<cost)return;if(k==='mend'&&B.hearts>=3)return;
+ B.kp-=cost;B.busy=1;var ar=$('#arena'),me=$('#me'),foe=$('#foe'),slow=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&ar&&me&&foe;
+ var finish=function(){nqbEndTurn(function(won,dot){if(won){nqbWin(slow?rpgPos(foe.querySelector('.body'),ar):null);return;}B.busy=0;nqbAdvance(dot);});};
+ if(k==='mend'){B.hearts=Math.min(3,B.hearts+1);if(!slow){finish();return;}var m0=rpgPos(me.querySelector('.body'),ar);rpgFx('dmg heal',m0.x,m0.y-40,'+1',1100);rpgBurst(m0.x,m0.y,'#7CFFCB',18);sfx('level');var hs=$('#hearts');if(hs)hs.innerHTML=nqbHearts(B);setTimeout(finish,800);return;}
+ var base=k==='quick'?(nqbGear(B,'crit')?150:100):300+(nqbGear(B,'heavy')?80:0),r=nqbDmg(B,base);nqbHit(B,r.d);
+ if(!slow){finish();return;}var m=rpgPos(me.querySelector('.body'),ar),f=rpgPos(foe.querySelector('.body'),ar),big=k==='heavy';
+ rpgAnim(me,'lunge');sfx(big?'crit':'beam');if(big)rpgBanner('★ '+L(nqbHeavy(c)[0],nqbHeavy(c)[1])+' ★','gold');
+ var pr=rpgFx('proj'+(big?' crit big':''),m.x+20,m.y-10,'<i></i><i></i><i></i>',800);pr.style.setProperty('--dx',(f.x-m.x-20)+'px');pr.style.setProperty('--dy',(f.y-m.y+10)+'px');pr.style.setProperty('--c',big?'#FFD000':c.col);
+ setTimeout(function(){rpgAnim(foe,'hit');rpgBurst(f.x,f.y,big?'#FFD000':c.col,big?30:16);rpgShake(big?'shake2':'shake1');sfx(big?'crit':'beamhit');
+  rpgFx('dmg'+(big?' crit':''),f.x,f.y-30,(r.dbl?'<small>'+L('OPENING BONUS ×1.5','開局加成 ×1.5')+'</small>':'')+(r.half?'<small>'+L('shield: half damage','霧盾：傷害減半')+'</small>':'')+'-'+r.d,1300);nqbHpUi(B);var kpEl=$('#kp');if(kpEl)kpEl.innerHTML=nqbKP(B);var kn=$('#kpn');if(kn)kn.textContent=B.kp;
+  setTimeout(finish,big?900:600);},big?520:420);}
+rpgNextTurn=function(){var B=NQV.b;if(B&&B.form){nqbNext();return;}};
+/* timer: a countdown runs in phase 2 (or from the start for some Murk forms); time-out counts as a wrong answer */
+var nqbT=null;
+setInterval(function(){var B=NQV&&NQV.b;if(curScreen!=='nobel'||NQV.task!=='boss'||!B||!B.form||B.st!=='q'||!B.deadline||B.busy||B.ans!=null)return;if(Date.now()>=B.deadline)nqBossAnswer(-1);},250);
+document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-nqbst],[data-nqbgear],[data-nqbgo],[data-nqsk],[data-nqbhint]');if(!t||!NQV||!NQV.b)return;var B=NQV.b;
+ if(t.dataset.nqbst){B.stance=t.dataset.nqbst;sfx('tap');render();}
+ else if(t.dataset.nqbgear){var id=t.dataset.nqbgear,j=B.gear.indexOf(id);if(j>=0)B.gear.splice(j,1);else{if(B.gear.length>=2)B.gear.shift();B.gear.push(id);}sfx('tap');render();}
+ else if(t.dataset.nqbgo){nqbStart(B);sfx('enrage');render();var ar=$('.nq-boss');if(ar)ar.scrollIntoView({block:'start'});}
+ else if(t.dataset.nqsk)nqbSkill(t.dataset.nqsk);
+ else if(t.dataset.nqbhint&&B.hintLeft&&B.st==='q'){B.hintLeft=0;var q=nqbQ(B),wr=NQV.opts.filter(function(k){return k!==q.ok&&(B.hide||[]).indexOf(k)<0;});B.hide=(B.hide||[]).concat(shuffle(wr).slice(0,Math.max(0,Math.min(2,wr.length-(q.o.length>2?0:1)))));sfx('crit');render();}});
+
+/* ---- chapter page: show the strategy (opening bonus + which Murk you will meet) ---- */
+(function(){var ch0=nqChapterHTML;nqChapterHTML=function(){var h=ch0.apply(this,arguments),i=NQV.ch,c=NQ[i],o=nqbOpen(i),F=MURK_FORMS[nqbForm(i)];
+ h=h.replace(L('Defeat Murk · 16 questions','打敗默克 · 16 條題目'),L('Strategy battle · new questions every time','策略戰鬥 · 每次題目都不同'));
+ return h+'<div class="nq-strat"><div><b>'+IC('sparkle')+' '+L('Opening bonus','開局加成')+'</b><span>'+(o?esc(L(NQ_OPEN[o].n[0],NQ_OPEN[o].n[1]))+' · '+esc(L(NQ_OPEN[o].d[0],NQ_OPEN[o].d[1])):L('Your FIRST task here sets a bonus for the Fog battle.','你在這章完成的第一個任務，會決定霧妖之戰的加成。'))+'</span></div><div><b>'+IC('warn')+' '+L('Murk will become','默克會變成')+'</b><span>'+esc(L(F.n[0],F.n[1]))+' · '+esc(L(F.d[0],F.d[1]))+'</span></div></div>';};})();
+/* ---- story: knowledge as keys (dates you met in the Timeline glow; tap for lore + coins) and dialogue that remembers your choices ---- */
+(function(){var st0=nqStoryHTML;nqStoryHTML=function(c){var h=st0.apply(this,arguments),pg=NQV.pg||0,ln=c.story[pg],ex='';
+ if(nqHas(c.id,2)){var txt=ln[1]+' '+ln[2],keys=c.time.filter(function(e){return txt.indexOf(String(e[0]))>=0;});
+  if(keys.length)ex+='<div class="nq-keys"><b>'+IC('sparkle')+' '+L('You know these dates from the Timeline!','你在時間線見過這些年份！')+'</b>'+keys.map(function(e){var got=(nqS().keys||{})[c.id+'_'+e[0]];return '<button class="kchip'+(got?' got':'')+'" data-nqkey="'+e[0]+'"><b>'+e[0]+'</b>'+(got?esc(L(e[1],e[2])):L('Tap to unlock a secret','點擊解鎖秘密'))+'</button>';}).join('')+'</div>';}
+ if(pg===0){var mem=[];if(nqHas(c.id,6))mem.push(L('I see you have already handled the lab work safely – let us go straight to the story!','我看到你已經安全地完成了實驗——我們直接進入故事吧！'));if(nqHas(c.id,3))mem.push(L('You already know the key words from the Word Vault. Listen out for them!','你已經在詞彙寶庫學會了關鍵詞，留心聽聽它們！'));
+  if(mem.length)ex+='<div class="nq-mem"><span class="mp">'+sciSVG(c.id,'joy')+'</span><p><b>'+esc(nqNames(c).sci)+':</b> '+mem.map(esc).join(' ')+'</p></div>';}
+ return ex?h+ex:h;};})();
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-nqkey]');if(!b||NQV.task!=='story')return;var c=NQ[NQV.ch],y=b.dataset.nqkey,st=nqS();st.keys=st.keys||{};var k=c.id+'_'+y;if(st.keys[k])return;st.keys[k]=1;S.coins+=5;sfx('coin');save();toast(L('Secret unlocked! +5 coins','解鎖秘密！+5 金幣'));render();});
+
+window.__game={dt:{DT:DT,pick:dtPick,card:dtCardHTML,prog:dtProgress},foods:FOODS,LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},sci:function(a,b){return sciSVG(a,b);},nqv:function(){return NQV;},nqpool:function(i){return nqbPool(i);},nqq:function(){return NQV&&NQV.b&&NQV.b.cur?NQV.b.cur.q:null;},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},pick:pickQs,AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;},leg:{dmCount:dmCount,dmNeed:dmNeed,dmTotal:dmTotal,dmHit:dmHit,evoReq:evoReq,palBuff:palBuff,gain:function(c,x,ctx){gainCtx=ctx;return gain(c,x);},chk:checkPetUnlocks,PETS:PETS,dict:function(u){openDictSetup(u);},evo:function(){openEvolve();},get DQ(){return DQ;}}};
 })();
 
 </script>
