@@ -7,14 +7,14 @@
 <title>Mochi Science Pals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Noto+Sans+TC:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&amp;display=swap&amp;text=%20%21%22%23%24%25%26%27%28%29%2A%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D~%C2%B7%E2%80%A2%E2%80%93%E2%80%94%E2%80%98%E2%80%99%E2%80%9C%E2%80%9D%C3%97%C3%B7%C2%B0%C2%B1%C2%B3%C2%B2%C2%B9%E2%82%82%E2%82%83%E2%80%A6%E2%86%92%E2%86%90%E2%86%94%E2%86%91%E2%86%93%E2%98%85%E2%98%86%E2%9C%93%E2%9C%97%E2%82%AC%C2%A3%C2%A5%C2%A9%C2%AE%E2%84%A2%C2%BD%C2%BC%C2%BE%C2%B5%CE%A9"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&amp;family=Noto+Sans+TC:wght@400;700&amp;display=swap">
 <style>
 /* Layout: one cozy phone-width column (room scene on top, cards below); widens to a 2-column desk on tablets/desktop. Bottom tab bar. */
 :root{
   --cream:#FFFDF6; --matcha:#D8E2DC; --pink:#FFE5EC; --rose:#E8AEB7; --butter:#FFF1C5; --sky:#D8F3DC;
   --lav:#EDE4F7; --ink:#5B4B49; --ink2:#8A7773; --line:#EADFD6; --card:#FFFFFF; --good:#6FB58A; --bad:#E2828F; --gold:#F2C14E;
   --shadow:0 6px 18px rgba(120,90,80,.12), 0 2px 4px rgba(120,90,80,.08);
-  --r:22px; --font:'M PLUS Rounded 1c','Noto Sans TC',ui-rounded,system-ui,sans-serif;
+  --r:22px; --font:'M PLUS Rounded 1c','Huninn','Noto Sans TC',ui-rounded,system-ui,sans-serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -1424,6 +1424,52 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 .fg3{right:12%;bottom:-40px;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,rgba(200,170,255,.55) 45%,transparent 72%)}
 @keyframes lgfgf{50%{margin-top:-24px}}
 @media (prefers-reduced-motion:reduce){.lgfx .scan,.glowL,.glowR,.dust i,.orb-r,.lgp,.fg1{animation:none}.lgmid,.dust,.lgfg span,.lgduo{transform:none}}
+.pcls{font-weight:700;color:var(--ink2);font-size:12px}
+/* ===== home advert: frame-break pal banner ===== */
+.palad{--a:#FFC800;--b:#FFE9A0;--ink3:#5E3B00;position:relative;margin:44px 0 16px;min-height:132px;display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:center;gap:10px;padding:12px 14px 12px 0;border-radius:24px;isolation:isolate}
+.pa-bg{position:absolute;inset:0;border-radius:24px;overflow:hidden;z-index:-1;border:3px solid #fff;box-shadow:0 5px 0 rgba(0,0,0,.12),0 14px 30px rgba(0,0,0,.12)}
+.pa-legendary .pa-bg{background:radial-gradient(120% 140% at 20% 100%,#FFE27A 0%,#FFC23D 38%,#F59E2A 70%,#D9701A 100%)}
+.pa-mythic .pa-bg{background:#1B1440}
+.pa-holo{position:absolute;inset:-40%;background:conic-gradient(from var(--ha,0deg),#FF8FB1,#FFD23F,#7ED957,#5CC8FF,#B07CFF,#FF8FB1);opacity:.55;filter:blur(18px);animation:holoring 8s linear infinite}
+.pa-neb{position:absolute;inset:0;background-image:radial-gradient(1.5px 1.5px at 12% 20%,#fff,transparent),radial-gradient(1.2px 1.2px at 32% 70%,#fff,transparent),radial-gradient(2px 2px at 62% 30%,#fff,transparent),radial-gradient(1.4px 1.4px at 82% 76%,#fff,transparent),radial-gradient(1.2px 1.2px at 92% 12%,#fff,transparent),radial-gradient(60% 80% at 70% 40%,rgba(120,80,255,.45),transparent 70%);animation:twinkle 3s ease-in-out infinite alternate}
+@keyframes twinkle{to{opacity:.6}}
+.pa-beam{position:absolute;top:-20%;width:26%;height:160%;background:linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,0));transform-origin:50% 0;opacity:.55;filter:blur(2px)}
+.pa-beam.b1{left:6%;transform:rotate(18deg);animation:beam 6s ease-in-out infinite}.pa-beam.b2{left:40%;transform:rotate(-14deg);animation:beam 7s ease-in-out infinite reverse}
+@keyframes beam{50%{opacity:.25;transform:rotate(4deg)}}
+.pa-sheen{position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.6) 50%,transparent 65%);transform:translateX(-120%);animation:cardsheen 4s ease-in-out infinite}
+.br-bio{--pc:#58CC02}.br-chem{--pc:#FF86D0}.br-phys{--pc:#FFF27A}.br-astro{--pc:#8EC5FF}
+.pa-legendary.br-bio .pa-bg{background:radial-gradient(120% 140% at 20% 100%,#FFF3A0 0%,#C8EB6A 40%,#5DBF3A 80%,#2F8A2A 100%)}
+.pa-legendary.br-chem .pa-bg{background:radial-gradient(120% 140% at 20% 100%,#FFE6F2 0%,#FFB3D9 40%,#C58BFF 80%,#7D5CE0 100%)}
+.pa-legendary.br-astro .pa-bg{background:radial-gradient(120% 140% at 20% 100%,#FFF1C2 0%,#9FD6FF 40%,#4285F4 80%,#2A4FB8 100%)}
+.pa-p{position:absolute;line-height:0;opacity:.75;animation:lgsine 5s ease-in-out infinite;filter:drop-shadow(0 0 4px var(--pc))}
+.pa-p .ic{width:22px;height:22px}
+.pa-pal{position:absolute;left:4px;bottom:14px;width:150px;z-index:2;filter:drop-shadow(0 6px 8px rgba(0,0,0,.25));animation:lgbob 3s ease-in-out infinite}
+.pa-pal svg{width:100%;height:auto;display:block}
+.pa-perk{position:absolute;left:6px;bottom:-12px;z-index:3;display:inline-flex;align-items:center;gap:4px;max-width:58%;font-size:11.5px;font-weight:800;line-height:1.25;background:#fff;color:#5E3B00;border-radius:999px;padding:4px 10px 4px 6px;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.pa-perk .ic{width:15px;height:15px;flex:none}
+.pa-txt{grid-column:2;min-width:0;display:grid;gap:3px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.pa-top{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.pa-top .tier{position:static}
+.pa-br{font-size:11px;font-weight:800;background:rgba(255,255,255,.25);border-radius:999px;padding:1px 8px}
+.pa-name{font-size:22px;line-height:1.15;font-weight:900}
+.pa-tag{font-size:12.5px;font-weight:700;opacity:.95}
+.pa-prog{height:10px;border-radius:999px;background:rgba(0,0,0,.25);overflow:hidden;margin-top:4px}.pa-prog i{display:block;height:100%;background:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+.pa-goal{font-size:11.5px;font-weight:700}
+.pa-side{grid-column:3;display:grid;gap:8px;justify-items:center}
+.pa-cta{display:inline-flex;align-items:center;gap:5px;min-height:46px;padding:8px 14px;border-radius:16px;font-weight:900;font-size:13.5px;white-space:nowrap;transition:transform .08s,box-shadow .08s}
+.pa-cta .ic{width:20px;height:20px}
+.pa-cta.gold{background:#FFC800;color:#5E3B00;box-shadow:0 4px 0 #C98A00}.pa-cta.blue{background:#1CB0F6;color:#fff;box-shadow:0 4px 0 #1478A8}
+.pa-cta:active{transform:translateY(4px);box-shadow:none}
+.pa-nav{display:flex;align-items:center;gap:6px;color:#fff;font-weight:800;font-size:12px;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.pa-nav button{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.9);color:#5E3B00;font-weight:900;font-size:18px;line-height:1;box-shadow:0 2px 0 rgba(0,0,0,.15)}
+@media (max-width:520px){.palad{grid-template-columns:132px minmax(0,1fr);grid-template-rows:auto auto;padding-right:12px}.pa-pal{width:132px}.pa-side{grid-column:2;grid-row:2;justify-items:start;grid-auto-flow:column;align-items:center}.pa-perk{max-width:44%}}
+@media (prefers-reduced-motion:reduce){.pa-holo,.pa-neb,.pa-beam,.pa-sheen,.pa-p,.pa-pal{animation:none}}
+/* frame-break: lift the pal so its head and ears rise above the banner's top edge */
+.palad{margin-top:78px;grid-template-columns:168px minmax(0,1fr) auto}
+.pa-pal{width:170px;bottom:auto;top:-70px;left:0}
+.pa-perk{bottom:10px;left:10px}
+@media (max-width:520px){.palad{grid-template-columns:150px minmax(0,1fr)}.pa-pal{width:150px;top:-60px}.pa-perk{max-width:46%;bottom:8px}}
+@media (max-width:520px){.pa-perk{max-width:140px;font-size:10.5px;padding:3px 8px 3px 5px}}
+.lgcap.guestcap{font-size:12px;margin-top:6px;opacity:.9}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -3002,7 +3048,7 @@ XQ4['2.4']=[
  M(5,'A company sells a jug filter that "makes any water 100% pure". Which comment is MOST scientific?','一間公司出售濾水壺，聲稱「令任何水 100% 純淨」。哪個評論最科學？',[['A simple filter cannot remove all dissolved substances or every microorganism, so the claim is too strong','簡單濾水器不能去除所有溶解物質或每一種微生物，聲稱太誇張'],['Filters always make pure water','濾水器一定能製造純水'],['The claim must be true because it is printed','印在包裝上的聲稱一定是真的'],['Pure water comes only from shops','純水只能從商店買到']],'Claims should be checked against evidence and scientific principles.','聲稱應以證據和科學原理檢驗。'),
  M(5,'Which comparison of filtration and distillation is CORRECT?','以下哪項對過濾和蒸餾的比較正確？',[['Filtration removes insoluble solids; distillation also removes dissolved substances but uses much more energy','過濾去除不溶固體；蒸餾還能去除溶解物質，但耗用更多能量'],['Both remove dissolved salt easily','兩者都能輕易去除溶解了的鹽'],['Filtration needs heating','過濾需要加熱'],['Distillation cannot give pure water','蒸餾不能得到純水']],'Each method has strengths and costs.','每種方法各有優點和代價。'),
  M(5,'After a typhoon, tap water looks yellow. A family has a filter, a kettle and a pot. Which plan is SAFEST?','颱風後，自來水呈黃色。一家人有濾水器、水煲和鍋。哪個做法最安全？',[['Let it settle, filter it, then boil it before drinking','先讓水靜置沉澱，再過濾，然後煮沸才飲用'],['Drink it straight away','立即飲用'],['Only boil it, even if it is very muddy','只把很混濁的水煮沸'],['Add salt and drink','加鹽後飲用']],'Remove solids first, then kill microorganisms by boiling.','先去除固體，再煮沸殺死微生物。'),
- M(6,'You design a cheap emergency water filter from a cut plastic bottle. Which order of layers (from top to bottom) is BEST?','你用剪開的膠樽設計廉價應急濾水器。由上至下哪個層次排列最好？',[['Cotton cloth → fine sand → charcoal → coarse sand → gravel','棉布 → 幼沙 → 炭 → 粗沙 → 碎石'],['Gravel → fine sand → cloth','碎石 → 幼沙 → 布'],['Only gravel','只有碎石'],['Salt → sugar → sand','鹽 → 糖 → 沙']],'Layers trap large to small particles; charcoal helps remove some smells and colours. Boil the water afterwards.','各層由大至小截留顆粒；炭有助去除部分氣味和顏色。之後仍需煮沸。'),
+ M(6,'You build a model of a water-works sand filter in a cut plastic bottle. Which order of layers (from top to bottom) is BEST?','你用剪開的膠樽製作濾水廠沙濾池的模型。由上至下哪個層次排列最好？',[['Fine sand → coarse sand → gravel, with cotton wool at the neck','幼沙 → 粗沙 → 碎石，瓶頸放棉花'],['Only one layer of large stones','只放一層大石'],['A layer of mud on top of the sand','在沙上加一層泥'],['Salt → sugar → sand','鹽 → 糖 → 沙']],'Like a water-works filter bed: fine sand traps tiny particles, the coarser layers below support it and let water drain out. Boil the water afterwards, because a sand filter cannot remove all germs.','就像濾水廠的濾床：幼沙截留細小顆粒，下面較粗的層次承托幼沙並讓水流出。之後仍要把水煮沸，因為沙濾不能去除所有細菌。'),
  M(6,'You must test which sand filters muddy water best: coarse or fine. What should you MEASURE?','你要測試粗沙還是幼沙過濾泥水效果較好。你應量度甚麼？',[['How clear the filtrate is (e.g. using a turbidity scale)','濾液的清澈程度（例如用濁度表）'],['The colour of the sand bag','沙袋的顏色'],['The temperature of the room','房間溫度'],['How heavy the bottle is','瓶的重量']],'Clarity of the filtrate is the dependent variable.','濾液的清澈程度是應變項。'),
  M(6,'A solar still is placed in the sun with sea water inside. To collect MORE fresh water, which change is BEST?','把裝有海水的太陽能蒸餾器放在陽光下。要收集更多淡水，哪個改動最好？',[['Use a black tray to absorb more heat, and keep the cover cooler','用黑色盤吸收更多熱，並保持蓋子較冷'],['Put it in the shade','放在陰涼處'],['Remove the cover','拿走蓋子'],['Use less sunlight','減少陽光']],'More evaporation and better condensation give more water.','蒸發越多、凝結越好，便能收集更多水。'),
  T(3,'The residue in filtration is the liquid that passes through the paper.','過濾中的殘渣是穿過濾紙的液體。',false,'The liquid is the filtrate; the residue is the solid left on the paper.','液體是濾液；殘渣是留在濾紙上的固體。')
@@ -3074,7 +3120,7 @@ XQ4['3.1']=[
  M(1,'Which is a living thing?','以下哪一項是生物？',[['A mushroom','蘑菇'],['A stone','石頭'],['A cloud','雲'],['A toy car','玩具車']],'A mushroom (fungus) carries out the vital functions.','蘑菇（真菌）進行生命活動。'),
  T(1,'All living things are made of cells.','所有生物都由細胞組成。',true,'Cells are the basic units of life.','細胞是生命的基本單位。'),
  T(2,'Plants cannot move at all, so movement is not a vital function of plants.','植物完全不能移動，所以運動不是植物的生命活動。',false,'Plants move parts slowly, e.g. leaves turn and flowers open and close.','植物部分會緩慢移動，例如葉轉向、花開合。'),
- T(2,'Fire grows and needs oxygen, so fire is a living thing.','火會增大，也需要氧，所以火是生物。',false,'Fire cannot reproduce, respond to stimuli in a controlled way, or grow by making new cells.','火不能生殖、不能有規律地對刺激作出反應，也不能透過製造新細胞生長。'),
+ T(2,'Fire grows and needs oxygen, so fire is a living thing.','火會增大，也需要氧，所以火是生物。',false,'Fire is not made of cells. It spreads, but it does not grow by making new cells, reproduce, excrete or respond to stimuli like a living thing.','火不是由細胞組成的。它會蔓延，但不會透過製造新細胞生長，也不會生殖、排泄或像生物一樣對刺激作出反應。'),
  M(2,'A mimosa (touch-me-not) plant folds its leaves when touched. This shows…','含羞草被觸碰時葉片會合起。這顯示……',[['sensitivity – reacting to a stimulus','感應——對刺激作出反應'],['excretion','排泄'],['respiration','呼吸作用'],['reproduction','生殖']],'Touch is the stimulus; folding is the response.','觸碰是刺激；合起是反應。'),
  M(2,'Which shows GROWTH?','以下哪一項顯示生長？',[['A baby gains height and mass over months','嬰兒在幾個月內身高和體重增加'],['A balloon is blown up','氣球被吹大'],['Ice turns into water','冰變成水'],['A crystal forms in salt water','鹽水中形成晶體']],'Growth in living things is a permanent increase in size by making new cells.','生物的生長是透過製造新細胞而永久增大。'),
  M(2,'Plants make their own food using light. This vital function is…','植物利用光製造自己的食物。這項生命活動是……',[['nutrition','營養'],['movement','運動'],['excretion','排泄'],['sensitivity','感應']],'Plants carry out nutrition by photosynthesis.','植物透過光合作用進行營養。'),
@@ -3391,7 +3437,7 @@ XQ4['5.2']=[
  M(2,'Why does hot air rise?','為甚麼熱空氣會上升？',[['It expands and becomes less dense','它膨脹，密度變小'],['It becomes heavier','它變得更重'],['It is pulled by the Sun','被太陽拉上去'],['It turns into water','它變成水']],'Less dense fluid rises; denser fluid sinks.','密度較小的流體上升；密度較大的下沉。'),
  M(2,'Which surface is the BEST emitter of radiation?','哪種表面最能發出輻射？',[['Dull black','暗黑色'],['Shiny silver','光亮銀色'],['Shiny white','光亮白色'],['Mirror','鏡面']],'Good absorbers are also good emitters.','良好的吸收體也是良好的輻射體。'),
  M(3,'Birds fluff up their feathers in winter. Why does this keep them warm?','雀鳥冬天把羽毛蓬起。為甚麼這樣能保暖？',[['More air is trapped, and air is a poor conductor','困住更多空氣，而空氣是不良導熱體'],['Feathers produce heat by burning','羽毛燃燒產生熱'],['It reflects all sunlight away','把所有陽光反射走'],['Feathers are metal','羽毛是金屬']],'Trapped air reduces heat loss.','困住的空氣減少熱散失。'),
- M(3,'Why are radiators on cars and fridges painted black?','為甚麼汽車和雪櫃的散熱器漆成黑色？',[['Black surfaces emit heat by radiation well','黑色表面能有效以輻射散熱'],['Black is cheaper','黑色較便宜'],['Black absorbs cold','黑色吸收冷'],['Black stops convection','黑色阻止對流']],'Dull black is a good emitter.','暗黑色是良好的輻射體。'),
+ M(3,'Why are the cooling fins at the back of a fridge painted dull black?','為甚麼雪櫃背面的散熱鰭片漆成暗黑色？',[['Dull black surfaces emit heat by radiation well','黑色表面能有效以輻射散熱'],['Black is cheaper','黑色較便宜'],['Black absorbs cold','黑色吸收冷'],['Black stops convection','黑色阻止對流']],'Dull black is a good emitter.','暗黑色是良好的輻射體。'),
  M(3,'On a sunny day, why does a car’s metal roof feel hotter than its plastic bumper?','晴天時，為甚麼汽車的金屬車頂摸起來比塑膠保險槓更熱？',[['Metal conducts heat to your hand faster','金屬把熱更快傳導到你的手'],['Metal is always hotter than the Sun','金屬總是比太陽更熱'],['Plastic absorbs all heat','塑膠吸收所有熱'],['The bumper is in water','保險槓在水中']],'Good conductors transfer heat to your skin quickly.','良好導熱體把熱迅速傳到皮膚。'),
  M(3,'Which explains why a land breeze blows at NIGHT?','以下哪項解釋晚上吹陸風的原因？',[['Land cools faster than the sea, so warm air rises over the sea and cooler air moves from land','陸地比海洋冷卻得快，海面暖空氣上升，較冷的空氣由陸地吹向海'],['The sea is colder at night','晚上海洋較冷'],['The Moon pulls the air','月亮拉動空氣'],['There is no convection at night','晚上沒有對流']],'Convection currents reverse at night.','晚上對流方向倒轉。'),
  M(4,'Double-glazed windows keep a room warm because…','雙層玻璃窗能令房間保暖，因為……',[['the gap between panes reduces conduction','兩塊玻璃之間的空隙減少傳導'],['glass is a great conductor','玻璃是極佳導熱體'],['they let in more cold air','讓更多冷空氣進入'],['they create convection outside','在室外產生對流']],'Trapped air or vacuum is a poor conductor.','困住的空氣或真空是不良導熱體。'),
@@ -3502,7 +3548,7 @@ XQ4['6.3']=[
  M(3,'Why does hot water dissolve sugar faster (particle view)?','從粒子角度看，為甚麼熱水溶解糖較快？',[['Water particles move faster and hit the sugar more often and harder','水粒子移動較快，更頻密及更大力地撞擊糖'],['Hot water has more particles','熱水有更多粒子'],['Sugar particles melt','糖粒子熔化'],['Hot water is a different substance','熱水是另一種物質']],'Faster particles pull solute particles away sooner.','較快的粒子更快把溶質粒子拉走。'),
  M(3,'You dilute 100 cm³ of orange squash with 400 cm³ of water. How many times more dilute is it?','你用 400 cm³ 水稀釋 100 cm³ 橙汁濃縮液。濃度被稀釋了多少倍？',[['5 times','5 倍'],['4 times','4 倍'],['2 times','2 倍'],['100 times','100 倍']],'Total volume 500 cm³ is 5 times the original 100 cm³.','總體積 500 cm³ 是原來 100 cm³ 的 5 倍。'),
  M(4,'Why is the volume of a sugar solution often slightly LESS than the volume of water + the volume of sugar?','為甚麼糖溶液的體積往往略少於水的體積加糖的體積？',[['Sugar particles fit into spaces between water particles','糖粒子填入水粒子之間的空隙'],['Some sugar is destroyed','部分糖被消滅'],['Some water evaporates instantly','部分水立即蒸發'],['Sugar particles shrink','糖粒子縮小']],'Particles of different sizes can pack together.','大小不同的粒子可以互相填補空隙。'),
- M(4,'A 5% salt solution and a 10% salt solution have the same volume. Compare them.','5% 鹽溶液和 10% 鹽溶液體積相同。比較兩者。',[['The 10% solution has twice as many salt particles','10% 溶液的鹽粒子數目是 5% 的兩倍'],['They have the same number of salt particles','鹽粒子數目相同'],['The 5% one is more concentrated','5% 的較濃'],['The 10% one has no water','10% 的沒有水']],'Higher percentage → more solute per volume.','百分比越高 → 每單位體積的溶質越多。'),
+ M(4,'A 5% salt solution and a 10% salt solution have the same volume. Compare them.','5% 鹽溶液和 10% 鹽溶液體積相同。比較兩者。',[['The 10% solution has about twice as many salt particles','10% 溶液的鹽粒子數目大約是 5% 的兩倍'],['They have the same number of salt particles','鹽粒子數目相同'],['The 5% one is more concentrated','5% 的較濃'],['The 10% one has no water','10% 的沒有水']],'Higher percentage → more solute per volume.','百分比越高 → 每單位體積的溶質越多。'),
  T(4,'Adding more water to a solution changes the total mass of solute in it.','向溶液加水會改變其中溶質的總質量。',false,'The solute mass stays the same; only the concentration decreases.','溶質質量不變，只是濃度降低。'),
  M(4,'Solid sugar particles are held together by attractions. What must happen for sugar to dissolve?','固體糖的粒子之間有吸引力。糖要溶解，必須發生甚麼？',[['Water particles pull sugar particles away from each other','水粒子把糖粒子彼此拉開'],['Sugar particles must melt first','糖粒子必須先熔化'],['Sugar must be heated to 100 °C','糖必須加熱至 100 °C'],['Water particles must stop moving','水粒子必須停止移動']],'Attractions between water and sugar separate the sugar particles.','水與糖之間的吸引力令糖粒子分開。'),
  M(5,'Which statement about dissolving is INCORRECT?','以下哪項關於溶解的說法不正確？',[['Dissolving destroys the solute particles','溶解會消滅溶質粒子'],['Mass is conserved','質量守恆'],['Solute particles spread among solvent particles','溶質粒子散佈在溶劑粒子之間'],['Stirring speeds up dissolving','攪拌加快溶解']],'Particles are not destroyed; they spread out.','粒子沒有被消滅，只是散開。'),
@@ -4763,7 +4809,7 @@ function shopHTML(){var tabs=[['food','🍙 '+L('Snacks','小食')],['wear','�
  h+='<div class="items">';
  if(shopTab==='food')FOODS.slice().sort(function(x,y){return x.price-y.price;}).forEach(function(f){h+='<div class="item food'+(PET_FAV[S.active]===f.id?' favf':'')+'">'+(S.food[f.id]?'<span class="own">×'+S.food[f.id]+'</span>':'')+'<div class="pic">'+foodIcon(f)+'</div><div class="nm">'+esc(LL(f))+'</div>'+foodFx(f,S.active)+'<button class="btn small" data-buyfood="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>🪙 '+f.price+'</button>'+nutriHTML(f)+'</div>';});
  else if(shopTab==='pets')PETS.slice().sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier);}).forEach(function(P){var has=!!S.pets[P.id];h+='<div class="item t-'+(P.tier||'common')+'">'+tierBadge(P)+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">'+esc(L(P.desc[0],P.desc[1]))+'</div>'+palBuffLine(P)+
-  (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):!P.cond?'<div class="sub">💰 '+L('Coins only – save up!','只可用金幣購買——努力儲錢！')+'</div><div class="prog" style="width:100%"><i style="width:'+Math.min(100,Math.round(S.coins/P.price*100))+'%;background:linear-gradient(90deg,#FF9AA2,#FFD58A,#9EE0C0,#9DB8F0,#D9A8F0)"></i></div><div class="sub">🪙 '+Math.min(S.coins,P.price)+' / '+P.price+'</div><button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>🪙 '+P.price+'</button>':'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')</div>'+(P.price?'<button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>':'<div class="sub">👑 '+L('Quest only','只限任務')+'</div>'))+'</div>';});
+  (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):!P.cond?'<div class="sub">💰 '+L('Coins only – save up!','只可用金幣購買——努力儲錢！')+'</div><div class="prog" style="width:100%"><i style="width:'+Math.min(100,Math.round(S.coins/P.price*100))+'%;background:linear-gradient(90deg,#FF9AA2,#FFD58A,#9EE0C0,#9DB8F0,#D9A8F0)"></i></div><div class="sub">🪙 '+Math.min(S.coins,P.price)+' / '+P.price+'</div><button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>🪙 '+P.price+'</button>':'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')</div>'+(P.price?'<button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>':'<div class="sub">'+(P.unit?IC('pen')+' '+L('Earn it in Unit '+P.unit+' dictation','於單元 '+P.unit+' 默書中贏取'):'👑 '+L('Quest only','只限任務'))+'</div>'))+'</div>';});
  else{var list=shopTab==='quests'?ITEMS.filter(function(i){return i.quest;}):ITEMS.filter(function(it){return it.cat===shopTab&&it.id!=='w0';});
   var grp={};list.sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier)||(a.sec?1:0)-(b.sec?1:0)||a.price-b.price;}).forEach(function(it){var has=isOwned(it),free=it.sec||it.quest;
    var c='<div class="item t-'+it.tier+(free&&!has?' locked':'')+'">'+tierBadge(it)+(has?'<span class="own">✓</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+esc(LL(it))+'</div><div class="sub">'+(it.cat==='room'?decName(decCat(it)):slotName(it.slot))+'</div>'+
@@ -4809,7 +4855,7 @@ var TROPHIES=[
  {id:'chap',e:'🏅',en:'Chapter Champion',zh:'單元冠軍',den:'Earn ★ in every part of a chapter',dzh:'在一個單元所有小節取得 ★',tier:2,f:function(){return [chapDone(),1];}},
  {id:'allstar',e:'🏆',en:'S1 Science Star',zh:'中一科學之星',den:'Get 3★ in every sub-topic',dzh:'在所有小節取得 3★',tier:3,f:function(){return [threeStars(),ALLSECS.length];}},
  {id:'match',e:'🃏',en:'Term Matcher',zh:'詞彙配對王',den:'Win 5 Term Match games',dzh:'贏 5 次詞彙配對',tier:1,f:function(){return [S.matchWins,5];}},
- {id:'pets12',e:'🏠',en:'Full Family',zh:'大家庭',den:'Adopt every non-mythic Science Pal',dzh:'領養所有非神話級科學小夥伴',tier:3,f:function(){return [PETS.filter(function(P){return P.tier!=='mythic'&&!P.unit&&S.pets[P.id];}).length,PETS.filter(function(P){return P.tier!=='mythic'&&!P.unit;}).length];}},
+ {id:'pets12',e:'🏠',en:'Full Family',zh:'大家庭',den:'Adopt every non-mythic Science Pal (Unit Pals not needed)',dzh:'領養所有非神話級科學小夥伴（單元小夥伴除外）',tier:3,f:function(){return [PETS.filter(function(P){return P.tier!=='mythic'&&!P.unit&&S.pets[P.id];}).length,PETS.filter(function(P){return P.tier!=='mythic'&&!P.unit;}).length];}},
  {id:'spec10',e:'🎀',en:'Treasure Hunter',zh:'尋寶獵人',den:'Unlock 10 special items',dzh:'解鎖 10 件特別物品',tier:2,f:function(){return [specialsOwned(),10];}},
  {id:'specall',e:'👑',en:'Complete Collector',zh:'完美收藏家',den:'Unlock every special item',dzh:'解鎖所有特別物品',tier:3,f:function(){return [specialsOwned(),specialsTotal()];}},
  {id:'spell',e:'✍️',en:'Spelling Star',zh:'串字之星',den:'Spell 100 words correctly in dictation',dzh:'默書中正確拼寫 100 個詞彙',tier:2,f:function(){return [(S.dict||{}).n||0,100];}},
@@ -5121,7 +5167,7 @@ function roomHTML(){if(bubblePet!==S.active){bubble=null;bubblePet=S.active;}var
  '<div class="petwrap" id="petTap">'+petSVG(S.active,m)+ideaHTML()+'</div>'+(S.bud&&S.bud.act&&budDef(S.bud.act)?'<div class="budroom'+(budDef(S.bud.act).kind==='fly'?' flying':'')+'" id="budTap">'+buddySVG(S.bud.act,budMood())+'</div>':'')+'<div class="bubwrap">'+(bubble?'<div class="bubble" aria-live="polite">'+esc(bubble)+'</div>':'')+bubbleChips()+'</div>'+'</div>';}
 function statRow(label,v,col,txt){return '<div class="stat"><span>'+label+'</span><div class="bar" role="progressbar" aria-valuenow="'+Math.round(v)+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+clamp(v,0,100)+'%;background:'+col+'"></i></div><span class="num">'+txt+'</span></div>';}
 function homeHTML(){var h=homeParts(),P=h.split('<!--S-->');nqAdCheck();
- return nqAdHTML()+'<div class="home"><div class="homeL"><div class="o1">'+P[0]+'</div><div class="o3">'+P[2]+'</div><div class="o4">'+P[3]+'</div><div class="o6">'+P[5]+'</div></div><div class="homeR"><div class="o2">'+P[1]+'</div><div class="o5">'+P[4]+'</div><div class="o7">'+P[6]+'</div></div></div>';}
+ return nqAdHTML()+palAdHTML()+'<div class="home"><div class="homeL"><div class="o1">'+P[0]+'</div><div class="o3">'+P[2]+'</div><div class="o4">'+P[3]+'</div><div class="o6">'+P[5]+'</div></div><div class="homeR"><div class="o2">'+P[1]+'</div><div class="o5">'+P[4]+'</div><div class="o7">'+P[6]+'</div></div></div>';}
 function homeParts(){var P=petDef(S.active),p=curPet(),lv=petLevel(p.xp),into=p.xp-lvXP(lv),need=lvXP(lv+1)-lvXP(lv);
  var ev=evoReq(S.active);var canEvo=ev&&lv>=ev.lv&&ev.ok;
  var t=today();var gift=S.gift!==t;
@@ -5743,13 +5789,13 @@ var LB_THANKS={xp:[['Thank you for working so hard! 💪','多謝你咁努力！
  col:[['Super collector – so many treasures! 🎀','收藏大師——寶物多到數唔晒！🎀'],['Your pets and outfits are legendary 👑','你的寵物和服飾都是傳說級 👑']]};
 function lbCount(){var c=ownedCount('wear')+ownedCount('room')+petsCount()+budOwned();return c;}
 function lbTier(t){return ITEMS.filter(function(i){return i.tier===t&&S.owned[i.id];}).length+BUDS.filter(function(B){return B.tier===t&&S.bud.own[B.id];}).length;}
-function lbLoad(force){if(AUTH.mode!=='google'){return;}var d=LB.data[LB.scope];if(!force&&d&&Date.now()-d.at<5*60000)return;if(LB.loading)return;LB.loading=true;LB.err='';
- api('board',{scope:LB.scope}).then(function(j){LB.loading=false;if(j.ok){j.at=Date.now();LB.data[LB.scope]=j;}else LB.err=errText(j.error);lbRefresh();});}
+function lbLoad(force){if(AUTH.mode!=='google'){return;}var sc=LB.scope,d=LB.data[sc];if(!force&&d&&Date.now()-d.at<5*60000)return;LB.busy=LB.busy||{};if(LB.busy[sc])return;LB.busy[sc]=1;LB.loading=true;LB.err='';
+ api('board',{scope:sc}).then(function(j){LB.busy[sc]=0;LB.loading=false;if(j.ok&&(!j.scope||j.scope===sc)){j.at=Date.now();LB.data[sc]=j;}else if(!j.ok)LB.err=errText(j.error);lbRefresh();},function(){LB.busy[sc]=0;LB.loading=false;LB.err=errText('network');lbRefresh();});}
 function lbRefresh(){var el=$('#lbBox');if(el){el.innerHTML=lbInner($('#ov #lbBox')?20:5);bindLB();}}
 function lbRow(r,i,cat){var med=i<3?rankBadge(i):'<span class="lbn">'+(i+1)+'</span>';var val=cat==='xp'?r.v+' XP':cat==='streak'?r.v+L(' days',' 日'):r.v+(r.m?' · 🌈'+r.m:'')+(r.g?' · 👑'+r.g:'');
  var th=i<3?LB_THANKS[cat][i%2]:null;
  return '<div class="lbrow'+(r.me?' me':'')+(i<3?' top':'')+'"><span class="lbm">'+med+'</span>'+lbAvatar(r)+'<div class="lbname"><b>'+(r.me?L('You','你')+' · ':'')+esc(r.n)+'</b> <span class="muted">'+esc(r.c||'')+'</span>'+(th?'<div class="lbthx">'+esc(L(th[0],th[1]))+'</div>':'')+'</div>'+lbVal(r,cat)+'</div>';}
-function lbInner(n){if(AUTH.mode!=='google')return '<p style="margin:0">'+L('Sign in with your school Google account to join the class leaderboard and cheer on your classmates! 🏆','用學校 Google 帳戶登入，就可以加入班級龍虎榜，為同學打氣！🏆')+'</p><div class="lbpreview muted">'+L('Your effort: ','你的努力值：')+S.xpTotal+' XP · 🔥 '+S.streak+' · 🎀 '+lbCount()+'</div>';
+function lbInner(n){if(AUTH.mode==='guest'&&AUTH.user)return guestBoardHTML();if(AUTH.mode!=='google')return '<p style="margin:0">'+L('Sign in with your school Google account to join the class leaderboard and cheer on your classmates! 🏆','用學校 Google 帳戶登入，就可以加入班級龍虎榜，為同學打氣！🏆')+'</p><div class="lbpreview muted">'+L('Your effort: ','你的努力值：')+S.xpTotal+' XP · 🔥 '+S.streak+' · 🎀 '+lbCount()+'</div>';
  var d=LB.data[LB.scope],cat=LB.cat;
  var h='<div class="row lbtabs" role="tablist">'+Object.keys(LB_CATS).map(function(k){return '<button class="btn small '+(cat===k?'pink':'white')+'" data-lbcat="'+k+'">'+LB_CATS[k][0]+' '+L(LB_CATS[k][1],LB_CATS[k][2])+'</button>';}).join('')+'</div>'+
  '<div class="row lbtabs"><button class="btn small '+(LB.scope==='class'?'green':'white')+'" data-lbscope="class">'+L('My class','本班')+'</button><button class="btn small '+(LB.scope==='all'?'green':'white')+'" data-lbscope="all">'+L('All S1','全級')+'</button><button class="btn small white" data-lbre="1" aria-label="Refresh">🔄</button></div>';
@@ -7009,7 +7055,7 @@ function ui2After(){
   var tm=setInterval(function(){if(!live.isConnected){clearInterval(tm);return;}k+=2;live.textContent=ch.slice(0,k).join('');if(k>=ch.length){clearInterval(tm);bb.textContent=txt;}},28);}}
  document.querySelectorAll('[data-chip]').forEach(function(b){b.onclick=function(e){e.stopPropagation();sfx('tap');var k=b.dataset.chip;if(k==='feed')openFeed();else if(k==='play')openMatch();else if(k==='dict')openDictSetup();else if(k==='clinic'){shopTab='clinic';curScreen='shop';render();}};});
  var idea=$('#ideaPop');if(idea)idea.onclick=function(e){e.stopPropagation();sfx('tap');startQuiz(quickSec().id,'quiz');};
- tiltBind();tcDefs();tcAfter();}
+ tiltBind();tcDefs();tcAfter();bindPalAd();}
 function ideaHTML(){return S.lastDay!==today()?'<button class="ideapop" id="ideaPop" aria-label="'+L('A science challenge is waiting – start a quiz','有科學挑戰等着你——開始測驗')+'">'+IC('bulb')+'</button>':'';}
 
 /* ---- collectible card tilt, sheen and tap sparkles ---- */
@@ -7036,7 +7082,7 @@ function bindSetActive(){setTimeout(function(){var b=document.querySelector('[da
 function lbVal(r,cat){return cat==='xp'?'<span class="spill sp-xp">'+IC('bolt')+r.v+' XP</span>':cat==='streak'?'<span class="spill sp-st">'+IC('flame')+r.v+L(' days',' 日')+'</span>':'<span class="spill sp-col">'+IC('gem')+r.v+(r.m?' · '+IC('prism')+r.m:'')+(r.g?' · '+IC('crown')+r.g:'')+'</span>';}
 function lbAvatar(r,big){var ok=PETS.some(function(P){return P.id===r.p;});return '<span class="lbav'+(big?' big':'')+'">'+(ok?petSVG(r.p,'happy',{stage:1,eq:{}}):'')+(r.lv?'<b class="lvb">Lv '+r.lv+'</b>':'')+'</span>';}
 function lbPodium(top,cat){var order=[1,0,2];return '<div class="podium">'+order.map(function(i){var r=top[i];if(!r)return '<div class="pod pod'+(i+1)+' empty"></div>';var th=LB_THANKS[cat][i%2];
- return '<div class="pod pod'+(i+1)+(r.me?' me':'')+'">'+(i===0?'<span class="pcrown">'+IC('crown')+'</span>':'')+lbAvatar(r,true)+'<span class="pmed">'+rankBadge(i)+'</span><b class="pname">'+(r.me?L('You','你')+' · ':'')+esc(r.n)+'</b>'+lbVal(r,cat)+'<span class="pquote">'+esc(L(th[0],th[1]))+'</span><div class="pstep">'+(i+1)+'</div></div>';}).join('')+'</div>';}
+ return '<div class="pod pod'+(i+1)+(r.me?' me':'')+'">'+(i===0?'<span class="pcrown">'+IC('crown')+'</span>':'')+lbAvatar(r,true)+'<span class="pmed">'+rankBadge(i)+'</span><b class="pname">'+(r.me?L('You','你')+' · ':'')+esc(r.n)+(r.c?' <span class="pcls">'+esc(r.c)+'</span>':'')+'</b>'+lbVal(r,cat)+'<span class="pquote">'+esc(L(th[0],th[1]))+'</span><div class="pstep">'+(i+1)+'</div></div>';}).join('')+'</div>';}
 function lbAnchor(c,cat){if(!c.me||!c.me.rank)return '';var me=c.me,above=c.top[me.rank-2],unit=cat==='xp'?' XP':cat==='streak'?L(' day',' 日'):L(' item',' 件'),tip;
  if(me.rank===1)tip=L('You\'re #1 – amazing effort!','你排第 1——超努力！');
  else if(above){var gap=above.v-me.v+1;tip=L('Only '+gap+unit+(gap>1&&cat!=='xp'?'s':'')+' more to pass #'+(me.rank-1)+' '+above.n+'!','只差 '+gap+unit+' 就超越第 '+(me.rank-1)+' 名 '+above.n+'！');}
@@ -7112,7 +7158,7 @@ var LG_DNA='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2
 function welcomeHTML2(){var saved=load(KEY),cloud=cloudOn();
  var parts=[['l1',IC('flask')],['l2',LG_ATOM],['l3',IC('flask')],['l4',LG_ATOM],['r1',IC('leaf')],['r2',LG_DNA],['r3',IC('sparkle')],['r4',LG_DNA],['r5',IC('leaf')]].map(function(q,i){return '<span class="lgp '+q[0]+'" style="animation-delay:'+(i*-1.3)+'s">'+q[1]+'</span>';}).join('');
  var sils=['nova','finn','flan','gelato','luna'].map(function(id){return '<span class="lgsil">'+petSVG(id,'happy',{stage:1,eq:{},plain:1})+'</span>';}).join('');
- var signIn=cloud?'<div class="lgcard"><div class="lgcta-h">'+IC('level')+L('Students & teachers','學生及老師')+'</div><div class="lgg"><div id="gbtn"></div></div><p class="lgcap">'+IC('cloud')+L('Progress saves automatically to your school class record.','進度會自動儲存到你的班級紀錄。')+'</p><div id="loginMsg" role="status" aria-live="polite"></div></div>':
+ var signIn=cloud?'<div class="lgcard"><div class="lgcta-h">'+IC('level')+L('Students & teachers','學生及老師')+'</div><div class="lgg"><div id="gbtn"></div></div><p class="lgcap">'+IC('cloud')+L('Progress saves automatically to your school class record.','進度會自動儲存到你的班級紀錄。')+'</p><p class="lgcap guestcap">'+IC('user')+L('Not in an S1 science class? Sign in with your school account to play in guest mode (no leaderboard or records).','不是中一科學班的學生？用學校帳戶登入，即可以訪客模式遊玩（不設龍虎榜及紀錄）。')+'</p><div id="loginMsg" role="status" aria-live="polite"></div></div>':
   '<div class="lgcard"><div class="lgcta-h">'+IC('sparkle')+L('Preview mode','預覽模式')+'</div><p class="lgcap" style="margin-top:0">'+L('Class sign-in is off on this copy, so it is a teacher preview. Progress stays on this device. Students should use the class link from their teacher.','此版本未開通班級登入，只供老師預覽，進度只儲存在此裝置。學生請使用老師提供的班級連結。')+'</p>'+
   (saved&&saved.started?'<div class="row" style="justify-content:center"><button class="lgbtn" id="wResume">▶ '+L('Continue preview','繼續預覽')+'</button><button class="btn white" id="wFresh">'+L('Start fresh','重新開始')+'</button></div>':'<button class="lgbtn" id="wStart">'+IC('sparkle')+L('Start preview','開始預覽')+'</button>')+
   '<details style="width:100%;text-align:left;margin-top:10px"><summary style="cursor:pointer;font-weight:800;min-height:44px">🔑 '+L('I have a save code','我有存檔碼')+'</summary><textarea id="inCode" rows="3" aria-label="Save code"></textarea><div id="prev"></div><button class="btn pink small" id="chk" style="margin-top:8px">🔍 '+L('Preview','預覽')+'</button></details><div id="loginMsg" role="status" aria-live="polite"></div></div>';
@@ -7128,6 +7174,37 @@ function welcomeHTML2(){var saved=load(KEY),cloud=cloudOn();
 var lgPar=false;
 function lgSet(x,y){var r=document.querySelector('.lgbg');if(!r)return;r.style.setProperty('--mx',x.toFixed(3));r.style.setProperty('--my',y.toFixed(3));}
 function bindWelcome2(){bindWelcome();if(!lgPar){lgPar=true;addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;lgSet(e.clientX/innerWidth-.5,e.clientY/innerHeight-.5);},{passive:true});addEventListener('deviceorientation',function(e){if(e.gamma==null)return;lgSet(Math.max(-.5,Math.min(.5,e.gamma/60)),Math.max(-.5,Math.min(.5,((e.beta||45)-45)/60)));});}var m=$('#lgMusic');if(m)m.onclick=function(){S.music=!S.music;try{var sv=load(KEY)||{};sv.music=S.music;}catch(e){}if(S.music){ac();startMusic();}else stopMusic();render();};}
+
+/* ---- home advert: an unowned legendary / mythic pal pops out of the banner ---- */
+var PAL_BRANCH={nova:'astro',finn:'astro',luna:'astro',petal:'bio',astra:'bio',flan:'chem',lotus:'astro',dandy:'bio',daifuku:'chem',solara:'phys',gelato:'chem'};
+var BRANCH_NAME={bio:['Biology & Nature','生物與自然'],chem:['Chemistry & Matter','化學與物質'],phys:['Physics & Energy','物理與能量'],astro:['Astronomy & Earth','天文與地球']};
+var BR_FX={bio:['leaf','leaf','sparkle','leaf'],chem:['flask','sparkle','flask','gem'],phys:['bolt','sparkle','bolt','flame'],astro:['sparkle','prism','sparkle','sparkle']};
+var palAdI=null;
+function palAdList(){return PETS.filter(function(P){return (P.tier==='legendary'||P.tier==='mythic')&&!S.pets[P.id];});}
+function palAdGoal(P){if(P.unit){var n=dmCount(P.unit),t=dmNeed(P.unit);return {pc:Math.min(1,n/t),txt:L(Math.min(n,t)+' / '+t+' words mastered',Math.min(n,t)+' / '+t+' 個詞彙已掌握'),btn:'<button class="pa-cta blue" data-padgo="dict" data-u="'+P.unit+'">🔬 '+L('UNLOCK IN UNIT '+P.unit,'單元 '+P.unit+' 解鎖')+'</button>'};}
+ if(!P.cond&&P.price)return {pc:Math.min(1,S.coins/P.price),txt:L(Math.min(S.coins,P.price)+' / '+P.price+' coins',Math.min(S.coins,P.price)+' / '+P.price+' 金幣'),btn:'<button class="pa-cta gold" data-padgo="shop">'+IC('coin')+P.price+' '+L('ADOPT','領養')+'</button>'};
+ if(P.cond&&P.cond.k==='nobel')return {pc:Math.min(1,nobelDone()/P.cond.n),txt:L(nobelDone()+' / '+P.cond.n+' Nobel Sparks',nobelDone()+' / '+P.cond.n+' 團諾貝爾火種'),btn:'<button class="pa-cta blue" data-padgo="nobel">'+IC('medal')+L('NOBEL QUEST','諾貝爾大冒險')+'</button>'};
+ var v=P.cond?condVal(P.cond.k):0,n=P.cond?P.cond.n:1;return {pc:Math.min(1,v/n),txt:P.cond?esc(L(P.cond.en,P.cond.zh))+' · '+Math.min(v,n)+'/'+n:'',btn:'<button class="pa-cta blue" data-padgo="quiz">'+IC('flask')+L('STUDY NOW','立即溫習')+'</button>'};}
+function palAdHTML(){var list=palAdList();if(!list.length)return '';if(palAdI==null)palAdI=dayNum(today())%list.length;palAdI=(palAdI+list.length)%list.length;
+ var P=list[palAdI],br=PAL_BRANCH[P.id]||'chem',g=palAdGoal(P),B=palBuffDef(P),fx=BR_FX[br];
+ var parts=[[8,16],[44,10],[70,62],[88,22],[30,74]].map(function(q,i){return '<span class="pa-p" style="left:'+q[0]+'%;top:'+q[1]+'%;animation-delay:'+(i*-.9)+'s">'+IC(fx[i%fx.length])+'</span>';}).join('');
+ return '<section class="palad pa-'+P.tier+' br-'+br+'" aria-label="'+L('Featured Science Pal','精選科學小夥伴')+'"><div class="pa-bg">'+(P.tier==='mythic'?'<span class="pa-holo"></span><span class="pa-neb"></span>':'<span class="pa-beam b1"></span><span class="pa-beam b2"></span><span class="pa-sheen"></span>')+parts+'</div>'+
+ '<div class="pa-pal">'+petSVG(P.id,'joy',{stage:1,eq:{},plain:1})+'</div>'+(B?'<span class="pa-perk">'+IC('sparkle')+esc(L(B.en,B.zh))+'</span>':'')+
+ '<div class="pa-txt"><div class="pa-top">'+tierBadge(P)+'<span class="pa-br">'+esc(L(BRANCH_NAME[br][0],BRANCH_NAME[br][1]))+'</span></div><b class="pa-name">'+esc(LL(P))+'</b><span class="pa-tag">'+L('Collect me!','快來收集我！')+'</span>'+
+ '<div class="pa-prog"><i style="width:'+Math.round(g.pc*100)+'%"></i></div><span class="pa-goal">'+g.txt+'</span></div>'+
+ '<div class="pa-side">'+g.btn+(list.length>1?'<div class="pa-nav"><button data-padnav="-1" aria-label="'+L('Previous pal','上一位')+'">‹</button><span>'+(palAdI+1)+' / '+list.length+'</span><button data-padnav="1" aria-label="'+L('Next pal','下一位')+'">›</button></div>':'')+'</div></section>';}
+function bindPalAd(){document.querySelectorAll('[data-padnav]').forEach(function(b){b.onclick=function(){palAdI+=+b.dataset.padnav;sfx('tap');var el=document.querySelector('.palad');if(el){var d=document.createElement('div');d.innerHTML=palAdHTML();el.replaceWith(d.firstChild);bindPalAd();}};});
+ document.querySelectorAll('[data-padgo]').forEach(function(b){b.onclick=function(){sfx('tap');var k=b.dataset.padgo;if(k==='dict')openDictSetup(+b.dataset.u);else if(k==='shop'){shopTab='pets';curScreen='shop';render();window.scrollTo(0,0);}else if(k==='nobel'){curScreen='nobel';NQV={ch:null,task:null};render();window.scrollTo(0,0);}else startQuiz(quickSec().id,'quiz');};});}
+
+/* ---- school guest mode: school Google accounts that are not on the S1 class list ---- */
+var GUEST_DOMAIN='@ptcc.edu.hk';
+function schoolGuestOk(pl){var em=String(pl.email||'').toLowerCase();return pl.email_verified!==false&&em.slice(-GUEST_DOMAIN.length)===GUEST_DOMAIN;}
+function enterSchoolGuest(pl){var em=String(pl.email||'').toLowerCase(),lang=S.lang;
+ AUTH.mode='guest';AUTH.user={email:em,zh:String(pl.name||''),en:String(pl.name||''),guest:true};AUTH.token=null;AUTH.stale=false;
+ var local=load(storeKey());if(local){S=local;}else{S=defaultState();bubble=L('Hi! I\'m Mochi. Let\'s study together!','你好！我係麻糬，一齊溫書啦！');}
+ S.lang=lang;S.started=true;curScreen='home';ac();save();render();openingPopup();
+ setTimeout(function(){toast(IC('user')+' '+L('Guest mode: progress stays on this device. No leaderboard or class records.','訪客模式：進度只儲存在此裝置，不設龍虎榜及班級紀錄。'));},900);}
+function guestBoardHTML(){return '<p style="margin:0">'+L('You are in guest mode, so you are not on the class leaderboard. Keep studying – your pal still grows! 🌱','你正使用訪客模式，所以不會出現在班級龍虎榜。繼續溫習——你的小夥伴一樣會成長！🌱')+'</p><div class="lbpreview muted">'+L('Your effort: ','你的努力值：')+S.xpTotal+' XP · 🔥 '+S.streak+' · 🎀 '+lbCount()+'</div>';}
 
 /* ---------- Dictation 默書 ---------- */
 var DQ=null,dictCfg={kind:'listen',unit:1,sec:'all'};
@@ -7207,8 +7284,8 @@ var CFGX=window.S1_CONFIG||{};
 var AUTH={mode:null,user:null,token:null,exp:0,stale:false,lastSync:0};
 var SESSION=Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
 function cloudOn(){return !!(CFGX.GOOGLE_CLIENT_ID&&CFGX.API_URL);}
-function storeKey(){return AUTH.mode==='google'&&AUTH.user?KEY+'_u_'+AUTH.user.email:KEY;}
-function dispName(){var u=AUTH.user;if(!u)return L('Preview','預覽');return (S.lang==='en'?(u.en||u.zh):(u.zh||u.en))||u.email;}
+function storeKey(){return AUTH.user?KEY+(AUTH.mode==='google'?'_u_':'_g_')+AUTH.user.email:KEY;}
+function dispName(){var u=AUTH.user;if(!u)return L('Preview','預覽');if(u.guest)return (u.zh||u.email.split('@')[0])+' · '+L('Guest','訪客');return (S.lang==='en'?(u.en||u.zh):(u.zh||u.en))||u.email;}
 function tokenOk(){return !!AUTH.token&&Date.now()<AUTH.exp-30000;}
 function post(action,data){return fetch(CFGX.API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({action:action,token:AUTH.token,app:'s1sci'},data||{}))}).then(function(r){return r.json();});}
 function api(action,data){if(AUTH.mode!=='google')return Promise.resolve({ok:false,error:'guest'});if(!tokenOk()){markStale();return Promise.resolve({ok:false,error:'expired'});}
@@ -7228,7 +7305,7 @@ function loginMsg(t,bad){var m=$('#loginMsg');if(m)m.innerHTML='<p style="margin
 function onCredential(resp){var tok=resp.credential,pl=jwtPayload(tok),em=String(pl.email||'').toLowerCase();
  if(AUTH.mode==='google'&&AUTH.user&&em===AUTH.user.email){AUTH.token=tok;AUTH.exp=(pl.exp||0)*1000;AUTH.stale=false;$('#ovroot').innerHTML='';toast('☁️ '+L('Reconnected – progress synced','已重新連線，進度已同步'));flushQueue();cloudSaveSoon(1);render();return;}
  AUTH.token=tok;AUTH.exp=(pl.exp||0)*1000;loginMsg('⏳ '+L('Checking the class list…','正在核對班級名單…'));
- post('login',{}).then(function(j){if(!j.ok){AUTH.token=null;loginMsg(errText(j.error),true);return;}
+ post('login',{}).then(function(j){if(!j.ok){AUTH.token=null;if(j.error==='not_listed'&&schoolGuestOk(pl)){enterSchoolGuest(pl);return;}loginMsg(errText(j.error),true);return;}
   AUTH.mode='google';AUTH.user=j.user;AUTH.stale=false;AUTH.lastSync=Date.now();
   var lang=S.lang,local=load(storeKey()),remote=null;try{remote=j.progress?JSON.parse(j.progress):null;}catch(e){}
   var chosen=(remote&&(!local||(remote.upd||0)>(local.upd||0)))?remote:local;
@@ -7262,11 +7339,12 @@ function openAccount(){var u=AUTH.user,q=getQ().length,h='<div class="sheet-h"><
   '<span style="font-size:14px">'+(AUTH.stale?'⚠️ '+L('Sign-in expired – sign in again to keep syncing.','登入已過期，請重新登入以繼續同步。'):'☁️ '+L('Synced ','已同步 ')+(AUTH.lastSync?new Date(AUTH.lastSync).toLocaleTimeString():'')+(q?' · '+q+L(' records waiting',' 條記錄待上傳'):''))+'</span></div>'+
   (AUTH.stale?'<div id="gbtn2" style="display:flex;justify-content:center;margin-top:12px;min-height:44px"></div>':'<div class="row" style="margin-top:12px"><button class="btn green" id="aSync">☁️ '+L('Sync now','立即同步')+'</button></div>')+
   '<div class="row" style="margin-top:12px"><button class="btn white" id="aOut">🚪 '+L('Sign out','登出')+'</button></div>';}
+ else if(AUTH.user&&AUTH.user.guest)h+='<div class="card grid" style="gap:6px"><b style="font-size:18px">'+esc(u.zh||'')+'</b><span class="muted" style="font-size:13px">'+esc(u.email)+'</span><span style="font-size:14px">'+IC('user')+' '+L('<b>Guest mode</b>: progress is saved on this device only. No leaderboard or class records.','<b>訪客模式</b>：進度只儲存在此裝置，不設龍虎榜及班級紀錄。')+'</span></div><div class="row" style="margin-top:12px"><button class="btn white" id="aOut">🚪 '+L('Sign out','登出')+'</button></div>';
  else h+='<p>'+L('This is <b>preview mode</b> (class sign-in is off on this copy). Progress stays on this device.','這是<b>預覽模式</b>（此版本未開通班級登入），進度只儲存在此裝置。')+'</p>'+(cloudOn()?'<button class="btn green" id="aIn">🎓 '+L('Sign in to my class','登入我的班級')+'</button>':'');
  modal(h);$('#xClose').onclick=closeModal;
  if($('#gbtn2'))renderGBtn('gbtn2');
  if($('#aSync'))$('#aSync').onclick=function(){cloudSave();flushQueue();toast('☁️ '+L('Syncing…','同步中…'));};
- if($('#aOut'))$('#aOut').onclick=function(){confirmBox(L('Sign out?','登出？'),L('Your progress is saved to your class account.','你的進度已儲存到班級帳戶。'),L('Sign out','登出'),signOut);};
+ if($('#aOut'))$('#aOut').onclick=function(){confirmBox(L('Sign out?','登出？'),AUTH.mode==='guest'?L('Your guest progress stays on this device.','你的訪客進度會保留在此裝置。'):L('Your progress is saved to your class account.','你的進度已儲存到班級帳戶。'),L('Sign out','登出'),signOut);};
  if($('#aIn'))$('#aIn').onclick=function(){save();var lang=S.lang;S=defaultState();S.lang=lang;$('#ovroot').innerHTML='';render();};}
 
 /* ---- teacher dashboard ---- */
