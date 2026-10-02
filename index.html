@@ -1554,6 +1554,44 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 coin-i{display:inline-block;line-height:0;vertical-align:-.22em;margin:0 .06em}
 coin-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!important;animation:none!important;filter:none!important}
 .brand .mlogo{flex:none;filter:drop-shadow(0 2px 0 rgba(90,58,46,.12))}
+/* ----- phones: every tab visible (wrap instead of hidden sideways scroll) ----- */
+@media (max-width:700px){
+ .tabs,.lbtabs{flex-wrap:wrap;overflow:visible}
+ .tabs button{min-height:40px;padding:6px 12px;font-size:13px}
+}
+/* ----- phones: data tables become cards, nothing cut off ----- */
+@media (max-width:600px){
+ .tbl{overflow:visible;background:transparent;box-shadow:none;border-radius:0}
+ .tbl table{min-width:0;display:block;font-size:13px}
+ .tbl thead{display:block;margin-bottom:8px}
+ .tbl thead tr{display:flex;flex-wrap:wrap;gap:6px}
+ .tbl thead th{display:block;padding:0;border:0;white-space:nowrap;font-size:12px}
+ .tbl thead th button{min-height:32px;padding:4px 10px;border-radius:999px;background:#fff;border:2px solid var(--line);font-size:12px}
+ .tbl thead th:not(:has(button)){padding:5px 10px;border-radius:999px;background:#fff;border:2px solid var(--line);color:var(--ink2);font-weight:800}
+ .tbl tbody{display:block}
+ .tbl tbody tr{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:2px 8px;background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:10px 12px;margin-bottom:10px}
+ .tbl tbody td{display:flex;flex-direction:column;gap:1px;padding:3px 0;border:0;white-space:normal;text-align:left!important;min-width:0;overflow-wrap:anywhere}
+ .tbl tbody td::before{content:attr(data-label);font-size:11px;font-weight:700;color:var(--ink2);opacity:.8}
+ .tbl tbody td:first-child,.tbl tbody td:has(.lnk),.tbl tbody td[data-label="姓名"],.tbl tbody td[data-label="Name"]{grid-column:1/-1;flex-direction:row;align-items:baseline;gap:8px;font-weight:800;font-size:14px}
+ .tbl tbody td:first-child{border-bottom:1px dashed #EADFD6;padding-bottom:6px;margin-bottom:2px}
+ .tbl tbody td[data-label=""]::before,.tbl tbody td[colspan]::before{display:none}
+ .tbl tbody td[colspan]{grid-column:1/-1}
+ .tbl .lnk{min-height:0;text-align:left}
+}
+/* ----- bottom nav: any number of tabs share the width, never wider than the screen ----- */
+.nav-in{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}
+.nav button{min-width:0}
+.nav button>span:last-child,.nav button{overflow-wrap:normal}
+@media (max-width:400px){
+ .nav button{font-size:11px;letter-spacing:-.2px}
+ .nav button .ni{padding:3px 6px}
+ .nav button .ni .ic{width:25px;height:25px}
+}
+/* ----- home Science Pal advert: button + arrows wrap on narrow phones ----- */
+@media (max-width:440px){
+ .pa-side{grid-auto-flow:row;display:flex;flex-wrap:wrap;gap:8px;align-items:center;max-width:100%}
+ .pa-cta{white-space:normal;min-width:0}
+}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -7752,7 +7790,11 @@ function coinSweep(root){if(!root||!root.textContent||!COIN_RX.test(root.textCon
  list.forEach(function(n){var parts=n.nodeValue.split(/🪙️?/),f=document.createDocumentFragment();
   parts.forEach(function(t,i){if(i){var sp=document.createElement('coin-i');sp.setAttribute('role','img');sp.setAttribute('aria-label',S&&S.lang==='en'?'coins':'金幣');sp.innerHTML=IC('coin');f.appendChild(sp);}if(t)f.appendChild(document.createTextNode(t));});
   n.parentNode.replaceChild(f,n);});}
-(function(){function go(){coinSweep(document.body);new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==='characterData')coinSweep(m.target.parentNode);else m.addedNodes.forEach(function(n){coinSweep(n.nodeType===3?n.parentNode:n);});});}).observe(document.body,{childList:true,subtree:true,characterData:true});}
+/* phone tables: label every cell with its column name so rows can show as cards */
+function tblLabel(root){if(!root||!root.querySelectorAll)return;var ts=root.matches&&root.matches('.tbl table')?[root]:root.querySelectorAll('.tbl table');
+ Array.prototype.forEach.call(ts,function(t){var h=Array.prototype.map.call(t.querySelectorAll('thead th'),function(th){return th.textContent.replace(/[\u25B2\u25BC\u2191\u2193]/g,'').trim();});
+  Array.prototype.forEach.call(t.querySelectorAll('tbody tr'),function(tr){Array.prototype.forEach.call(tr.children,function(td,i){if(!td.hasAttribute('data-label'))td.setAttribute('data-label',h[i]||'');});});});}
+(function(){function go(){coinSweep(document.body);tblLabel(document.body);new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==='characterData')coinSweep(m.target.parentNode);else m.addedNodes.forEach(function(n){coinSweep(n.nodeType===3?n.parentNode:n);if(n.nodeType===1)tblLabel(n);});});}).observe(document.body,{childList:true,subtree:true,characterData:true});}
  if(document.body)go();else document.addEventListener('DOMContentLoaded',go);})();
 
 /* ---------- Streak Freeze 連勝凍結: buy ahead, auto-used on a missed day (like a "freeze" power-up) ---------- */
