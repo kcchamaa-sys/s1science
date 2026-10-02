@@ -28,11 +28,23 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
 - **🦈🦉 Mythic Science Pals**: Finn the shark (2,000 🪙) and Luna the moon owl (5,000 🪙) can only be adopted with coins, with a mythic unlock animation and a rainbow aura.
 - **🍱 Food 2.0**: 20 foods, each with its own original drawing (e.g. HK milk tea in a cup, iced lemon tea with ice and a lemon slice, pineapple bun, siu mai, egg tart) and a 🔍 nutrition card (approx. energy, carbohydrate, protein, fat, sugar and salt per typical serving, a 🟢 everyday / 🟡 sometimes / 🔴 treat rating and a one-line analysis); prices from 3 🪙 to 200 🪙 (Hong Kong favourites such as curry fish balls, siu mai, egg tarts, pineapple buns and wonton noodles). Foods change energy, happiness and XP differently. Boost foods multiply XP and/or coins for 20–30 minutes (🫐 ×1.3 XP, 🌰 ×1.5 XP, 🍵 ×1.3 coins, 🥮 ×2 both). Every pet has a ❤️ favourite food (double happiness). Eating 3 sugary snacks in one day causes a "sugar crash" (−15 energy) and a healthy-eating tip.
 - **📅 Daily mission**: one mission a day on the Home screen, chosen from 30 story events (e.g. "Detective Mochi", "Boss battle", "Power cut!", "Radio host"). It targets what each student avoids or finds hardest: their weakest sub-topic or unit, unread notes, mistakes waiting in 錯題本, missed dictation words, read-aloud practice or Term Match. Completing it gives 40 🪙 and a snack.
+- **👑 Legendary Unit Pals (dictation mastery)**: 6 dessert / flower pals, one per unit, each showing its unit:
+  - **Professor Flan 布甸博士** (U1 lab safety): caramel pudding with safety goggles and a test tube.
+  - **Lotus Dewdrop 蓮露露** (U2 water): lotus on a lily pad with a water drop and waves.
+  - **Dandy 蒲蒲** (U3 living things): dandelion seed-puff crown, leaves and a ladybird.
+  - **Strawberry Daifuku 草莓大福** (U4 cells): its tummy is a cell (membrane, cytoplasm, strawberry nucleus).
+  - **Solara 陽陽** (U5 energy): sunflower petals and a lightning badge.
+  - **Gelato 粒粒** (U6 particles): mint gelato with sprinkle "particles".
+  - **Unlock:** master 90% of the unit's dictation words. A word is *mastered* after a first-try, no-hint correct answer on 2 different days. Progress shows in the dictation setup; results show "+N words mastered".
+- **✨ Pal perks** (only for the active pal, kept small): Nova +8% XP; Finn +8% coins; Luna +20% on 錯題本 / missed-word practice; Petal +12% quiz XP; Riccio +5% coins & XP; each Unit Pal +15% coins & XP on its own unit's quizzes, dictation and read-aloud.
+- **🧗 Tougher evolution** for legendary & mythic pals:
+  - Legendary: Lv 7 / 13 and 250 / 600 🪙. Unit Pals also need 2★ (then 3★) in every sub-topic of their unit, plus every unit word mastered for the final stage. Nova needs a 7-day best streak, then 3★ in 15 sub-topics.
+  - Mythic: Lv 8 / 15 and 400 / 900 🪙, plus a 14-day best streak, then 3★ in 22 sub-topics and 120 mastered dictation words.
 - **🌈 Evolution routes**: every pet evolves into one of 3 colour variations (same character, new colours + a small mark). 🌿 Scholar (finish 8 quizzes with that pet), 🌊 Ocean (feed it 10 healthy meals) and a 🌌 secret Galaxy route that shows only as a silhouette until its hidden challenge is done (3 brain-boost foods + a 5-day streak). Students can re-choose at the next evolution, or change look at the final stage for 150 🪙.
 - **Home layout**: on wide screens the Home page uses two balanced columns (room, streak, daily mission, Mochi's pets | pet card, chat, leaderboard, next step); phones keep one column.
 - **Retention**: daily streak with reward multiplier (up to ×1.5) and streak shields, daily gift, 30+ trophies (streak trophies up to 200 days), collection gallery.
 - **錯題本 Mistake Bank**: wrong answers are saved automatically; answer one right twice in a row to clear it (+6 coins).
-- **Saving**: auto-saves to `localStorage` key `s1SciencePals_v1`; 💾 gives a save code + share link (`…/#CODE`) to move devices, with preview and checksum. Codes from every earlier version (v1–v6) still load; the current format is v9.
+- **Saving**: auto-saves to `localStorage` key `s1SciencePals_v1`; 💾 gives a save code + share link (`…/#CODE`) to move devices, with preview and checksum. Codes from every earlier version (v1–v6) still load; the current format is v13 (adds the 6 Unit Pals).
 
 ## 🏅 Nobel Time Quest (season event, Oct 2026 – Mar 2027)
 - A separate **Nobel** tab with its own dark neon style, holographic cards and synth music (a faster track for the boss battle).
