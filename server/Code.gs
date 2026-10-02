@@ -209,7 +209,7 @@ function fullName(zh, en) {
   return zh || String(en || '').trim() || '?';
 }
 function boardRows() {
-  var cache = CacheService.getScriptCache(), hit = cache.get('board_rows2');
+  var cache = CacheService.getScriptCache(), hit = cache.get('board_rows3');
   if (hit) return JSON.parse(hit);
   var ss = book(), rows = [];
   var uv = ss.getSheetByName(PROPS.getProperty('USERS_SHEET') || USERS_DEFAULT).getDataRange().getValues();
@@ -230,11 +230,11 @@ function boardRows() {
       if (!u) return;
       var x = b[k] || [];
       var last = String(r[12] || '');
-      rows.push({ e: em, n: u.n, c: u.c, p: String(r[7] || ''), xp: Number(x[0]) || 0,
+      rows.push({ e: em, n: u.n, c: u.c, p: String(r[7] || ''), lv: Number(r[5]) || 0, xp: Number(x[0]) || 0,
         st: last >= yest ? Number(r[2]) || 0 : 0, col: Number(x[1]) || 0, g: Number(x[2]) || 0, m: Number(x[3]) || 0 });
     });
   }
-  cache.put('board_rows2', JSON.stringify(rows), 300);
+  cache.put('board_rows3', JSON.stringify(rows), 300);
   return rows;
 }
 function board(user, scope) {
@@ -242,7 +242,7 @@ function board(user, scope) {
   function cat(key, extra) {
     var list = rows.filter(function (r) { return r[key] > 0; }).sort(function (x, y) { return y[key] - x[key] || y.xp - x.xp; });
     var top = list.slice(0, 20).map(function (r) {
-      var o = { n: r.n, c: r.c, p: r.p, v: r[key], me: r.e === user.email };
+      var o = { n: r.n, c: r.c, p: r.p, lv: r.lv, v: r[key], me: r.e === user.email };
       if (extra) { o.g = r.g; o.m = r.m; }
       return o;
     });
