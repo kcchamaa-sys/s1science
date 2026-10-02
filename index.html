@@ -1470,6 +1470,57 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 @media (max-width:520px){.palad{grid-template-columns:150px minmax(0,1fr)}.pa-pal{width:150px;top:-60px}.pa-perk{max-width:46%;bottom:8px}}
 @media (max-width:520px){.pa-perk{max-width:140px;font-size:10.5px;padding:3px 8px 3px 5px}}
 .lgcap.guestcap{font-size:12px;margin-top:6px;opacity:.9}
+/* ===== performance: animate only what is on screen, avoid per-frame repaints ===== */
+.tcard{content-visibility:auto;contain-intrinsic-size:auto 230px;contain:layout paint style}
+.tgrid .tcard:not(.live),.tgrid .tcard:not(.live) *,.tgrid .tcard:not(.live)::before,.tgrid .tcard:not(.live)::after{animation-play-state:paused!important}
+.item.t-legendary:not(.live),.item.t-legendary:not(.live) *,.item.t-legendary:not(.live)::before,.item.t-mythic:not(.live),.item.t-mythic:not(.live) *,.item.t-mythic:not(.live)::before,.palad:not(.live) *{animation-play-state:paused!important}
+.tscene .pet .bob,.tscene .pet .spark{animation:none}
+.tcard.locked .tscene *{animation:none!important}
+.tscene .lay{transition:none}.tcard.tilting .tscene .lay,.tinspect .tscene .lay{transition:transform .2s ease-out}
+.tcard .frost{-webkit-backdrop-filter:none;backdrop-filter:none;background:linear-gradient(160deg,rgba(235,244,252,calc((1 - var(--p,0))*.55)),rgba(210,226,244,calc((1 - var(--p,0))*.35)))}
+.tcard.v-mid .l-pal svg.pet{filter:brightness(0) drop-shadow(0 0 2px var(--rim))}
+.tcard::after{mix-blend-mode:normal;background:radial-gradient(circle at var(--gx,25%) var(--gy,15%),rgba(255,255,255,.22),transparent 46%)}
+.tr3::before{mix-blend-mode:normal;opacity:.55}
+/* silver reverse-holo: slide with transform instead of repainting the background */
+.tr2 .holo{background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.9) 48%,rgba(170,215,255,.6) 52%,transparent 60%);background-size:100% 100%;animation:revslide 3.6s linear infinite;width:200%;left:-100%}
+@keyframes revslide{from{transform:translateX(-25%)}to{transform:translateX(75%)}}
+/* "almost there" glow: fade a pseudo glow instead of animating box-shadow */
+.tcard.almost{animation:none;box-shadow:0 0 0 3px #FFC800,0 4px 0 rgba(60,40,20,.22)}
+.tcard.almost .tw::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;box-shadow:inset 0 0 18px 4px rgba(255,210,60,.85);animation:almostglow 1.6s ease-in-out infinite}
+@keyframes almostglow{50%{opacity:.25}}
+/* secret foil: rotate the gradient layer (compositor) instead of a blurred @property animation */
+.tcard .foil{filter:none;background:conic-gradient(#FF8FB1,#FFD23F,#7ED957,#5CC8FF,#B07CFF,#FF8FB1);animation:tcspin 10s linear infinite}
+/* mythic pal cards: static rainbow ring, shimmer slides with transform */
+.item.t-mythic{animation:none;background:linear-gradient(#fff,#fff) padding-box,conic-gradient(#FF8FB1,#FFD23F,#7ED957,#5CC8FF,#B07CFF,#FF8FB1) border-box}
+.item.t-mythic::before{background-size:100% 100%;background-position:0 0;animation:mythslide 5s ease-in-out infinite alternate;inset:0 -60%}
+@keyframes mythslide{from{transform:translateX(-25%)}to{transform:translateX(25%)}}
+.item.t-legendary .pic{animation:none;box-shadow:inset 0 0 22px rgba(255,200,0,.3)}
+.item{content-visibility:auto;contain-intrinsic-size:auto 220px}
+.tcard.v-mid .l-pal svg.pet{filter:brightness(0) drop-shadow(0 0 1.2px var(--rim)) drop-shadow(0 0 4px var(--rim))}
+/* ===== shop: Science Pals tab stands out ===== */
+.tabs button[data-shop="pets"]{position:relative;overflow:hidden;color:#fff;font-weight:900;border-color:#F3A6C8;background:linear-gradient(100deg,#FFB547,#FF7EB6 50%,#A88BFF);box-shadow:0 3px 0 #C25E95,0 0 14px rgba(255,126,182,.45);text-shadow:0 1px 1px rgba(0,0,0,.25);display:inline-flex;align-items:center;gap:5px;padding-right:12px}
+.tabs button[data-shop="pets"] .ic{width:20px;height:20px;animation:tcspin 6s linear infinite}
+.tabs button[data-shop="pets"]::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-50%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent);animation:tabsheen 2.8s ease-in-out infinite}
+@keyframes tabsheen{0%,40%{transform:translateX(0)}100%{transform:translateX(380%)}}
+.tabs button[data-shop="pets"][aria-selected="true"]{background:linear-gradient(100deg,#FFA62E,#FF5FA2 50%,#8F6BFF);border-color:#fff;box-shadow:0 0 0 2px #FF7EB6,0 0 18px rgba(255,126,182,.6);transform:translateY(3px)}
+.hotb{font-size:9.5px;font-weight:900;letter-spacing:.5px;background:#fff;color:#FF4B7D;border-radius:999px;padding:1px 6px;margin-left:2px;text-shadow:none;animation:tchot 1.2s ease-in-out infinite}
+/* hero header */
+.palshero{position:relative;overflow:hidden;margin:14px 0 4px;border-radius:24px;padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;background:linear-gradient(120deg,#FFF1C2,#FFD6EA 45%,#DCD2FF);border:3px solid #fff;box-shadow:0 5px 0 #E9C4DA,0 14px 28px rgba(200,120,170,.18)}
+.ph-sheen{position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.7) 50%,transparent 65%);transform:translateX(-120%);animation:cardsheen 4.5s ease-in-out infinite;pointer-events:none}
+.ph-spark{position:absolute;line-height:0;animation:lgsine 4s ease-in-out infinite}.ph-spark .ic{width:20px;height:20px}
+.ph-spark.s1{right:16px;top:10px}.ph-spark.s2{right:42%;bottom:8px;animation-delay:-1.4s}.ph-spark.s3{right:30px;bottom:12px;animation-delay:-2.6s}
+.ph-row{display:flex;align-items:flex-end}
+.ph-pal{width:56px;margin-right:-16px;animation:lgbob 2.6s ease-in-out infinite;animation-delay:calc(var(--i)*-.35s);filter:drop-shadow(0 3px 2px rgba(0,0,0,.15))}
+.ph-pal svg{width:100%;height:auto;display:block}
+.ph-pal.sil svg{filter:brightness(0) drop-shadow(0 0 1.5px #FFC800);opacity:.55}
+.ph-txt{display:grid;gap:4px;min-width:0}
+.ph-txt b{font-size:18px;line-height:1.25}
+.ph-count{font-weight:900;font-size:13px;color:#8C3B6A}
+.ph-prog{height:12px;border-radius:999px;background:rgba(255,255,255,.75);overflow:hidden}.ph-prog i{display:block;height:100%;background:linear-gradient(90deg,#FF8FB1,#FFD23F,#7ED957,#5CC8FF,#B07CFF);box-shadow:inset 0 -3px 0 rgba(0,0,0,.1)}
+.ph-chips{display:flex;flex-wrap:wrap;gap:6px}.ph-chips span{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:800;background:#fff;border-radius:999px;padding:2px 9px 2px 5px;box-shadow:0 2px 0 rgba(0,0,0,.08)}.ph-chips .ic{width:15px;height:15px}
+@media (max-width:560px){.palshero{grid-template-columns:1fr}.ph-pal{width:48px}}
+@media (prefers-reduced-motion:reduce){.tabs button[data-shop="pets"]::after,.tabs button[data-shop="pets"] .ic,.hotb,.ph-sheen,.ph-spark,.ph-pal{animation:none}}
+.ph-pal{width:54px;margin-right:-4px}@media (max-width:560px){.ph-pal{width:50px;margin-right:-6px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -4800,15 +4851,16 @@ function tierRank(t){return TIERS.indexOf(t||'common');}
 function tierCounts(filter){var o={};TIERS.forEach(function(t){o[t]=[0,0];});ITEMS.forEach(function(it){if(it.id==='w0'||!filter(it))return;var t=it.tier||'common';o[t][1]++;if(isOwned(it))o[t][0]++;});PETS.forEach(function(P){if(!filter({pet:1}))return;var t=P.tier||'common';o[t][1]++;if(S.pets[P.id])o[t][0]++;});BUDS.forEach(function(B){if(!filter({pet:1}))return;o[B.tier][1]++;if(S.bud.own[B.id])o[B.tier][0]++;});return o;}
 function lockLine(it){if(it.quest){var v=it.quest.f(),pc=Math.min(100,Math.round(v[0]/v[1]*100));return '<div class="sub">🎯 '+esc(L(it.quest.en,it.quest.zh))+'</div><div class="prog" style="width:100%"><i style="width:'+pc+'%;background:'+(it.tier==='legendary'?'var(--gold)':it.tier==='mythic'?'linear-gradient(90deg,#FF9AA2,#FFD58A,#9EE0C0,#9DB8F0,#D9A8F0)':'#A58BD6')+'"></i></div><div class="sub">'+Math.min(v[0],v[1])+' / '+v[1]+'</div>';}
  if(it.sec)return '<div class="sub">🔒 '+L('Get 3★ (14/15 or more) in the '+it.sec+' quiz','在 '+it.sec+' 測驗取得 3★（14/15 或以上）')+'</div>';return '';}
-function shopHTML(){var tabs=[['food','🍙 '+L('Snacks','小食')],['wear','👒 '+L('Wardrobe','衣櫃')],['room','🛋️ '+L('Room decor','房間裝飾')],['pets','🧸 '+L('Science Pals','科學小夥伴')],['quests','🎯 '+L('Quests','任務')],['clinic','🏥 '+L('Clinic','診所')+(S.ill&&S.ill.lv?' ❗':'')]];
+function shopHTML(){var tabs=[['pets',IC('sparkle')+L('Science Pals','科學小夥伴')+'<span class="hotb">HOT</span>'],['food','🍙 '+L('Snacks','小食')],['wear','👒 '+L('Wardrobe','衣櫃')],['room','🛋️ '+L('Room decor','房間裝飾')],['quests','🎯 '+L('Quests','任務')],['clinic','🏥 '+L('Clinic','診所')+(S.ill&&S.ill.lv?' ❗':'')]];
  var h='<h1 class="h-sec">🛍️ '+L('Shop','商店')+'</h1><div class="tabs" role="tablist">'+tabs.map(function(t){return '<button role="tab" data-shop="'+t[0]+'" aria-selected="'+(shopTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div>';
  if(shopTab==='wear'||shopTab==='room'||shopTab==='quests')h+='<p class="muted" style="margin:10px 0 0;font-size:14px">'+TIERS.map(function(t){return tierBadge({tier:t});}).join(' ')+'<br>'+L('✦ Rare sub-topic items: 3★ in that quiz · 💎 Epic unit rewards: 3★ in a whole unit · 👑 Legendary: very hard milestones · 🌈 Mythic: long streaks and the toughest challenges.','✦ 稀有小節物品：該測驗 3★ · 💎 史詩單元獎勵：整個單元 3★ · 👑 傳說：非常困難的里程碑 · 🌈 神話：超長連續溫習及最艱難挑戰。')+'</p>'+(shopTab==='quests'?'<div class="row" style="margin-top:8px;gap:8px"><button class="btn small" data-fx="legendary">👑 '+L('Preview legendary unlock','預覽傳說級解鎖')+'</button><button class="btn small lav" data-fx="mythic">🌈 '+L('Preview mythic unlock','預覽神話級解鎖')+'</button></div>':'');
  if(shopTab==='clinic')return h+clinicHTML()+'<div class="items">'+medCards()+'</div>';
  if(shopTab==='food')h+='<div class="tipbar"><span>❤️ '+L('Favourite food = double happiness','最愛食物＝快樂加倍')+'</span><span>🧠 🪙 '+L('Boost foods multiply rewards','加成食物令獎勵倍增')+'</span><span>🍬 '+L('3 sugary snacks a day = sugar spike, then crash','一天 3 款高糖＝血糖急升又急跌')+'</span><span>🟢 🟡 🔴 '+L('Tap 🔍 for nutrition','按 🔍 看營養分析')+'</span></div>';
  if(shopTab==='room')h+='<div class="tipbar"><span>✨ '+L('Use 1 item from each group at the same time','每組可同時擺放 1 件')+'</span><span>👆 '+L('Tap again to take it away','再按一次即可收起')+'</span></div>';
+ if(shopTab==='pets')h+=palsHeroHTML();
  h+='<div class="items">';
  if(shopTab==='food')FOODS.slice().sort(function(x,y){return x.price-y.price;}).forEach(function(f){h+='<div class="item food'+(PET_FAV[S.active]===f.id?' favf':'')+'">'+(S.food[f.id]?'<span class="own">×'+S.food[f.id]+'</span>':'')+'<div class="pic">'+foodIcon(f)+'</div><div class="nm">'+esc(LL(f))+'</div>'+foodFx(f,S.active)+'<button class="btn small" data-buyfood="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>🪙 '+f.price+'</button>'+nutriHTML(f)+'</div>';});
- else if(shopTab==='pets')PETS.slice().sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier);}).forEach(function(P){var has=!!S.pets[P.id];h+='<div class="item t-'+(P.tier||'common')+'">'+tierBadge(P)+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">'+esc(L(P.desc[0],P.desc[1]))+'</div>'+palBuffLine(P)+
+ else if(shopTab==='pets')PETS.slice().sort(function(a,b){return tierRank(b.tier)-tierRank(a.tier);}).forEach(function(P){var has=!!S.pets[P.id];h+='<div class="item t-'+(P.tier||'common')+'">'+tierBadge(P)+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div><div class="sub">'+esc(L(P.desc[0],P.desc[1]))+'</div>'+palBuffLine(P)+
   (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):!P.cond?'<div class="sub">💰 '+L('Coins only – save up!','只可用金幣購買——努力儲錢！')+'</div><div class="prog" style="width:100%"><i style="width:'+Math.min(100,Math.round(S.coins/P.price*100))+'%;background:linear-gradient(90deg,#FF9AA2,#FFD58A,#9EE0C0,#9DB8F0,#D9A8F0)"></i></div><div class="sub">🪙 '+Math.min(S.coins,P.price)+' / '+P.price+'</div><button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>🪙 '+P.price+'</button>':'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')</div>'+(P.price?'<button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>':'<div class="sub">'+(P.unit?IC('pen')+' '+L('Earn it in Unit '+P.unit+' dictation','於單元 '+P.unit+' 默書中贏取'):'👑 '+L('Quest only','只限任務'))+'</div>'))+'</div>';});
  else{var list=shopTab==='quests'?ITEMS.filter(function(i){return i.quest;}):ITEMS.filter(function(it){return it.cat===shopTab&&it.id!=='w0';});
   var grp={};list.sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier)||(a.sec?1:0)-(b.sec?1:0)||a.price-b.price;}).forEach(function(it){var has=isOwned(it),free=it.sec||it.quest;
@@ -5135,7 +5187,7 @@ var LINES={
 function line(m){if(m==='sick')return sickLine();var l=pick(LINES[m]||LINES.happy);return L(l[0],l[1]);}
 
 /* ---------- screens ---------- */
-var curScreen='home',shopTab='food',colTab='pets',bubble=null,bubblePet='mochi';
+var curScreen='home',shopTab='pets',colTab='pets',bubble=null,bubblePet='mochi';
 function render(){var a=$('#app');if(!S.started){a.innerHTML=welcomeHTML2();bindWelcome2();return;}
  checkIll();nightCheck();decay();
  var mCount=Object.keys(S.mistakes).length;
@@ -7104,17 +7156,17 @@ function tcElem(t){return t.id==='st3'||/^st\d/.test(t.id)&&t.tier===2?'fire':['
 function tcPal(t,i,el){return el==='vine'?'mochi':el==='fire'?(i%2?'solara':'mochi'):(i%2?'nova':'petal');}
 function tcScene(t,i){var el=tcElem(t),pal=tcPal(t,i,el),pet=petSVG(pal,el==='bolt'?'happy':'joy',{stage:1,eq:{},plain:1}).replace('<svg class="pet"','<svg class="pet" x="20" y="'+(el==='bolt'?30:36)+'" width="80" height="73"'),bg='',fb='',ff='',pose='';
  if(el==='vine'){bg='<rect width="120" height="120" fill="url(#tcBgVine)"/><path d="M26 0h16l40 120H58Z" fill="#FFE9A0" opacity=".13"/><path d="M62 0h10l26 120H84Z" fill="#FFE9A0" opacity=".09"/>';
-  fb='<g class="spinslow"><path d="M64 114C14 110 4 62 30 38C54 16 98 20 108 52C116 80 92 102 68 96" stroke="url(#tcVine)" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#tcInk)"/><path d="M64 114C14 110 4 62 30 38C54 16 98 20 108 52" stroke="#C8F7A0" stroke-width="1.6" fill="none" opacity=".7"/><path d="M30 38c-8-6-6-14 2-12M108 52c8-2 10 6 4 9M18 84c-8 2-8 10-1 9" stroke="#57C46A" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>'+
+  fb='<g class="spinslow"><path d="M64 114C14 110 4 62 30 38C54 16 98 20 108 52C116 80 92 102 68 96" stroke="#7ED957" stroke-width="12" fill="none" stroke-linecap="round" opacity=".18"/><path d="M64 114C14 110 4 62 30 38C54 16 98 20 108 52C116 80 92 102 68 96" stroke="url(#tcVine)" stroke-width="7" stroke-dasharray="40 3 22 2" fill="none" stroke-linecap="round"/><path d="M64 114C14 110 4 62 30 38C54 16 98 20 108 52" stroke="#C8F7A0" stroke-width="1.6" fill="none" opacity=".7"/><path d="M30 38c-8-6-6-14 2-12M108 52c8-2 10 6 4 9M18 84c-8 2-8 10-1 9" stroke="#57C46A" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>'+
    '<g class="wind"><path d="M2 70Q26 62 42 72M4 84Q24 78 36 86M6 56Q22 50 34 56" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".55"/></g>';
-  ff='<g class="leaves">'+[[18,30,'#E8742A'],[100,26,'#D9452B'],[110,86,'#F2B33D'],[14,96,'#E8742A'],[60,10,'#7ED957'],[86,108,'#D9452B'],[40,112,'#F2B33D']].map(function(q,k){return '<g transform="translate('+q[0]+' '+q[1]+') rotate('+(k*47)+')"><path class="lf" style="animation-delay:'+(k*-.4)+'s" d="M0-5C4-2 4 2 0 5C-4 2-4-2 0-5Z" fill="'+q[2]+'" filter="url(#tcInk)"/></g>';}).join('')+'</g>';
+  ff='<g class="leaves">'+[[18,30,'#E8742A'],[100,26,'#D9452B'],[110,86,'#F2B33D'],[14,96,'#E8742A'],[60,10,'#7ED957'],[86,108,'#D9452B'],[40,112,'#F2B33D']].map(function(q,k){return '<g transform="translate('+q[0]+' '+q[1]+') rotate('+(k*47)+')"><path class="lf" style="animation-delay:'+(k*-.4)+'s" d="M0-5C4-2 4 2 0 5C-4 2-4-2 0-5Z" fill="'+q[2]+'"/></g>';}).join('')+'</g>';
   pose='rotate(-12 60 80)';}
  else if(el==='fire'){bg='<rect width="120" height="120" fill="url(#tcBgFire)"/><ellipse cx="60" cy="118" rx="70" ry="26" fill="#FF7A1A" opacity=".35"/>';
-  fb='<g class="dragon" filter="url(#tcInk)"><path d="M70 114C110 104 120 58 96 32C74 8 32 12 18 40C8 62 18 80 32 86" stroke="url(#tcFire)" stroke-width="11" fill="none" stroke-linecap="round"/><path class="flow" d="M70 114C110 104 120 58 96 32C74 8 32 12 18 40C8 62 18 80 32 86" stroke="#FFE27A" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="14 10"/>'+
+  fb='<g class="dragon"><path d="M70 114C110 104 120 58 96 32C74 8 32 12 18 40C8 62 18 80 32 86" stroke="#FF6A1A" stroke-width="17" fill="none" stroke-linecap="round" opacity=".22"/><path d="M70 114C110 104 120 58 96 32C74 8 32 12 18 40C8 62 18 80 32 86" stroke="url(#tcFire)" stroke-width="11" stroke-dasharray="50 3 30 2" fill="none" stroke-linecap="round"/><path class="flow" d="M70 114C110 104 120 58 96 32C74 8 32 12 18 40C8 62 18 80 32 86" stroke="#FFE27A" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="14 10"/>'+
    '<g transform="translate(34 88) rotate(30)"><path d="M0 0L16-7L26-2L16 5L4 7Z" fill="#E0281C" stroke="#FFC93D" stroke-width="1.2"/><circle cx="15" cy="-2" r="1.8" fill="#FFF27A"/><path d="M8-6L4-14M13-6L12-15M24 0L34-4M24 2L33 6" stroke="#FFC93D" stroke-width="1.2" fill="none" stroke-linecap="round"/></g></g>';
   ff='<g class="embers">'+[[22,110],[44,116],[78,114],[100,108],[60,118]].map(function(q,k){return '<circle cx="'+q[0]+'" cy="'+q[1]+'" r="'+(1.4+k%2)+'" fill="#FFD23F" style="animation-delay:'+(k*-.6)+'s"/>';}).join('')+'</g><g class="tongues">'+[10,34,88,110].map(function(x,k){return '<path style="animation-delay:'+(k*-.3)+'s" d="M'+x+' 120C'+(x-7)+' 108 '+(x-2)+' 100 '+x+' 92C'+(x+2)+' 100 '+(x+7)+' 108 '+x+' 120Z" fill="#FF6A1A" opacity=".85"/>';}).join('')+'</g>';
   pose='rotate(-8 60 80)';}
  else{bg='<rect width="120" height="120" fill="url(#tcBgBolt)"/><g fill="#fff" opacity=".7">'+[[12,14],[30,8],[96,12],[108,30],[18,40],[104,62]].map(function(q){return '<circle cx="'+q[0]+'" cy="'+q[1]+'" r=".9"/>';}).join('')+'</g><path d="M12 14L30 8L18 40M96 12L108 30L104 62" stroke="#9FB4FF" stroke-width=".5" fill="none" opacity=".5"/>';
-  fb='<g class="bolts" filter="url(#tcGlow)"><path d="M20 0L34 30L24 34L42 70L30 72L40 104" stroke="#5CC8FF" stroke-width="3.6" fill="none" stroke-linejoin="bevel"/><path d="M20 0L34 30L24 34L42 70L30 72L40 104" stroke="#fff" stroke-width="1.2" fill="none"/><path d="M104 4L90 34L100 38L80 72L94 76L82 110" stroke="#FFE14D" stroke-width="3.2" fill="none" stroke-linejoin="bevel"/><path d="M104 4L90 34L100 38L80 72L94 76L82 110" stroke="#fff" stroke-width="1" fill="none"/><path d="M34 30L10 46M90 34L114 50M42 70L58 82" stroke="#B07CFF" stroke-width="2" fill="none"/></g>';
+  fb='<g class="bolts"><path d="M20 0L34 30L24 34L42 70L30 72L40 104M104 4L90 34L100 38L80 72L94 76L82 110" stroke="#9FDBFF" stroke-width="9" fill="none" stroke-linejoin="bevel" opacity=".28"/><path d="M20 0L34 30L24 34L42 70L30 72L40 104" stroke="#5CC8FF" stroke-width="3.6" fill="none" stroke-linejoin="bevel"/><path d="M20 0L34 30L24 34L42 70L30 72L40 104" stroke="#fff" stroke-width="1.2" fill="none"/><path d="M104 4L90 34L100 38L80 72L94 76L82 110" stroke="#FFE14D" stroke-width="3.2" fill="none" stroke-linejoin="bevel"/><path d="M104 4L90 34L100 38L80 72L94 76L82 110" stroke="#fff" stroke-width="1" fill="none"/><path d="M34 30L10 46M90 34L114 50M42 70L58 82" stroke="#B07CFF" stroke-width="2" fill="none"/></g>';
   ff='<g class="halo">'+Array.apply(null,{length:12}).map(function(_,k){var a=k/12*Math.PI*2,x=60+30*Math.cos(a),y=58+12*Math.sin(a);return '<path d="M'+x.toFixed(1)+' '+(y-2.4).toFixed(1)+'l2 2.4-2 2.4-2-2.4Z" fill="'+['#5CC8FF','#FFE14D','#B07CFF'][k%3]+'"/>';}).join('')+'</g>';
   pose='rotate(8 60 70)';}
  return '<svg class="tscene el-'+el+'" viewBox="0 0 120 120" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g class="lay l-bg">'+bg+'</g><g class="lay l-fb">'+fb+'</g><g class="lay l-pal"><g class="pa"><g class="pose" transform="'+pose+'">'+pet+'</g></g></g><g class="lay l-ff">'+ff+'</g></svg>';}
@@ -7142,8 +7194,10 @@ function openTrophy(id){var t=TROPHIES.filter(function(x){return x.id===id;})[0]
  function tiltDev(e){if(e.gamma==null)return;var x=Math.max(-.5,Math.min(.5,e.gamma/56)),y=Math.max(-.5,Math.min(.5,((e.beta||45)-45)/48));c.style.setProperty('--ry',(x*28).toFixed(1)+'deg');c.style.setProperty('--rx',(-y*24).toFixed(1)+'deg');c.style.setProperty('--gx',((x+.5)*100).toFixed(0)+'%');c.style.setProperty('--mx',x.toFixed(2));c.style.setProperty('--my',y.toFixed(2));}
  window.addEventListener('deviceorientation',tiltDev);var mo=new MutationObserver(function(){if(!document.querySelector('.tinspect')){window.removeEventListener('deviceorientation',tiltDev);mo.disconnect();}});mo.observe(document.body,{childList:true,subtree:true});}
 var tcScrollOn=false;
-function tcParallax(){var cs=document.querySelectorAll('.tgrid .tcard');if(!cs.length)return;var vh=innerHeight;cs.forEach(function(c){var r=c.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;c.style.setProperty('--py',(((r.top+r.height/2)-vh/2)/vh).toFixed(3));});}
-function tcAfter(){if(!document.querySelector('.tgrid'))return;tcDefs();tcParallax();
+function tcParallax(){var cs=document.querySelectorAll('.tgrid .tcard.live:not(.locked)');if(!cs.length)return;var vh=innerHeight;cs.forEach(function(c){var r=c.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;c.style.setProperty('--py',(((r.top+r.height/2)-vh/2)/vh).toFixed(3));});}
+var tcIO=null;
+function liveWatch(sel){if(!('IntersectionObserver' in window)){document.querySelectorAll(sel).forEach(function(c){c.classList.add('live');});return;}if(!tcIO)tcIO=new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle('live',e.isIntersecting);});},{rootMargin:'80px'});document.querySelectorAll(sel).forEach(function(c){if(!c.dataset.lw){c.dataset.lw=1;tcIO.observe(c);}});}
+function tcAfter(){liveWatch('.item.t-legendary,.item.t-mythic,.tgrid .tcard,.palad');if(!document.querySelector('.tgrid'))return;tcDefs();tcParallax();
  if(!tcScrollOn){tcScrollOn=true;var tk=false;addEventListener('scroll',function(){if(tk)return;tk=true;requestAnimationFrame(function(){tk=false;tcParallax();});},{passive:true});}
  var rv=document.querySelectorAll('.tgrid .tcard.reveal');if(rv.length){S.tSeen=S.tSeen||{};rv.forEach(function(c){S.tSeen[c.dataset.tcard]=1;});save();setTimeout(function(){sfx('fanfare');},350);}}
 
@@ -7205,6 +7259,13 @@ function enterSchoolGuest(pl){var em=String(pl.email||'').toLowerCase(),lang=S.l
  S.lang=lang;S.started=true;curScreen='home';ac();save();render();openingPopup();
  setTimeout(function(){toast(IC('user')+' '+L('Guest mode: progress stays on this device. No leaderboard or class records.','訪客模式：進度只儲存在此裝置，不設龍虎榜及班級紀錄。'));},900);}
 function guestBoardHTML(){return '<p style="margin:0">'+L('You are in guest mode, so you are not on the class leaderboard. Keep studying – your pal still grows! 🌱','你正使用訪客模式，所以不會出現在班級龍虎榜。繼續溫習——你的小夥伴一樣會成長！🌱')+'</p><div class="lbpreview muted">'+L('Your effort: ','你的努力值：')+S.xpTotal+' XP · 🔥 '+S.streak+' · 🎀 '+lbCount()+'</div>';}
+
+/* ---- shop: Science Pals hero header ---- */
+function palsHeroHTML(){var own=petsCount(),tot=PETS.length,mine=PETS.filter(function(P){return S.pets[P.id];}).map(function(P){return P.id;}).slice(0,3),pick=mine.concat(['finn','flan','luna','gelato','petal','daifuku','nova'].filter(function(id){return mine.indexOf(id)<0;})).slice(0,6);
+ var row=pick.map(function(id,i){var has=!!S.pets[id];return '<span class="ph-pal'+(has?'':' sil')+'" style="--i:'+i+'">'+petSVG(id,'happy',{stage:1,eq:{},plain:1})+'</span>';}).join('');
+ return '<div class="palshero"><span class="ph-sheen"></span><span class="ph-spark s1">'+IC('sparkle')+'</span><span class="ph-spark s2">'+IC('sparkle')+'</span><span class="ph-spark s3">'+IC('prism')+'</span>'+
+ '<div class="ph-row">'+row+'</div><div class="ph-txt"><b>'+L('Collect every Science Pal!','收集所有科學小夥伴！')+'</b><span class="ph-count">'+own+' / '+tot+'</span>'+
+ '<div class="ph-prog"><i style="width:'+Math.round(own/tot*100)+'%"></i></div><div class="ph-chips"><span>'+IC('crown')+L('Legendary perks','傳說級加成')+'</span><span>'+IC('prism')+L('Mythic auras','神話級光環')+'</span><span>'+IC('pen')+L('6 Unit Pals from dictation','6 位單元小夥伴靠默書解鎖')+'</span></div></div></div>';}
 
 /* ---------- Dictation 默書 ---------- */
 var DQ=null,dictCfg={kind:'listen',unit:1,sec:'all'};
