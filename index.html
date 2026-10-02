@@ -1550,6 +1550,10 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 .tabs button[data-shop="power"]{background:linear-gradient(135deg,#EAF7FF,#C9EBFF);border-color:#8FD3FF;color:#1D5C88}
 .tabs button[data-shop="power"][aria-selected="true"]{background:linear-gradient(135deg,#5CC8FF,#1CB0F6);color:#fff}
 @media (max-width:520px){.frzhero{grid-template-columns:1fr;text-align:center}.frzbig{width:96px;margin:0 auto}.fslots{justify-content:center}}
+/* one consistent gold coin, sitting on the text baseline */
+coin-i{display:inline-block;line-height:0;vertical-align:-.22em;margin:0 .06em}
+coin-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!important;animation:none!important;filter:none!important}
+.brand .mlogo{flex:none;filter:drop-shadow(0 2px 0 rgba(90,58,46,.12))}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -7728,6 +7732,28 @@ function sciFig(k,x,mood){var o=SCI_LOOK[k],s='<g transform="translate('+x+' 0)"
   foil:'<g class="sci-it"><rect x="94" y="98" width="8" height="40" rx="1.5" fill="#FFD000"'+sw+'/>'+pLine('M96 104 L100 108 M96 120 L100 124','#FFF1A8',1.5)+'</g>',
   scissors:'<g class="sci-it"><circle cx="94" cy="140" r="5" fill="none" stroke="#FF2D55" stroke-width="3"/><circle cx="104" cy="138" r="5" fill="none" stroke="#FF2D55" stroke-width="3"/>'+pLine('M96 135 L112 112 M102 134 L106 110','#C9CFD8',3.5)+'</g>',none:''}[o.item];
  return s+it+'</g>';}
+
+/* ----- header logo: soft-shaded mochi pal with a science sprout, on a rounded app-icon tile ----- */
+function miniLogo(){var o={w:2,sx:-1.5,sy:-3,ry:1.4,rw:1.6,so:.16};
+ return '<svg class="mlogo" viewBox="0 0 40 40" width="38" height="38" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="11" fill="#FFD3DE" stroke="'+PK+'" stroke-width="2"/><path d="M3.5 18 C3.5 8 8 3.5 14 3.5 L26 3.5 C32 3.5 36.5 8 36.5 14 C26 11 14 12 3.5 18Z" fill="#FFE8EE"/>'+
+  '<circle cx="31" cy="9" r="1.3" fill="#fff"/><path d="M8 9 L9 11 L11 12 L9 13 L8 15 L7 13 L5 12 L7 11Z" fill="#FFF6C8"/>'+
+  pLine('M20 15 C20 12 20 10.5 20.5 8.5',PK,3.6)+pLine('M20 15 C20 12 20 10.5 20.5 8.5','#6DBE5C',1.6)+
+  '<path d="M20.5 9.5 C22 6 25.5 5.5 27 6.5 C26 9.5 23 10.5 20.5 9.5Z" fill="#8ED47A" stroke="'+PK+'" stroke-width="1.4" stroke-linejoin="round"/><path d="M20 10.5 C18.5 8 15.5 7.8 14.5 8.6 C15.6 11 18 11.6 20 10.5Z" fill="#B5E59F" stroke="'+PK+'" stroke-width="1.4" stroke-linejoin="round"/>'+
+  '<circle cx="12.6" cy="17.4" r="3.6" fill="#FFFDF8" stroke="'+PK+'" stroke-width="2"/><circle cx="27.4" cy="17.4" r="3.6" fill="#FFFDF8" stroke="'+PK+'" stroke-width="2"/><circle cx="12.6" cy="17.6" r="1.6" fill="#FFC6CF"/><circle cx="27.4" cy="17.6" r="1.6" fill="#FFC6CF"/>'+
+  cel('M7.5 30 C7 21.5 12.5 14.5 20 14.5 C27.5 14.5 33 21.5 32.5 30 C32 34.5 27.5 35.5 20 35.5 C12.5 35.5 8 34.5 7.5 30Z','#FFFDF8','',o)+
+  '<ellipse cx="16" cy="25.5" rx="1.5" ry="1.9" fill="'+PK+'"/><ellipse cx="24" cy="25.5" rx="1.5" ry="1.9" fill="'+PK+'"/><circle cx="16.5" cy="24.8" r=".55" fill="#fff"/><circle cx="24.5" cy="24.8" r=".55" fill="#fff"/>'+
+  '<ellipse cx="12.4" cy="28.6" rx="2.3" ry="1.3" fill="#FF9EAE" opacity=".75"/><ellipse cx="27.6" cy="28.6" rx="2.3" ry="1.3" fill="#FF9EAE" opacity=".75"/>'+pLine('M18.6 28.2 Q19.3 29.3 20 28.4 Q20.7 29.3 21.4 28.2',PK,1.2)+'</svg>';}
+
+/* ----- one gold coin everywhere: swap the 🪙 emoji (grey on many devices) for the game's own coin icon ----- */
+var COIN_RX=/🪙/;
+function coinSweep(root){if(!root||!root.textContent||!COIN_RX.test(root.textContent))return;
+ var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentNode;if(!p||/^(SCRIPT|STYLE|TEXTAREA|OPTION|TITLE|INPUT)$/.test(p.nodeName)||p.closest&&p.closest('svg'))return NodeFilter.FILTER_REJECT;return COIN_RX.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP;}}),list=[];
+ while(w.nextNode())list.push(w.currentNode);
+ list.forEach(function(n){var parts=n.nodeValue.split(/🪙️?/),f=document.createDocumentFragment();
+  parts.forEach(function(t,i){if(i){var sp=document.createElement('coin-i');sp.setAttribute('role','img');sp.setAttribute('aria-label',S&&S.lang==='en'?'coins':'金幣');sp.innerHTML=IC('coin');f.appendChild(sp);}if(t)f.appendChild(document.createTextNode(t));});
+  n.parentNode.replaceChild(f,n);});}
+(function(){function go(){coinSweep(document.body);new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==='characterData')coinSweep(m.target.parentNode);else m.addedNodes.forEach(function(n){coinSweep(n.nodeType===3?n.parentNode:n);});});}).observe(document.body,{childList:true,subtree:true,characterData:true});}
+ if(document.body)go();else document.addEventListener('DOMContentLoaded',go);})();
 
 /* ---------- Streak Freeze 連勝凍結: buy ahead, auto-used on a missed day (like a "freeze" power-up) ---------- */
 var FRZ_MAX=3,FRZ_PRICE=50;
