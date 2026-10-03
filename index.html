@@ -2449,7 +2449,7 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .come>ellipse{fill:rgba(47,168,220,.35)}
 .cofix .cowalk{transform-box:fill-box;transform-origin:50% 100%;animation:coIdle 3s ease-in-out infinite}.cofix:nth-of-type(2n) .cowalk{animation-delay:-1.4s}
 @keyframes coIdle{0%,100%{transform:none}50%{transform:translateY(-1.5px)}}
-.cofix.cowave .cowalk{animation:coWave .5s ease-in-out 3}@keyframes coWave{0%,100%{transform:none}30%{transform:translateY(-7px) rotate(-8deg)}60%{transform:translateY(-3px) rotate(8deg)}}
+.cofix.cohello .cowalk{animation:coHello .5s ease-in-out 3}@keyframes coHello{0%,100%{transform:none}30%{transform:translateY(-7px) rotate(-8deg)}60%{transform:translateY(-3px) rotate(8deg)}}
 .coheart{transform-box:fill-box;transform-origin:50% 100%;animation:coHeart 1.4s ease-out both}@keyframes coHeart{0%{opacity:0;transform:translateY(6px) scale(.4)}25%{opacity:1;transform:scale(1)}100%{opacity:0;transform:translateY(-22px) scale(.9)}}
 .cobubg{transform-box:fill-box;transform-origin:50% 100%}.cobubg.fresh{animation:coBub .5s cubic-bezier(.2,1.6,.4,1) both}@keyframes coBub{from{transform:scale(0)}}
 .cowalkhint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:4;display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,.92);border:2px solid #E4D9F2;font-size:12.5px;font-weight:800;color:var(--ink);pointer-events:none;white-space:nowrap;animation:coHintB 2s ease-in-out infinite}
@@ -2478,7 +2478,7 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .comove{margin-top:6px;width:100%}
 .covill .cowalk{animation:coVill 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}.covill:nth-of-type(2n) .cowalk{animation-duration:4s}
 @keyframes coVill{50%{transform:translateY(-1.5px)}}
-.covill.cowave .cowalk{animation:coWave .7s cubic-bezier(.2,1.4,.4,1)}@keyframes coWave{30%{transform:translateY(-6px) rotate(-6deg)}60%{transform:translateY(-2px) rotate(5deg)}}
+.covill.cohello .cowalk{animation:coHello .7s cubic-bezier(.2,1.4,.4,1)}
 .cosyn path{animation:coSynFlow 1.6s linear infinite}@keyframes coSynFlow{to{stroke-dashoffset:-18}}
 @media (prefers-reduced-motion:reduce){.covill .cowalk,.cosyn path,.copk.sel circle{animation:none}}
 .cowalkhint{position:relative!important;left:auto!important;bottom:auto!important;transform:none!important;margin:8px auto 0;white-space:normal!important;width:max-content;max-width:100%;text-align:left;padding:7px 14px 7px 8px!important;border-color:#FF6FA3!important;box-shadow:0 3px 0 #F7C3D6;animation:coHintC 2s ease-in-out infinite!important}@keyframes coHintC{50%{transform:translateY(-3px)}}
@@ -10325,7 +10325,7 @@ function coBldInfo(k){var q=coopSq(),B=CO_B[k],lv=q.bld[k]||0,max=B.u?3:1,F=CO_F
  modal('<div class="sheet-h"><h2>'+esc(L(B.n[0],B.n[1]))+'</h2><button class="x" id="cobX" aria-label="Close">✕</button></div><div class="cobinfo"><svg viewBox="-45 -70 90 90" width="120" height="120" aria-hidden="true">'+coBld(k,lv||1,0,0,q.fogB===k&&lv>0,false)+'</svg><span class="cwlv big">'+dots+'</span>'+
   (lv?'<p class="good">'+IC('check')+esc(L(B.p[Math.min(lv,B.p.length)-1][0],B.p[Math.min(lv,B.p.length)-1][1]))+'</p>':'<p class="muted">'+L('Not built yet.','尚未建成。')+'</p>')+
   (F&&F[2]?'<p class="cwhk"><b>'+L('Science fact','科學小知識')+'</b> '+esc(L(F[0],F[1]))+' '+cwSecTag(F[2])+'</p>':'')+'<button class="btn pink" data-coex="gobuild">'+IC('pencil')+L('Go to Build','前往建造')+'</button></div>');$('#cobX').onclick=function(){closeModal();};}
-function coCheer(i){var g=document.querySelector('.cofix[data-mi="'+i+'"]'),q=coopSq(),m=q&&q.members[i];if(g){g.classList.remove('cowave');void g.getBoundingClientRect();g.classList.add('cowave');}
+function coCheer(i){var g=document.querySelector('.cofix[data-mi="'+i+'"]'),q=coopSq(),m=q&&q.members[i];if(g){g.classList.remove('cohello');void g.getBoundingClientRect();g.classList.add('cohello');}
  var svg=document.querySelector('.coisle');if(svg&&g&&!coRM()){var t=g.getAttribute('transform');var hs='';for(var k=0;k<3;k++)hs+='<path class="coheart" style="animation-delay:'+(k*0.18)+'s" d="M'+(k*7-7)+' -46c-3-4-9-1-6 4l6 5 6-5c3-5-3-8-6-4Z" fill="#FF8FB1" stroke="#5B4B6E" stroke-width="1"/>';
   var h=document.createElementNS('http://www.w3.org/2000/svg','g');h.setAttribute('transform',t);h.innerHTML=hs;svg.appendChild(h);setTimeout(function(){h.remove();},1600);}
  sfx('pop');if(m)toast(L('You cheered '+m.n+'! 💗','你為'+m.n+'打氣了！💗'));}
@@ -10359,8 +10359,21 @@ function coLayout(q){var used={},pl=q.plot||{},free=[];CO_UNITS.forEach(function
 /* ---------- island scenery: grass, flowers, a little village with villagers ---------- */
 var CO_VILL=[{id:'elder',x:58,y:170,hx:66,hy:156,n:['Grandpa Oak','橡樹爺爺'],hat:'#8B6B3E'},{id:'farmer',x:206,y:56,hx:226,hy:62,n:['Farmer Bao','包包農夫'],hat:'#F2C14E'},{id:'fisher',x:344,y:196,hx:352,hy:180,n:['Fisher Mei','漁夫阿美'],hat:'#2FA8DC'}];
 function coHouse(x,y,roof,s){return '<g transform="translate('+x+' '+y+') scale('+(s||1)+')"><path d="M-11 0V-12H11V0Z" fill="#FFF3DC" stroke="#5B4B6E" stroke-width="1.6"/><path d="M-14 -11L0 -22L14 -11Z" fill="'+roof+'" stroke="#5B4B6E" stroke-width="1.6" stroke-linejoin="round"/><rect x="-7" y="-9" width="5" height="5" rx="1" fill="#FFE27A" stroke="#5B4B6E" stroke-width="1"/><rect x="2" y="-7" width="5" height="7" rx="1" fill="#C98A4A" stroke="#5B4B6E" stroke-width="1"/></g>';}
-function coVillager(v){return '<g class="covill" data-v="'+v.id+'" transform="translate('+v.x+' '+v.y+')"><ellipse rx="9" ry="2.4" fill="rgba(90,70,110,.22)"/><g class="cowalk"><ellipse cy="-9" rx="9" ry="9" fill="#FFF7EC" stroke="#5B4B6E" stroke-width="1.6"/><circle cx="-3" cy="-10" r="1.2" fill="#5B4B6E"/><circle cx="3" cy="-10" r="1.2" fill="#5B4B6E"/><ellipse cx="-5" cy="-7" rx="1.8" ry="1" fill="#FFB3C1"/><ellipse cx="5" cy="-7" rx="1.8" ry="1" fill="#FFB3C1"/>'+
- (v.id==='elder'?'<path d="M-4 -5q4 6 8 0" fill="#fff" stroke="#5B4B6E" stroke-width="1"/><path d="M-8 -16q8-6 16 0" fill="none" stroke="'+v.hat+'" stroke-width="3" stroke-linecap="round"/>':v.id==='farmer'?'<path d="M-13 -15h26l-5-3h-16Z" fill="'+v.hat+'" stroke="#5B4B6E" stroke-width="1.2"/><path d="M-6 -18q6-7 12 0" fill="'+v.hat+'" stroke="#5B4B6E" stroke-width="1.2"/>':'<path d="M-9 -15q9-9 18 0Z" fill="'+v.hat+'" stroke="#5B4B6E" stroke-width="1.2"/><path d="M9 -15h4" stroke="#5B4B6E" stroke-width="1.6" stroke-linecap="round"/>')+'</g></g>';}
+function coVillager(v){var K='#5B4B6E',S=' stroke="'+K+'" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"',P={elder:['#F3E3C8','#DCC4A0'],farmer:['#FFE1C9','#F4C3A0'],fisher:['#FFF3C4','#F2D88A']}[v.id]||['#FFF7EC','#EADFD4'];
+ var body='<path d="M-11 -1C-13.5 -10 -10 -22 0 -22C10 -22 13.5 -10 11 -1C8 1 -8 1 -11 -1Z" fill="'+P[0]+'"/><path d="M5 -20.5C11 -17 13.5 -9 11 -1C9 .4 5 1 2 1C8 -4 9.5 -13 5 -20.5Z" fill="'+P[1]+'"/><path d="M-11 -1C-13.5 -10 -10 -22 0 -22C10 -22 13.5 -10 11 -1C8 1 -8 1 -11 -1Z" fill="none"'+S+'/><ellipse cx="-5.5" cy="-16" rx="3" ry="1.8" fill="#fff" opacity=".75" transform="rotate(-25 -5.5 -16)"/>';
+ var feet='<ellipse cx="-5" cy="0.5" rx="3.6" ry="2" fill="'+P[1]+'"'+S+'/><ellipse cx="5" cy="0.5" rx="3.6" ry="2" fill="'+P[1]+'"'+S+'/>';
+ var face='<circle cx="-3.8" cy="-9" r="1.9" fill="'+K+'"/><circle cx="3.8" cy="-9" r="1.9" fill="'+K+'"/><circle cx="-3.3" cy="-9.7" r=".7" fill="#fff"/><circle cx="4.3" cy="-9.7" r=".7" fill="#fff"/><ellipse cx="-7" cy="-6.3" rx="2" ry="1.1" fill="#FFB3C1"/><ellipse cx="7" cy="-6.3" rx="2" ry="1.1" fill="#FFB3C1"/>';
+ var mouth='<path d="M-1.6 -6.2q1.6 1.5 3.2 0" fill="none"'+S+'/>',x='';
+ if(v.id==='elder')x='<path d="M13 -10l3 11" stroke="#8B6B3E" stroke-width="2.2" stroke-linecap="round"/><path d="M12.5 -10q1.5-3 4-1" fill="none" stroke="#8B6B3E" stroke-width="2.2" stroke-linecap="round"/>'+feet+body+face+
+  '<path d="M-4.5 -5.6q2.2 2.4 4.5 .4q2.3 2 4.5 -.4" fill="#fff"'+S+'/><path d="M-6 -12.2l3.6 -.8M6 -12.2l-3.6 -.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/>'+
+  '<path d="M-9.5 -18.5C-9 -25 9 -25 9.5 -18.5C6 -17 -6 -17 -9.5 -18.5Z" fill="#8B6B3E"'+S+'/><path d="M-6 -21.5l2 2M-1 -22.5l2 2M4 -21.5l2 2" stroke="#6E5230" stroke-width="1"/><path d="M0 -23.5q1 -3 3 -3.5" fill="none" stroke="#6E5230" stroke-width="1.8" stroke-linecap="round"/>';
+ else if(v.id==='farmer')x=feet+body+'<path d="M-9.5 -4C-6 -1.5 6 -1.5 9.5 -4L10.6 -1.2C8 1 -8 1 -10.6 -1.2Z" fill="#7ED957"'+S+'/><circle cx="-5" cy="-2.6" r=".9" fill="#5DAE4B"/><circle cx="5" cy="-2.6" r=".9" fill="#5DAE4B"/>'+face+mouth+
+  '<path d="M-15 -17.5C-9 -15 9 -15 15 -17.5C12 -20 -12 -20 -15 -17.5Z" fill="#F2C14E"'+S+'/><path d="M-7.5 -18.5C-7 -25.5 7 -25.5 7.5 -18.5Z" fill="#F2C14E"'+S+'/><path d="M-7.3 -19.6h14.6" stroke="#E0509F" stroke-width="2"/>'+
+  '<g transform="translate(-14 -6) rotate(-30)"><path d="M0 0l2.5 9 2.5-9Z" fill="#FF9F43"'+S+'/><path d="M2.5 0l-2 -3M2.5 0l0 -3.5M2.5 0l2 -3" stroke="#5DAE4B" stroke-width="1.4" stroke-linecap="round"/></g>';
+ else x='<path d="M12 -6l7 -18" stroke="#8B6B3E" stroke-width="1.8" stroke-linecap="round"/><path d="M19 -24q4 6 3 14" fill="none" stroke="#9AA6B6" stroke-width=".9"/><circle cx="22" cy="-9.5" r="1.8" fill="#FF6B6B" stroke="'+K+'" stroke-width=".9"/>'+feet+body+
+  '<path d="M-10.5 -3h21" stroke="#E8B923" stroke-width="1.4"/><circle cx="0" cy="-1.6" r="1" fill="#E8B923"/>'+face+mouth+
+  '<path d="M-10.5 -16.5C-10 -25 10 -25 10.5 -16.5Z" fill="#2FA8DC"'+S+'/><path d="M-13 -16.5C-8 -14 8 -14 13 -16.5C9 -18.8 -9 -18.8 -13 -16.5Z" fill="#2290C4"'+S+'/><path d="M-6 -21q6 -3 12 0" fill="none" stroke="#fff" stroke-width="1.2" opacity=".7"/>';
+ return '<g class="covill" data-v="'+v.id+'" transform="translate('+v.x+' '+v.y+')"><g transform="scale('+(v.x||v.y?1.25:1)+')"><ellipse cy="1.5" rx="12" ry="3" fill="rgba(90,70,110,.22)"/><g class="cowalk">'+x+'</g></g></g>';}
 function coScenery(q){var o='<g class="coscene">',r=function(i){var x=Math.sin(i*12.9898)*43758.5453;return x-Math.floor(x);};
  var far=function(x,y){var pts=CO_PLOTS.concat(CO_SPOTS,[[CO_PLAZA[0],CO_PLAZA[1]],[198,66],[200,160],[318,94]]);for(var i=0;i<pts.length;i++)if(Math.hypot(pts[i][0]-x,(pts[i][1]-y)*1.2)<26)return false;var dx=(x-205)/150,dy=(y-150)/80;return dx*dx+dy*dy<=1;};
  var n=0;for(var i=0;i<140&&n<34;i++){var x=60+r(i)*290,y=72+r(i+77)*156;if(!far(x,y))continue;n++;
@@ -10388,9 +10401,9 @@ function coVillLine(v,q){var w=q.world,f=q.fog;
  return [L('The sea gives us water – the Sun evaporates it, clouds carry it back as rain.','大海給我們水——太陽令它蒸發，雲再把它變成雨送回來。'),''];}
 (function(){var n0=coNear;coNear=function(fresh){var a=document.getElementById('coAct'),q=coopSq(),h=a&&q?coNearest():null;if(!h||(h.k!=='v'&&h.k!=='p'))return n0(fresh);
  var ic,title,line,btn='';
- if(h.k==='v'){var x=coVillLine(h.v,q);ic='<svg viewBox="-12 -24 24 28" width="38" height="40" aria-hidden="true">'+coVillager(Object.assign({},h.v,{x:0,y:0})).replace(/class="covill"[^>]*transform="translate\(0 0\)"/,'')+'</svg>';title=L(h.v.n[0],h.v.n[1]);line=x[0];
+ if(h.k==='v'){var x=coVillLine(h.v,q);ic='<svg viewBox="-17 -28 40 32" width="46" height="38" aria-hidden="true">'+coVillager(Object.assign({},h.v,{x:0,y:0})).replace(/class="covill"[^>]*transform="translate\(0 0\)"/,'')+'</svg>';title=L(h.v.n[0],h.v.n[1]);line=x[0];
   btn=x[1]==='repair'&&q.fog>0?'<button class="btn small" data-coop="repair">'+L('Repair','修復')+'</button>':x[1]==='prep'&&q.world?'<button class="btn small" data-cow="prep">'+L('Prepare','準備')+'</button>':x[1]==='water'&&q.world?'<button class="btn small" data-cotab="water">'+L('Water','供水')+'</button>':x[1]==='build'?'<button class="btn small" data-cotab="build">'+L('Build','建造')+'</button>':'';
-  var g=document.querySelector('.covill[data-v="'+h.v.id+'"]');if(g&&fresh){g.classList.remove('cowave');void g.getBoundingClientRect();g.classList.add('cowave');}}
+  var g=document.querySelector('.covill[data-v="'+h.v.id+'"]');if(g&&fresh){g.classList.remove('cohello');void g.getBoundingClientRect();g.classList.add('cohello');}}
  else{ic='<span class="coexic">+</span>';title=L('Free plot','空地');line=L('Build any science building here. Think about its neighbours – some pairs work better together!','這裏可以建任何科學建築。想想旁邊是甚麼——有些建築放在一起效果更好！');btn='<button class="btn small pink" data-coplot="'+h.i+'">'+L('Build here','在這裏建造')+'</button>';}
  a.innerHTML='<div class="coexchip'+(fresh?' fresh':'')+'">'+ic+'<div><b>'+title+'</b><small>'+line+'</small></div>'+btn+'</div>';
  var bub=document.getElementById('coBub');if(bub)bub.innerHTML='<g class="cobubg'+(fresh?' fresh':'')+'"><rect x="-9" y="-16" width="18" height="16" rx="8" fill="#fff" stroke="#5B4B6E" stroke-width="1.6"/><text x="0" y="-4" text-anchor="middle" font-size="11" font-weight="900" fill="#E8920F">'+(h.k==='v'?'…':'+')+'</text></g>';};})();
@@ -10434,7 +10447,7 @@ document.addEventListener('click',function(e){var t=e.target.closest&&e.target.c
  else if(t.dataset.coplot!=null)coPickerOpen('plot',null,+t.dataset.coplot);});
 document.addEventListener('keydown',function(e){var t=e.target;if(t&&t.dataset&&t.dataset.copk!=null&&(e.key==='Enter'||e.key===' ')){e.preventDefault();t.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
 (function(){var e1=coopErr;coopErr=function(e){return ({plot:L('That plot is taken – pick another one.','這塊地已被佔用——請選另一塊。'),locked:L('Build it first, then you can move it.','先建成才可以搬遷。'),busy:L('It is under construction – move it when it is finished.','正在建造中——完成後才可以搬遷。'),short:L('You need 1 Blueprint to move a building.','搬遷建築需要 1 張藍圖。')})[e]||e1(e);};})();
-window.__coop.place={plots:CO_PLOTS,syn:CO_SYN,layout:coLayout,pick:coPickerOpen};
+window.__coop.place={plots:CO_PLOTS,syn:CO_SYN,layout:coLayout,pick:coPickerOpen,vill:CO_VILL,villArt:coVillager};
 /* ===================== Island incidents + Murk's ten minions =====================
    One incident a day per squad (server picks it, server grades it). 20 come from Murk's minions –
    each one a bad lab habit or science attitude – and 10 are lucky discoveries. */
