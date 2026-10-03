@@ -1824,6 +1824,113 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .nq-mem .mp svg{width:60px;height:auto}.nq-mem p{margin:0}
 @media (max-width:560px){.rpg2 .bhud{gap:6px}.rpg2 .bhud .hp{padding:6px 8px}.rpg2 .bhud .pn b{font-size:14px}.rpg2 .hrt,.rpg2 .hrt svg.ic{width:20px;height:20px}.rpg2 .skills{grid-template-columns:1fr 1fr}.nq-prep .pcard{grid-template-columns:70px minmax(0,1fr)}.nq-prep .pcard .pic{width:70px}}
 @media (prefers-reduced-motion:reduce){.rpg2 .brk,.nq-keys .kchip,.rpg2 .tbar i{animation:none}}
+
+/* ===== Lucky Capsule ===== */
+#bGift.capready{position:relative;animation:capBtn 1.6s ease-in-out infinite}
+@keyframes capBtn{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+#bGift .capic{width:30px;height:30px}
+#bGift .cdot{position:absolute;top:6px;right:8px;width:12px;height:12px;border-radius:50%;background:#FF4B4B;box-shadow:0 0 0 3px #fff}
+.capov{position:fixed;inset:0;z-index:120;display:grid;place-items:start center;overflow-y:auto;padding:14px 10px 40px;background:radial-gradient(circle at 50% 30%,rgba(255,214,231,.96),rgba(206,184,255,.96) 60%,rgba(120,96,200,.96));opacity:0;transition:opacity .25s}
+.capov.on{opacity:1}
+.capbox{width:min(460px,100%);display:grid;gap:12px}
+.caph{display:flex;align-items:center;justify-content:space-between}
+.caph h2{display:flex;align-items:center;gap:8px;margin:0;color:#5A2E6E;font-size:22px}.caph h2 .capic{width:32px;height:32px}
+.caph .x{width:40px;height:40px;border-radius:50%;background:#fff;border:2px solid #E3D6F5;font-size:18px;font-weight:900;color:#5A2E6E}
+.capstage{position:relative;width:min(330px,82vw);margin:0 auto;aspect-ratio:260/330}
+.capstage .mach{position:relative;width:100%;height:100%;display:block;z-index:1}
+.capglow{position:absolute;inset:-12%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.9),rgba(255,255,255,0) 65%);z-index:0}
+.mach .caps{transform-origin:130px 110px}
+.mach .crank{transform-box:fill-box;transform-origin:50% 50%}
+.capstage.turning .crank{animation:capCrank .5s linear 2}
+.capstage.turning .caps{animation:capMix .3s ease-in-out 4}
+.capstage.turning .mach{animation:capWob .2s ease-in-out 6}
+@keyframes capCrank{to{transform:rotate(360deg)}}
+@keyframes capMix{25%{transform:rotate(-6deg) translateY(-4px)}75%{transform:rotate(6deg) translateY(-6px)}}
+@keyframes capWob{25%{transform:rotate(-1.5deg)}75%{transform:rotate(1.5deg)}}
+.capstage.flash::after{content:"";position:absolute;inset:-10%;z-index:6;background:#fff;border-radius:30px;animation:capFlash .45s ease-out forwards;pointer-events:none}
+@keyframes capFlash{from{opacity:.9}to{opacity:0}}
+.capstage.big{animation:capShake .5s}
+@keyframes capShake{20%{transform:translate(-4px,2px)}40%{transform:translate(4px,-2px)}60%{transform:translate(-3px,1px)}80%{transform:translate(2px,0)}}
+.capfx{position:absolute;inset:0;z-index:5;pointer-events:none}
+.capfx>*{pointer-events:auto}
+/* the capsule: drops out of the chute (bottom right) and bounces to the front */
+.cdrop{position:absolute;left:50%;top:70%;width:34%;aspect-ratio:1;margin:-17% 0 0 -17%;animation:capDrop 1s cubic-bezier(.3,.6,.4,1) both;filter:drop-shadow(0 8px 8px rgba(90,58,46,.25))}
+.cdrop .cball{width:100%;height:100%;display:block;overflow:visible}
+@keyframes capDrop{0%{transform:translate(48%,62%) scale(.35);opacity:0}15%{opacity:1}45%{transform:translate(10%,8%) scale(1.05)}62%{transform:translate(4%,-18%) scale(1.05)}80%{transform:translate(0,4%) scale(1,.92)}100%{transform:translate(0,0) scale(1)}}
+.cdrop.wob{animation:capWobble .5s ease-in-out infinite}
+@keyframes capWobble{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+.cdrop.up{animation:capUp .45s cubic-bezier(.2,1.8,.4,1),capWobble .35s .45s ease-in-out infinite}
+@keyframes capUp{0%{transform:scale(1.35) rotate(0)}100%{transform:scale(1) rotate(-8deg)}}
+.cdrop.pop{animation:none}
+.cdrop.pop .ctop{animation:capTop .6s cubic-bezier(.3,1.4,.5,1) forwards;transform-box:fill-box;transform-origin:0% 100%}
+.cdrop.pop .cbot{animation:capBot .6s ease-in forwards}
+@keyframes capTop{to{transform:translate(-30px,-70px) rotate(-60deg);opacity:0}}
+@keyframes capBot{to{transform:translate(10px,40px);opacity:0}}
+.cupg{position:absolute;left:50%;top:30%;transform:translateX(-50%);font-weight:900;font-size:26px;letter-spacing:2px;color:#fff;text-align:center;text-shadow:0 2px 0 rgba(90,58,46,.4),0 0 14px currentColor;animation:capUpg .9s ease-out forwards;white-space:nowrap}
+.cupg small{display:block;font-size:14px;letter-spacing:1px}
+.cupg.t-epic{color:#CE82FF}.cupg.t-legendary{color:#FFD23F}.cupg.t-mythic{color:#FF8FD8}
+@keyframes capUpg{0%{transform:translate(-50%,10px) scale(.6);opacity:0}25%{transform:translate(-50%,0) scale(1.15);opacity:1}100%{transform:translate(-50%,-30px) scale(1);opacity:0}}
+.cbanner{position:absolute;left:-6%;right:-6%;top:-2%;z-index:3;text-align:center;font-size:clamp(30px,9vw,44px);font-weight:900;font-style:italic;letter-spacing:3px;color:#fff;-webkit-text-stroke:2px #5A2E6E;text-shadow:0 0 18px #FFD23F;animation:capBan .8s cubic-bezier(.2,1.6,.4,1) both}
+.cbanner.t-mythic{background:linear-gradient(90deg,#FF8FB1,#FFD23F,#7ED957,#5CC8FF,#B07CFF);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1.5px #fff}
+@keyframes capBan{from{transform:scale(2.2);opacity:0}to{transform:scale(1);opacity:1}}
+/* prize card */
+.pzcard{position:absolute;left:50%;top:50%;width:min(300px,86vw);transform:translate(-50%,-50%);display:grid;justify-items:center;gap:6px;padding:16px 14px 14px;border-radius:24px;background:#fff;border:4px solid #E3D6F5;box-shadow:0 10px 0 rgba(90,46,110,.18),0 20px 40px rgba(90,46,110,.3);text-align:center;animation:pzIn .6s cubic-bezier(.2,1.5,.4,1) both;overflow:hidden}
+@keyframes pzIn{from{transform:translate(-50%,-30%) scale(.3);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
+.pzcard>*{position:relative;z-index:1}
+.pzrays{position:absolute!important;inset:-60%;z-index:0!important;background:repeating-conic-gradient(from 0deg,var(--rc,rgba(255,214,231,.55)) 0 10deg,transparent 10deg 20deg);animation:tcspin 9s linear infinite;opacity:.8}
+.pzcard.t-rare{border-color:#5CC8FF;--rc:rgba(92,200,255,.28)}.pzcard.t-epic{border-color:#CE82FF;--rc:rgba(206,130,255,.3)}
+.pzcard.t-legendary{border-color:#FFC800;--rc:rgba(255,200,0,.35);box-shadow:0 0 0 4px rgba(255,200,0,.3),0 20px 40px rgba(201,138,0,.4)}
+.pzcard.t-mythic{border-color:#FF8FD8;--rc:rgba(176,124,255,.32);box-shadow:0 0 0 4px rgba(255,143,216,.35),0 0 40px rgba(176,124,255,.6)}
+.pzcard.t-mythic .pzrays{background:repeating-conic-gradient(rgba(255,143,177,.35) 0 8deg,rgba(255,210,63,.35) 8deg 16deg,rgba(126,217,87,.3) 16deg 24deg,rgba(92,200,255,.3) 24deg 32deg,rgba(176,124,255,.35) 32deg 40deg)}
+.pzsub{margin:0;font-weight:900;letter-spacing:1px;color:#8442C8;font-size:13px}
+.pzart{width:140px;height:120px;display:grid;place-items:center}
+.pzart svg,.pzart .foodico svg{width:100%;height:100%}
+.pzart .foodico{width:110px;height:110px;display:block}
+.pzart.coin .ic{width:96px;height:96px}
+.pzart.decor>*{width:110px;height:110px;border-radius:14px;overflow:hidden}
+.pzart.pet{width:170px;height:150px}
+.pzcard h3{margin:2px 0 0;font-size:20px;color:#4B2A55}
+.pzdesc{margin:0;font-size:13px;color:#6B5A70;line-height:1.4}
+.pzbtns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px}
+.capact{display:grid;justify-items:center;gap:8px;text-align:center}
+.btn.capgo{font-size:20px;padding:14px 28px;display:inline-flex;align-items:center;gap:10px;animation:capBtn 1.4s ease-in-out infinite}
+.btn.capgo .capic{width:30px;height:30px}
+.capmsg{margin:0;display:flex;gap:8px;align-items:flex-start;text-align:left;background:#fff;border-radius:16px;padding:10px 12px;font-size:14px;color:#4B2A55;box-shadow:0 4px 0 rgba(90,46,110,.12)}
+.capmsg .ic{width:22px;height:22px;flex:none}
+.capmsg.spin{justify-content:center;font-weight:900;animation:capBtn .8s ease-in-out infinite}
+/* luck meter */
+.luck{background:#fff;border-radius:20px;padding:12px 14px;box-shadow:0 4px 0 rgba(90,46,110,.12)}
+.lhead{display:flex;justify-content:space-between;align-items:center;color:#4B2A55}
+.lhead b{display:flex;align-items:center;gap:6px;font-size:16px}.lhead .ic{width:22px;height:22px}
+.lbar{position:relative;height:14px;margin:18px 6px 22px;border-radius:999px;background:#F1E8FA}
+.lbar>i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,#FFD23F,#FF8FB1,#B07CFF)}
+.lbar .mk{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#fff;border:3px solid #D9C8EE}
+.lbar .mk.on{border-color:#B07CFF;background:#FFE27A}.lbar .mk.cur{box-shadow:0 0 0 4px rgba(176,124,255,.35)}
+.lbar .mk b{position:absolute;top:18px;left:50%;transform:translateX(-50%);font-size:11px;color:#8A7A90}
+.odds{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.od{display:grid;justify-items:center;padding:5px 2px;border-radius:12px;font-size:10.5px;font-weight:800;background:#F7F3FB;color:#6B5A70}
+.od b{font-size:14px}
+.od.t-rare b{color:#1490CC}.od.t-epic b{color:#8442C8}.od.t-legendary b{color:#C98A00}.od.t-mythic b{background:linear-gradient(90deg,#FF5FA2,#B07CFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lnext{margin:10px 0 4px;font-size:13px;color:#4B2A55}
+.pity{margin:0;display:flex;align-items:center;gap:6px;font-size:12.5px;color:#8442C8;font-weight:800}.pity .ic{width:18px;height:18px}
+.capin{background:#fff;border-radius:20px;padding:10px 14px;box-shadow:0 4px 0 rgba(90,46,110,.12)}
+.capin summary{cursor:pointer;font-weight:900;color:#4B2A55;display:flex;align-items:center;gap:6px}.capin summary .ic{width:20px;height:20px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-top:10px}
+.ci{display:grid;justify-items:center;gap:3px;padding:6px;border-radius:14px;background:#FBF8FE;border:2px solid #EFE6F8;text-align:center}
+.ci .tier{font-size:10px}.ci small{font-size:11px;line-height:1.25;color:#4B2A55}
+.ci .cpic{width:72px;height:64px;display:grid;place-items:center}.ci .cpic>*{max-width:100%;max-height:100%}.ci .cpic svg{width:100%;height:100%}
+.ci .cpic>div{width:64px;height:64px;border-radius:10px}
+.ci.got{border-color:#9ED8A6;background:#F3FFF4}
+.ci.t-legendary{border-color:#FFE27A}.ci.t-mythic{border-color:#E9C8FF}
+@media (prefers-reduced-motion:reduce){#bGift.capready,.btn.capgo,.capstage *,.cdrop,.pzcard,.pzrays,.cbanner,.capmsg.spin{animation:none!important}}
+.capstage.revealed{aspect-ratio:auto;width:min(340px,92vw)}
+.capstage.revealed .mach,.capstage.revealed .capglow{display:none}
+.capstage.revealed .capfx{position:relative;inset:auto;display:grid;justify-items:center;gap:6px}
+.capstage.revealed .pzcard{position:relative;left:auto;top:auto;transform:none;width:100%;animation:pzIn2 .6s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes pzIn2{from{transform:scale(.3) translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.capstage.revealed .cbanner{position:relative;left:auto;right:auto;top:auto}
+.cupg{-webkit-text-stroke:1.5px #5A2E6E}
+.ci .tier{position:static!important;transform:none!important;margin:0}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -5534,7 +5641,7 @@ function homeParts(){var P=petDef(S.active),p=curPet(),lv=petLevel(p.xp),into=p.
  (buffChips()?'<div>'+buffChips()+'</div>':'')+palBuffChip()+(fedBonus()>1?'<div class="tipline good">'+IC('leaf')+L('Well-fed & happy: +20% rewards','飽飽又開心：獎勵 +20%')+'</div>':'<div class="tipline">'+IC('bulb')+L('Keep Energy & Happiness ≥ 50 for +20% rewards','能量和快樂保持 50 以上，獎勵 +20%')+'</div>')+
  '<div class="actions"><button class="btn pink" id="bFeed"><span class="e">'+IC('bowl')+'</span>'+L('Feed','餵食')+'</button><button class="btn lav" id="bPlay"><span class="e">'+IC('cards')+'</span>'+L('Play','玩耍')+'</button><button class="btn green" id="bStudy"><span class="e">'+IC('book')+'</span>'+L('Study','溫習')+'</button><button class="btn white" id="bDress"><span class="e">'+IC('shirt')+'</span>'+L('Dress up','換裝')+'</button>'+
  '<button class="btn" id="bEvo"><span class="e">'+(ev?IC('sparkle'):IC('rainbow'))+'</span>'+(ev?L('Evolve','進化')+' (Lv'+ev.lv+')':p.rt?L('Change look','轉換外觀'):L('Pick route','選擇路線'))+'</button>'+
- '<button class="btn '+(gift?'pink':'white')+'" id="bGift"'+(gift?'':' disabled')+'><span class="e">'+IC('gift')+'</span>'+(gift?L('Daily gift','每日禮物'):L('Come back tomorrow','明天再來'))+'</button></div></div>'+
+ capBtnHTML()+'</div></div>'+
  '<!--S--><div class="card"><div class="streak"><span class="flame" aria-hidden="true">'+IC('flame',S.streak>=7?'blaze':'')+'</span><div style="min-width:0"><b style="font-size:18px">'+S.streak+' '+L('day streak','日連續溫習')+'</b><div class="muted" style="font-size:13px">'+L('Reward ×','獎勵 ×')+streakMult().toFixed(1)+' · '+frzChip()+' · '+L('Best ','最佳 ')+S.best+'</div></div></div><div class="days" style="margin-top:10px">'+last7+'</div>'+
  (S.lastDay!==t?'<p class="muted" style="font-size:13px;margin:10px 0 0">'+L('Finish one study session or quiz today to keep the flame alive 🌱','今日完成一次溫習或測驗，讓火焰繼續燃燒 🌱')+'</p>':'<p style="font-size:13px;margin:10px 0 0">✅ '+L('Today counted! Your future self says thanks.','今日已計算！未來的你會多謝你。')+'</p>')+'</div>'+
  '<!--S-->'+dtCardHTML()+'<!--S-->'+chatHTML()+'<!--S-->'+buddyCardHTML()+'<!--S-->'+leaderboardHTML()+nextStepCard();}
@@ -5709,17 +5816,17 @@ function openMatch(){var chap=pick(CHAPTERS);var pool=[];chap.sections.forEach(f
 var B32='0123456789ABCDEFGHJKMNPQRSTVWXYZ',EPOCH=dayNum('2025-01-01');
 function wearIds(){return ITEMS.filter(function(i){return i.id!=='w0'&&!i.sec;}).map(function(i){return i.id;});}
 function packState(){var bits=[];function w(v,n){v=Math.max(0,Math.min(Math.round(v),Math.pow(2,n)-1));for(var i=n-1;i>=0;i--)bits.push((v>>i)&1);}
- w(13,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),5);
+ w(14,4);w(S.coins,16);w(PETS.map(function(p){return p.id;}).indexOf(S.active),5);
  PETS.forEach(function(P){var p=S.pets[P.id];w(p?1:0,1);w(p?p.stage:0,2);w(p?p.xp/5:0,12);});
  var ids=wearIds();ids.forEach(function(id){w(S.owned[id]?1:0,1);});
- var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,7);});
- var dec=S.room.dec||{};w(eqItems.indexOf(S.room.wall||'w0'),7);w(0,7);
+ var eqItems=ITEMS.map(function(i){return i.id;});var pe=curPet().eq;SLOTS.forEach(function(sl){w(pe[sl]?eqItems.indexOf(pe[sl])+1:0,8);});
+ var dec=S.room.dec||{};w(eqItems.indexOf(S.room.wall||'w0'),8);w(0,8);
  w(S.streak,9);w(S.best,9);w(S.shields,2);w(S.lastDay?dayNum(S.lastDay)-EPOCH:0,13);w(S.days,10);w(S.quizzes,11);w(S.perfect,9);w(S.cleared,10);w(S.studies,10);w(S.matchWins,8);
  ALLSECS.forEach(function(s){w((S.secs[s.id]||{}).stars||0,2);});
  TROPHIES.forEach(function(t){w(S.trophies[t.id]?1:0,1);});
  BUDS.forEach(function(B){w(S.bud.own[B.id]?1:0,1);});w(S.bud.act?BUDS.indexOf(budDef(S.bud.act))+1:0,5);w(S.ill.lv,3);var dd=S.dict||{};w(dd.n||0,12);w(dd.perf||0,8);w(dd.days||0,9);w(S.say.n||0,12);w(S.tc||0,14);
  PETS.forEach(function(P){var pp=S.pets[P.id];w(pp&&pp.rt?ROUTE_IDS.indexOf(pp.rt)+1:0,2);});
- DECATS.slice(1).forEach(function(c){w(dec[c[0]]?eqItems.indexOf(dec[c[0]])+1:0,7);});
+ DECATS.slice(1).forEach(function(c){w(dec[c[0]]?eqItems.indexOf(dec[c[0]])+1:0,8);});
  NQ.forEach(function(c){w(nqMask(c.id),8);});
  var sum=0;for(var i=0;i<bits.length;i++)sum=(sum*31+bits[i]*(i%7+1))%1021;w(sum,10);
  while(bits.length%5)bits.push(0);scramble(bits);var out='';for(var j=0;j<bits.length;j+=5){var v=0;for(var k=0;k<5;k++)v=v*2+bits[j+k];out+=B32[v];}return out;}
@@ -5727,14 +5834,14 @@ function scramble(bits){var x=0x5EED1;for(var i=0;i<bits.length;i++){x=(x*110351
 function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1');var bits=[];
  for(var i=0;i<code.length;i++){var v=B32.indexOf(code[i]);if(v<0)return null;for(var k=4;k>=0;k--)bits.push((v>>k)&1);}
  scramble(bits);var pos=0;function r(n){var v=0;for(var i=0;i<n;i++){if(pos>=bits.length)throw 0;v=v*2+bits[pos++];}return v;}
- try{var o={};var ver=r(4);if(ver<1||ver>13)return null;var v1=ver===1,EB=v1?6:7;o.coins=r(16);o.active=r(v1?3:ver<8?4:5);o.pets={};PETS.slice(0,v1?6:ver<4?12:ver<8?15:ver<11?V10.pets:ver<13?V12P:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
-  o.owned={};wearIds().slice(0,ver<4?40:ver<5?59:ver<6?64:ver<11?V10.wear:ver<12?V11.wear:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
-  o.wall=ver<4?(['w0','w1','w2','w3','w4','w5'][r(3)]||'w0'):(eqItems[r(7)]||'w0');var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
+ try{var o={};var ver=r(4);if(ver<1||ver>14)return null;var v1=ver===1,EB=v1?6:ver<14?7:8;o.coins=r(16);o.active=r(v1?3:ver<8?4:5);o.pets={};PETS.slice(0,v1?6:ver<4?12:ver<8?15:ver<11?V10.pets:ver<13?V12P:ver<14?V13P:PETS.length).forEach(function(P){var u=r(1),st=r(2),xp=r(12)*5;if(u)o.pets[P.id]={st:st||1,xp:xp};});
+  o.owned={};wearIds().slice(0,ver<4?40:ver<5?59:ver<6?64:ver<11?V10.wear:ver<12?V11.wear:ver<14?V13W:1e9).forEach(function(id){if(r(1))o.owned[id]=1;});var eqItems=ITEMS.map(function(i){return i.id;});o.eq={};SLOTS.forEach(function(sl){var v=r(EB);o.eq[sl]=v?eqItems[v-1]:null;});
+  o.wall=ver<4?(['w0','w1','w2','w3','w4','w5'][r(3)]||'w0'):(eqItems[r(ver<14?7:8)]||'w0');var pv=r(EB);o.prop=pv?eqItems[pv-1]:null;
   o.streak=r(9);o.best=r(9);o.shields=r(2);var ld=r(13);o.lastDay=ld?fromDayNum(ld+EPOCH):null;o.days=r(10);o.quizzes=r(11);o.perfect=r(9);o.cleared=r(10);o.studies=r(10);o.matchWins=r(8);
   o.stars={};ALLSECS.slice(0,v1?20:ALLSECS.length).forEach(function(s){o.stars[s.id]=r(2);});o.tro={};TROPHIES.slice(0,v1?18:ver===2?21:ver===3?22:ver<6?23:ver<7?30:ver<8?33:ver<11?V10.tro:TROPHIES.length).forEach(function(t){if(r(1))o.tro[t.id]=1;});
   if(ver>=7){o.bud={};BUDS.slice(0,ver<11?V10.buds:BUDS.length).forEach(function(B){if(r(1))o.bud[B.id]=1;});o.budAct=r(5);o.ill=r(3);o.dn=r(12);o.dperf=r(8);o.ddays=r(9);o.sayn=r(12);o.tc=r(14);}
-  if(ver>=9){o.routes={};PETS.slice(0,ver<11?V10.pets:ver<13?V12P:PETS.length).forEach(function(P){var v=r(2);if(v)o.routes[P.id]=ROUTE_IDS[v-1];});}
-  if(ver>=10){o.dec={};DECATS.slice(1).forEach(function(c){var v=r(7);if(v&&eqItems[v-1])o.dec[c[0]]=eqItems[v-1];});}
+  if(ver>=9){o.routes={};PETS.slice(0,ver<11?V10.pets:ver<13?V12P:ver<14?V13P:PETS.length).forEach(function(P){var v=r(2);if(v)o.routes[P.id]=ROUTE_IDS[v-1];});}
+  if(ver>=10){o.dec={};DECATS.slice(1).forEach(function(c){var v=r(ver<14?7:8);if(v&&eqItems[v-1])o.dec[c[0]]=eqItems[v-1];});}
   if(ver>=11){o.nq={};NQ.forEach(function(c){var v=r(ver>=12?8:6);if(v)o.nq[c.id]=v;});}
   var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
   if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
@@ -5785,7 +5892,7 @@ function bindWelcome(){document.querySelectorAll('[data-lang]').forEach(function
 function bindScreen(){if(curScreen==='teacher')bindTeacher();if(curScreen==='nobel')bindNobel();
  var pt=$('#petTap');if(pt)pt.onclick=function(){var svg=pt.querySelector('.pet');svg.classList.remove('boing');void svg.getBoundingClientRect();svg.classList.add('boing');sfx('boing');var p=curPet();p.happy=clamp(p.happy+1,5,100);bubble=line(moodOf(S.active));if($('#chatText'))showChat('fact');var bb=$('.bubble');if(bb)bb.textContent=bubble;else render();};
  var m={bFeed:openFeed,bPlay:function(){var p=curPet();if(p.energy<12){bubble=L('Too tired to play… feed me first?','太攰玩唔到……可唔可以先餵我？');render();return;}openMatch();},bStudy:function(){curScreen='study';render();},bDress:openDress,bEvo:openEvolve,bSwitch:openSwitch,
-  bGift:function(){S.gift=today();S.coins+=10;S.food.onigiri=(S.food.onigiri||0)+1;sfx('coin');confetti();toast('🎁 +10 🪙 · +1 🍙');save();render();},
+  bGift:function(){openCapsule();},
   bPractice:function(){startPractice(practiceFilter);},bBuddies:openBuddies,bTask:function(){sfx('tap');dtGo(S.dtask);},bClinic:openClinic,budTap:function(){var B=budDef(S.bud.act);if(!B)return;sfx('boing');bubble=S.ill&&S.ill.lv?L(B.en+' is feeling poorly too… 🥺',B.zh+'都唔舒服……🥺'):LL(B)+': '+L(B.fact[0],B.fact[1]);var bb=$('.bubble');if(bb)bb.textContent=bubble;else render();},bFact:function(){showChat('fact');},bHealth:function(){showChat('health');},bCheer:function(){showChat('cheer');}};
  for(var k in m){var el=document.getElementById(k);if(el)el.onclick=m[k];}
  document.querySelectorAll('[data-studysec]').forEach(function(b){b.onclick=function(){openStudy(b.dataset.studysec);};});
@@ -8208,7 +8315,7 @@ function riskState(){if(!S||!S.started||S.streak<1||!S.lastDay)return null;var t
 function riskHTML(){frzGift();var r=riskState();if(!r)return '';var P=petDef(S.active),n=S.streak,nm=esc(LL(P)),left=S.shields-(r.k==='frozen'?r.miss:0);
  var face=r.lvl>=3?'sad':'happy',head,msg;
  if(r.k==='today'){head=r.lvl>=3?L('Hurry! Your '+n+'-day streak ends tonight!','快啲！你的 '+n+' 日連續紀錄今晚就會中斷！'):r.lvl===2?L('Your '+n+'-day streak is waiting for you','你的 '+n+' 日連續紀錄在等你'):L('Let\'s keep our '+n+'-day streak going!','一齊保持 '+n+' 日連續紀錄！');
-  msg=L('I\'m '+nm+'. Just <b>1 quiz or 1 study session</b> today keeps our flame alive. ','我係'+nm+'。今日只要完成 <b>1 次測驗或溫習</b>，小火焰就會繼續燃燒。')+(left>0?L('If you miss today, 1 of your '+left+' Streak Freeze'+(left>1?'s':'')+' will be used.','如果今日錯過，會用掉你 '+left+' 個連勝凍結中的 1 個。'):L('<b>You have no Streak Freeze left</b> – missing today resets the streak!','<b>你已沒有連勝凍結</b>——今日錯過，連續紀錄就會歸零！'));}
+  msg=L('I\'m '+nm+'. Just <b>1 quiz or 1 study session</b> today keeps our flame alive. ','我係'+nm+'。今日只要完成 <b>1 次測驗或溫習</b>，小火焰就會繼續燃燒。')+(left>0?L('If you miss today, 1 of your '+left+' Streak Freeze'+(left>1?'s':'')+' will be used.','如果今日錯過，會用掉你 '+left+' 個連勝凍結中的 1 個。'):L('<b>You have no Streak Freeze left</b> – missing today resets the streak!','<b>你已沒有連勝凍結</b>——今日錯過，連續紀錄就會歸零！'))+(typeof capS==='function'&&capS().day!==today()?L(' Studying also powers up today’s <b>Lucky Capsule</b>!','溫習亦會為今日的<b>幸運扭蛋</b>充能！'):'');}
  else{head=L('A Streak Freeze saved you – don\'t let it melt!','連勝凍結救了你——別讓它融化！');
   msg=L('You missed '+r.miss+' day'+(r.miss>1?'s':'')+', so '+r.miss+' freeze'+(r.miss>1?'s were':' was')+' used. Study today to keep the <b>'+n+'-day</b> streak. Freezes left: <b>'+left+'</b>.','你錯過了 '+r.miss+' 天，用了 '+r.miss+' 個凍結。今日溫習，就能保住 <b>'+n+' 日</b>紀錄。剩餘凍結：<b>'+left+'</b>。');}
  return '<div class="card risk lv'+r.lvl+'" role="status"><div class="rk-pal">'+petSVG(S.active,face,{stage:1,eq:{}})+'</div><div class="rk-bub"><div class="rk-h">'+IC('flame')+'<b>'+head+'</b></div><p>'+msg+'</p>'+
@@ -8596,7 +8703,145 @@ document.addEventListener('click',function(e){var t=e.target.closest&&e.target.c
  return ex?h+ex:h;};})();
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-nqkey]');if(!b||NQV.task!=='story')return;var c=NQ[NQV.ch],y=b.dataset.nqkey,st=nqS();st.keys=st.keys||{};var k=c.id+'_'+y;if(st.keys[k])return;st.keys[k]=1;S.coins+=5;sfx('coin');save();toast(L('Secret unlocked! +5 coins','解鎖秘密！+5 金幣'));render();});
 
-window.__game={dt:{DT:DT,pick:dtPick,card:dtCardHTML,prog:dtProgress},foods:FOODS,LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},sci:function(a,b){return sciSVG(a,b);},nqv:function(){return NQV;},nqpool:function(i){return nqbPool(i);},nqq:function(){return NQV&&NQV.b&&NQV.b.cur?NQV.b.cur.q:null;},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},pick:pickQs,AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;},leg:{dmCount:dmCount,dmNeed:dmNeed,dmTotal:dmTotal,dmHit:dmHit,evoReq:evoReq,palBuff:palBuff,gain:function(c,x,ctx){gainCtx=ctx;return gain(c,x);},chk:checkPetUnlocks,PETS:PETS,dict:function(u){openDictSetup(u);},evo:function(){openEvolve();},get DQ(){return DQ;}}};
+/* ---------- Lucky Capsule 幸運扭蛋: one capsule a day (after studying), luck grows with the streak ---------- */
+var V13P=PETS.length,V13W=wearIds().length;
+var CAP_Q={en:'Lucky Capsule only',zh:'只限幸運扭蛋',f:function(){return [0,1];}};
+/* --- three new apparatus pals (capsule only) --- */
+PETS.push(
+ {id:'bunsen',en:'Bunsen',zh:'本生仔',body:'#CFE3F5',belly:'#F2F8FF',ears:'bunsen',price:0,tier:'legendary',capsule:1,cond:{k:'cap',n:1,en:'Win it from the Lucky Capsule',zh:'從幸運扭蛋獲得'},
+  desc:['A legendary Bunsen burner with a calm blue flame on his head. Air hole open = hot blue flame; air hole closed = wobbly yellow flame. He always reminds you to tie your hair back!','頭頂有藍色火焰的傳說級本生燈。空氣孔打開 = 很熱的藍色火焰；關上 = 搖晃的黃色火焰。他總是提醒你把頭髮束好！']},
+ {id:'cylie',en:'Cylie',zh:'量量',body:'#DDF3FF',belly:'#FFFFFF',ears:'cylinder',price:0,tier:'legendary',capsule:1,cond:{k:'cap',n:1,en:'Win it from the Lucky Capsule',zh:'從幸運扭蛋獲得'},
+  desc:['A legendary measuring cylinder full of sky-blue water. She always reads the volume at eye level, at the bottom of the meniscus.','裝滿天藍色水的傳說級量筒。她總是以視線平齊、在彎月面底部讀取體積。']},
+ {id:'gram',en:'Gram',zh:'克克',body:'#F3F0FF',belly:'#FFFFFF',ears:'balance',price:0,tier:'mythic',capsule:1,cond:{k:'cap',n:1,en:'Win it from the Lucky Capsule',zh:'從幸運扭蛋獲得'},
+  desc:['A mythic electronic balance who loves to weigh things to two decimal places. Press TARE first to set the reading to zero! Its screen secretly shows 520.00 g whenever it sees you.','愛把東西量到小數點後兩位的神話級電子天平。量度前先按「歸零」(TARE)！每次見到你，它的屏幕都會偷偷顯示 520.00 g。']});
+LEG_ART.bunsen={back:function(){return '<path d="M100 66 C76 58 78 32 90 18 C92 30 98 34 102 26 C106 16 102 8 100 2 C124 14 128 42 116 58 C112 63 106 66 100 66Z" fill="#9ED8FF" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M100 64 C91 58 91 44 100 28 C109 44 109 58 100 64Z" fill="#3E7BFF" opacity=".9"/><circle cx="132" cy="22" r="3" fill="#BFE8FF"/><circle cx="70" cy="30" r="2.4" fill="#BFE8FF"/>';},
+ front:function(){return '<path d="M36 148 Q100 166 164 148 L162 162 Q100 180 38 162Z" fill="#8C98AA" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><circle cx="80" cy="160" r="4.4" fill="#4B5563"/><circle cx="100" cy="163" r="4.4" fill="#4B5563"/><circle cx="120" cy="160" r="4.4" fill="#4B5563"/>';}};
+LEG_ART.cylinder={back:function(b){return '<path d="M48 176 L152 176 L166 192 L34 192Z" fill="#B9DCF2" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M60 76 Q44 62 54 52 Q66 54 72 68Z" fill="'+b+'" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/>';},
+ front:function(){return '<path d="M34 124 Q67 116 100 124 Q133 132 166 124 C168 150 150 176 100 178 C50 176 32 150 34 124Z" fill="#7FD3FF" opacity=".55"/><path d="M40 82h12M40 94h7M40 106h12M40 118h7M40 130h12M40 142h7" stroke="#3E7BA8" stroke-width="2.6" stroke-linecap="round"/><text x="56" y="86" font-size="9" font-weight="900" fill="#3E7BA8">100</text><text x="56" y="110" font-size="9" font-weight="900" fill="#3E7BA8">50</text>';}};
+LEG_ART.balance={back:function(){return '<rect x="96" y="44" width="8" height="18" fill="#C9D3E0" stroke="'+O+'" stroke-width="2.5"/><rect x="80" y="30" width="40" height="15" rx="7.5" fill="#C8FFB0" stroke="'+O+'" stroke-width="3"/><circle cx="104" cy="37.5" r="4" fill="#fff" stroke="'+O+'" stroke-width="1.5"/>'+
+  '<ellipse cx="100" cy="181" rx="74" ry="7.5" fill="#E3E8F0" stroke="'+O+'" stroke-width="3"/><path d="M26 186 H174 Q182 186 182 193 V196 Q182 200 176 200 H24 Q18 200 18 196 V193 Q18 186 26 186Z" fill="#9AA6B8" stroke="'+O+'" stroke-width="3"/><rect x="66" y="188" width="68" height="11" rx="2.5" fill="#B8F5C8" stroke="'+O+'" stroke-width="1.6"/><text x="100" y="197" text-anchor="middle" font-size="9" font-weight="900" font-family="monospace" fill="#1F5130">♥520.00g</text>';},
+ front:function(){return '<circle cx="86" cy="154" r="8" fill="#7FB2FF" stroke="'+O+'" stroke-width="2.5"/><text x="86" y="157.5" text-anchor="middle" font-size="8" font-weight="900" fill="#fff">T</text><circle cx="114" cy="154" r="8" fill="#FF8FB1" stroke="'+O+'" stroke-width="2.5"/><text x="114" y="157.5" text-anchor="middle" font-size="7" font-weight="900" fill="#fff">ON</text>';}};
+PAL_BUFF.bunsen={src:'quiz',c:.1,en:'+10% coins from quizzes',zh:'測驗金幣 +10%'};
+PAL_BUFF.cylie={x:.06,en:'+6% XP from everything',zh:'所有經驗值 +6%'};
+PAL_BUFF.gram={c:.06,x:.06,en:'+6% coins & XP from everything',zh:'所有金幣及經驗值 +6%'};
+PET_FAV.bunsen='toast';PET_FAV.cylie='lemontea';PET_FAV.gram='mooncake';
+/* --- ten new apparatus & measuring-tool decor items (rare → mythic) --- */
+var CAP_DECOR=[
+ ['cap_thermo','sticker','sci','rare','Smiley thermometer sticker','微笑溫度計貼紙','<svg viewBox="0 0 60 60"><rect x="24" y="6" width="12" height="38" rx="6" fill="#fff" stroke="#O" stroke-width="2.5"/><rect x="27.5" y="20" width="5" height="26" rx="2.5" fill="#FF5A5A"/><circle cx="30" cy="48" r="8" fill="#FF5A5A" stroke="#O" stroke-width="2.5"/><path d="M38 14h5M38 20h3M38 26h5M38 32h3" stroke="#O" stroke-width="1.6" stroke-linecap="round"/><circle cx="27.2" cy="46.6" r="1.1" fill="#fff"/><circle cx="32.8" cy="46.6" r="1.1" fill="#fff"/><path d="M27.6 50 q2.4 2 4.8 0" stroke="#fff" stroke-width="1.2" fill="none"/></svg>'],
+ ['cap_tape','sticker','sci','rare','Tape measure sticker','捲尺貼紙','<svg viewBox="0 0 60 60"><rect x="6" y="14" width="32" height="32" rx="10" fill="#FFC800" stroke="#O" stroke-width="2.5"/><circle cx="22" cy="30" r="8" fill="#fff" stroke="#O" stroke-width="2"/><path d="M38 36h17v9H38Z" fill="#FFF3B8" stroke="#O" stroke-width="2" stroke-linejoin="round"/><path d="M42 36v3M46 36v5M50 36v3" stroke="#O" stroke-width="1.4"/><circle cx="19.5" cy="29" r="1.2" fill="#O"/><circle cx="24.5" cy="29" r="1.2" fill="#O"/><path d="M20 33 q2 1.6 4 0" stroke="#O" stroke-width="1.2" fill="none"/></svg>'],
+ ['cap_cylinder','prop','lab','rare','Measuring cylinder','量筒','<svg viewBox="0 0 100 100"><path d="M30 90 h40 l7 8 h-54Z" fill="#B9DCF2" stroke="#O" stroke-width="3" stroke-linejoin="round"/><rect x="38" y="10" width="24" height="80" rx="4" fill="rgba(220,240,255,.8)" stroke="#O" stroke-width="3"/><path d="M39 50 Q50 56 61 50 V86 Q61 89 58 89 H42 Q39 89 39 86Z" fill="#7FD3FF"/><path d="M40 22h8M40 34h5M40 46h8M40 58h5M40 70h8M40 82h5" stroke="#3E7BA8" stroke-width="2"/><path d="M38 12 Q33 6 40 6" stroke="#O" stroke-width="3" fill="none" stroke-linecap="round"/></svg>'],
+ ['cap_burner','prop','lab','epic','Bunsen burner','本生燈','<svg viewBox="0 0 100 100"><path d="M24 88 Q12 80 18 70" stroke="#FF8A3D" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="92" rx="26" ry="6" fill="#8C98AA" stroke="#O" stroke-width="3"/><rect x="42" y="42" width="16" height="48" rx="4" fill="#C9D3E0" stroke="#O" stroke-width="3"/><rect x="40" y="70" width="20" height="8" rx="2" fill="#8C98AA" stroke="#O" stroke-width="2.5"/><circle cx="46" cy="74" r="2" fill="#4B5563"/><circle cx="54" cy="74" r="2" fill="#4B5563"/><path d="M50 42 C36 32 40 14 50 4 C60 14 64 32 50 42Z" fill="#9ED8FF" stroke="#O" stroke-width="2.5"/><path d="M50 40 C44 34 45 25 50 16 C55 25 56 34 50 40Z" fill="#3E7BFF"/></svg>'],
+ ['cap_stopwatch','sticker','sci','epic','Stopwatch sticker','秒錶貼紙','<svg viewBox="0 0 60 60"><rect x="26" y="3" width="8" height="7" rx="2" fill="#AFAFAF" stroke="#O" stroke-width="2"/><path d="M45 13 l4 -4" stroke="#O" stroke-width="3" stroke-linecap="round"/><circle cx="30" cy="34" r="20" fill="#fff" stroke="#O" stroke-width="2.5"/><circle cx="30" cy="34" r="15" fill="#E8F7FF"/><path d="M30 18v3M46 34h-3M30 50v-3M14 34h3" stroke="#1CB0F6" stroke-width="2" stroke-linecap="round"/><path d="M30 34 V22 M30 34 L39 39" stroke="#FF4B4B" stroke-width="2.6" stroke-linecap="round"/><circle cx="30" cy="34" r="2.4" fill="#O"/></svg>'],
+ ['cap_tripod','prop','lab','epic','Tripod & bubbling beaker','三腳架與冒泡燒杯','<svg viewBox="0 0 100 100"><path d="M28 60 L20 96 M72 60 L80 96 M50 60 V96" stroke="#8C98AA" stroke-width="4" stroke-linecap="round"/><path d="M44 96 C38 88 44 82 50 76 C56 82 62 88 56 96Z" fill="#3E7BFF" opacity=".85"/><rect x="22" y="56" width="56" height="6" rx="2" fill="#AFAFAF" stroke="#O" stroke-width="2.5"/><path d="M34 18 h32 v34 q0 4 -4 4 h-24 q-4 0 -4 -4Z" fill="rgba(220,240,255,.8)" stroke="#O" stroke-width="3"/><path d="M35 34 h30 v18 q0 3 -3 3 h-24 q-3 0 -3 -3Z" fill="#FF8FB1"/><circle cx="44" cy="29" r="3" fill="#FFC4DA" stroke="#O" stroke-width="1.4"/><circle cx="56" cy="22" r="2.4" fill="#FFC4DA" stroke="#O" stroke-width="1.4"/><circle cx="50" cy="12" r="1.8" fill="#FFC4DA" stroke="#O" stroke-width="1.2"/></svg>'],
+ ['cap_spring','prop','lab','legendary','Newton’s spring balance','牛頓彈簧秤','<svg viewBox="0 0 100 100"><path d="M14 96 H86 M24 96 V8 H62" stroke="#8A5A36" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M62 8 V14" stroke="#O" stroke-width="2.5"/><rect x="54" y="14" width="16" height="44" rx="4" fill="#FFE27A" stroke="#O" stroke-width="3"/><path d="M57 22h4M57 30h6M57 38h4M57 46h6" stroke="#8A5A00" stroke-width="1.6"/><rect x="60" y="40" width="6" height="3" rx="1" fill="#FF4B4B"/><path d="M62 58 V66" stroke="#O" stroke-width="2.5"/><path d="M62 67 c-12 -5 -19 7 -15 17 c3 8 11 10 15 6 c4 4 12 2 15 -6 c4 -10 -3 -22 -15 -17Z" fill="#FF5A5A" stroke="#O" stroke-width="3"/><path d="M62 67 q2 -6 7 -7" stroke="#46A302" stroke-width="3" fill="none" stroke-linecap="round"/><text x="76" y="34" font-size="12" font-weight="900" fill="#O">N</text></svg>'],
+ ['cap_titrate','prop','lab','legendary','Rainbow titration set','彩虹滴定裝置','<svg viewBox="0 0 100 100"><path d="M18 96 H82" stroke="#8A5A36" stroke-width="5" stroke-linecap="round"/><path d="M26 96 V6 M26 30 H50" stroke="#8C98AA" stroke-width="4" stroke-linecap="round"/><rect x="47" y="8" width="8" height="46" rx="3" fill="rgba(220,240,255,.85)" stroke="#O" stroke-width="2.5"/><rect x="48.5" y="20" width="5" height="32" fill="#B07CFF"/><path d="M51 54 V60" stroke="#O" stroke-width="2.5"/><path d="M51 63 q2.4 3 0 5.4 q-2.4 -2.4 0 -5.4Z" fill="#B07CFF"/><path d="M44 70 h14 l12 22 q2 4 -2 4 H34 q-4 0 -2 -4Z" fill="rgba(220,240,255,.85)" stroke="#O" stroke-width="3" stroke-linejoin="round"/><path d="M37 84 h28 l4 8 q1 2 -1 2 H34 q-2 0 -1 -2Z" fill="#FF8FD8"/><path d="M40 88 h22" stroke="#FFD23F" stroke-width="2"/><circle cx="46" cy="90" r="1.4" fill="#fff"/></svg>'],
+ ['cap_hourglass','prop','lab','mythic','Galaxy hourglass','銀河沙漏','<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#B07CFF" opacity=".15"/><rect x="24" y="8" width="52" height="8" rx="3" fill="#C98A00" stroke="#O" stroke-width="3"/><rect x="24" y="84" width="52" height="8" rx="3" fill="#C98A00" stroke="#O" stroke-width="3"/><path d="M30 16 h40 c0 18 -14 24 -14 34 c0 10 14 16 14 34 h-40 c0 -18 14 -24 14 -34 c0 -10 -14 -16 -14 -34Z" fill="rgba(220,240,255,.7)" stroke="#O" stroke-width="3"/><path d="M36 22 h28 c-2 10 -10 16 -14 20 c-4 -4 -12 -10 -14 -20Z" fill="#7B5BD6"/><path d="M50 50 V78" stroke="#FFD23F" stroke-width="2" stroke-dasharray="2 3"/><path d="M34 84 c2 -8 10 -12 16 -12 c6 0 14 4 16 12Z" fill="#5CC8FF"/><circle cx="44" cy="28" r="1.3" fill="#fff"/><circle cx="56" cy="26" r="1" fill="#fff"/><circle cx="48" cy="80" r="1.1" fill="#fff"/><path d="M82 18 l2 4 4 2 -4 2 -2 4 -2 -4 -4 -2 4 -2Z" fill="#FFD23F"/><path d="M14 70 l1.6 3 3 1.6 -3 1.6 -1.6 3 -1.6 -3 -3 -1.6 3 -1.6Z" fill="#FF8FD8"/></svg>'],
+ ['cap_wall','wall','wall','mythic','Apparatus constellation wallpaper','儀器星座牆紙',null]];
+(function(){var pat='<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><g fill="none" stroke="rgba(255,255,255,.42)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18h12M17 18v10l-7 14h24l-7-14V18"/><path d="M70 12h18v26q0 4-4 4H74q-4 0-4-4Z"/><circle cx="96" cy="86" r="10"/><path d="M96 86v-6M96 86l5 3"/><path d="M20 80h6v28h-6Z M30 84h6v24h-6Z"/><ellipse cx="60" cy="74" rx="14" ry="5"/><ellipse cx="60" cy="74" rx="14" ry="5" transform="rotate(60 60 74)"/><ellipse cx="60" cy="74" rx="14" ry="5" transform="rotate(-60 60 74)"/></g><g fill="rgba(255,236,150,.9)"><circle cx="44" cy="30" r="1.4"/><circle cx="104" cy="50" r="1.2"/><circle cx="10" cy="62" r="1"/><circle cx="80" cy="108" r="1.3"/></g></svg>';
+ WALLS.cap_wall="url('data:image/svg+xml,"+encodeURIComponent(pat)+"') 0 0/120px 120px,linear-gradient(160deg,#2B2163,#3B2C8C 50%,#5B3FB0)";})();
+CAP_DECOR.forEach(function(d){var it=QI(d[0],'room',d[1],d[4],d[5],d[3],CAP_Q,d[6]);it.capsule=1;ITEMS.push(it);if(d[1]!=='wall')DECAT_OF[d[0]]=d[2];});
+
+/* --- odds: luck level rises every 20 streak days (20, 40, 60, 80, 100) --- */
+var CAP_ODDS=[[60,28,9,2.5,.5],[52,30,12,4.5,1.5],[44,31,16,6.5,2.5],[36,31,20,9,4],[28,30,24,12,6],[20,28,28,16,8]];
+var CAP_COL={common:['#FFFFFF','#E3DCD6'],rare:['#5CC8FF','#1490CC'],epic:['#CE82FF','#8442C8'],legendary:['#FFD23F','#C98A00'],mythic:['url(#capRb)','#8442C8']};
+function capS(){if(!S.cap)S.cap={day:'',n:0,pity:0,log:[]};return S.cap;}
+function capLv(){return Math.min(5,Math.floor((S.streak||0)/20));}
+function capReady(){return S.lastDay===today()&&capS().day!==today();}
+function capRoll(){var o=CAP_ODDS[capLv()],c=capS(),r=Math.random()*100,k=0,acc=0;for(k=0;k<5;k++){acc+=o[k];if(r<acc)break;}if(k>4)k=0;
+ if(c.pity>=9&&k<2){var s=o[2]+o[3]+o[4],r2=Math.random()*s;k=r2<o[2]?2:r2<o[2]+o[3]?3:4;}
+ return TIERS[k];}
+function capPick(a){var t=0;a.forEach(function(x){t+=x[0];});var r=Math.random()*t;for(var i=0;i<a.length;i++){r-=a[i][0];if(r<=0)return a[i][1];}return a[a.length-1][1];}
+function capDecor(tiers,newOnly){return ITEMS.filter(function(it){return it.cat==='room'&&it.id!=='w0'&&!S.owned[it.id]&&(it.capsule?tiers.indexOf(it.tier)>=0:(!newOnly&&!it.sec&&!it.quest&&it.price>0&&tiers.indexOf('common')>=0));});}
+function capPets(tier){return PETS.filter(function(P){return P.capsule&&P.tier===tier&&!S.pets[P.id];});}
+function capPrize(rar){var r={rar:rar},coins=function(a,b,st){r.kind='coins';r.n=a+Math.floor(Math.random()*((b-a)/st+1))*st;return r;},food=function(lo,hi){var f=pick(FOODS.filter(function(x){return x.price>=lo&&x.price<=hi;}));r.kind='food';r.id=f.id;r.n=1;return r;};
+ if(rar==='common')return Math.random()<.5?coins(15,35,5):food(0,16);
+ if(rar==='rare'){var dr=capDecor(['rare','common'],false),k=capPick([[25,'c'],[25,'f'],[S.shields<FRZ_MAX?20:0,'z'],[dr.length?30:0,'d']]);
+  if(k==='z'){r.kind='freeze';r.n=1;return r;}if(k==='d'){var cr=dr.filter(function(x){return x.capsule;}),it=cr.length&&Math.random()<.6?pick(cr):pick(dr);r.kind='decor';r.id=it.id;return r;}return k==='f'?food(18,70):coins(50,90,10);}
+ if(rar==='epic'){var de=capDecor(['epic'],true),k2=capPick([[de.length?55:0,'d'],[S.shields<FRZ_MAX?15:0,'z'],[15,'c'],[15,'m']]);
+  if(k2==='d'){r.kind='decor';r.id=pick(de).id;return r;}if(k2==='z'){r.kind='freeze';r.n=1;return r;}if(k2==='m'){r.kind='food';r.id='mooncake';r.n=1;return r;}return coins(150,150,10);}
+ var pp=capPets(rar),dd=capDecor([rar],true),k3=capPick([[pp.length?(rar==='mythic'?55:50):0,'p'],[dd.length?50:0,'d']]);
+ if(!pp.length&&!dd.length)return coins(rar==='mythic'?800:400,rar==='mythic'?800:400,10);
+ if(k3==='p'){r.kind='pet';r.id=pick(pp).id;return r;}r.kind='decor';r.id=pick(dd).id;return r;}
+function capApply(r){if(r.kind==='coins')S.coins+=r.n;else if(r.kind==='food')S.food[r.id]=(S.food[r.id]||0)+r.n;else if(r.kind==='freeze')S.shields=Math.min(FRZ_MAX,S.shields+1);else if(r.kind==='decor')S.owned[r.id]=1;else if(r.kind==='pet'){S.pets[r.id]=newPet();}}
+function capDraw(){var c=capS();if(!capReady())return null;var rar=capRoll(),r=capPrize(rar);capApply(r);c.day=today();S.gift=today();c.n++;c.pity=TIERS.indexOf(rar)>=2?0:c.pity+1;c.log.unshift({d:today(),r:rar,k:r.kind,id:r.id||'',n:r.n||0});c.log=c.log.slice(0,12);save();try{checkTrophies();}catch(e){}return r;}
+
+/* --- art: capsule machine + capsule --- */
+function capBall(cx,cy,r,col,rot){return '<g transform="rotate('+rot+' '+cx+' '+cy+')"><path d="M'+(cx-r)+' '+cy+'a'+r+' '+r+' 0 0 1 '+(2*r)+' 0Z" fill="'+col+'" stroke="'+PK+'" stroke-width="2.4"/><path d="M'+(cx-r)+' '+cy+'a'+r+' '+r+' 0 0 0 '+(2*r)+' 0Z" fill="#fff" stroke="'+PK+'" stroke-width="2.4"/><path d="M'+(cx-r*.55)+' '+(cy-r*.45)+'q'+(r*.3)+' '+(-r*.3)+' '+(r*.7)+' '+(-r*.35)+'" stroke="#fff" stroke-width="2" fill="none" opacity=".8" stroke-linecap="round"/></g>';}
+function capMachine(){var balls=[[86,140,17,'#FF8FB1',20],[118,146,17,'#5CC8FF',-30],[150,140,17,'#FFD23F',60],[176,124,15,'#CE82FF',10],[70,116,15,'#7ED957',-50],[102,114,16,'#FFD23F',35],[136,112,16,'#FF8FB1',-15],[166,96,14,'#5CC8FF',80],[90,86,14,'#CE82FF',-70],[122,84,15,'#7ED957',25],[150,70,13,'#FF8FB1',-40],[108,58,13,'#5CC8FF',55]];
+ return '<svg class="mach" viewBox="0 0 260 330" aria-hidden="true"><defs><linearGradient id="capRb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8FB1"/><stop offset=".3" stop-color="#FFD23F"/><stop offset=".55" stop-color="#7ED957"/><stop offset=".8" stop-color="#5CC8FF"/><stop offset="1" stop-color="#B07CFF"/></linearGradient></defs>'+
+  '<ellipse cx="130" cy="322" rx="96" ry="7" fill="rgba(90,58,46,.18)"/><rect x="62" y="300" width="22" height="18" rx="5" fill="#E060AE" stroke="'+PK+'" stroke-width="4"/><rect x="176" y="300" width="22" height="18" rx="5" fill="#E060AE" stroke="'+PK+'" stroke-width="4"/>'+
+  '<g class="mbody"><rect x="44" y="184" width="172" height="122" rx="24" fill="#FF8FB1" stroke="'+PK+'" stroke-width="5"/><path d="M50 280 H210 V284 Q210 300 192 300 H68 Q50 300 50 284Z" fill="#E060AE"/><path d="M62 196 Q130 188 198 196" stroke="#FFD1E3" stroke-width="5" fill="none" stroke-linecap="round"/>'+
+  '<rect x="72" y="202" width="116" height="30" rx="12" fill="#FFF3D6" stroke="'+PK+'" stroke-width="3"/><text x="130" y="223" text-anchor="middle" font-size="15" font-weight="900" fill="#E060AE" letter-spacing="1">'+L('LUCKY LAB','幸運實驗室')+'</text>'+
+  '<g class="crank"><circle cx="94" cy="264" r="23" fill="#FFE27A" stroke="'+PK+'" stroke-width="4"/><rect x="90" y="242" width="8" height="44" rx="4" fill="#fff" stroke="'+PK+'" stroke-width="3"/><circle cx="94" cy="264" r="5" fill="#E5A000" stroke="'+PK+'" stroke-width="2"/></g>'+
+  '<rect x="146" y="246" width="50" height="36" rx="12" fill="#3B2A4A" stroke="'+PK+'" stroke-width="4"/><path d="M150 252 H192" stroke="#FFD1E3" stroke-width="3" stroke-linecap="round" opacity=".6"/>'+
+  '<circle cx="64" cy="244" r="3" fill="#fff" opacity=".8"/><circle cx="200" cy="232" r="2.4" fill="#fff" opacity=".8"/></g>'+
+  '<rect x="78" y="170" width="104" height="20" rx="7" fill="#C9D3E0" stroke="'+PK+'" stroke-width="4"/>'+
+  '<g class="dome"><circle cx="130" cy="100" r="88" fill="rgba(220,240,255,.45)" stroke="'+PK+'" stroke-width="5"/><g class="caps">'+balls.map(function(b){return capBall(b[0],b[1],b[2],b[3],b[4]);}).join('')+'</g>'+
+  '<path d="M66 64 A76 76 0 0 1 120 26" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity=".8"/><circle cx="182" cy="56" r="5" fill="#fff" opacity=".7"/></g>'+
+  '<rect x="114" y="6" width="32" height="12" rx="5" fill="#FF8FB1" stroke="'+PK+'" stroke-width="4"/><circle cx="130" cy="6" r="6" fill="#FFD23F" stroke="'+PK+'" stroke-width="3"/>'+
+  '<g class="mface"><circle cx="112" cy="250" r="0" /></g></svg>';}
+function capBallSVG(rar){var c=CAP_COL[rar]||CAP_COL.rare;return '<svg class="cball" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="capRb2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8FB1"/><stop offset=".3" stop-color="#FFD23F"/><stop offset=".55" stop-color="#7ED957"/><stop offset=".8" stop-color="#5CC8FF"/><stop offset="1" stop-color="#B07CFF"/></linearGradient></defs>'+
+ '<g class="cbot"><path d="M8 52 a42 42 0 0 0 84 0Z" fill="#fff" stroke="'+PK+'" stroke-width="4"/><path d="M8 52 H92" stroke="'+PK+'" stroke-width="4"/></g>'+
+ '<g class="ctop"><path d="M8 50 a42 42 0 0 1 84 0Z" fill="'+(rar==='mythic'?'url(#capRb2)':c[0])+'" stroke="'+PK+'" stroke-width="4"/><path d="M24 30 q10 -12 26 -14" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".85"/><rect x="40" y="44" width="20" height="10" rx="4" fill="'+c[1]+'" stroke="'+PK+'" stroke-width="2.4"/></g></svg>';}
+function capIcon(){return '<svg class="ic capic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 18 0Z" fill="#FF86D0"/><path d="M3 12a9 9 0 0 0 18 0Z" fill="#fff" stroke="#E060AE" stroke-width="1.2"/><path d="M3 12h18" stroke="#E060AE" stroke-width="1.4"/><path d="M7 7.6q2-2.4 5-2.6" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>';}
+
+/* --- prize card --- */
+function capPrizeArt(r){if(r.kind==='coins')return '<div class="pzart coin">'+IC('coin')+'</div>';if(r.kind==='food'){var f=FOODS.filter(function(x){return x.id===r.id;})[0];return '<div class="pzart">'+foodIcon(f)+'</div>';}
+ if(r.kind==='freeze')return '<div class="pzart">'+frzSVG()+'</div>';if(r.kind==='decor')return '<div class="pzart decor">'+itemPic(item(r.id))+'</div>';return '<div class="pzart pet">'+petSVG(r.id,'joy',{stage:1,eq:{}})+'</div>';}
+function capPrizeName(r){if(r.kind==='coins')return '+'+r.n+' '+L('coins','金幣');if(r.kind==='food'){var f=FOODS.filter(function(x){return x.id===r.id;})[0];return esc(LL(f))+' ×1';}if(r.kind==='freeze')return L('Streak Freeze','連勝凍結')+' ×1';if(r.kind==='decor')return esc(LL(item(r.id)));return esc(LL(petDef(r.id)));}
+function capPrizeSub(r){if(r.kind==='pet')return L('NEW SCIENCE PAL!','新的科學小夥伴！');if(r.kind==='decor')return L('New room decoration','新的房間裝飾');if(r.kind==='freeze')return L('Protects your streak for 1 missed day','可保護 1 天的連續紀錄');if(r.kind==='food')return L('Added to your snack bag','已放進小食袋');return L('Added to your purse','已放進錢包');}
+function capPrizeHTML(r){var P=r.kind==='pet'?petDef(r.id):null;
+ return '<div class="pzcard t-'+r.rar+'"><div class="pzrays"></div>'+tierBadge({tier:r.rar})+'<p class="pzsub">'+capPrizeSub(r)+'</p>'+capPrizeArt(r)+'<h3>'+capPrizeName(r)+'</h3>'+(P?'<p class="pzdesc">'+esc(L(P.desc[0],P.desc[1]))+'</p>'+palBuffLine(P):'')+
+  '<div class="pzbtns">'+(P&&S.active!==P.id?'<button class="btn green small" data-capact="'+P.id+'">'+IC('swap')+L('Make active pal','設為陪伴小夥伴')+'</button>':'')+(r.kind==='decor'?'<button class="btn small white" data-capplace="'+r.id+'">'+IC('home')+L('Place in my room','擺放在房間')+'</button>':'')+'<button class="btn pink" data-capclose="1">'+L('Collect','收下')+'</button></div></div>';}
+
+/* --- the machine screen --- */
+function capOddsHTML(){var lv=capLv(),o=CAP_ODDS[lv],nx=lv<5?CAP_ODDS[lv+1]:null,s=S.streak||0;
+ var marks=[0,20,40,60,80,100].map(function(m,i){return '<span class="mk'+(s>=m?' on':'')+(i===lv?' cur':'')+'" style="left:'+(m)+'%"><b>'+(i?m:'')+'</b></span>';}).join('');
+ return '<div class="luck"><div class="lhead"><b>'+IC('flame')+L('Luck level ','幸運等級 ')+lv+'</b><span>'+L('Streak ','連續 ')+s+L(' days',' 日')+'</span></div><div class="lbar"><i style="width:'+Math.min(100,s)+'%"></i>'+marks+'</div>'+
+  '<div class="odds">'+TIERS.map(function(t,i){return '<span class="od t-'+t+'"><b>'+o[i]+'%</b>'+tierName(t)+'</span>';}).join('')+'</div>'+
+  (nx?'<p class="lnext">'+L('Reach a <b>'+((lv+1)*20)+'-day</b> streak for Luck level '+(lv+1)+': Legendary <b>'+nx[3]+'%</b>, Mythic <b>'+nx[4]+'%</b>!','連續溫習達 <b>'+((lv+1)*20)+' 日</b>即升至幸運等級 '+(lv+1)+'：傳說 <b>'+nx[3]+'%</b>、神話 <b>'+nx[4]+'%</b>！')+'</p>':'<p class="lnext">'+L('Maximum luck! You are a streak legend.','幸運度已達最高！你是連續溫習傳奇。')+'</p>')+
+  '<p class="pity">'+IC('gem')+L('Epic or better guaranteed within ','保證 ')+(10-capS().pity)+L(' draws',' 次內抽到史詩或以上')+'</p></div>';}
+function capInsideHTML(){var pets=PETS.filter(function(P){return P.capsule;}),dec=ITEMS.filter(function(i){return i.capsule;});
+ return '<details class="capin"><summary>'+IC('sparkle')+L('What’s inside? (new pals & items)','扭蛋有甚麼？（新小夥伴及物品）')+'</summary><div class="cgrid">'+
+  pets.map(function(P){var has=!!S.pets[P.id];return '<div class="ci t-'+P.tier+(has?' got':'')+'">'+tierBadge(P)+'<div class="cpic">'+petSVG(P.id,'happy',{stage:1,eq:{},plain:1})+'</div><small>'+esc(LL(P))+(has?' ✓':'')+'</small></div>';}).join('')+
+  dec.map(function(it){var has=!!S.owned[it.id];return '<div class="ci t-'+it.tier+(has?' got':'')+'">'+tierBadge(it)+'<div class="cpic">'+itemPic(it)+'</div><small>'+esc(LL(it))+(has?' ✓':'')+'</small></div>';}).join('')+
+  '</div><p class="muted" style="font-size:12px;margin:8px 0 0">'+L('Also inside: coins, snacks, Streak Freezes and shop decorations you don’t own yet.','另外還有：金幣、小食、連勝凍結，以及你未擁有的商店裝飾。')+'</p></details>';}
+function capActionHTML(){if(capReady())return '<button class="btn pink big capgo" data-capgo="1">'+capIcon()+L('Turn the crank!','扭一扭！')+'</button>';
+ if(capS().day===today())return '<p class="capmsg">'+IC('check')+L('You opened today’s capsule. Study again tomorrow for a new one – and keep the streak for better luck!','今日的扭蛋已打開。明天溫習後再來——保持連續溫習，運氣會更好！')+'</p>';
+ return '<p class="capmsg">'+IC('bolt')+L('The machine needs power! Finish <b>1 quiz or 1 study session today</b> to unlock today’s capsule.','扭蛋機需要能量！今日完成 <b>1 次測驗或溫習</b>，就能解鎖今日的扭蛋。')+'</p><button class="btn green" data-riskgo="quiz">'+IC('flask')+L('Quick quiz (2 min)','快速測驗（2 分鐘）')+'</button>';}
+function openCapsule(){var old=$('#capov');if(old)old.remove();var d=document.createElement('div');d.id='capov';d.className='capov';
+ d.innerHTML='<div class="capbox" role="dialog" aria-modal="true" aria-label="'+esc(L('Lucky Capsule','幸運扭蛋'))+'"><div class="caph"><h2>'+capIcon()+L('Lucky Capsule','幸運扭蛋')+'</h2><button class="x" data-capclose="1" aria-label="Close">✕</button></div>'+
+  '<div class="capstage" id="capstage"><div class="capglow"></div>'+capMachine()+'<div class="capfx" id="capfx"></div></div><div class="capact" id="capact">'+capActionHTML()+'</div>'+capOddsHTML()+capInsideHTML()+'</div>';
+ document.body.appendChild(d);sfx('tap');requestAnimationFrame(function(){d.classList.add('on');});}
+function capClose(){var d=$('#capov');if(!d)return;d.classList.remove('on');setTimeout(function(){d.remove();},250);render();}
+/* the show: crank → drop → shake (+ rarity upgrades) → burst → prize */
+function capSpin(){var st=$('#capstage'),act=$('#capact');if(!st||!capReady()||st.dataset.busy)return;var r=capDraw();if(!r)return;st.dataset.busy=1;act.innerHTML='<p class="capmsg spin">'+L('Mixing the capsules…','正在攪拌扭蛋……')+'</p>';
+ var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,fx=$('#capfx'),rank=TIERS.indexOf(r.rar);
+ if(reduce){capReveal(r);return;}
+ st.classList.add('turning');sfx('whoosh');setTimeout(function(){sfx('tap');},300);setTimeout(function(){sfx('tap');},600);
+ var steps=rank<=1?[r.rar]:TIERS.slice(1,rank+1),t=1200;
+ setTimeout(function(){st.classList.remove('turning');var b=document.createElement('div');b.className='cdrop';b.innerHTML=capBallSVG(rank===0?'common':'rare');fx.appendChild(b);sfx('boing');setTimeout(function(){sfx('boing');},520);},t);
+ t+=1100;var cur=rank===0?'common':'rare';
+ setTimeout(function(){var b=fx.querySelector('.cdrop');if(b)b.classList.add('wob');},t);
+ for(var i=1;i<steps.length;i++)(function(i){t+=750;setTimeout(function(){var b=fx.querySelector('.cdrop');if(!b)return;b.innerHTML=capBallSVG(steps[i]);b.classList.remove('up');void b.offsetWidth;b.classList.add('up');st.classList.remove('flash');void st.offsetWidth;st.classList.add('flash');
+  var u=document.createElement('div');u.className='cupg t-'+steps[i];u.innerHTML=L('UPGRADE!','升級！')+'<small>'+tierName(steps[i])+'</small>';fx.appendChild(u);setTimeout(function(){u.remove();},900);sfx('crit');},t);})(i);
+ t+=900;setTimeout(function(){var b=fx.querySelector('.cdrop');if(b)b.classList.add('pop');sfx(rank>=4?'mythic':rank>=3?'legend':'fanfare');if(rank>=3){st.classList.add('big');try{confetti();}catch(e){}}},t);
+ t+=650;setTimeout(function(){capReveal(r);},t);}
+function capReveal(r){var fx=$('#capfx'),st=$('#capstage'),act=$('#capact');if(!fx)return;var rank=TIERS.indexOf(r.rar);st.classList.remove('big','flash');st.classList.add('revealed');
+ fx.innerHTML=(rank>=3?'<div class="cbanner t-'+r.rar+'">'+(rank>=4?L('MYTHIC!','神話級！'):L('LEGENDARY!','傳說級！'))+'</div>':'')+capPrizeHTML(r);
+ if(act)act.innerHTML='';if(rank>=3)setTimeout(function(){try{confetti();}catch(e){}},500);}
+document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-capgo],[data-capclose],[data-capact],[data-capplace],[data-capopen]');if(!t)return;
+ if(t.dataset.capopen){if($('#ov'))closeModal();openCapsule();return;}
+ if(t.dataset.capgo){capSpin();return;}
+ if(t.dataset.capact){S.active=t.dataset.capact;sfx('boing');save();t.remove();toast(L('New active pal!','已換上新的陪伴小夥伴！'));return;}
+ if(t.dataset.capplace){var it=item(t.dataset.capplace);if(it){S.room=S.room||{wall:'w0',dec:{}};if(it.slot==='wall')S.room.wall=it.id;else{S.room.dec=S.room.dec||{};S.room.dec[decCat(it)]=it.id;}save();sfx('boing');t.remove();toast(L('Placed in your room!','已擺放在房間！'));}return;}
+ if(t.dataset.capclose){capClose();}});
+document.addEventListener('keydown',function(e){var st=$('#capstage');if(e.key==='Escape'&&$('#capov')&&(!st||!st.dataset.busy||$('.pzcard')))capClose();});
+/* the old pal-advert CTA for capsule pals */
+(function(){var g0=palAdGoal;palAdGoal=function(P){if(P.capsule)return {pc:capReady()?1:0,txt:L('Only from the Lucky Capsule · luck level ','只限幸運扭蛋 · 幸運等級 ')+capLv(),btn:'<button class="pa-cta gold" data-capopen="1">'+capIcon()+L('LUCKY CAPSULE','幸運扭蛋')+'</button>'};return g0(P);};})();
+function capBtnHTML(){var ready=capReady(),done=capS().day===today();return '<button class="btn '+(ready?'pink capready':'white')+'" id="bGift"><span class="e">'+capIcon()+'</span>'+(ready?L('Lucky capsule!','幸運扭蛋！'):done?L('Capsule opened','扭蛋已打開'):L('Lucky capsule','幸運扭蛋'))+(ready?'<i class="cdot"></i>':'')+'</button>';}
+
+window.__game={dt:{DT:DT,pick:dtPick,card:dtCardHTML,prog:dtProgress},foods:FOODS,LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},sci:function(a,b){return sciSVG(a,b);},nqv:function(){return NQV;},nqpool:function(i){return nqbPool(i);},cap:{roll:function(){return capRoll();},prize:function(r){return capPrize(r);},lv:function(){return capLv();},s:function(){return capS();},items:function(){return ITEMS.length;}},nqq:function(){return NQV&&NQV.b&&NQV.b.cur?NQV.b.cur.q:null;},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},pick:pickQs,AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;},leg:{dmCount:dmCount,dmNeed:dmNeed,dmTotal:dmTotal,dmHit:dmHit,evoReq:evoReq,palBuff:palBuff,gain:function(c,x,ctx){gainCtx=ctx;return gain(c,x);},chk:checkPetUnlocks,PETS:PETS,dict:function(u){openDictSetup(u);},evo:function(){openEvolve();},get DQ(){return DQ;}}};
 })();
 
 </script>
