@@ -183,6 +183,40 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
   - Motion effects: a level-up sequence (charge-up → black/white impact frames → shockwave that blows the fog away), a shockwave when a repair clears Fog, fog-creep tentacles when Fog rises, and materials flying into storage. Reduced-motion settings turn the flashes and movement off.
 - **Teacher view** (on the Island tab): every squad with members, materials given, days studied and last study day. Teachers can remove a student and turn on **holiday mode**, which pauses the Fog.
 
+### 🌧️ Living Island 3.0 – Phase 1: weather + the water system (off until the teacher turns it on)
+- **One Island Day (10–20 min):**
+  1. Read last night's **Field Report** (what happened → why, with the S1 section → what next, plus an optional 1-question "Why?" check).
+  2. **Study** as normal: every study day gives each member **+2 Ops** (island action points; up to 4 carry over).
+  3. **Prepare** for tonight's weather.
+  4. Do one **island task**.
+
+  An **Island today** card shows the 4 steps as a ring and highlights only the next one.
+- **Shared Hong Kong weather:**
+  - The same for every squad on the same date (calm, cloudy, light rain, heavy rain or rainstorm), weighted by season: wet June–September, dry winter.
+  - Tonight is certain. Tomorrow shows a chance of rain.
+  - Mercy rules: never two severe nights in a row, at most 2 in any 7 days, a dry recovery night after every crisis, and a 7-night tutorial for new worlds (calm → light rain → heavy rain on night 3).
+- **The water system is the science (S1 Unit 2):**
+  1. Rain makes runoff (green space from the Greenhouse soaks some up).
+  2. Storm drains and a retention pond carry it away.
+  3. Too much runoff overflows as sewage pollution.
+  4. The **treatment plant** cleans it: sedimentation → filtration → chlorination → fluoridation.
+  5. What is left lowers **Clean Water** and **Health**.
+
+  Without chlorination, germs make people ill. Fluoride protects teeth but does not kill germs.
+- **Action + Reason prep:** clear the drains, lower the pond or store clean water. After choosing an action, students pick the scientific reason from 3 options (1 real concept, 2 real misconceptions). The right reason doubles the effect.
+- **Treatment Plant puzzle:** the squad arranges its built stages in order. The right order runs at 100%, a wrong order at 50%, and the misplaced stages are explained. It is redone after each new stage, with 2 tries a day.
+- **Task board:** 3 squad tasks a day, issued by the server so they cannot be re-rolled.
+  - **Order the chain:** treatment works, water cycle, distillation, filtering, heating ice, scientific investigation.
+  - **Sort and classify:** pollutes/saves water, separation methods, soluble/insoluble, solid/liquid/gas, absorbs/releases energy, what each treatment step does.
+  - Rewards are Ops and Clean Water, never coins. Repeating a task within 7 days pays nothing.
+- **Island Codex:** 6 concept cards (water cycle, runoff, sewage overflow, treatment order, chlorine vs fluoride, reservoirs), each with a Hong Kong example.
+- **Never punishing study:**
+  - The world never removes coins, XP, pets or materials.
+  - A crisis adds at most +1 Fog, and never beyond Fog 5, so Murk's theft at 9+ still only comes from missed study.
+  - Nights with absent members do half damage, and no meter falls below 15 (20 on missed days).
+  - Holiday mode freezes the world.
+- **Teacher view:** turn the world on/off and choose **gentle** mode (half the rain load); squads in crisis last night are listed.
+
 ## 🧠 Learning rewards (anti-grinding)
 - **Fresh topics pay more:** 🌱 a never-tried sub-topic ×1.5, 🔁 not played for 7+ days ×1.25; the same quiz again within 20 hours pays ×0.5, then ×0.25, then ×0.1. The same applies to each dictation and read-aloud set ("missed words" practice always pays in full).
 - **New knowledge beats repeats:** 4 🪙 for a question answered correctly for the first time, 1 🪙 for one already known.

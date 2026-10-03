@@ -61,3 +61,10 @@ When `Code.gs` changes (for example, the class leaderboard was added), replace A
 - Squads are stored in the `合作小隊 Coop Squads` tab (one row per squad). Please don't edit the JSON column by hand.
 - **Holiday mode:** on the Island tab, open *Teacher view* → **Holiday mode: pause the Fog**. While it is on, missed days don't add Fog or break squad streaks. (It sets the script property `COOP_PAUSE` to `1`.)
 - A student who leaves a squad waits 7 days before joining another. A teacher can **Remove** a student from a squad with no wait.
+
+### Living Island 3.0 (weather + water system)
+- It is **off** until you turn it on: Island tab → *Teacher view* → **Turn the world on**. (This sets the script property `COOP_WORLD` to `1`; `0` or empty = off.)
+- **Gentle mode** halves the rain load (`COOP_MODE` = `gentle`; anything else = standard). You can switch it in the same place.
+- Holiday mode (`COOP_PAUSE` = `1`) also freezes the weather and the island meters.
+- Old squads keep working: their data is upgraded automatically the first time it is read. Nothing a student earned is ever removed by the weather.
+- After pasting the new `Coop.gs`, deploy a **New version** as usual.

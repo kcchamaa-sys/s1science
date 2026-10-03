@@ -2159,6 +2159,102 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .cofx.p4 .cofx-bw{animation:coPopIn .55s cubic-bezier(.2,1.5,.4,1)}@keyframes coPopIn{from{transform:scale(.82)}}
 .cofx.p4 .cofx-b{animation:coShine 1.3s ease-out}@keyframes coShine{0%{filter:brightness(2.4) drop-shadow(0 0 22px #fff)}35%{filter:brightness(1.4) drop-shadow(0 0 16px #4FD8FF)}100%{filter:drop-shadow(0 0 6px rgba(79,216,255,.5))}}
 .cofx.p4 .cofx-t{animation:coSlam .45s cubic-bezier(.2,1.6,.4,1) .2s forwards}@keyframes coSlam{from{opacity:0;transform:scale(1.8) skewX(-12deg)}to{opacity:1;transform:none}}
+/* ---------- Island 3.0 Living Island (Phase 1) ---------- */
+.cwtoday{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.cwring{flex:none}
+.cwtd{flex:1 1 220px;min-width:0}.cwtd h3{margin:0 0 2px;font-size:17px}
+.cwnext{margin:0 0 6px;font-size:14px;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.cwsteps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 10px}
+.cwsteps li{display:flex;gap:5px;align-items:flex-start;font-size:12.5px;color:var(--ink2);line-height:1.35}
+.cwsteps li .ic{width:16px;height:16px;flex:none;opacity:.55}
+.cwsteps li.ok{color:#3E9E5B;text-decoration:line-through;text-decoration-color:rgba(62,158,91,.5)}.cwsteps li.ok .ic{opacity:1}
+.cwsteps li.nx{color:var(--ink);font-weight:800}.cwsteps li.nx .ic{opacity:1}
+.cwact{flex:none;margin-left:auto}
+.cwduo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;margin:0 0 12px}
+.cwduo .card{margin:0}
+.cwfc-now{display:flex;gap:10px;align-items:flex-start}.cwfc-now>div{min-width:0}
+.cwfc-now small{display:block;color:var(--ink2);font-size:12px;font-weight:800}
+.cwfc-now b{font-size:19px;margin-right:6px}.cwfc-now p{margin:4px 0 0;font-size:13.5px;line-height:1.5}
+.cwfc-now.mini{align-items:center;margin-bottom:8px}.cwfc-now.mini .cwops{margin-left:auto}
+.cwwx{flex:none}
+.cwtag{display:inline-block;font-size:11.5px;font-weight:900;padding:1px 8px;border-radius:99px;background:#FFE9C7;color:#8A5A00;vertical-align:middle}
+.cwtag.calm{background:#E3F4E8;color:#2F7A49}
+.cwfc-nx{margin:10px 0;padding:6px 10px;border-radius:12px;background:#F4EEFB;font-size:13.5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cwfc-nx small{color:var(--ink2);font-weight:800}
+.cwmeters{display:grid;gap:8px}
+.cwm-h{display:flex;align-items:center;gap:6px;font-size:14px}.cwm-h span{margin-left:auto;font-weight:900;font-size:16px}.cwm-h small{font-size:11px;color:var(--ink2)}
+.cwm-bar{height:12px;border-radius:99px;background:#EFE8F7;overflow:hidden;border:1px solid #E4D9F2}
+.cwm-bar i{display:block;height:100%;border-radius:99px;transition:width .6s}
+.cwm-st{font-size:11.5px;color:var(--ink2)}.cwm-low .cwm-st{color:#C0392B;font-weight:800}
+.cwpol{position:relative;font-size:13px;padding:4px 10px;border-radius:10px;background:#F6F1EA;overflow:hidden}
+.cwpol i{position:absolute;left:0;bottom:0;height:3px;background:#8B6B3E}
+.cwfc-ft{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.cwops{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;background:#FFF3C4;border:1px solid #F2C14E;font-weight:900;font-size:13px;white-space:nowrap}
+.cwops .ic{width:16px;height:16px}
+.cwsec{display:inline-block;font-size:11px;font-weight:900;padding:0 7px;border-radius:99px;background:#E7F3FB;color:#1C6E96;white-space:nowrap;vertical-align:middle}
+.cwrep h3{margin:0;font-size:17px}.cwrep h3 small{font-weight:700;color:var(--ink2);font-size:12px}
+.cwrep-h{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.cwrep p{margin:6px 0;font-size:14px;line-height:1.55}
+.cwres{display:inline-block;font-size:12px;font-weight:900;padding:1px 10px;border-radius:99px}
+.cwres.calm{background:#EFE8F7;color:#5B4B6E}.cwres.ok{background:#E3F4E8;color:#2F7A49}.cwres.mid{background:#FFE9C7;color:#8A5A00}.cwres.bad{background:#FDE2E6;color:#B03045}
+.cwdelta{display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-weight:900}
+.cwrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.cwtasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.cwtask{margin:0;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.cwtask b{font-size:14.5px;line-height:1.4}.cwtask.done{opacity:.8}
+.cwtype{font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--ink2)}
+.cosub small{font-size:12px;font-weight:700;color:var(--ink2);letter-spacing:0;text-transform:none}
+.cwplant h4{margin:0 0 6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.cwchain{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:4px 0}
+.cwst{padding:3px 10px;border-radius:10px;background:#E7F3FB;border:1px solid #BFE0F2;font-weight:800;font-size:13px}
+.cwarr{color:#2FA8DC;font-weight:900}
+.cwplant b.cwgood{color:#3E9E5B}
+.cwmods{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,138px),1fr));gap:10px;margin-top:10px}
+.cwmod{margin:0;display:flex;flex-direction:column;gap:4px;align-items:flex-start;min-width:0}
+.cwmod small{font-size:12px;color:var(--ink2);line-height:1.4}
+.cwmod .lv{font-size:12px;font-weight:800;background:var(--butter);padding:1px 8px;border-radius:99px}
+.cwmod.on{border-color:#BFE0F2}
+.cwmod .btn{margin-top:auto;width:100%}
+/* rain on the island: CSS streaks, slow and steady (no flashing) */
+.cwrain{position:absolute;inset:6px;border-radius:18px;pointer-events:none;z-index:3;opacity:.55;
+ background-image:repeating-linear-gradient(105deg,transparent 0 14px,rgba(47,120,180,.35) 14px 15px,transparent 15px 31px);background-size:160px 160px;animation:cwRain .9s linear infinite}
+.cwrain.heavy{opacity:.8;background-image:repeating-linear-gradient(105deg,transparent 0 8px,rgba(40,100,160,.45) 8px 9.5px,transparent 9.5px 18px);animation-duration:.55s}
+.cwrain::after{content:"";position:absolute;inset:0;border-radius:18px;background:linear-gradient(rgba(90,100,130,.18),rgba(90,100,130,.05))}
+@keyframes cwRain{to{background-position:-40px 160px}}
+/* modals */
+.cwsheet{display:flex;flex-direction:column;gap:8px}
+.cwq{margin:0;font-size:15px;line-height:1.5}
+.cwprep{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;border:2px solid #E4D9F2;border-radius:14px;flex-wrap:wrap}
+.cwprep>div{min-width:0;flex:1 1 180px}.cwprep small{display:block;color:var(--ink2);font-size:12px}
+.cwprep.done{background:#F2FBF4;border-color:#BFE6CB}
+.cwopts{display:flex;flex-direction:column;gap:8px}
+.cwopts .opt{text-align:left}
+.cwfeed{padding:10px 12px;border-radius:14px;background:#F4EEFB}
+.cwfeed p{margin:4px 0;font-size:14px;line-height:1.5}
+.cwfeed.ok{background:#E9F7EE}.cwfeed.mid{background:#FFF4DE}.cwfeed.bad{background:#FDECEF}
+.cwnote{font-size:13px;color:var(--ink2);margin:0}
+.cwgot{font-weight:900;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.cword{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.cword li{display:flex;align-items:center;gap:8px;padding:6px 8px;border:2px solid #E4D9F2;border-radius:14px;background:#fff}
+.cword li.ok{border-color:#9BD3AE;background:#F2FBF4}.cword li.bad{border-color:#F2A7B4;background:#FDF1F3}
+.cwn{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#EFE8F7;font-weight:900;font-size:13px}
+.cwtx{flex:1;min-width:0;font-size:14px;line-height:1.4;overflow-wrap:anywhere}.cwtx small{display:block;color:#B03045;font-size:12px;margin-top:2px}
+.cwud{display:flex;gap:4px;flex:none}.cwud .btn{min-width:44px;padding:4px 8px}
+.cwsort{display:flex;flex-direction:column;gap:8px}
+.cwit{padding:8px;border:2px solid #E4D9F2;border-radius:14px;display:flex;flex-direction:column;gap:6px}
+.cwit.ok{border-color:#9BD3AE;background:#F2FBF4}.cwit.bad{border-color:#F2A7B4;background:#FDF1F3}
+.cwbins{display:flex;gap:6px;flex-wrap:wrap}
+.cwbin{flex:1 1 90px;min-height:44px;padding:6px 8px;border-radius:12px;border:2px solid #E4D9F2;background:#fff;font:inherit;font-size:13px;font-weight:800;color:var(--ink);cursor:pointer}
+.cwbin.on{border-color:#2FA8DC;background:#E7F3FB}
+.cwbin:focus-visible{outline:3px solid #2FA8DC;outline-offset:2px}
+.cwcdx{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,130px),1fr));gap:8px}
+.cwcard{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:14px;border:2px solid #E4D9F2;background:#fff;font:inherit;color:var(--ink);text-align:center;cursor:pointer;min-height:44px}
+.cwcard b{font-size:13px}.cwcard.lock{background:#F4F0F8;color:var(--ink2);cursor:default}
+.cwhk{background:#FFF8E6;padding:8px 10px;border-radius:12px;font-size:14px}
+.cwteach{margin:8px 0;padding:8px 10px;border-radius:12px;background:#F4EEFB;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cwteach p{flex-basis:100%;margin:0}
+@media (max-width:420px){.cwsteps{grid-template-columns:1fr}.cwact{margin-left:0;width:100%}.cwact .btn{width:100%}}
+@media (prefers-reduced-motion:reduce){.cwrain{animation:none}.cwm-bar i{transition:none}}
 @media (max-width:520px){.coscr{margin:0 -8px;padding:12px 8px 16px;border-radius:20px}.coscr .h-sec{font-size:21px}}
 @media (prefers-reduced-motion:reduce){.coscr *,.cofx *{animation:none!important}.cofx.p4 .cofx-t,.cofx.p4 .cofx-ring{opacity:1}.cofx.p4 .cofx-ring{opacity:0}.cofx.p4 .cofx-fog{opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
@@ -9517,6 +9613,239 @@ function coFxNext(){var x=CO_FXQ.shift();if(!x)return;var k=x[0],lv=x[1],B=CO_B[
  setTimeout(close,5200);}
 window.__coop.tod=function(h){CO_TOD_FORCE=h==null?null:+h;try{render();}catch(e){}};
 window.__coop.art={bld:coBld,isl:coIsland,defs:coDefs,lvup:coLevelUp,pop:coPop,shock:coShock,creep:coCreep};
+/* ===================== Island 3.0 "Living Island" – Phase 1 (weather + water system) =====================
+   Shown only when the teacher turns the world on (server sends squad.world). Every rule is S1 Unit 2 science:
+   rain → runoff → drains/pond → overflow (sewage) → treatment works order → clean water + health. */
+var CW_WX={calm:['Calm','天晴'],cloudy:['Cloudy','多雲'],lrain:['Light rain','微雨'],hrain:['Heavy rain','大雨'],storm:['Rainstorm','暴雨']};
+function cwWxName(x){var k=x.t==='hrain'&&x.sev>=3?'storm':x.t;return L(CW_WX[k][0],CW_WX[k][1]);}
+function cwWxIcon(x,sz){var s=sz||40,o='<svg class="cwwx" viewBox="0 0 40 40" width="'+s+'" height="'+s+'" aria-hidden="true">',K='#5B4B6E';
+ var cloud=function(f){return '<path d="M10 25a6 6 0 0 1 1-12a8 8 0 0 1 15-2a6 6 0 0 1 4 14Z" fill="'+f+'" stroke="'+K+'" stroke-width="2" stroke-linejoin="round"/>';};
+ if(x.t==='calm')o+='<circle cx="20" cy="20" r="8" fill="#FFD23F" stroke="'+K+'" stroke-width="2"/><path d="M20 4v5M20 31v5M4 20h5M31 20h5M8.7 8.7l3.5 3.5M27.8 27.8l3.5 3.5M8.7 31.3l3.5-3.5M27.8 12.2l3.5-3.5" stroke="#F2A900" stroke-width="2.4" stroke-linecap="round"/>';
+ else if(x.t==='cloudy')o+='<circle cx="27" cy="13" r="6" fill="#FFD23F" stroke="'+K+'" stroke-width="2"/>'+cloud('#fff');
+ else{o+=cloud(x.t==='hrain'?'#B9C3D6':'#E8EEF6');var n=x.t==='hrain'?(x.sev>=3?5:4):2;for(var i=0;i<n;i++)o+='<path d="M'+(11+i*(n>2?4.5:8))+' 29l-2 6" stroke="#2FA8DC" stroke-width="2.4" stroke-linecap="round"/>';
+  if(x.sev>=3)o+='<path d="M24 26l-4 6h4l-3 6" stroke="#E8920F" stroke-width="2" fill="none" stroke-linejoin="round"/>';}
+ return o+'</svg>';}
+/* water modules (costs and levels come from the server) */
+var CW_MOD={drain:['Storm drain','雨水渠','Carries runoff away: +1.5 drainage a level.','排走地面徑流：每級排水量 +1.5。','2.2'],
+ pond:['Retention pond','蓄洪池','Holds a downpour for a while: +2 drainage a level.','暫存大雨：每級排水量 +2。','2.2'],
+ res:['Reservoir','水塘','Stores rain: saves 1 water a day a level and fills up on good rain nights. Bigger sizes need a higher Water Works.','儲存雨水：每級每日節省 1 點水，雨夜順利時會蓄水。更大的水塘需要更高級的淨水廠。','2.2'],
+ settle:['Sedimentation tank','沉澱池','Mud settles out (alum helps). Removes solids.','泥沙沉降（明礬幫助沉澱），除去固體。','2.5'],
+ filter:['Sand filter','濾床','Sand beds trap the fine bits. Removes solids.','沙床隔走細小顆粒，除去固體。','2.4'],
+ chlor:['Chlorination','加氯','Chlorine kills microorganisms, so dirty water no longer makes people ill.','氯能殺死微生物，污水不再令人生病。','2.5'],
+ fluor:['Fluoridation','加氟','Fluoride helps prevent tooth decay (+1 health a night with chlorine). It does NOT kill germs.','氟幫助預防蛀牙（配合加氯，每晚健康 +1）。氟不能殺菌。','2.5']};
+var CW_STAGE=['settle','filter','chlor','fluor'];
+var CW_STAGE_WHY={settle:['Sedimentation first: heavy mud settles (alum helps), so the filter does not clog.','先沉澱：較重的泥沙沉降（明礬幫助），濾床才不會淤塞。'],
+ filter:['Filtration next: sand beds trap the fine bits left after settling.','然後過濾：沙床隔走沉澱後剩下的細小顆粒。'],
+ chlor:['Chlorination once the water is clear: chlorine kills microorganisms (germs).','水清澈後加氯：氯能殺死微生物（細菌）。'],
+ fluor:['Fluoridation last: fluoride protects teeth – it does NOT kill germs.','最後加氟：氟保護牙齒——但不能殺菌。']};
+/* prep actions: action + reason (one real concept, two real misconceptions); the server knows which is right */
+var CW_PREP={
+ drains:{n:['Clear the storm drains','清理雨水渠'],sec:'2.2',why:{d1:['Rain can’t soak into concrete, so it runs off into drains. Clear drains carry more runoff away.','雨水不能滲入混凝土地面，會流進雨水渠。暢通的雨水渠能排走更多地面徑流。'],d2:['Clean drains make the rainwater evaporate faster.','乾淨的雨水渠令雨水蒸發得更快。'],d3:['Drains turn rainwater into drinking water straight away.','雨水渠會把雨水直接變成食水。']},
+  exp:['Clear drains carry more runoff tonight. Rainwater only becomes drinking water after treatment works.','暢通的雨水渠今晚能排走更多徑流。雨水要經過濾水廠處理才能成為食水。']},
+ pond:{n:['Lower the retention pond early','預先排空蓄洪池'],sec:'2.2',why:{p1:['An emptier pond has room to store the next downpour, so less water overflows at once.','排空了的蓄洪池有空間暫存下一場大雨，同一時間溢出的水較少。'],p2:['Ponds take the salt out of rainwater.','蓄洪池會除去雨水中的鹽分。'],p3:['An empty pond makes it rain less.','排空蓄洪池會令雨量減少。']},
+  exp:['A pond stores water for a while and lets it out slowly. It changes where the water goes, not how much rain falls.','蓄洪池暫存雨水再慢慢排走，改變的是水的去向，而不是雨量。']},
+ store:{n:['Store clean water before the rain','預先儲存潔淨食水'],sec:'2.6',why:{s1:['Heavy rain can wash mud and sewage into the supply, so clean water saved before the storm stays safe.','大雨可能把泥沙和污水沖進供水系統，預先儲存的潔淨食水較安全。'],s2:['Water left standing cleans itself, so storing it makes it safe to drink.','靜置的水會自己變乾淨，所以儲存後就可以安全飲用。'],s3:['Storing water adds more water to the water cycle.','儲存食水會令水循環中的水增加。']},
+  exp:['Standing water does not clean itself – germs can still grow. Drinking water is made safe by treatment (sedimentation, filtration, chlorination).','靜置的水不會自己變乾淨，細菌仍可滋生。食水要經過處理（沉澱、過濾、加氯）才安全。']}};
+/* Island Codex v1 (6 cards, all from S1 Unit 2) */
+var CW_CDX={
+ cycle:{n:['The water cycle','水循環'],sec:'2.2',t:['The Sun’s energy evaporates sea water. Water vapour cools and condenses into clouds, then falls as rain.','太陽的能量令海水蒸發。水蒸氣冷卻後凝結成雲，再以雨的形式落下。'],hk:['Hong Kong collects rain in reservoirs – Plover Cove was the world’s first reservoir built in the sea.','香港把雨水收集到水塘——船灣淡水湖是世界上首個在海中建成的水塘。']},
+ runoff:{n:['Runoff','地面徑流'],sec:'2.2',t:['Rain can’t soak into concrete, so it flows over the ground into drains. Green spaces soak up some of it.','雨水不能滲入混凝土，會沿地面流入雨水渠。綠化地帶可以吸收部分雨水。'],hk:['Hong Kong has underground stormwater storage tanks that hold heavy rain for a while.','香港設有地下蓄洪池，暫存暴雨的雨水。']},
+ sewage:{n:['Sewage overflow','污水溢流'],sec:'2.6',t:['When drains overflow, dirty water can mix with clean water – one kind of water pollution.','雨水渠滿溢時，污水可能混進潔淨的水中——這是水污染的一種。'],hk:['In Hong Kong, waste water is treated in sewage treatment works before it goes into the sea.','在香港，污水經污水處理廠處理後才排放入海。']},
+ treat:{n:['Treatment works order','濾水廠的次序'],sec:'2.5',t:['Sedimentation → filtration → chlorination → fluoridation. Remove solids first, then kill germs, then add fluoride.','沉澱 → 過濾 → 加氯 → 加氟。先除去固體，再殺菌，最後加氟。'],hk:['Hong Kong’s water treatment works use this order.','香港的濾水廠就是用這個次序。']},
+ chlorine:{n:['Chlorine vs fluoride','氯與氟'],sec:'2.5',t:['Chlorine kills microorganisms. Fluoride helps prevent tooth decay but does NOT kill germs.','氯能殺死微生物。氟幫助預防蛀牙，但不能殺菌。'],hk:['Small, controlled amounts of chlorine and fluoride keep Hong Kong’s tap water safe.','少量而受控的氯和氟令香港的自來水安全。']},
+ reservoir:{n:['Reservoirs','水塘'],sec:'2.2',t:['Reservoirs store rainwater collected from the land – the “collection” step of the water cycle.','水塘儲存從地面收集的雨水——即水循環中的「收集」。'],hk:['Most of Hong Kong’s fresh water comes from Dongjiang; the rest comes from local reservoirs.','香港大部分食水來自東江，其餘來自本地水塘。']}};
+function cwCdxIcon(k){var K='#5B4B6E',g={cycle:'<path d="M20 6a14 14 0 1 1-13 9" fill="none" stroke="#2FA8DC" stroke-width="3"/><path d="M5 9l2 7 6-3" fill="none" stroke="#2FA8DC" stroke-width="3" stroke-linejoin="round"/><path d="M20 14c3 4 4 6 0 9c-4-3-3-5 0-9Z" fill="#7FD3F5" stroke="'+K+'" stroke-width="1.6"/>',
+  runoff:'<path d="M4 16h32" stroke="'+K+'" stroke-width="2"/><path d="M6 12l3-5M14 12l3-5M22 12l3-5" stroke="#2FA8DC" stroke-width="2" stroke-linecap="round"/><rect x="12" y="20" width="16" height="12" rx="2" fill="#B9C3D6" stroke="'+K+'" stroke-width="2"/><path d="M15 23v6M20 23v6M25 23v6" stroke="'+K+'" stroke-width="2"/>',
+  sewage:'<path d="M4 14h18v8H4Z" fill="#B9C3D6" stroke="'+K+'" stroke-width="2"/><path d="M22 18c6 0 8 4 8 10" fill="none" stroke="#8B6B3E" stroke-width="5" stroke-linecap="round"/><circle cx="30" cy="33" r="3" fill="#8B6B3E"/>',
+  treat:'<rect x="3" y="18" width="8" height="14" fill="#E8EEF6" stroke="'+K+'" stroke-width="1.8"/><rect x="16" y="18" width="8" height="14" fill="#D7F0FB" stroke="'+K+'" stroke-width="1.8"/><rect x="29" y="18" width="8" height="14" fill="#BFE8FF" stroke="'+K+'" stroke-width="1.8"/><path d="M11 24h5M24 24h5" stroke="#2FA8DC" stroke-width="2.4"/><path d="M5 28h4" stroke="#8B6B3E" stroke-width="3"/>',
+  chlorine:'<rect x="9" y="10" width="12" height="22" rx="3" fill="#E9F7E9" stroke="'+K+'" stroke-width="2"/><path d="M12 6h6v4h-6Z" fill="#7ED957" stroke="'+K+'" stroke-width="1.6"/><text x="15" y="25" text-anchor="middle" font-size="7" font-weight="900" fill="'+K+'">Cl</text><path d="M26 14q4 4 0 8q4 4 0 8" fill="none" stroke="#E0509F" stroke-width="2"/>',
+  reservoir:'<path d="M3 30q17-12 34 0Z" fill="#7FD3F5" stroke="'+K+'" stroke-width="2"/><path d="M3 22l8-10 6 6 6-9 14 13" fill="#B8E39C" stroke="'+K+'" stroke-width="2" stroke-linejoin="round"/>'}[k]||'';
+ return '<svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true">'+g+'</svg>';}
+/* task bank: T1 order the chain, T2 sort and classify (seeded variants; wrong options are real misconceptions) */
+var CW_TPL={
+ o_treat:{type:'order',sec:'2.5',q:['Put Hong Kong’s water treatment works in order.','把香港濾水廠的處理步驟排列正確。'],steps:[['Sedimentation (alum helps particles settle)','沉澱（加明礬幫助顆粒沉降）'],['Filtration through sand beds','用沙床過濾'],['Chlorination – kills microorganisms','加氯——殺死微生物'],['Fluoridation – helps prevent tooth decay','加氟——幫助預防蛀牙']],exp:['Remove solids first, then kill microorganisms, then add fluoride.','先除去固體，再殺死微生物，最後加氟。']},
+ o_cycle:{type:'order',sec:'2.2',q:['Order the water cycle that refills the island.','排列令小島補充食水的水循環。'],steps:[['Sea water evaporates (energy from the Sun)','海水蒸發（太陽提供能量）'],['Water vapour rises and cools','水蒸氣上升並冷卻'],['Vapour condenses into tiny droplets – clouds','水蒸氣凝結成小水點——雲'],['Rain falls (precipitation)','下雨（降水）'],['Rain is collected in reservoirs','雨水被收集到水塘']],exp:['Evaporation → condensation → precipitation → collection.','蒸發 → 凝結 → 降水 → 收集。']},
+ o_distil:{type:'order',sec:'2.4',q:['Order the steps to get pure water from sea water by distillation.','排列用蒸餾從海水取得純水的步驟。'],steps:[['Heat the sea water in the flask','在燒瓶中加熱海水'],['The water boils and becomes vapour','水沸騰變成水蒸氣'],['The vapour cools in the condenser','水蒸氣在冷凝管中冷卻'],['It condenses into liquid water','凝結成液態水'],['The pure water (distillate) is collected','收集純水（餾出液）']],exp:['Distillation = boiling then condensation. The salt stays behind in the flask.','蒸餾 = 沸騰再凝結，鹽留在燒瓶中。']},
+ o_filter:{type:'order',sec:'2.4',q:['Order the steps to filter muddy water.','排列過濾泥水的步驟。'],steps:[['Fold the filter paper into a cone','把濾紙摺成圓錐形'],['Put it in the filter funnel','放入漏斗'],['Pour the muddy water in slowly','慢慢倒入泥水'],['Collect the clear filtrate in the beaker','在燒杯收集清澈的濾液']],exp:['The liquid that passes through is the filtrate; the mud left on the paper is the residue.','穿過濾紙的液體是濾液；留在濾紙上的泥是殘餘物。']},
+ o_heat:{type:'order',sec:'2.1',q:['Heat a block of ice. Put the changes in order.','加熱一塊冰，把變化排列正確。'],steps:[['Ice (solid)','冰（固態）'],['The ice melts at 0 °C','冰在 0 °C 熔化'],['The liquid water gets warmer','液態水溫度上升'],['The water boils at 100 °C','水在 100 °C 沸騰'],['Water vapour (gas)','水蒸氣（氣態）']],exp:['Melting and boiling both absorb energy from the heater.','熔化和沸騰都會從熱源吸收能量。']},
+ o_method:{type:'order',sec:'1.2',q:['Order the steps of a scientific investigation.','排列科學探究的步驟。'],steps:[['Ask a question','提出問題'],['Make a hypothesis (a possible explanation that can be tested)','作出假說（可以測試的可能解釋）'],['Do a fair test (change only ONE variable)','進行公平測試（只改變一個變量）'],['Draw a conclusion from the results','根據結果作出結論']],exp:['A hypothesis is tested by experiments, then a conclusion is drawn.','假說要用實驗測試，然後作出結論。']},
+ s_pollute:{type:'sort',sec:'2.6',n:6,q:['Sort: does it pollute water or save/protect it?','分類：這會污染水源，還是節約／保護水源？'],bins:[['Pollutes water','污染水源'],['Saves or protects water','節約或保護水源']],items:[['Pouring cooking oil down the sink','把食油倒進洗碗盆',0],['Untreated sewage flowing into the sea','未經處理的污水流入海中',0],['Fertiliser washed into rivers','肥料被沖進河流',0],['Litter dropped into storm drains','垃圾掉進雨水渠',0],['Taking shorter showers','縮短淋浴時間',1],['Fixing dripping taps','修理滴水的水龍頭',1],['Flushing toilets with sea water','用海水沖廁',1],['Collecting rainwater for plants','收集雨水澆花',1]],exp:['Hong Kong saves fresh water by flushing toilets with sea water.','香港用海水沖廁來節省淡水。']},
+ s_separate:{type:'sort',sec:'2.4',n:6,q:['Which separation method would you use?','你會用哪種分離方法？'],bins:[['Filtration','過濾'],['Evaporation','蒸發'],['Distillation','蒸餾']],items:[['Remove mud from river water','除去河水中的泥沙',0],['Remove sand from sea water','除去海水中的沙',0],['Get salt from sea water','從海水取得鹽',1],['Get the salt back from salty water','從鹽水取回鹽',1],['Get pure water from sea water','從海水取得純水',2],['Get pure water from ink','從墨水取得純水',2]],exp:['Filtration removes insoluble solids; evaporation keeps the dissolved solid; distillation collects the pure liquid.','過濾除去不溶的固體；蒸發取回溶解了的固體；蒸餾收集純液體。']},
+ s_soluble:{type:'sort',sec:'2.3',n:6,q:['Does it dissolve in water?','它會溶於水嗎？'],bins:[['Dissolves','會溶解'],['Does not dissolve','不會溶解']],items:[['Table salt','食鹽',0],['Sugar','糖',0],['Instant coffee powder','即溶咖啡粉',0],['Sand','沙',1],['Chalk powder','粉筆粉末',1],['Cooking oil','食油',1]],exp:['Soluble solids disappear into the water to form a solution; insoluble ones can be filtered out.','可溶的固體會溶入水中形成溶液；不溶的可以用過濾分開。']},
+ s_states:{type:'sort',sec:'2.1',n:6,q:['Solid, liquid or gas?','固態、液態還是氣態？'],bins:[['Solid','固態'],['Liquid','液態'],['Gas','氣態']],items:[['Ice cube','冰塊',0],['Snow','雪',0],['Raindrops','雨點',1],['The white mist above a boiling kettle','煲水時水壺上方的白霧',1],['Water vapour in the air','空氣中的水蒸氣',2],['The water that evaporates from a puddle','從水窪蒸發的水',2]],exp:['The white “steam” you can see is tiny liquid droplets – water vapour itself is invisible.','看得見的白色「蒸氣」其實是細小的液態水點——水蒸氣本身是看不見的。']},
+ s_energy:{type:'sort',sec:'2.1',n:5,q:['Does this change absorb or release energy?','這個變化會吸收還是釋放能量？'],bins:[['Absorbs energy','吸收能量'],['Releases energy','釋放能量']],items:[['Melting','熔化',0],['Boiling','沸騰',0],['Evaporation','蒸發',0],['Freezing','凝固',1],['Condensation','凝結',1]],exp:['Melting, boiling and evaporation absorb energy; freezing and condensation release it.','熔化、沸騰和蒸發吸收能量；凝固和凝結釋放能量。']},
+ s_treat:{type:'sort',sec:'2.5',n:5,q:['What does each step do to drinking water?','每個步驟對食水有甚麼作用？'],bins:[['Removes solids','除去固體'],['Kills germs','殺死細菌'],['Protects teeth','保護牙齒']],items:[['Sedimentation','沉澱',0],['Filtration','過濾',0],['Chlorination','加氯',1],['Boiling the water','把水煮沸',1],['Fluoridation','加氟',2]],exp:['Fluoride protects teeth but does NOT kill microorganisms.','氟保護牙齒，但不能殺死微生物。']}};
+function cwRng(seed){var a=(+seed>>>0)||1;return function(){a=(a+0x6D2B79F5)>>>0;var t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return ((t^(t>>>14))>>>0)/4294967296;};}
+function cwShuffle(arr,rnd){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(rnd()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+/* deterministic from the server's seed, so a task can't be re-rolled */
+function cwBuild(k,seed){var T=CW_TPL[k],rnd=cwRng(seed);if(!T)return null;
+ if(T.type==='order'){var idx=T.steps.map(function(_,i){return i;}),cur=cwShuffle(idx,rnd),g=0;while(cur.every(function(v,i){return v===i;})&&g++<5)cur=cwShuffle(idx,rnd);return {k:k,T:T,type:'order',cur:cur};}
+ var byBin=T.bins.map(function(_,b){return cwShuffle(T.items.filter(function(it){return it[2]===b;}),rnd);}),pick=[],n=Math.min(T.n||6,T.items.length),b=0,guard=0;
+ while(pick.length<n&&guard++<50){var l=byBin[b%T.bins.length];if(l.length)pick.push(l.shift());b++;}
+ return {k:k,T:T,type:'sort',items:cwShuffle(pick,rnd),ans:{}};}
+function cwGrade(t){if(t.type==='order'){var right=t.cur.filter(function(v,i){return v===i;}).length,n=t.cur.length;return {score:right===n?1:right>=n/2?0.5:0,right:right,n:n};}
+ var r=t.items.filter(function(it,i){return t.ans[i]===it[2];}).length,m=t.items.length;return {score:r===m?1:r/m>=0.6?0.5:0,right:r,n:m};}
+
+/* ---------- small helpers ---------- */
+function cwW(){var q=coopSq();return q&&q.world;}
+function cwKey(k){var q=coopSq();return 'cw'+k+'_'+(q?q.id:'');}
+function cwGet(k){try{return localStorage.getItem(cwKey(k));}catch(e){return null;}}
+function cwSet(k,v){try{localStorage.setItem(cwKey(k),v);}catch(e){}}
+function cwMeter(lbl,v,col,ic){var lv=v>=60?'good':v>=30?'mid':'low';return '<div class="cwm cwm-'+lv+'"><div class="cwm-h">'+ic+'<b>'+lbl+'</b><span>'+v+'<small>/100</small></span></div><div class="cwm-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+v+'" aria-label="'+esc(lbl)+'"><i style="width:'+v+'%;background:'+col+'"></i></div><small class="cwm-st">'+(lv==='good'?L('Healthy','良好'):lv==='mid'?L('Strained','吃緊'):L('Low – needs help','偏低——需要幫忙'))+'</small></div>';}
+function cwSecTag(sec){return '<span class="cwsec">S1 '+sec+'</span>';}
+function cwOpsChip(n){return '<span class="cwops" title="'+esc(L('Ops: island action points. +2 on every day you study.','行動點：每個溫習日 +2。'))+'">'+IC('bolt')+n+' '+L('Ops','行動點')+'</span>';}
+
+/* ---------- Island Today: one highlighted next step (no guilt if skipped) ---------- */
+function cwTodayHTML(q,w){var me=q.members.filter(function(m){return m.me;})[0]||{},rep=w.rep,read=!rep||cwGet('rep')===rep.d,studied=!!me.today,
+  quiet=w.tonight.sev===0,prepped=quiet||w.prep.some(function(p){return p.me;}),tasked=w.tasks.some(function(t){return t.mine;})||w.tasks.every(function(t){return t.done;});
+ var steps=[['report',read,L('Read last night’s Field Report','閱讀昨晚的實地報告'),IC('notebook')],['study',studied,L('Study (quiz, practice or dictation) to earn Ops','溫習（測驗、練習或默書）賺取行動點'),IC('books')],
+  ['prep',prepped,quiet?L('Nothing to prepare – a dry night','今晚天氣乾爽，毋須準備'):L('Prepare for tonight’s weather','為今晚的天氣作準備'),IC('cloud')],['task',tasked,L('Do one island task','完成一項小島任務'),IC('cards')]];
+ var done=steps.filter(function(s){return s[1];}).length,nx=steps.filter(function(s){return !s[1];})[0],C=2*Math.PI*16;
+ var ring='<svg class="cwring" viewBox="0 0 40 40" width="56" height="56" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="none" stroke="#EDE4F7" stroke-width="5"/>'+steps.map(function(s,i){return '<circle cx="20" cy="20" r="16" fill="none" stroke="'+(s[1]?'#3E9E5B':'#EDE4F7')+'" stroke-width="5" stroke-dasharray="'+(C/4-2).toFixed(2)+' '+(C-C/4+2).toFixed(2)+'" stroke-dashoffset="'+(-(C/4)*i).toFixed(2)+'" transform="rotate(-90 20 20)"/>';}).join('')+'<text x="20" y="24" text-anchor="middle" font-size="11" font-weight="900" fill="#5B4B6E">'+done+'/4</text></svg>';
+ var act=!nx?'':nx[0]==='report'?'<button class="btn small pink" data-cow="report">'+L('Read it','閱讀')+'</button>':nx[0]==='study'?'<button class="btn small pink" data-cow="study">'+L('Study now','去溫習')+'</button>':nx[0]==='prep'?'<button class="btn small pink" data-cow="prep">'+L('Prepare','準備')+'</button>':'<button class="btn small pink" data-cow="tasks">'+L('See tasks','查看任務')+'</button>';
+ return '<div class="card cwtoday">'+ring+'<div class="cwtd"><h3>'+L('Island today','今日小島')+'</h3>'+(nx?'<p class="cwnext"><b>'+L('Next:','下一步：')+'</b> '+nx[2]+'</p>':'<p class="cwnext">'+IC('check')+L('All done for today – the island thanks you!','今日全部完成——小島感謝你！')+'</p>')+
+  '<ol class="cwsteps">'+steps.map(function(s){return '<li class="'+(s[1]?'ok':'')+(nx&&s===nx?' nx':'')+'">'+s[3]+'<span>'+s[2]+'</span></li>';}).join('')+'</ol></div>'+(act?'<div class="cwact">'+act+'</div>':'')+'</div>';}
+
+/* ---------- Forecast + meters ---------- */
+function cwForecastHTML(q,w){var tn=w.tonight,nx=w.next;
+ var tag=tn.tut?'<span class="cwtag">'+L('Tutorial night '+tn.tut+'/7','教學夜 '+tn.tut+'/7')+'</span>':tn.rec?'<span class="cwtag calm">'+L('Recovery night','休養之夜')+'</span>':'';
+ return '<div class="card cwfc"><div class="cwfc-now">'+cwWxIcon(tn,52)+'<div><small>'+L('Tonight (certain)','今晚（確定）')+'</small><b>'+cwWxName(tn)+'</b>'+tag+'<p>'+(tn.sev===0?L('No rain to handle tonight. A good day to build or do tasks.','今晚沒有雨，適合建造或完成任務。'):tn.sev>=2?L('Heavy rain hits tonight. Prepare drains and the pond before bedtime!','今晚有大雨，睡前準備好雨水渠和蓄洪池！'):L('Some rain tonight. Your drains should cope.','今晚有少量雨，雨水渠應可應付。'))+'</p></div></div>'+
+  '<div class="cwfc-nx"><small>'+L('Tomorrow night','明晚')+'</small>'+(nx.t?'<b>'+cwWxName({t:nx.t,sev:nx.t==='hrain'?2:0})+'</b>':'<b>'+L('Chance of rain','下雨機會')+' '+nx.chance+'%</b>')+'</div>'+
+  '<div class="cwmeters">'+cwMeter(L('Clean Water','潔淨食水'),w.water,'linear-gradient(90deg,#7FD3F5,#2FA8DC)',cwDrop())+cwMeter(L('Health','健康'),w.health,'linear-gradient(90deg,#FFB3C1,#E0509F)',cwHeart())+
+  '<div class="cwpol" title="'+esc(L('Pollution in the water supply (0–10)','供水中的污染（0–10）'))+'">'+L('Pollution','污染')+' <b>'+w.pol+'</b>/10<i style="width:'+(w.pol*10)+'%"></i></div></div>'+
+  '<div class="cwfc-ft">'+cwOpsChip(w.ops)+(w.mode==='gentle'?'<span class="cwtag calm">'+L('Gentle mode','溫和模式')+'</span>':'')+'<button class="btn small" data-cow="prep">'+IC('cloud')+L('Prepare','準備')+'</button><button class="btn small white" data-cow="codex">'+IC('book')+L('Codex ','圖鑑 ')+w.cdx.filter(function(k){return CW_CDX[k];}).length+'/6</button></div></div>';}
+function cwDrop(){return '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M10 2c4 6 6 8.5 6 11a6 6 0 0 1-12 0c0-2.5 2-5 6-11Z" fill="#7FD3F5" stroke="#5B4B6E" stroke-width="1.6"/></svg>';}
+function cwHeart(){return '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M10 17S2 12 2 7a4 4 0 0 1 8-1a4 4 0 0 1 8 1c0 5-8 10-8 10Z" fill="#FF8FB1" stroke="#5B4B6E" stroke-width="1.6"/></svg>';}
+
+/* ---------- Field Report: what happened → why (concept) → what next ---------- */
+function cwReportLines(r,w){var nm=cwWxName(r),L1,why=[],sec='2.2';
+ if(r.res==='calm')L1=L(nm+': no rain to handle. The island used some water, and people rested.',nm+'：沒有雨要處理。小島用了一些水，大家休息了一晚。');
+ else if(r.res==='ok')L1=L(nm+': your drains and pond carried all the runoff away ('+r.cap+' capacity vs '+r.load+' rain). Clean Water went up.',nm+'：雨水渠和蓄洪池排走了全部徑流（排水量 '+r.cap+'，雨量 '+r.load+'）。潔淨食水上升。');
+ else if(r.res==='strained')L1=L(nm+': runoff ('+r.load+') was bigger than your drainage ('+r.cap+'). Water was strained.',nm+'：徑流（'+r.load+'）大於排水量（'+r.cap+'），供水吃緊。');
+ else L1=L(nm+': CRISIS – runoff ('+r.load+') swamped the drains ('+r.cap+'). Sewage overflowed into the water supply.',nm+'：危機——徑流（'+r.load+'）遠超雨水渠的排水量（'+r.cap+'），污水溢入了供水系統。');
+ if(r.res==='strained'||r.res==='crisis'){why.push(L('Rain can’t soak into concrete, so it runs off into drains. When drains are full, dirty water overflows – that is water pollution.','雨水不能滲入混凝土，會流入雨水渠。雨水渠滿溢時，污水便會溢出——這就是水污染。'));sec='2.6';}
+ if(r.ex>0)why.push(L('+'+r.ex+' pollution entered the supply.','+'+r.ex+' 污染進入了供水。'));
+ if(r.rm>0)why.push(L('Treatment and nature removed '+r.rm+' pollution (sedimentation + filtration remove solids).','處理過程和大自然除去了 '+r.rm+' 污染（沉澱和過濾除去固體）。'));
+ if(r.ill){why.push(L('Germs in the dirty water made people ill. Chlorination kills microorganisms – fluoride does not.','污水中的細菌令人生病。加氯能殺死微生物——加氟不能。'));sec='2.5';}
+ if(r.half)why.push(L('Some members missed studying, so Murk’s Fog already struck – the weather only did half damage.','有成員沒有溫習，默克的濃霧已經來襲——天氣只造成一半損害。'));
+ if(r.fog)why.push(L('The crisis thickened Murk’s Fog (+1).','危機令默克的濃霧變濃（+1）。'));
+ if(r.rec)why.push(L('Recovery night: Murk rested after the crisis.','休養之夜：危機過後默克休息了。'));
+ var next;if(w.treat)next=L('Arrange the Treatment Plant so it runs at 100%.','排列濾水廠的次序，令效率達到 100%。');
+ else if(w.pol>0&&w.stages.length<2)next=L('Build a Sedimentation tank and a Sand filter to clean the water.','建造沉澱池和濾床來淨化食水。');
+ else if(w.pol>0&&w.stages.indexOf('chlor')<0)next=L('Build Chlorination so dirty water stops making people ill.','建造加氯設施，令污水不再使人生病。');
+ else if(r.res==='strained'||r.res==='crisis')next=L('Before the next rain: clear the drains or build more drainage.','下次下雨前：清理雨水渠或增加排水設施。');
+ else next=L('Check tonight’s forecast and keep studying for Ops.','查看今晚天氣預報，繼續溫習賺取行動點。');
+ return {what:L1,why:why,next:next,sec:sec};}
+function cwReportHTML(w){var r=w.rep;if(!r)return '<div class="card cwrep"><h3>'+IC('notebook')+L('Field Report','實地報告')+'</h3><p class="muted">'+L('The first report arrives after tonight. Check the forecast and get ready!','今晚過後會收到第一份報告。先看看天氣預報，作好準備！')+'</p></div>';
+ var x=cwReportLines(r,w),cls={calm:'calm',ok:'ok',strained:'mid',crisis:'bad'}[r.res],lab={calm:L('Calm','平靜'),ok:L('Handled','應付得宜'),strained:L('Strained','吃緊'),crisis:L('Crisis','危機')}[r.res];
+ return '<div class="card cwrep" id="cwRep"><div class="cwrep-h">'+cwWxIcon(r,36)+'<div><h3>'+L('Field Report','實地報告')+' <small>'+r.d.slice(5)+(r.tut?' · '+L('tutorial','教學'):'')+'</small></h3><span class="cwres '+cls+'">'+lab+'</span></div></div>'+
+  '<p><b>'+L('What happened','發生了甚麼')+'</b> '+x.what+'</p>'+(x.why.length?'<p><b>'+L('Why','原因')+'</b> '+x.why.join(' ')+'</p>':'')+'<p><b>'+L('What next','下一步')+'</b> '+x.next+'</p>'+
+  '<p class="cwdelta">'+cwDrop()+(r.dw>=0?'+':'')+r.dw+' &nbsp; '+cwHeart()+(r.dh>=0?'+':'')+r.dh+' &nbsp; '+cwSecTag(x.sec)+'</p>'+
+  '<div class="cwrow"><button class="btn small white" data-cow="why" data-sec="'+x.sec+'">'+L('Why did that happen? (1 question)','為甚麼會這樣？（1 題）')+'</button><button class="btn small white" data-cow="studysec" data-sec="'+x.sec+'">'+IC('books')+L('Study note','溫習筆記')+'</button></div></div>';}
+
+/* ---------- Water system: modules + Treatment Plant ---------- */
+function cwCost(c,q){var s=[];for(var u=1;u<=6;u++)if(c[u])s.push('<span class="cc'+(q.mats[u]>=c[u]?' ok':'')+'"><i style="background:'+CO_U[u][2]+'"></i>'+c[u]+'</span>');return s.join('');}
+function cwWaterHTML(q,w){var h='<h3 class="cosub" id="cwWater">'+L('Water system','供水系統')+'</h3>';
+ var built=w.stages,ord=w.ord&&w.ord.length===built.length?w.ord:built,eff=Math.round(w.eff*100);
+ h+='<div class="card cwplant"><h4>'+IC('flask')+L('Treatment Plant','濾水廠')+' '+cwSecTag('2.5')+'</h4>'+(built.length?'<div class="cwchain">'+ord.map(function(k,i){return (i?'<span class="cwarr" aria-hidden="true">→</span>':'')+'<span class="cwst">'+L(CW_MOD[k][0],CW_MOD[k][1])+'</span>';}).join('')+'</div>':'<p class="muted">'+L('No treatment stages yet. Build at least two below.','尚未有處理設施。請在下面建造最少兩項。')+'</p>')+
+  (built.length>=2?'<p>'+L('Efficiency','效率')+' <b class="'+(eff===100?'cwgood':'')+'">'+eff+'%</b>'+(w.treat?' · '+L('Re-arrange it to reach 100% ('+w.treat.left+' tries left today).','重新排列以達到 100%（今日剩 '+w.treat.left+' 次）。'):'')+'</p>':'')+
+  (w.treat&&w.treat.left>0?'<button class="btn small pink" data-cow="treat">'+L('Arrange the plant','排列濾水廠')+'</button>':'')+'</div>';
+ h+='<div class="cwmods">'+['drain','pond','res','settle','filter','chlor','fluor'].map(function(k){var M=CW_MOD[k],m=w.mods[k],full=m.lv>=m.max;
+  return '<div class="card cwmod'+(m.lv?' on':'')+'"><b>'+L(M[0],M[1])+'</b><span class="lv">'+(m.max>1?'Lv '+m.lv+'/'+m.max:m.lv?L('Built','已建成'):L('Not built','未建成'))+'</span><small>'+L(M[2],M[3])+'</small>'+
+   (full?'':'<div class="ccost">'+cwCost(m.cost,q)+'</div><button class="btn small" data-cow="mod" data-m="'+k+'"'+(m.ok?'':' disabled')+'>'+(m.lv?L('Upgrade','升級'):L('Build','建造'))+'</button>')+'</div>';}).join('')+'</div>';
+ return h;}
+function cwTasksHTML(w){var q=coopSq();return '<h3 class="cosub" id="cwTasks">'+L('Island tasks','小島任務')+' <small>'+L('3 a day for the squad · rewards Ops','全隊每日 3 項 · 獎勵行動點')+'</small></h3><div class="cwtasks">'+w.tasks.map(function(t,i){var T=CW_TPL[t.k];if(!T)return '';var who=t.who>=0&&q.members[t.who]?q.members[t.who].n:'';
+  return '<div class="card cwtask'+(t.done?' done':'')+'"><span class="cwtype">'+(T.type==='order'?L('Order the chain','排列次序'):L('Sort and classify','分類'))+'</span><b>'+L(T.q[0],T.q[1])+'</b>'+cwSecTag(T.sec)+
+   (t.done?'<p class="good">'+IC('check')+(t.mine?L('Done by you','由你完成'):L('Done by '+who,'由'+who+'完成'))+' · '+Math.round((t.s||0)*100)+'%</p>':'<button class="btn small pink" data-cow="task" data-i="'+i+'">'+L('Start','開始')+'</button>')+'</div>';}).join('')+'</div>';}
+
+/* ---------- plug the world into the squad screen ---------- */
+(function(){var s0=coopSquadHTML;coopSquadHTML=function(q,d){var h=s0(q,d),w=q.world;if(!w)return h;
+ var isl='<div class="card coislandc">',i1=h.indexOf(isl),rain=w.tonight.sev>=1?'<div class="cwrain'+(w.tonight.sev>=2?' heavy':'')+'" aria-hidden="true"></div>':'';
+ if(i1>=0)h=h.slice(0,i1)+isl+rain+h.slice(i1+isl.length);
+ var mem=h.indexOf('<div class="comem">');if(mem>=0)h=h.slice(0,mem)+cwTodayHTML(q,w)+h.slice(mem);
+ var endIsl=h.indexOf('<h3 class="cosub">',h.indexOf(isl));if(endIsl>=0)h=h.slice(0,endIsl)+'<div class="cwduo">'+cwForecastHTML(q,w)+cwReportHTML(w)+'</div>'+h.slice(endIsl);
+ var m=h.match(/<h3 class="cosub">(Storage|倉庫)<\/h3>/);if(m)h=h.replace(m[0],cwTasksHTML(w)+cwWaterHTML(q,w)+m[0]);else h+=cwTasksHTML(w)+cwWaterHTML(q,w);
+ return h;};})();
+(function(){var e0=coopErr;coopErr=function(e){return ({world_off:L('The island world is switched off right now.','小島世界暫時關閉。'),no_ops:L('Not enough Ops – study to earn more (+2 a day).','行動點不足——溫習可以賺取更多（每日 +2）。'),done:L('Already done today.','今日已經完成。'),stale:L('That task has changed – here is today’s board.','任務已更新——這是今日的任務板。'),bad:L('Something did not match. Please try again.','資料不符，請再試一次。')})[e]||e0(e);};})();
+(function(){var t0=coopTeachHTML;coopTeachHTML=function(){var h=t0(),T=COOP.teach;if(!T)return h;
+ var cr=(T.squads||[]).filter(function(s){return s.crisis;}).map(function(s){return esc(s.name);});
+ var bar='<div class="cwteach"><b>'+L('Living Island (weather + water)','活力小島（天氣＋供水）')+'</b> <button class="btn small'+(T.wOn?' green':'')+'" data-cow="tworld">'+(T.wOn?L('World ON – switch off','世界已開啟——關閉'):L('Turn the world on','開啟小島世界'))+'</button>'+
+  (T.wOn?' <button class="btn small white" data-cow="tmode">'+(T.wMode==='gentle'?L('Mode: gentle (switch to standard)','模式：溫和（改為標準）'):L('Mode: standard (switch to gentle)','模式：標準（改為溫和）'))+'</button>':'')+
+  (T.wOn?'<p class="muted">'+(cr.length?L('Crisis last night: ','昨晚陷入危機：')+cr.join('、'):L('No squad was in crisis last night.','昨晚沒有小隊陷入危機。'))+'</p>':'<p class="muted">'+L('Off by default. When on, every squad shares the same Hong Kong weather and starts a 7-night tutorial.','預設關閉。開啟後所有小隊共用同一香港天氣，並由 7 晚教學開始。')+'</p>')+'</div>';
+ return h.replace('</summary>','</summary>'+bar);};})();
+
+/* ---------- modals: prepare, tasks, treatment plant, codex, why-check ---------- */
+function cwModal(title,body){var sh=document.querySelector('#ov .cwsheet'),hd=document.querySelector('#ov .sheet-h h2');if(sh&&hd){hd.innerHTML=title;sh.innerHTML=body;return;}/* update in place: no re-opening animation on every tap */
+ modal('<div class="sheet-h"><h2>'+title+'</h2><button class="x" id="cwX" aria-label="Close">✕</button></div><div class="cwsheet">'+body+'</div>');$('#cwX').onclick=function(){closeModal();};}
+function cwPrepOpen(){var w=cwW();if(!w)return;var done={};w.prep.forEach(function(p){done[p.a]=p;});
+ cwModal(IC('cloud')+L('Prepare for tonight','為今晚作準備'),'<div class="cwfc-now mini">'+cwWxIcon(w.tonight,40)+'<div><small>'+L('Tonight','今晚')+'</small><b>'+cwWxName(w.tonight)+'</b></div>'+cwOpsChip(w.ops)+'</div>'+
+  '<p class="muted">'+L('Each action costs Ops. After you tap one, choose the scientific reason – the right reason makes it work twice as well.','每項行動需要行動點。選擇後要揀出科學原因——原因正確，效果加倍。')+'</p>'+
+  Object.keys(CW_PREP).map(function(k){var P=CW_PREP[k],c=w.costs[k],d=done[k];return '<div class="cwprep'+(d?' done':'')+'"><div><b>'+L(P.n[0],P.n[1])+'</b><small>'+c+' '+L('Ops','行動點')+' · '+cwSecTag(P.sec)+'</small></div>'+(d?'<span class="good">'+IC('check')+(d.x===2?L('×2 done','×2 完成'):L('×1 done','×1 完成'))+'</span>':'<button class="btn small" data-cow="prepa" data-a="'+k+'"'+(w.ops<c?' disabled':'')+'>'+L('Do it','執行')+'</button>')+'</div>';}).join('')+
+  (w.tonight.sev===0?'<p class="cwnote">'+L('Tonight is dry, so drains and the pond will not be tested – but storing clean water still helps.','今晚乾爽，雨水渠和蓄洪池不會受考驗——但儲存潔淨食水仍有幫助。')+'</p>':''));}
+function cwPrepWhy(k){var P=CW_PREP[k],ids=cwShuffle(Object.keys(P.why),cwRng(Date.now()));
+ cwModal(IC('cloud')+L(P.n[0],P.n[1]),'<p><b>'+L('Why does this help?','為甚麼這樣做有幫助？')+'</b></p><div class="cwopts">'+ids.map(function(id){return '<button class="opt" data-cow="prepw" data-a="'+k+'" data-why="'+id+'"><span>'+esc(L(P.why[id][0],P.why[id][1]))+'</span></button>';}).join('')+'</div>');}
+function cwPrepSend(k,why,btn){document.querySelectorAll('#ov [data-cow=prepw]').forEach(function(b){b.disabled=true;});
+ coopCall('coopPrep',{a:k,why:why}).then(function(j){var P=CW_PREP[k];if(!j||!j.ok||!j.prep){closeModal();return;}var right=j.prep.right;
+  btn.classList.add(right?'right':'wrong');sfx(right?'right':'wrong');
+  var box=document.createElement('div');box.className='cwfeed '+(right?'ok':'bad');box.innerHTML='<p><b>'+(right?L('Right reason – double effect tonight!','原因正確——今晚效果加倍！'):L('Done, but that reason is a common mix-up – normal effect.','已完成，但這個原因是常見誤解——效果正常。'))+'</b></p><p>'+esc(L(P.exp[0],P.exp[1]))+'</p><button class="btn small" data-cow="prep">'+L('Back to Prepare','返回準備')+'</button>';
+  var sh=document.querySelector('#ov .cwsheet');if(sh)sh.appendChild(box);});}
+function cwTaskOpen(i){var w=cwW();if(!w)return;var t=w.tasks[i];if(!t||t.done)return;var task=cwBuild(t.k,t.seed);if(!task)return;COOP.cwt={i:i,t:t,task:task,checked:false};cwTaskShow();}
+function cwTaskShow(){var X=COOP.cwt,task=X.task,T=task.T,h='<p class="cwq"><b>'+esc(L(T.q[0],T.q[1]))+'</b> '+cwSecTag(T.sec)+'</p>';
+ if(task.type==='order'){h+='<ol class="cword">'+task.cur.map(function(si,pos){var ok=X.checked?si===pos:null;return '<li class="'+(ok===true?'ok':ok===false?'bad':'')+'"><span class="cwn">'+(pos+1)+'</span><span class="cwtx">'+esc(L(T.steps[si][0],T.steps[si][1]))+'</span>'+
+   (X.checked?'':'<span class="cwud"><button class="btn small white" data-cow="up" data-p="'+pos+'"'+(pos?'':' disabled')+' aria-label="'+esc(L('Move up','上移'))+'">▲</button><button class="btn small white" data-cow="down" data-p="'+pos+'"'+(pos<task.cur.length-1?'':' disabled')+' aria-label="'+esc(L('Move down','下移'))+'">▼</button></span>')+'</li>';}).join('')+'</ol>';}
+ else{h+='<div class="cwsort">'+task.items.map(function(it,ii){var a=task.ans[ii],ok=X.checked?a===it[2]:null;return '<div class="cwit '+(ok===true?'ok':ok===false?'bad':'')+'"><span class="cwtx">'+esc(L(it[0],it[1]))+(ok===false?' <small>→ '+esc(L(T.bins[it[2]][0],T.bins[it[2]][1]))+'</small>':'')+'</span><span class="cwbins" role="group">'+
+   T.bins.map(function(bn,bi){return '<button class="cwbin'+(a===bi?' on':'')+'" data-cow="bin" data-it="'+ii+'" data-b="'+bi+'" aria-pressed="'+(a===bi)+'"'+(X.checked?' disabled':'')+'>'+esc(L(bn[0],bn[1]))+'</button>';}).join('')+'</span></div>';}).join('')+'</div>';}
+ if(!X.checked){var ready=task.type==='order'||task.items.every(function(_,ii){return task.ans[ii]!=null;});h+='<button class="btn pink" data-cow="check"'+(ready?'':' disabled')+'>'+L('Check','檢查')+'</button>';}
+ else{var g=X.g;h+='<div class="cwfeed '+(g.score===1?'ok':g.score?'mid':'bad')+'"><p><b>'+g.right+'/'+g.n+' '+L('correct','正確')+'</b> · '+(g.score===1?L('Perfect!','完美！'):g.score?L('Half marks','一半分數'):L('Keep practising','繼續努力'))+'</p><p>'+esc(L(T.exp[0],T.exp[1]))+'</p>'+(X.res||'')+
+  '<div class="cwrow">'+(g.score<1?'<button class="btn small white" data-cow="studysec" data-sec="'+T.sec+'">'+IC('books')+L('Study this','溫習這課')+'</button>':'')+'<button class="btn small" data-cow="close">'+L('Done','完成')+'</button></div></div>';}
+ cwModal(IC('cards')+(task.type==='order'?L('Order the chain','排列次序'):L('Sort and classify','分類')),h);}
+function cwTaskCheck(){var X=COOP.cwt;if(!X||X.checked)return;X.checked=true;X.g=cwGrade(X.task);sfx(X.g.score===1?'right':X.g.score?'tap':'wrong');X.res='<p class="muted">'+L('Sending…','傳送中……')+'</p>';cwTaskShow();
+ coopCall('coopTask',{i:X.i,k:X.t.k,seed:X.t.seed,score:X.g.score},true).then(function(j){if(!COOP.cwt||COOP.cwt!==X)return;var got=j&&j.ok&&j.task&&j.task.got;
+  X.res=!j||!j.ok?'<p class="cwnote">'+esc(coopErr(j&&j.error))+'</p>':j.task.repeat?'<p class="cwnote">'+L('You did this task this week already, so no reward this time.','這星期已做過這項任務，今次沒有獎勵。')+'</p>':
+   '<p class="cwgot">'+(got.ops?'+'+got.ops+' '+L('Ops','行動點')+' ':'')+(got.water?' · '+cwDrop()+'+'+got.water+' ':'')+(got.cdx?' · '+L('New Codex card!','新圖鑑卡！'):'')+(!got.ops&&!got.water?L('No reward this time – try the next task!','今次沒有獎勵——試試下一項任務！'):'')+'</p>';
+  if($('#ov'))cwTaskShow();});}
+function cwTreatOpen(){var w=cwW();if(!w||!w.treat)return;var cur=cwShuffle(w.stages.slice(),cwRng(Date.now()));COOP.cwp={cur:cur,res:null};cwTreatShow();}
+function cwTreatShow(){var P=COOP.cwp,w=cwW(),h='<p class="muted">'+L('Put your stages in the order the water should flow. The right order runs the plant at 100%; a wrong order only at 50%.','按食水流經的次序排列設施。次序正確效率 100%；錯誤只有 50%。')+'</p><ol class="cword">'+P.cur.map(function(k,pos){var bad=P.res&&P.res.wrong.indexOf(k)>=0;return '<li class="'+(P.res?(bad?'bad':'ok'):'')+'"><span class="cwn">'+(pos+1)+'</span><span class="cwtx">'+esc(L(CW_MOD[k][0],CW_MOD[k][1]))+(P.res&&bad?'<small>'+esc(L(CW_STAGE_WHY[k][0],CW_STAGE_WHY[k][1]))+'</small>':'')+'</span>'+
+  (P.res?'':'<span class="cwud"><button class="btn small white" data-cow="tup" data-p="'+pos+'"'+(pos?'':' disabled')+' aria-label="'+esc(L('Move up','上移'))+'">▲</button><button class="btn small white" data-cow="tdown" data-p="'+pos+'"'+(pos<P.cur.length-1?'':' disabled')+' aria-label="'+esc(L('Move down','下移'))+'">▼</button></span>')+'</li>';}).join('')+'</ol>';
+ if(!P.res)h+='<button class="btn pink" data-cow="tsend">'+L('Run the plant','啟動濾水廠')+'</button>';
+ else h+='<div class="cwfeed '+(P.res.ok?'ok':'bad')+'"><p><b>'+(P.res.ok?L('Water flows clean – 100% efficiency!','食水暢順淨化——效率 100%！'):L('Some stages are in the wrong place – 50% efficiency.','部分設施位置錯誤——效率 50%。'))+'</b></p>'+(P.res.ok?'<p>'+esc(L(CW_CDX.treat.t[0],CW_CDX.treat.t[1]))+'</p>':'<p>'+L('Tries left today: ','今日剩餘次數：')+P.res.left+'</p>')+'<div class="cwrow">'+(!P.res.ok&&P.res.left>0?'<button class="btn small" data-cow="treat">'+L('Try again','再試一次')+'</button>':'')+'<button class="btn small white" data-cow="close">'+L('Done','完成')+'</button></div></div>';
+ cwModal(IC('flask')+L('Treatment Plant','濾水廠'),h);}
+function cwTreatSend(){var P=COOP.cwp;coopCall('coopTreat',{ord:P.cur}).then(function(j){if(j&&j.ok&&j.treat){P.res=j.treat;sfx(j.treat.ok?'fanfare':'wrong');if($('#ov'))cwTreatShow();}else closeModal();});}
+function cwCodexOpen(){var w=cwW();if(!w)return;cwModal(IC('book')+L('Island Codex','小島圖鑑'),'<p class="muted">'+L('Concept cards unlocked by what happens on your island.','小島上發生的事會解鎖概念卡。')+'</p><div class="cwcdx">'+Object.keys(CW_CDX).map(function(k){var C=CW_CDX[k],on=w.cdx.indexOf(k)>=0;
+  return on?'<button class="cwcard" data-cow="cdx" data-k="'+k+'">'+cwCdxIcon(k)+'<b>'+esc(L(C.n[0],C.n[1]))+'</b>'+cwSecTag(C.sec)+'</button>':'<div class="cwcard lock" aria-label="'+esc(L('Locked card','未解鎖'))+'">'+IC('lock')+'<b>???</b></div>';}).join('')+'</div>');}
+function cwCdxShow(k){var C=CW_CDX[k];cwModal(cwCdxIcon(k)+esc(L(C.n[0],C.n[1])),'<p>'+esc(L(C.t[0],C.t[1]))+'</p><p class="cwhk"><b>'+L('In Hong Kong','香港例子')+'</b> '+esc(L(C.hk[0],C.hk[1]))+'</p><div class="cwrow"><button class="btn small white" data-cow="codex">'+L('All cards','所有卡')+'</button><button class="btn small" data-cow="studysec" data-sec="'+C.sec+'">'+IC('books')+L('Study note','溫習筆記')+' '+C.sec+'</button></div>');}
+function cwWhyOpen(sec){var s=secById(sec);if(!s){toast(L('No questions for this section yet.','此課暫時未有題目。'));return;}var qs=s.qs.filter(function(q){return !q.ce&&!q.fig;});if(!qs.length)return;
+ var q=pick(qs),opts=optsFor(q);COOP.cwy={q:q,opts:opts,sec:sec,ans:null};cwWhyShow();}
+function cwWhyShow(){var Y=COOP.cwy,q=Y.q;cwModal(IC('bulb')+L('Why did that happen?','為甚麼會這樣？'),'<p class="cwq">'+esc(LL(q))+' '+cwSecTag(Y.sec)+'</p><div class="opts'+(q.t==='tf'?' two':'')+'">'+Y.opts.map(function(o,i){var cls=Y.ans==null?'':o.ok?' right':i===Y.ans?' wrong':'';return '<button class="opt'+cls+'" data-cow="whya" data-i="'+i+'"'+(Y.ans!=null?' disabled':'')+'><span>'+esc(LL(o))+'</span></button>';}).join('')+'</div>'+
+  (Y.ans!=null?'<div class="cwfeed '+(Y.opts[Y.ans].ok?'ok':'bad')+'"><p><b>'+(Y.opts[Y.ans].ok?L('Correct!','答對了！'):L('Not quite.','答錯了。'))+'</b> '+esc(q.xe?L(q.xe,q.xz||q.xe):'')+'</p><div class="cwrow"><button class="btn small white" data-cow="studysec" data-sec="'+Y.sec+'">'+IC('books')+L('Study note','溫習筆記')+'</button><button class="btn small" data-cow="close">'+L('Done','完成')+'</button></div></div>':''));}
+
+/* ---------- clicks ---------- */
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-cow]');if(!b||b.disabled)return;var k=b.dataset.cow,w=cwW();sfx('tap');
+ if(k==='close'){closeModal();return;}
+ if(k==='report'){var r=w&&w.rep;if(r)cwSet('rep',r.d);render();setTimeout(function(){var x=document.getElementById('cwRep');if(x)x.scrollIntoView({behavior:coRM()?'auto':'smooth',block:'center'});},30);return;}
+ if(k==='study'){var ss=coSecs(2),s=ss.filter(function(x){return ((S.secs[x.id]||{}).stars||0)<3;})[0]||ss[0];if(s)startQuiz(s.id,'quiz');return;}
+ if(k==='tasks'){var t=document.getElementById('cwTasks');if(t)t.scrollIntoView({behavior:coRM()?'auto':'smooth'});return;}
+ if(k==='studysec'){var sec=b.dataset.sec;if($('#ov'))closeModal();setTimeout(function(){openStudy(sec);},50);return;}
+ if(k==='prep'){cwPrepOpen();return;}
+ if(k==='prepa'){cwPrepWhy(b.dataset.a);return;}
+ if(k==='prepw'){cwPrepSend(b.dataset.a,b.dataset.why,b);return;}
+ if(k==='mod'){var M=CW_MOD[b.dataset.m],mk=b.dataset.m;confirmBox(L('Build '+M[0]+'?','建造'+M[1]+'？'),L('The materials will be used straight away.','材料會即時用掉。'),L('Build','建造'),function(){coopCall('coopMod',{m:mk}).then(function(j){if(j&&j.ok){sfx('fanfare');toast(L(M[0]+' is online!',M[1]+'已投入運作！'));}});});return;}
+ if(k==='treat'){cwTreatOpen();return;}
+ if(k==='tup'||k==='tdown'){var P=COOP.cwp,p=+b.dataset.p,o=k==='tup'?p-1:p+1;if(P&&o>=0&&o<P.cur.length){var tmp=P.cur[p];P.cur[p]=P.cur[o];P.cur[o]=tmp;cwTreatShow();var f=document.querySelector('#ov [data-cow='+k+'][data-p="'+o+'"]');if(f)f.focus();}return;}
+ if(k==='tsend'){cwTreatSend();return;}
+ if(k==='task'){cwTaskOpen(+b.dataset.i);return;}
+ if(k==='up'||k==='down'){var X=COOP.cwt,p2=+b.dataset.p,o2=k==='up'?p2-1:p2+1;if(X&&!X.checked&&o2>=0&&o2<X.task.cur.length){var t2=X.task.cur[p2];X.task.cur[p2]=X.task.cur[o2];X.task.cur[o2]=t2;cwTaskShow();var f2=document.querySelector('#ov [data-cow='+k+'][data-p="'+o2+'"]');if(f2)f2.focus();}return;}
+ if(k==='bin'){var X2=COOP.cwt;if(X2&&!X2.checked){X2.task.ans[+b.dataset.it]=+b.dataset.b;cwTaskShow();}return;}
+ if(k==='check'){cwTaskCheck();return;}
+ if(k==='codex'){cwCodexOpen();return;}
+ if(k==='cdx'){cwCdxShow(b.dataset.k);return;}
+ if(k==='why'){cwWhyOpen(b.dataset.sec);return;}
+ if(k==='whya'){var Y=COOP.cwy;if(Y&&Y.ans==null){Y.ans=+b.dataset.i;sfx(Y.opts[Y.ans].ok?'right':'wrong');cwWhyShow();}return;}
+ if(k==='tworld'){var on=COOP.teach&&COOP.teach.wOn?0:1;confirmBox(on?L('Turn the Living Island on?','開啟活力小島？'):L('Turn the Living Island off?','關閉活力小島？'),on?L('Every squad gets shared weather, the water system and a 7-night tutorial. You can switch it off any time; nothing earned is lost.','所有小隊會共用天氣、供水系統和 7 晚教學。可隨時關閉，已獲得的東西不會失去。'):L('Weather stops and meters freeze. Squads keep everything they built.','天氣會停止，數值凍結。小隊保留所有已建成的設施。'),on?L('Turn on','開啟'):L('Turn off','關閉'),function(){api('coopWorld',{on:on}).then(function(){return api('coopAll',{});}).then(function(j){if(j&&j.ok){COOP.teach=j;coopCall('coopGet',{},true);render();}});});return;}
+ if(k==='tmode'){var md=COOP.teach&&COOP.teach.wMode==='gentle'?'standard':'gentle';api('coopMode',{mode:md}).then(function(){return api('coopAll',{});}).then(function(j){if(j&&j.ok){COOP.teach=j;coopCall('coopGet',{},true);render();}});return;}
+});
+window.__coop.cw={build:cwBuild,grade:cwGrade,tpl:CW_TPL,lines:cwReportLines};
+
 
 window.__game={dt:{DT:DT,pick:dtPick,card:dtCardHTML,prog:dtProgress},foods:FOODS,LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},sci:function(a,b){return sciSVG(a,b);},nqv:function(){return NQV;},nqpool:function(i){return nqbPool(i);},cap:{roll:function(){return capRoll();},prize:function(r){return capPrize(r);},lv:function(){return capLv();},s:function(){return capS();},items:function(){return ITEMS.length;}},nqq:function(){return NQV&&NQV.b&&NQV.b.cur?NQV.b.cur.q:null;},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},pick:pickQs,AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;},leg:{dmCount:dmCount,dmNeed:dmNeed,dmTotal:dmTotal,dmHit:dmHit,evoReq:evoReq,palBuff:palBuff,gain:function(c,x,ctx){gainCtx=ctx;return gain(c,x);},chk:checkPetUnlocks,PETS:PETS,dict:function(u){openDictSetup(u);},evo:function(){openEvolve();},get DQ(){return DQ;}}};
 })();

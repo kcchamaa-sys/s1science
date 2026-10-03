@@ -22,6 +22,36 @@ var COOP_ROLES = { chem: [2, 6], bio: [3, 4], phys: [5, 1], eng: [] };
 var COOP_DECO = { lamp: 3, flag: 2, bench: 2, tree: 3, statue: 5, fountain: 6 };
 var COOP_STARS = [7, 14, 30, 60];
 
+/* ---------- Island 3.0 "Living Island": every world constant in one place (tune here) ----------
+   The world simulation is OFF until a teacher turns it on (Script property COOP_WORLD = 1).
+   It never removes coins, XP, pets or materials already earned: it only moves the island meters,
+   adds at most +1 Fog a night from a system crisis, and switches perks on/off. */
+var COOP_WORLD = {
+  opsDay: 2, opsCarry: 4, opsMax: 8,             // Ops (island action points): +2 on a study day, unspent Ops carry over up to 4
+  start: { water: 70, health: 75 },
+  okGain: 10, strained: -10, crisis: -25,        // meter change by result (uniform formula)
+  floor: 15, floorMissed: 20, sysFog: 1, sysFogMax: 5,         // meters never fall below 15 (20 on nights with absent members); a crisis adds +1 Fog, but never beyond 5 (Murk's theft at 9+ stays a missed-study thing)
+  rain: { calm: 0, cloudy: 0, lrain: 2, hrain: 5, storm: 7 },
+  soil: 1, drainCap: 1.5, pondCap: 2, greenPave: 0.15, nature: 1,   /* soil soaks up a little; nature slowly flushes 1 pollution a night */    // capacity per module level; each Greenhouse level absorbs 15% of the runoff
+  use: 3, resGain: 2,                            // daily water use (each reservoir level saves 1); reservoir bonus on a good rain night
+  polCap: 10, polWater: 3, polGerm: 1.5, polClean: 1, illness: 6, fluor: 1,
+  calmWater: 6, calmHealth: 3, storeGain: 5, maxLoss: { water: 30, health: 12 },
+  tasksDay: 3, taskOps: 1, taskWater: 3, treatTries: 2,
+  tutorial: ['calm', 'lrain', 'hrain', 'calm', 'cloudy', 'lrain', 'calm'],
+  /* month weights for [calm, cloudy, light rain, heavy rain] (Hong Kong: wet Jun–Sep, dry Nov–Feb) */
+  season: [[50, 35, 13, 2], [45, 38, 15, 2], [40, 35, 20, 5], [35, 30, 25, 10], [25, 30, 28, 17], [20, 25, 30, 25],
+           [25, 20, 28, 27], [22, 20, 30, 28], [30, 22, 26, 22], [45, 30, 18, 7], [50, 32, 15, 3], [55, 32, 11, 2]]
+};
+/* water modules: [unit, amount per level] costs (scaled by squad size like buildings) */
+var COOP_MOD = { drain: { max: 3, c: [[2, 15], [1, 10]] }, pond: { max: 2, c: [[2, 25], [3, 10]] }, res: { max: 3, c: [[2, 20], [6, 10]] },
+  settle: { max: 1, c: [[2, 20], [6, 10]] }, filter: { max: 1, c: [[2, 20], [1, 10]] }, chlor: { max: 1, c: [[2, 20], [1, 15]] }, fluor: { max: 1, c: [[2, 15], [4, 10]] } };
+var COOP_STAGES = ['settle', 'filter', 'chlor', 'fluor'];   /* Hong Kong water treatment works order (S1 2.5) */
+/* prep actions: Ops cost and the id of the scientifically right reason (texts live in the game) */
+var COOP_PREP = { drains: { ops: 1, right: 'd1', why: ['d1', 'd2', 'd3'] }, pond: { ops: 2, right: 'p1', why: ['p1', 'p2', 'p3'] }, store: { ops: 1, right: 's1', why: ['s1', 's2', 's3'] } };
+/* task templates (content lives in the game): id -> syllabus section */
+var COOP_TPL = { o_treat: '2.5', o_cycle: '2.2', o_distil: '2.4', o_filter: '2.4', o_heat: '2.1', o_method: '1.2',
+  s_pollute: '2.6', s_separate: '2.4', s_soluble: '2.3', s_states: '2.1', s_energy: '2.1', s_treat: '2.5' };
+
 function cDay(t) { return Utilities.formatDate(t || new Date(), COOP_TZ, 'yyyy-MM-dd'); }
 function cAdd(d, n) { var p = d.split('-'); return Utilities.formatDate(new Date(Date.UTC(+p[0], +p[1] - 1, +p[2] + n, 12)), 'UTC', 'yyyy-MM-dd'); }
 function cDow(d) { var p = d.split('-'); return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2], 12)).getUTCDay(); }
@@ -32,7 +62,7 @@ function coopData() {
   var sh = sheet(COOP_SQ, COOP_HEAD), last = sh.getLastRow(), rows = [];
   if (last > 1) sh.getRange(2, 1, last - 1, COOP_HEAD.length).getValues().forEach(function (v, i) {
     if (!v[0]) return;
-    var st; try { st = JSON.parse(v[5]); } catch (e) { return; }
+    var st; try { st = coopMigrate(JSON.parse(v[5])); } catch (e) { return; }
     rows.push({ r: i + 2, id: String(v[0]), name: String(v[1]), code: String(v[2]), st: st });
   });
   return { sh: sh, rows: rows };
@@ -55,13 +85,18 @@ function coopPaused() { return PROPS.getProperty('COOP_PAUSE') === '1'; }
 /* ---------- squad state ---------- */
 function coopNewState() {
   var t = cDay();
-  return { v: 1, m: {}, mats: [0, 0, 0, 0, 0, 0, 0], bp: 0, spark: 0, crys: 0, star: 0,
+  return { v: 2, w: coopWorldNew(), m: {}, mats: [0, 0, 0, 0, 0, 0, 0], bp: 0, spark: 0, crys: 0, star: 0,
     bld: { safety: 0, water: 0, green: 0, cell: 0, power: 0, part: 0, obs: 0, museum: 0, light: 0 },
     con: null, fog: 0, fogB: null, frz: 1, blk: false, streak: 0, best: 0, sg: [], day: cAdd(t, -1), wk: {}, puz: null, log: [], deco: {}, prize: false, created: t };
 }
 function coopMember(role) { return { role: role || '', joined: cDay(), days: [], dk: '', dm: 0, fr: 0, soft: 0, dc: 0, owe: 0, rep: { d: '', n: 0 }, tot: 0 }; }
 function coopLog(st, k, x) { st.log.unshift({ d: cDay(), k: k, x: x || '' }); if (st.log.length > 25) st.log.length = 25; }
-function coopMark(st, e, d) { var m = st.m[e]; if (!m || !d) return false; if (m.days.indexOf(d) >= 0) return false; m.days.push(d); m.days.sort(); if (m.days.length > 21) m.days = m.days.slice(-21); return true; }
+function coopMark(st, e, d) {
+  var m = st.m[e], added = false; if (!m || !d) return false;
+  if (m.days.indexOf(d) < 0) { m.days.push(d); m.days.sort(); if (m.days.length > 21) m.days = m.days.slice(-21); added = true; }
+  if (coopOpsSync(st, e)) added = true;
+  return added;
+}
 function coopFactor(st) { return Math.max(0.5, Object.keys(st.m).length / 4); }
 
 /* building costs (materials scale with squad size; blueprints and stars do not) */
@@ -108,7 +143,7 @@ function coopRoll(row) {
         if (hit > 0) { st.fog = Math.min(10, st.fog + hit); coopLog(st, 'fog', hit); }
       }
     }
-    if (st.bld.water >= 1 && st.fog > 0 && absent.length === 0) st.fog--;
+    if (st.bld.water >= 1 && st.fog > 0 && absent.length === 0 && (!coopWorldOn() || st.w.water >= 30)) st.fog--;
     if (st.fog >= 9) { for (var u = 1; u <= 6; u++) st.mats[u] -= Math.floor(st.mats[u] * 0.05); coopLog(st, 'steal', ''); }
     if (cDow(d) === 0) {
       var c = 0; for (var k = 0; k < 7; k++) c += (st.wk[cAdd(d, -k)] || 0);
@@ -117,6 +152,7 @@ function coopRoll(row) {
       else { st.fog = Math.min(10, st.fog + 3); coopLog(st, 'raidlose', c + '/' + need); }
     }
     coopFogB(st);
+    if (coopWorldOn()) coopWorldTick(st, d, absent.length);
   }
   Object.keys(st.wk).forEach(function (k) { if (cDiff(k, today) > 14) delete st.wk[k]; });
   return changed;
@@ -177,7 +213,7 @@ function coopAction(u, b) {
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     var D = coopData(), row = coopFind(D, u.email), today = cDay(), err = null, extra = {};
-    if (row && coopRoll(row)) coopWrite(D, row);
+    if (row && (coopRoll(row) | coopOpsSync(row.st, u.email) | (coopWorldOn() && coopTaskEnsure(row)))) coopWrite(D, row);
     var cool = 0; /* no time lock: anyone can leave and join/create a squad straight away */
     switch (b.action) {
       case 'coopGet': break;
@@ -214,6 +250,16 @@ function coopAction(u, b) {
       case 'coopDeco': err = row ? coopDeco(row.st, b) : 'no_squad'; if (!err) coopWrite(D, row); break;
       case 'coopClaim':
         if (row) { extra.coins = row.st.m[u.email].owe || 0; row.st.m[u.email].owe = 0; coopWrite(D, row); } break;
+      case 'coopPrep': err = row ? coopPrep(row.st, u.email, b, extra) : 'no_squad'; if (!err) coopWrite(D, row); break;
+      case 'coopMod': err = row ? coopMod(row.st, String(b.m)) : 'no_squad'; if (!err) coopWrite(D, row); break;
+      case 'coopTreat': err = row ? coopTreat(row.st, b, extra) : 'no_squad'; if (!err) coopWrite(D, row); break;
+      case 'coopTask': err = row ? coopTask(row.st, u.email, b, extra) : 'no_squad'; if (!err) coopWrite(D, row); break;
+      case 'coopWorld':
+        if (!u.teacher) { err = 'forbidden'; break; }
+        PROPS.setProperty('COOP_WORLD', b.on ? '1' : '0'); break;
+      case 'coopMode':
+        if (!u.teacher) { err = 'forbidden'; break; }
+        PROPS.setProperty('COOP_MODE', b.mode === 'gentle' ? 'gentle' : 'standard'); break;
       case 'coopPause':
         if (!u.teacher) { err = 'forbidden'; break; }
         PROPS.setProperty('COOP_PAUSE', b.on ? '1' : '0'); break;
@@ -223,7 +269,7 @@ function coopAction(u, b) {
         row = coopFind(D, u.email); break;
       default: err = 'unknown_action';
     }
-    if (row && row.st && coopPuzzleEnsure(row.st)) coopWrite(D, row);
+    if (row && row.st && (coopPuzzleEnsure(row.st) | (coopWorldOn() && coopTaskEnsure(row))) ) coopWrite(D, row);
     var res = coopView(u, row, cool);
     if (err) { res.ok = false; res.error = err; }
     for (var k in extra) res[k] = extra[k];
@@ -322,7 +368,7 @@ function coopDeco(st, b) {
 
 /* ---------- what the game sees ---------- */
 function coopView(u, row, cool) {
-  var res = { ok: true, pause: coopPaused(), cool: cool || 0, today: cDay(), squad: null };
+  var res = { ok: true, pause: coopPaused(), cool: cool || 0, today: cDay(), squad: null, wOn: coopWorldOn(), wMode: coopMode() };
   if (!row) return res;
   var st = row.st, pets = coopPets(), mem = Object.keys(st.m), idx = {};
   mem.forEach(function (e, i) { idx[e] = i; });
@@ -339,6 +385,7 @@ function coopView(u, row, cool) {
     me: { dm: me.dk === today ? me.dm : 0, dc: me.dk === today ? me.dc : 0, owe: me.owe || 0, rep: me.rep && me.rep.d === today ? me.rep.n : 0, role: me.role || '' },
     costs: coopCosts(st)
   };
+  if (res.wOn) res.squad.world = coopWorldView(row, u.email);
   return res;
 }
 function coopCosts(st) {
@@ -352,9 +399,215 @@ function coopPets() {
 }
 function coopAll() {
   var D = coopData();
-  return { ok: true, pause: coopPaused(), today: cDay(), squads: D.rows.map(function (row) {
-    var st = row.st;
+  return { ok: true, pause: coopPaused(), wOn: coopWorldOn(), wMode: coopMode(), today: cDay(), squads: D.rows.map(function (row) {
+    var st = row.st, w = st.w || {}, r0 = (w.rep || [])[0];
     return { id: row.id, name: row.name, code: row.code, streak: st.streak, best: st.best, fog: st.fog, bld: st.bld, con: st.con, prize: st.prize,
+      water: w.water, health: w.health, crisis: !!(r0 && r0.res === 'crisis' && r0.d === cAdd(cDay(), -1)),
       members: Object.keys(st.m).map(function (e) { var x = findUser(e) || {}; return { e: e, n: fullName(x.zh, x.en), c: x.cls || '', role: st.m[e].role, tot: st.m[e].tot, days: st.m[e].days.length, last: st.m[e].days[st.m[e].days.length - 1] || '' }; }) };
   }) };
+}
+
+/* =====================================================================================
+   Island 3.0 "Living Island" – Phase 1: shared weather + the water system
+   ===================================================================================== */
+function coopWorldOn() { return PROPS.getProperty('COOP_WORLD') === '1'; }
+function coopMode() { return PROPS.getProperty('COOP_MODE') === 'gentle' ? 'gentle' : 'standard'; }
+function coopWorldNew() {
+  return { t0: '', water: COOP_WORLD.start.water, health: COOP_WORLD.start.health, pol: 0, miss: 0, rec: '',
+    mod: { drain: 1, pond: 0, res: 0, settle: 0, filter: 0, chlor: 0, fluor: 0 }, eff: 0.5, ord: null, tv: 0, tdone: -1, tt: { d: '', n: 0 },
+    prep: null, rep: [], cdx: [], task: null, seen: {}, cm: {} };
+}
+/* old squads (v1) get the world defaults; nothing else changes */
+function coopMigrate(st) {
+  if (!st.w) st.w = coopWorldNew();
+  if (!st.v || st.v < 2) st.v = 2;
+  return st;
+}
+function cAddF(d, n) { var p = d.split('-'); return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2] + n, 12)).toISOString().slice(0, 10); }
+function coopHash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h = (h ^ s.charCodeAt(i)) >>> 0; h = Math.imul(h, 16777619) >>> 0; } h = (h ^ (h >>> 13)) >>> 0; h = Math.imul(h, 2246822519) >>> 0; h = (h ^ (h >>> 16)) >>> 0; return h / 4294967296; }   /* always 0 ≤ x < 1 */
+
+/* ---------- deterministic class-wide weather (same for every squad on the same Hong Kong date) ---------- */
+var COOP_WX0 = '2026-01-01', COOP_WXM = {};
+function coopWxRaw(d) {
+  var wt = COOP_WORLD.season[+d.slice(5, 7) - 1], r = coopHash('wx' + d) * 100, t = ['calm', 'cloudy', 'lrain', 'hrain'], i = 0, a = 0;
+  for (i = 0; i < 4; i++) { a += wt[i]; if (r < a) break; }
+  var type = t[Math.min(i, 3)], wet = +d.slice(5, 7) >= 6 && +d.slice(5, 7) <= 9;
+  return { t: type, sev: type === 'hrain' ? (coopHash('sv' + d) < (wet ? 0.35 : 0.15) ? 3 : 2) : type === 'lrain' ? 1 : 0 };
+}
+/* mercy: never two severe days in a row, at most 2 severe days in any 7 */
+function coopWx(d) {
+  if (COOP_WXM[d]) return COOP_WXM[d];
+  if (d < COOP_WX0) { var r0 = coopWxRaw(d); return r0.sev >= 2 ? { t: 'lrain', sev: 1 } : r0; }
+  var x = COOP_WX0, hist = [];
+  for (var guard = 0; guard < 4000; guard++) {
+    var w = COOP_WXM[x];
+    if (!w) {
+      w = coopWxRaw(x);
+      var c6 = hist.slice(-6).filter(Boolean).length;
+      if (w.sev >= 2 && (hist[hist.length - 1] || c6 >= 2)) w = { t: 'lrain', sev: 1 };
+      COOP_WXM[x] = w;
+    }
+    hist.push(w.sev >= 2);
+    if (x === d) return w;
+    x = cAddF(x, 1);
+  }
+  return { t: 'calm', sev: 0 };
+}
+/* what a squad actually gets: 7-day tutorial for new worlds, a recovery day after a crisis */
+function coopSqWx(st, d) {
+  var w = st.w, t0 = w.t0 || cDay(), i = cDiff(t0, d);
+  var x = i >= 0 && i < 7 ? { t: COOP_WORLD.tutorial[i], tut: i + 1 } : coopWx(d);
+  if (x.tut) x.sev = x.t === 'hrain' ? 2 : x.t === 'lrain' ? 1 : 0;
+  if (w.rec === d && x.sev >= 1) return { t: 'cloudy', sev: 0, rec: 1 };
+  return x;
+}
+function coopRain(x) { var R = COOP_WORLD.rain; return x.t === 'hrain' ? (x.sev >= 3 ? R.storm : R.hrain) : (R[x.t] || 0); }
+function coopCdx(w, id) { if (w.cdx.indexOf(id) < 0 && w.cdx.length < 80) { w.cdx.push(id); return true; } return false; }
+function coopClamp(v, lo) { return Math.max(lo, Math.min(100, Math.round(v))); }
+
+/* ---------- the night tick for day d (inside coopRoll, so it is lazy and covers missed days) ---------- */
+function coopWorldTick(st, d, absentN) {
+  var W = COOP_WORLD, w = st.w;
+  if (!w.t0) w.t0 = d;
+  var wx = coopSqWx(st, d), gentle = coopMode() === 'gentle';
+  var pave = Math.max(0.4, 1 - W.greenPave * (st.bld.green || 0));
+  var load = coopRain(wx) * pave * (gentle ? 0.5 : 1);
+  var prep = w.prep && w.prep.d === d ? w.prep.a : {};
+  var fogPen = st.fog >= 6 ? 1 : st.fog >= 3 ? 0.5 : 0;
+  var cap = Math.max(0, W.soil + (w.mod.drain + (prep.drains || 0)) * W.drainCap + (w.mod.pond + (prep.pond || 0)) * W.pondCap - fogPen);
+  var half = absentN > 0 ? 0.5 : 1, dW = 0, dH = 0, res = 'calm', excess = 0, fogAdd = 0;
+  if (load > 0) {
+    var ratio = cap / load;
+    res = ratio >= 1 ? 'ok' : ratio >= 0.6 ? 'strained' : 'crisis';
+    excess = Math.max(0, load - cap);
+    dW += res === 'ok' ? W.okGain + w.mod.res * W.resGain : res === 'strained' ? W.strained : W.crisis;
+    coopCdx(w, 'cycle'); if (wx.t === 'hrain') coopCdx(w, 'runoff');
+  } else { dW += W.calmWater; dH += W.calmHealth; }
+  dW -= Math.max(0, W.use - w.mod.res);
+  if (prep.store) dW += W.storeGain * prep.store;
+  /* overflow becomes sewage pollution; the treatment chain removes it (order matters) */
+  var add = Math.ceil(excess - 1e-9); if (add > 0) coopCdx(w, 'sewage');
+  w.pol = Math.min(W.polCap, w.pol + add);
+  var solids = (w.mod.settle ? 1.5 : 0) + (w.mod.filter ? 1.5 : 0), rm = Math.min(w.pol, Math.round(solids * w.eff + 0.5 * (st.bld.water || 0)) + W.nature);
+  w.pol -= rm;
+  var ill = false;
+  if (w.pol > 0) {
+    dW -= w.pol * W.polWater;
+    if (w.mod.chlor) dH -= w.pol * W.polClean;
+    else { dH -= w.pol * W.polGerm; if (w.pol >= 3) { dH -= W.illness; ill = true; coopCdx(w, 'chlorine'); } }
+  } else if (w.water >= 50) dH += W.calmHealth;
+  if (w.mod.fluor && w.mod.chlor) dH += W.fluor;
+  if (res === 'crisis') { w.rec = cAddF(d, 1); if (absentN === 0 && !wx.tut && st.fog < W.sysFogMax) {   /* no Fog from systems on absent days or tutorial nights */
+     fogAdd = W.sysFog; st.fog = Math.min(W.sysFogMax, st.fog + fogAdd); } coopLog(st, 'wcrisis', wx.t); }
+  dW = Math.max(-W.maxLoss.water, dW); dH = Math.max(-W.maxLoss.health, dH);   /* one bad night can only do so much */
+  if (dW < 0) dW *= half; if (dH < 0) dH *= half;
+  w.miss = absentN > 0 ? (w.miss || 0) + 1 : 0;
+  var lo = absentN > 0 ? W.floorMissed : W.floor, w0 = w.water, h0 = w.health;   /* a missed day never pushes a meter below 20 */
+  w.water = coopClamp(w.water + dW, Math.min(lo, w.water));
+  w.health = coopClamp(w.health + dH, Math.min(lo, w.health));
+  w.rep.unshift({ d: d, t: wx.t, sev: wx.sev, tut: wx.tut || 0, rec: wx.rec || 0, res: res, load: Math.round(load * 10) / 10, cap: Math.round(cap * 10) / 10,
+    ex: add, rm: rm, pol: w.pol, ill: ill ? 1 : 0, dw: w.water - w0, dh: w.health - h0, half: half < 1 ? 1 : 0, fog: fogAdd,
+    pr: Object.keys(prep).join(','), gm: gentle ? 1 : 0 });
+  if (w.rep.length > 3) w.rep.length = 3;
+  w.prep = null;
+}
+
+/* ---------- Ops: +2 on a day the member studies (only while the world is on) ---------- */
+function coopOpsSync(st, e) {
+  var m = st.m[e], t = cDay();
+  if (!m || !coopWorldOn() || m.days.indexOf(t) < 0 || m.opsD === t) return false;
+  m.ops = Math.min(m.ops || 0, COOP_WORLD.opsCarry) + COOP_WORLD.opsDay; m.opsD = t; return true;
+}
+
+/* ---------- player actions ---------- */
+function coopPrep(st, email, b, extra) {
+  if (!coopWorldOn()) return 'world_off';
+  var P = COOP_PREP[b.a], m = st.m[email], w = st.w, t = cDay();
+  if (!P) return 'bad';
+  if (!w.prep || w.prep.d !== t) w.prep = { d: t, a: {}, by: {} };
+  if (w.prep.a[b.a]) return 'done';
+  if ((m.ops || 0) < P.ops) return 'no_ops';
+  if (P.why.indexOf(String(b.why)) < 0) return 'bad';
+  var right = String(b.why) === P.right;
+  m.ops -= P.ops; w.prep.a[b.a] = right ? 2 : 1; w.prep.by[b.a] = email;
+  extra.prep = { a: b.a, right: right }; return null;
+}
+function coopModCost(st, k) {
+  var M = COOP_MOD[k], lv = (st.w.mod[k] || 0) + 1, f = coopFactor(st), c = [0, 0, 0, 0, 0, 0, 0];
+  M.c.forEach(function (x) { c[x[0]] += Math.round(x[1] * lv * f); });
+  return c;
+}
+function coopModMax(st, k) { return k === 'res' ? Math.min(3, 1 + (st.bld.water || 0)) : COOP_MOD[k].max; }
+function coopMod(st, k) {
+  if (!coopWorldOn()) return 'world_off';
+  if (!COOP_MOD[k]) return 'bad';
+  if ((st.w.mod[k] || 0) >= coopModMax(st, k)) return 'max';
+  var c = coopModCost(st, k);
+  for (var u = 1; u <= 6; u++) if (st.mats[u] < c[u]) return 'short';
+  for (var v = 1; v <= 6; v++) st.mats[v] -= c[v];
+  st.w.mod[k] = (st.w.mod[k] || 0) + 1;
+  if (COOP_STAGES.indexOf(k) >= 0) { st.w.tv++; st.w.eff = 0.5; }    /* a new stage: re-arrange the plant to run it at full power */
+  if (k === 'res') coopCdx(st.w, 'reservoir');
+  if (k === 'chlor') coopCdx(st.w, 'chlorine');
+  coopLog(st, 'mod', k + ':' + st.w.mod[k]); return null;
+}
+/* Treatment Plant puzzle: the squad arranges its built stages; the server grades the order */
+function coopTreat(st, b, extra) {
+  if (!coopWorldOn()) return 'world_off';
+  var w = st.w, t = cDay(), built = COOP_STAGES.filter(function (k) { return w.mod[k] > 0; });
+  if (built.length < 2) return 'locked';
+  if (w.tdone === w.tv) return 'done';
+  if (w.tt.d !== t || w.tt.v !== w.tv) w.tt = { d: t, v: w.tv, n: 0 };   /* 2 tries a day for each plant layout */
+  if (w.tt.n >= COOP_WORLD.treatTries) return 'limit';
+  var ord = (b.ord || []).map(String);
+  if (ord.length !== built.length || built.some(function (k) { return ord.indexOf(k) < 0; })) return 'bad';
+  w.tt.n++;
+  var wrong = ord.filter(function (k, i) { return k !== built[i]; }), ok = !wrong.length;
+  w.ord = ord;
+  if (ok) { w.eff = 1; w.tdone = w.tv; coopCdx(w, 'treat'); coopLog(st, 'treat', ''); } else w.eff = 0.5;
+  extra.treat = { ok: ok, wrong: wrong, left: COOP_WORLD.treatTries - w.tt.n }; return null;
+}
+/* daily task board: 3 squad tasks issued by the server (template + seed), so tasks cannot be re-rolled */
+function coopTaskEnsure(row) {
+  var st = row.st, w = st.w, t = cDay();
+  if (w.task && w.task.d === t) return false;
+  var ids = Object.keys(COOP_TPL), ord = ids.filter(function (k) { return k[0] === 'o'; }), srt = ids.filter(function (k) { return k[0] === 's'; });
+  var fresh = function (k) { return !w.seen[k] || cDiff(w.seen[k], t) >= 7; };
+  var pick = function (list, salt, not) { var c = list.filter(function (k) { return fresh(k) && not.indexOf(k) < 0; }); if (!c.length) c = list.filter(function (k) { return not.indexOf(k) < 0; }); return c[Math.floor(coopHash(row.id + t + salt) * c.length)]; };
+  var a = pick(ord, 'a', []), b2 = pick(srt, 'b', []), c3 = pick(ids, 'c', [a, b2]);
+  w.task = { d: t, list: [a, b2, c3].map(function (k, i) { return { k: k, seed: Math.floor(coopHash(row.id + t + k + i) * 1e6), by: '', s: null }; }) };
+  Object.keys(w.seen).forEach(function (k) { if (cDiff(w.seen[k], t) > 14) delete w.seen[k]; });
+  return true;
+}
+function coopTask(st, email, b, extra) {
+  if (!coopWorldOn()) return 'world_off';
+  var w = st.w, t = cDay(), T = w.task && w.task.d === t ? w.task.list[Number(b.i)] : null;
+  if (!T) return 'bad';
+  if (T.k !== String(b.k) || T.seed !== Number(b.seed)) return 'stale';
+  if (T.by) return 'done';
+  var sc = Number(b.score), m = st.m[email]; sc = sc >= 1 ? 1 : sc >= 0.5 ? 0.5 : 0;
+  var repeat = w.seen[T.k] && cDiff(w.seen[T.k], t) < 7;
+  T.by = email; T.s = sc; w.seen[T.k] = t;
+  var got = { ops: 0, water: 0, cdx: '' };
+  if (!repeat) {
+    if (sc >= 0.5) { m.ops = Math.min(COOP_WORLD.opsMax, (m.ops || 0) + COOP_WORLD.taskOps); got.ops = COOP_WORLD.taskOps; }
+    if (sc >= 1) { w.water = Math.min(100, w.water + COOP_WORLD.taskWater); got.water = COOP_WORLD.taskWater; if (T.k === 'o_treat' && coopCdx(w, 'treat')) got.cdx = 'treat'; if (T.k === 'o_cycle' && coopCdx(w, 'cycle')) got.cdx = 'cycle'; }
+  }
+  if (sc < 1) { var sec = COOP_TPL[T.k]; if (Object.keys(w.cm).length < 40 || w.cm[sec]) w.cm[sec] = (w.cm[sec] || 0) + 1; }
+  extra.task = { k: T.k, s: sc, repeat: !!repeat, got: got }; return null;
+}
+
+/* ---------- what the game sees of the world (never the right reasons) ---------- */
+function coopWorldView(row, email) {
+  var st = row.st, w = st.w, t = cDay(), m = st.m[email] || {}, tn = coopSqWx(st, t), nx = coopSqWx(st, cAddF(t, 1));
+  var h = coopHash('fc' + t), chance = nx.tut ? null : Math.round(nx.sev >= 1 ? 55 + h * 30 : 8 + h * 27);
+  var built = COOP_STAGES.filter(function (k) { return w.mod[k] > 0; });
+  var mods = {}; Object.keys(COOP_MOD).forEach(function (k) { var c = coopModCost(st, k), ok = true; for (var u = 1; u <= 6; u++) if (st.mats[u] < c[u]) ok = false; mods[k] = { lv: w.mod[k] || 0, max: coopModMax(st, k), cost: c, ok: ok }; });
+  var prep = w.prep && w.prep.d === t ? w.prep : { a: {}, by: {} }, mem = Object.keys(st.m);
+  return { tonight: tn, next: { t: nx.tut ? nx.t : null, chance: chance }, water: w.water, health: w.health, pol: w.pol, eff: w.eff, mode: coopMode(),
+    mods: mods, stages: built, ord: w.ord, treat: built.length >= 2 && w.tdone !== w.tv ? { left: COOP_WORLD.treatTries - (w.tt.d === t && w.tt.v === w.tv ? w.tt.n : 0) } : null,
+    ops: m.ops || 0, opsToday: m.opsD === t, prep: Object.keys(prep.a).map(function (k) { return { a: k, x: prep.a[k], me: prep.by[k] === email }; }),
+    rep: w.rep[0] || null, cdx: w.cdx, rec: w.rec === t,
+    tasks: w.task && w.task.d === t ? w.task.list.map(function (T) { return { k: T.k, seed: T.seed, done: !!T.by, mine: T.by === email, who: T.by ? mem.indexOf(T.by) : -1, s: T.s }; }) : [],
+    costs: { drains: COOP_PREP.drains.ops, pond: COOP_PREP.pond.ops, store: COOP_PREP.store.ops } };
 }
