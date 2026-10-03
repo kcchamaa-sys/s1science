@@ -233,6 +233,17 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
   - Tap anywhere on the island (or use the arrow keys) and your own pal walks there, bobbing as it walks.
   - Stop next to a building, decoration, the plaza or a teammate to get an action chip: building science facts and info, "build here", the quest, or **Cheer** a teammate (they wave back with hearts).
   - Teammates' pals stand at fixed spots. Your position is saved on your device only.
+- **Plan your own island (free building):**
+  - The 6 science buildings can stand on any of **9 plots**. The first time you build one, a map opens: pick a plot, then press *Build here*.
+  - **Neighbour links:** some pairs work better side by side (about one plot apart). The picker previews them before you build:
+    - Water Works + Greenhouse = **Irrigation** (+10% Unit 2 and 3 materials)
+    - Safety Lab + Cell Clinic = **Safe clinic** (+10% Unit 1 and 4)
+    - Power Station + Particle Factory = **Energy link** (+10% Unit 5 and 6)
+    - Power Station + Water Works = **Pumps** (+1 drainage on rainy nights, +10% Unit 5 and 2)
+    - Water Works + Cell Clinic = **Clean & healthy** (+1 island health a night, +10% Unit 2 and 4)
+  - A fogged building switches its links off, so clearing the Fog matters more.
+  - **Move** a finished building for 1 Blueprint (Build tab). Links show as golden dotted lines on the island.
+- **The village:** grass, flowers and three villagers (Grandpa Oak, Farmer Bao, Fisher Mei). Walk up to them for tips that change with the weather, the Fog and your buildings. Free plots say "Build here" when you walk next to them.
 - **Island UI 4.0 (picture-first):**
   - The screen splits into tabs: **Today / Build / Water / Squad**.
   - A **Today's quest** bar shows 4 icons with ticks and one "next step" button.

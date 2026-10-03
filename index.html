@@ -2278,16 +2278,17 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .cmok{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#7ED957}.cmok .ic{width:13px;height:13px}
 .coquest{display:flex;flex-direction:column;gap:10px}
 .coqhead{display:flex;justify-content:space-between;align-items:center}.coqhead b{font-size:16px}.coqhead span{font-weight:900;color:#9B7CC8}
-.coqsteps{display:flex;align-items:flex-start;justify-content:space-between}
+.coqsteps{display:flex;align-items:flex-start;justify-content:space-between;width:100%;max-width:460px;margin:0 auto}
 .coqs{display:flex;flex-direction:column;align-items:center;gap:4px;flex:none;width:58px;text-align:center}
 .coqi{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#F4F0F8;border:3px solid #E4D9F2}
 .coqi .ic{width:24px;height:24px;opacity:.55}
 .coqs small{font-size:11.5px;font-weight:800;color:var(--ink2)}
-.coqs.ok .coqi{background:#7ED957;border-color:#5DB83A}
+.coqi{position:relative}.coqs.ok .coqi{background:color-mix(in srgb,var(--qc) 16%,#fff);border-color:var(--qc)}.coqs.ok .coqi .ic{opacity:1;color:var(--qc)}
+.coqtick{position:absolute;right:-5px;bottom:-5px;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#3E9E5B;border:2px solid #fff;box-shadow:0 1px 0 rgba(0,0,0,.15)}.coqtick svg{width:12px;height:12px}
 .coqs.nx .coqi{background:#fff;border-color:var(--qc);box-shadow:0 0 0 4px color-mix(in srgb,var(--qc) 22%,transparent);animation:coqPulse 1.8s ease-in-out infinite}
 .coqs.nx .coqi .ic{opacity:1}.coqs.nx small{color:var(--ink)}
 @keyframes coqPulse{50%{transform:scale(1.08)}}
-.coqline{flex:1;height:4px;margin-top:21px;border-radius:2px;background:#E4D9F2}.coqline.ok{background:#7ED957}
+.coqline{display:block;flex:1 1 auto;min-width:12px;height:4px;margin-top:21px;border-radius:2px;background:#E4D9F2}.coqline.ok{background:#7ED957}
 .coqgo{width:100%}.coqdone{display:flex;gap:6px;align-items:center;justify-content:center;font-weight:900;color:#3E9E5B}
 .cotabs{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;padding:4px;margin:12px 0;border-radius:18px;background:#EFE8F7;position:sticky;top:0;z-index:5}
 .cotabs button{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:52px;padding:6px 2px;border:0;border-radius:14px;background:transparent;font:inherit;font-size:12.5px;font-weight:800;color:var(--ink2);cursor:pointer}
@@ -2319,7 +2320,8 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .cwd-pol{display:flex;flex-direction:column;align-items:center;gap:4px}.cwd-pol small{font-size:11.5px;color:var(--ink2);font-weight:800}
 .cwpd{display:grid;grid-template-columns:repeat(5,9px);gap:3px}.cwpd i{width:9px;height:9px;border-radius:50%;background:#EFE8F7}.cwpd i.on{background:#8B6B3E}
 .cwd-act{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.cwrep0{display:flex;align-items:center;gap:10px}.cwrep0 small{display:block;color:var(--ink2);font-size:12px}
+.cwrep0{display:flex;align-items:center;gap:10px}
+.cwduo .cwrep0{align-self:start}.cot-s .cot-bar{flex:1 0 100%}.cwrep0 small{display:block;color:var(--ink2);font-size:12px}
 .cwrep-h{display:flex;align-items:center;gap:8px}.cwrep-h>div{flex:1;min-width:0}.cwrep-h small{display:block;font-size:12px;color:var(--ink2)}
 .cwbars{display:flex;flex-direction:column;gap:5px;margin:8px 0}
 .cwbars>div{display:grid;grid-template-columns:52px 1fr 34px;align-items:center;gap:6px}.cwbars small{font-size:12px;font-weight:800;color:var(--ink2)}.cwbars b{font-size:14px;text-align:right}
@@ -2459,6 +2461,25 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .coexic{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:#FFF3C4;flex:none}
 .cobinfo{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}.cobinfo .btn{width:100%}
 @media (prefers-reduced-motion:reduce){.come .cowalk,.cofix .cowalk,.cowalkhint,.coexchip,.cobubg{animation:none!important}.coheart{display:none}}
+/* free placement + village */
+.copkmap{display:block;width:100%;max-width:420px;margin:8px auto;border-radius:18px;background:#BFE6F5}
+.copk{cursor:pointer}.copk:focus-visible circle{stroke:#2FA8DC;stroke-width:4}
+.copk.sel circle{animation:copkPop .3s cubic-bezier(.2,1.5,.4,1)}@keyframes copkPop{from{transform:scale(.7)}}.copk circle{transform-box:fill-box;transform-origin:center}
+.copkprev{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.copkrow{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border-radius:14px;background:#F6F2FA;border:2px solid #EEE6F7;font-size:13.5px;line-height:1.3}
+.copkrow .ic{flex:none;width:20px;height:20px;margin-top:1px;opacity:.5}.copkrow small{display:block;color:var(--ink2);font-size:12px;margin-top:2px}
+.copkrow.on{background:#EDF9E6;border-color:#9ED88A}.copkrow.on .ic{opacity:1;color:#3E9E5B}
+.copkb{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin:8px 0}
+.copkbtn{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px;border-radius:16px;border:2px solid #E4D9F2;background:#fff;font:inherit;font-size:12.5px;cursor:pointer}
+.copkbtn:disabled{opacity:.45;cursor:not-allowed}.copkbtn:not(:disabled):hover{border-color:#9B7CC8}
+.cosynok{position:absolute;top:4px;right:4px;display:flex;align-items:center;gap:2px;padding:1px 6px;border-radius:99px;background:#FFF3C4;color:#B86E00;font-size:11px;font-weight:900}.cosynok .ic{width:12px;height:12px}
+.cosyncard h4{display:flex;align-items:center;gap:6px;margin:0 0 4px}.cosyncard h4 small{margin-left:auto;color:#9B7CC8}.cosyncard{display:flex;flex-direction:column;gap:6px}
+.comove{margin-top:6px;width:100%}
+.covill .cowalk{animation:coVill 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}.covill:nth-of-type(2n) .cowalk{animation-duration:4s}
+@keyframes coVill{50%{transform:translateY(-1.5px)}}
+.covill.cowave .cowalk{animation:coWave .7s cubic-bezier(.2,1.4,.4,1)}@keyframes coWave{30%{transform:translateY(-6px) rotate(-6deg)}60%{transform:translateY(-2px) rotate(5deg)}}
+.cosyn path{animation:coSynFlow 1.6s linear infinite}@keyframes coSynFlow{to{stroke-dashoffset:-18}}
+@media (prefers-reduced-motion:reduce){.covill .cowalk,.cosyn path,.copk.sel circle{animation:none}}
 @media (max-width:520px){.coscr{margin:0 -8px;padding:12px 8px 16px;border-radius:20px}.coscr .h-sec{font-size:21px}}
 @media (prefers-reduced-motion:reduce){.coscr *,.cofx *{animation:none!important}.cofx.p4 .cofx-t,.cofx.p4 .cofx-ring{opacity:1}.cofx.p4 .cofx-ring{opacity:0}.cofx.p4 .cofx-fog{opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
@@ -10027,7 +10048,7 @@ function coQuest(q,w){var me=q.members.filter(function(m){return m.me;})[0]||{},
  else steps=[['study',!!me.today,L('Study','溫習'),IC('books'),'#2FA8DC'],['puzzle',!my||my.ok!==null||(p&&p.done),L('Puzzle','拼圖'),IC('cards'),'#9B7CC8']].concat(q.fog>0?[['repair',q.me.rep>=3,L('Repair','修復'),IC('cloud'),'#3E9E5B']]:[]);
  var nx=steps.filter(function(s){return !s[1];})[0],done=steps.length-steps.filter(function(s){return !s[1];}).length;
  var cta=!nx?'<span class="coqdone">'+IC('check')+L('All done today!','今日全部完成！')+'</span>':'<button class="btn pink coqgo" data-coq="'+nx[0]+'">'+({report:L('Read the report','閱讀報告'),study:L('Study now','去溫習'),prep:L('Prepare','準備'),task:L('Do a task','做任務'),puzzle:L('Solve my part','解答我的部分'),repair:L('Repair the Fog','修復濃霧')})[nx[0]]+' ›</button>';
- return '<div class="card coquest cwtoday"><div class="coqhead"><b>'+L('Today’s quest','今日任務')+'</b><span>'+done+'/'+steps.length+'</span></div><div class="coqsteps">'+steps.map(function(s,i){return (i?'<i class="coqline'+(steps[i-1][1]?' ok':'')+'"></i>':'')+'<div class="coqs'+(s[1]?' ok':'')+(s===nx?' nx':'')+'" style="--qc:'+s[4]+'"><span class="coqi">'+(s[1]?'<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>':s[3])+'</span><small>'+s[2]+'</small></div>';}).join('')+'</div>'+cta+'</div>';}
+ return '<div class="card coquest cwtoday"><div class="coqhead"><b>'+L('Today’s quest','今日任務')+'</b><span>'+done+'/'+steps.length+'</span></div><div class="coqsteps">'+steps.map(function(s,i){return (i?'<i class="coqline'+(steps[i-1][1]?' ok':'')+'"></i>':'')+'<div class="coqs'+(s[1]?' ok':'')+(s===nx?' nx':'')+'" style="--qc:'+s[4]+'"><span class="coqi">'+s[3]+(s[1]?'<span class="coqtick" aria-label="'+esc(L('done','已完成'))+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>':'')+'</span><small>'+s[2]+'</small></div>';}).join('')+'</div>'+cta+'</div>';}
 
 /* ---------- weather dashboard ---------- */
 function cwForecastHTML(q,w){var tn=w.tonight,nx=w.next,warn=tn.sev>=2;
@@ -10099,7 +10120,7 @@ function coBuildTab(q){var h='<h3 class="cosub">'+L('Storage','倉庫')+'</h3><d
  if(q.con){var B0=CO_B[q.con.b];h+='<div class="card cocon"><svg viewBox="-45 -70 90 90" width="56" height="56" aria-hidden="true">'+coBld(q.con.b,q.con.lv,0,0,false,true)+'</svg><div><b>'+esc(L(B0.n[0],B0.n[1]))+' Lv '+q.con.lv+'</b><span class="cot-bar"><i style="width:'+(q.con.done/q.con.need*100)+'%"></i></span><small>'+q.con.done+'/'+q.con.need+' '+L('squad days','全隊日')+'</small></div></div>';}
  h+='<h3 class="cosub">'+L('Buildings','建築')+'</h3><div class="cobld">';
  CO_ORDER.forEach(function(k){var B=CO_B[k],lv=q.bld[k],max=B.u?3:1,c=q.costs[k],can=c&&c.req&&!q.con&&coAfford(q,c),dots='';for(var i=0;i<max;i++)dots+='<i class="'+(i<lv?'on':'')+'"></i>';
-  h+='<div class="card cb'+(lv?' built':'')+(q.fogB===k?' fogged':'')+'"><div class="cbpic"><svg viewBox="-45 -70 90 90">'+coBld(k,lv||1,0,0,q.fogB===k&&lv>0,false)+'</svg>'+(q.fogB===k?'<span class="cbfog">'+L('Fogged','被霧籠罩')+'</span>':'')+'</div><b>'+esc(L(B.n[0],B.n[1]))+'</b><span class="cwlv">'+dots+'</span>'+
+  h+='<div class="card cb'+(lv?' built':'')+(q.fogB===k?' fogged':'')+'" data-cbk="'+k+'"><div class="cbpic"><svg viewBox="-45 -70 90 90">'+coBld(k,lv||1,0,0,q.fogB===k&&lv>0,false)+'</svg>'+(q.fogB===k?'<span class="cbfog">'+L('Fogged','被霧籠罩')+'</span>':'')+'</div><b>'+esc(L(B.n[0],B.n[1]))+'</b><span class="cwlv">'+dots+'</span>'+
    (c?'<div class="ccost">'+coCost(q,c)+'</div><button class="btn small" data-coop="build" data-b="'+k+'"'+(can?'':' disabled')+'>'+(c.req?L('Build','建造')+' · '+c.need+L('d','日'):IC('lock'))+'</button>':'')+
    '<details class="cbinfo"><summary>'+L('Perk','效果')+'</summary>'+(lv?'<small class="pk">'+IC('check')+esc(L(B.p[Math.min(lv,B.p.length)-1][0],B.p[Math.min(lv,B.p.length)-1][1]))+'</small>':'')+(c?'<small class="nx">'+L('Next: ','下一級：')+esc(L(B.p[Math.min(lv,B.p.length-1)][0],B.p[Math.min(lv,B.p.length-1)][1]))+'</small>':'')+'</details></div>';});
  h+='</div>';
@@ -10160,32 +10181,32 @@ function gTick(x,y,ok,cls){return '<g class="'+(cls||'')+'"><circle cx="'+x+'" c
 function gZzz(x,y){return '<g class="gzz"><text x="'+x+'" y="'+y+'" font-size="11" font-weight="900" fill="#9B7CC8">z</text><text x="'+(x+7)+'" y="'+(y-8)+'" font-size="9" font-weight="900" fill="#B9A5D9">z</text></g>';}
 function coSlides(){var me=(S&&S.active)||'mochi',P=[me,me==='nova'?'luna':'nova',me==='luna'?'kuma':'luna'],T=function(a,b){return L(a,b);};
  return [
- {t:T('The island is in trouble!','小島有危險！'),b:[[IC('warn'),T('Murk, the Fog of Forgetting, covered the island in fog.','遺忘之霧默克用濃霧籠罩了小島。')],[IC('user'),T('Your squad rebuilds it by studying together – and finally seals Murk away.','你的小隊要一起溫習重建小島——最後封印默克。')]],
+ {t:T('The island is in trouble!','小島有危險！'),b:[[IC('warn'),T('Murk, the Fog of Forgetting, has wrapped the island in grey fog. Things we forget feed the Fog.','「遺忘之霧」默克用灰霧包圍了小島——我們忘記的知識，都會變成它的力量。')],[IC('user'),T('Your squad brings the island back to life: every science question you get right turns into building materials.','你的小隊要令小島重現生機：每答對一題科學題，就會變成建築材料。')],[IC('trophy'),T('Rebuild all the labs, then light the Lighthouse to seal Murk away for good.','重建所有實驗室，再點亮燈塔，就能把默克永遠封印。')]],
   a:gGround()+gBld('safety',2,70,128,.55,'gs1-b')+gBld('water',2,175,128,.55,'gs1-b')+gMurk(185,40,88,'gs1-m')+gFog(120,110,1.4,'gs1-f')+gPal(P[0],56,138,40,'sad','gs1-p1')+gPal(P[1],96,140,36,'sad','gs1-p2')},
- {t:T('How a day works','每日玩法'),b:[[IC('books'),T('Study → earn materials and Ops.','溫習 → 賺取材料和行動點。')],[IC('pencil'),T('Spend them to build and prepare.','用來建造和準備。')],[IC('cloud'),T('At night the weather and Murk test your island; next morning a report shows what happened.','晚上天氣和默克會考驗小島；第二朝報告告訴你發生了甚麼。')]],
+ {t:T('How a day works','每日玩法'),b:[[IC('books'),T('Daytime: study as usual. Right answers give materials, and studying gives your squad Ops (action points).','白天：照常溫習。答對的題目會變成材料，溫習亦會為小隊帶來行動點。')],[IC('pencil'),T('Spend materials on buildings, and Ops on getting ready for tonight’s weather.','材料用來建造；行動點用來為今晚的天氣作好準備。')],[IC('cloud'),T('Night: the weather (and sometimes Murk) tests how strong your island is.','晚上：天氣（有時還有默克）會考驗小島有多堅固。')],[IC('notebook'),T('Next morning: read the Field Report to see what held up – and what to fix today.','第二天早上：看實地報告，了解哪些設施撐得住、今日要改善甚麼。')]],
   a:(function(){var nodes=[[120,24,IC('books'),'#E7F3FB',T('Study','溫習')],[198,72,IC('flask'),'#E3F4E8',T('Earn','賺取')],[160,128,IC('pencil'),'#FFF3C4',T('Build','建造')],[80,128,IC('cloud'),'#EDE4F7',T('Night','晚上')],[42,72,IC('notebook'),'#FDE2E6',T('Report','報告')]],o='<circle cx="120" cy="78" r="56" fill="none" stroke="#D7C9EC" stroke-width="4" stroke-dasharray="6 6" class="gs2-ring"/>';
    nodes.forEach(function(n,i){o+='<g class="gs2-n" style="animation-delay:'+(i*0.5)+'s"><circle cx="'+n[0]+'" cy="'+n[1]+'" r="17" fill="'+n[3]+'" stroke="#5B4B6E" stroke-width="2"/><g transform="translate('+(n[0]-10)+' '+(n[1]-12)+') scale(.85)">'+n[2].replace('<svg','<svg width="24" height="24"')+'</g><text x="'+n[0]+'" y="'+(n[1]+12)+'" text-anchor="middle" font-size="7.5" font-weight="900" fill="#5B4B6E">'+esc(n[4])+'</text></g>';});
    return o+'<g class="gs2-dot"><circle cx="120" cy="22" r="5" fill="#E8920F"/></g>'+gPal(P[0],120,96,34,'joy','gs2-p');})()},
- {t:T('Team up','組隊'),b:[[IC('user'),T('2–4 friends, any class. One creates the squad and shares the 6-letter code.','2–4 位朋友，不限班別。一人建立小隊並分享 6 位邀請碼。')],[IC('flask'),T('Pick a role: your units give +50% materials (Engineer: +20% for all).','選擇角色：你的單元材料 +50%（工程師：全部 +20%）。')]],
+ {t:T('Team up','組隊'),b:[[IC('user'),T('Play with 2–4 friends – they can be from any class. One person creates the squad, then shares its 6-letter code so the others can join.','和 2–4 位朋友一起玩，不同班也可以。一人建立小隊，再把 6 個字母的邀請碼分享給其他人加入。')],[IC('flask'),T('Everyone picks a role. Your role’s units earn 50% more materials; the Engineer gets 20% more on every unit.','每人選一個角色。你角色負責的單元，材料多 50%；工程師則所有單元都多 20%。')],[IC('sparkle'),T('Tip: choose different roles so your squad covers all six units.','小貼士：大家選不同角色，小隊就能照顧到全部六個單元。')]],
   a:gGround()+gPal(P[0],60,136,42,'joy','gs3-p1')+gPal(P[1],120,136,42,'joy','gs3-p2')+gPal(P[2],180,136,42,'joy','gs3-p3')+'<g class="gs3-code"><rect x="78" y="22" width="84" height="24" rx="12" fill="#FFF3C4" stroke="#5B4B6E" stroke-width="2"/><text x="120" y="39" text-anchor="middle" font-size="13" font-weight="900" fill="#8A5A00" letter-spacing="2">AB12CD</text></g>'},
- {t:T('Study → materials','溫習 → 材料'),b:[[IC('check'),T('Every correct answer (quiz, mistakes, dictation) = 1 material of that unit.','每答對一題（測驗、錯題、默書）= 該單元 1 份材料。')],[IC('flame'),T('Up to 30 a day at full speed; extra study still pays bonus coins.','每日 30 份內全速；多溫習仍有額外金幣。')]],
+ {t:T('Study → materials','溫習 → 材料'),b:[[IC('check'),T('Each question you answer correctly – in a quiz, the Mistake Book or dictation – gives 1 material from that question’s unit.','在測驗、錯題本或默書中每答對一題，就得到 1 份該單元的材料。')],[IC('flame'),T('Your first 30 materials each day come at full speed.','每日首 30 份材料以正常速度獲得。')],[IC('coin'),T('After that, you still get 1 material for every 3 correct answers, plus 2 coins each – so extra revision is never wasted.','之後每答對 3 題仍可得 1 份材料，每題另加 2 個金幣——多溫習一定有回報。')]],
   a:gGround()+gPal(P[0],56,136,46,'joy','gs4-p')+'<g class="gs4-card"><rect x="74" y="58" width="34" height="42" rx="6" fill="#fff" stroke="#5B4B6E" stroke-width="2"/><path d="M80 70h22M80 78h16M80 86h19" stroke="#D7C9EC" stroke-width="3" stroke-linecap="round"/></g>'+gTick(104,62,true,'gs4-t')+
    gGem(112,70,2,'gs4-g','--dx:70px;--dy:44px;animation-delay:.9s')+gGem(112,70,5,'gs4-g','--dx:74px;--dy:42px;animation-delay:1.5s')+gGem(112,70,3,'gs4-g','--dx:66px;--dy:46px;animation-delay:2.1s')+
    '<g class="gs4-chest"><rect x="168" y="104" width="48" height="30" rx="6" fill="#C98A4A" stroke="#5B4B6E" stroke-width="2"/><path d="M168 114h48" stroke="#5B4B6E" stroke-width="2"/><rect x="187" y="110" width="10" height="9" rx="2" fill="#FFD23F" stroke="#5B4B6E" stroke-width="1.5"/></g>'},
- {t:T('Build together','一起建造'),b:[[IC('pencil'),T('Spend materials + Blueprints to start a building (Lv 1 → Lv 3).','用材料＋藍圖開始建造（Lv 1 → Lv 3）。')],[IC('check'),T('It only grows on squad days – days when EVERY member studies.','只在全隊日（全部成員都溫習）才會進展。')],[IC('sparkle'),T('Each level switches on a perk for the whole squad.','每升一級，全隊獲得一項效果。')]],
+ {t:T('Build together','一起建造'),b:[[IC('pencil'),T('Use materials and Blueprints to start a building. Choose WHERE it goes – any free plot on the island.','用材料和藍圖開始建造，並自己決定建在哪裏——島上任何一塊空地都可以。')],[IC('sparkle'),T('Plan your map: some buildings work better as neighbours (e.g. Water Works + Greenhouse = Irrigation, +10% materials). You can move a building later for 1 Blueprint.','好好規劃地圖：有些建築放在隔鄰效果更好（例如淨水廠＋溫室＝灌溉，材料 +10%）。之後亦可用 1 張藍圖搬遷。')],[IC('check'),T('Construction moves forward only on squad days – days when every member studies. Each level (Lv 1 → 3) switches on a perk for everyone.','只有在「全隊日」（全部成員都有溫習）建造才會推進。每升一級（Lv 1 → 3），全隊都會獲得一項效果。')]],
   a:gGround()+gTick(22,22,true,'gs5-t')+gTick(40,22,true,'gs5-t')+gTick(58,22,true,'gs5-t')+gTick(76,22,true,'gs5-t')+gPal(P[0],40,138,36,'joy','gs5-p')+gPal(P[1],200,138,36,'joy','gs5-p2')+
    gBld('safety',1,120,128,.8,'gs5-l1')+gBld('safety',2,120,128,.8,'gs5-l2')+gBld('safety',3,120,128,.8,'gs5-l3')+'<g class="gs5-spark"><path d="M152 48l3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" fill="#FFD23F" stroke="#5B4B6E" stroke-width="1.2"/></g>'},
- {t:T('Miss a day → Murk strikes','有人缺席 → 默克來襲'),b:[[IC('shield'),T('A Squad Freeze blocks the first miss each week.','每星期第一次缺席由小隊凍結擋住。')],[IC('cloud'),T('After that, Murk’s Fog creeps in and switches building perks off.','之後默克的濃霧蔓延，令建築效果失效。')],[IC('bolt'),T('Clear it with repair quizzes – right answers blast the Fog away.','用修復測驗清除——答對就能驅散濃霧。')]],
+ {t:T('Miss a day → Murk strikes','有人缺席 → 默克來襲'),b:[[IC('shield'),T('If someone misses a day, the squad’s Freeze shield blocks the first miss of each week.','如果有隊員一天沒溫習，小隊凍結護盾會擋下每星期的第一次缺席。')],[IC('cloud'),T('Further misses let Murk’s Fog creep in. A fogged building stops giving its perk and its neighbour links.','再缺席的話，默克的濃霧就會蔓延。被霧籠罩的建築會失去效果和鄰居連結。')],[IC('bolt'),T('Push it back with repair quizzes: every correct answer blasts some Fog away. Nothing you earned is ever taken.','用修復測驗反擊：每答對一題就能驅散部分濃霧。你已賺到的東西不會被拿走。')]],
   a:gGround()+gBld('water',2,150,128,.75,'gs6-b')+gFog(150,104,1.2,'gs6-f')+gMurk(196,36,70,'gs6-m')+'<g class="gs6-sh"><path d="M120 60a40 40 0 0 1 0 70" fill="none" stroke="#7FD3F5" stroke-width="5" stroke-linecap="round" opacity=".9"/></g>'+
    gPal(P[1],40,138,34,'sleepy','gs6-s')+gZzz(52,98)+gPal(P[0],86,138,40,'joy','gs6-p')+'<path class="gs6-beam" d="M100 112 L140 104" stroke="#FFD23F" stroke-width="5" stroke-linecap="round"/>'},
- {t:T('Daily puzzle & Sunday raid','每日拼圖與星期日來襲'),b:[[IC('cards'),T('Everyone answers one puzzle part. A wrong part? A teammate can rescue it.','每人解答一部分拼圖。答錯了？隊友可以救援。')],[IC('warn'),T('Every Sunday night Murk raids: your squad’s correct answers that week are the shield.','每個星期日晚默克來襲：小隊本週答對的題數就是護盾。')]],
+ {t:T('Daily puzzle & Sunday raid','每日拼圖與星期日來襲'),b:[[IC('cards'),T('Each day the Blueprint puzzle is split into one part per member. Solve yours to win a Blueprint for the squad.','每日的藍圖拼圖會分成每人一部分。解答你那部分，小隊就能贏得藍圖。')],[IC('user'),T('Got your part wrong? A teammate can rescue it for you – that is what squads are for.','答錯了自己的部分？隊友可以幫你救援——這就是隊友的意義。')],[IC('warn'),T('Every Sunday night Murk raids. All the questions your squad answered correctly that week add up to your shield.','每個星期日晚默克都會來襲。小隊本週答對的題目總數，就是你們的護盾。')]],
   a:gGround()+gPal(P[0],34,138,34,'joy')+gPal(P[1],80,138,34,'joy','gs7-res')+'<g class="gs7-a"><path d="M24 56h22v8a5 5 0 0 0 0 10v8H24Z" fill="#B9A5D9" stroke="#5B4B6E" stroke-width="1.6"/></g><g class="gs7-b"><path d="M46 56h22v26H46v-8a5 5 0 0 1 0-10Z" fill="#FF8FB1" stroke="#5B4B6E" stroke-width="1.6"/></g>'+
    gMurk(212,50,56,'gs7-m')+'<g class="gs7-sh"><path d="M140 34a42 42 0 0 1 0 92" fill="none" stroke="#7ED957" stroke-width="6" stroke-linecap="round"/><text x="130" y="84" text-anchor="end" font-size="14" font-weight="900" fill="#3E9E5B">240</text></g><circle class="gs7-shot" cx="186" cy="66" r="7" fill="#7B4FD0" stroke="#5B4B6E" stroke-width="1.6"/>'},
- {t:T('Weather every night','每晚天氣來襲'),b:[[IC('cloud'),T('Murk sends Hong Kong weather – the same for every squad. Tonight’s forecast is always right.','默克送來香港天氣——所有小隊一樣。今晚的預報一定準確。')],[IC('bolt'),T('Study → +2 Ops. Spend Ops to Prepare and pick the right reason: ×2 effect.','溫習 → +2 行動點。用來準備並揀對原因：效果×2。')],[cwDrop(),T('Drains carry the rain; the treatment plant keeps water clean.','雨水渠排走雨水；濾水廠保持食水潔淨。')]],
+ {t:T('Weather every night','每晚天氣來襲'),b:[[IC('cloud'),T('Every night brings Hong Kong-style weather – sun, rain or storms. All squads get the same weather, and tonight’s forecast is always correct.','每晚都有香港式天氣——晴天、下雨或暴風雨。所有小隊的天氣都一樣，而今晚的預報一定準確。')],[IC('bolt'),T('Each study day gives +2 Ops. Spend them on Prepare actions, like clearing the drains before heavy rain.','每個溫習日可得 2 個行動點，用來做準備，例如大雨前先清理雨水渠。')],[IC('check'),T('When you prepare, pick the science reason why it helps. The right reason doubles the effect!','準備時要選出它有用的科學原因。選對了，效果加倍！')],[cwDrop(),T('Drains carry the rain; the treatment plant keeps water clean.','雨水渠排走雨水；濾水廠保持食水潔淨。')]],
   a:gGround()+gMurk(48,34,58,'gs8-m')+'<g transform="translate(110 20) scale(1.3)"><g class="gs8-cl">'+cwWxIcon({t:'hrain',sev:2},40).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')+'</g></g>'+
    '<g class="gs8-rain"><path d="M118 72l-3 8M128 72l-3 8M138 72l-3 8M148 72l-3 8M123 86l-3 8M133 86l-3 8M143 86l-3 8" stroke="#2FA8DC" stroke-width="2.4" stroke-linecap="round"/></g>'+
    '<g transform="translate(150 106) scale(1.2)">'+CW_NIC.drain+'</g>'+gPal(P[0],112,138,38,'joy','gs8-p')+'<text class="gs8-x2" x="196" y="112" font-size="20" font-weight="900" fill="#3E9E5B">×2</text>'},
- {t:T('Seal the Fog – win Lumi','封印濃霧——贏得燈燈'),b:[[IC('pencil'),T('Raise all 6 buildings to Lv 3, then build the wonders.','把 6 座建築升到 Lv 3，再建奇蹟。')],[IC('trophy'),T('The Lighthouse seals Murk away – every member wins the co-op pal Lumi and a trophy card.','燈塔封印默克——每位成員獲得合作小夥伴燈燈和獎盃卡。')]],
+ {t:T('Seal the Fog – win Lumi','封印濃霧——贏得燈燈'),b:[[IC('pencil'),T('Upgrade all 6 science buildings to Lv 3. That unlocks the three wonders: the Observatory, the Museum and the Lighthouse.','把 6 座科學建築都升到 Lv 3，就能解鎖三大奇蹟：天文台、博物館和燈塔。')],[IC('trophy'),T('Light the Lighthouse to seal Murk away. Every member wins the co-op pal Lumi and a trophy card.','點亮燈塔就能封印默克。每位成員都會獲得合作小夥伴燈燈和一張獎盃卡。')]],
   a:gGround()+gBld('light',1,64,132,1.05,'gs9-l')+'<path class="gs9-beam" d="M70 58 L230 30 L230 80Z" fill="#FFF3A0" opacity=".75"/>'+gMurk(196,52,60,'gs9-m')+gPal('lumi',140,138,40,'joy','gs9-lumi')+'<path class="gs9-st" d="M166 96l3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" fill="#FFD23F" stroke="#5B4B6E" stroke-width="1.2"/>'}];}
 function coGuideOpen(){try{localStorage.setItem('coGuide','1');}catch(e){}var sl=coSlides();COOP.gs=Math.max(0,Math.min(sl.length-1,COOP.gs||0));var i=COOP.gs,s=sl[i];
  var body='<div class="cogslide gsc'+(i+1)+'"><div class="cogstage"><svg class="cogart" viewBox="0 0 240 150" role="img" aria-label="'+esc(s.t)+'">'+s.a+'</svg><span class="cogn">'+(i+1)+'/'+sl.length+'</span></div><h3>'+s.t+'</h3><ul class="cogpts">'+s.b.map(function(x){return '<li>'+x[0]+'<span>'+x[1]+'</span></li>';}).join('')+'</ul></div>'+
@@ -10269,6 +10290,102 @@ document.addEventListener('click',function(e){var c=e.target.closest&&e.target.c
 document.addEventListener('keydown',function(e){var c=document.activeElement;if(!c||!c.classList||!c.classList.contains('coislandc')||!document.getElementById('coMeG'))return;var P=coMePos(),s=22,map={ArrowLeft:[-s,0],ArrowRight:[s,0],ArrowUp:[0,-s*.7],ArrowDown:[0,s*.7]};
  if(map[e.key]){e.preventDefault();coWalkTo(P.x+map[e.key][0],P.y+map[e.key][1]);}else if(e.key==='Enter'||e.key===' '){var b=document.querySelector('#coAct [data-coex]');if(b){e.preventDefault();b.click();}}});
 (function(){var r1=render;render=function(){var r=r1.apply(this,arguments);if(curScreen==='coop'&&coopSq()){var P=coMePos();if(P.tx!=null&&!COOP.wraf){COOP.wlast=0;COOP.wraf=requestAnimationFrame(coWalkStep);}else coNear(false);}return r;};})();
+/* ===================== Free building placement + neighbour synergies + the village =====================
+   The 6 science buildings can stand on any of 9 plots (same coordinates as COOP_PLOTXY in Coop.gs).
+   Neighbouring pairs form synergies (+10% materials for both units; some also help the weather defences). */
+var CO_PLOTS=[[78,128],[150,96],[244,92],[320,138],[112,188],[290,190],[256,142],[140,150],[200,214]],CO_NEAR=105;
+var CO_UNITS=['safety','water','green','cell','power','part'];
+var CO_SYN=[{id:'irrig',a:'water',b:'green',u:[2,3],n:['Irrigation','灌溉'],e:['Water for the plants: +10% Unit 2 & 3 materials.','食水灌溉植物：單元 2、3 材料 +10%。']},
+ {id:'clinic',a:'safety',b:'cell',u:[1,4],n:['Safe clinic','安全診所'],e:['A safe, clean lab beside the clinic: +10% Unit 1 & 4 materials.','診所旁有安全潔淨的實驗室：單元 1、4 材料 +10%。']},
+ {id:'energy',a:'power',b:'part',u:[5,6],n:['Energy link','能源連線'],e:['Power to heat and cool particles: +10% Unit 5 & 6 materials.','電力用來加熱和冷卻粒子：單元 5、6 材料 +10%。']},
+ {id:'pumps',a:'power',b:'water',u:[5,2],n:['Pumps','水泵'],e:['Pumps need energy: +1 drainage on rainy nights, +10% Unit 5 & 2.','水泵需要電力：雨夜排水 +1，單元 5、2 材料 +10%。']},
+ {id:'health',a:'water',b:'cell',u:[2,4],n:['Clean & healthy','潔淨健康'],e:['Clean water keeps people healthy: +1 health a night, +10% Unit 2 & 4.','潔淨食水令人健康：每晚健康 +1，單元 2、4 材料 +10%。']}];
+function coNearP(p,q){var a=CO_PLOTS[p],c=CO_PLOTS[q];return p!==q&&Math.hypot(a[0]-c[0],a[1]-c[1])<=CO_NEAR;}
+function coPlotOf(q,k){return q.plot&&q.plot[k]!=null?q.plot[k]:null;}
+function coPlotUsed(q,p){for(var k in (q.plot||{}))if(q.plot[k]===p)return k;return null;}
+/* where everything is drawn: placed buildings on their plot, unplaced ones on the remaining plots as empty "?" plots */
+function coLayout(q){var used={},pl=q.plot||{},free=[];CO_UNITS.forEach(function(k){if(pl[k]!=null)used[pl[k]]=k;});
+ CO_PLOTS.forEach(function(_,i){if(used[i]==null)free.push(i);});var disp={};CO_UNITS.forEach(function(k){disp[k]=pl[k]!=null?pl[k]:free.shift();});
+ return {disp:disp,spare:free};}
+/* ---------- island scenery: grass, flowers, a little village with villagers ---------- */
+var CO_VILL=[{id:'elder',x:58,y:170,hx:66,hy:156,n:['Grandpa Oak','橡樹爺爺'],hat:'#8B6B3E'},{id:'farmer',x:206,y:56,hx:226,hy:62,n:['Farmer Bao','包包農夫'],hat:'#F2C14E'},{id:'fisher',x:344,y:196,hx:352,hy:180,n:['Fisher Mei','漁夫阿美'],hat:'#2FA8DC'}];
+function coHouse(x,y,roof,s){return '<g transform="translate('+x+' '+y+') scale('+(s||1)+')"><path d="M-11 0V-12H11V0Z" fill="#FFF3DC" stroke="#5B4B6E" stroke-width="1.6"/><path d="M-14 -11L0 -22L14 -11Z" fill="'+roof+'" stroke="#5B4B6E" stroke-width="1.6" stroke-linejoin="round"/><rect x="-7" y="-9" width="5" height="5" rx="1" fill="#FFE27A" stroke="#5B4B6E" stroke-width="1"/><rect x="2" y="-7" width="5" height="7" rx="1" fill="#C98A4A" stroke="#5B4B6E" stroke-width="1"/></g>';}
+function coVillager(v){return '<g class="covill" data-v="'+v.id+'" transform="translate('+v.x+' '+v.y+')"><ellipse rx="9" ry="2.4" fill="rgba(90,70,110,.22)"/><g class="cowalk"><ellipse cy="-9" rx="9" ry="9" fill="#FFF7EC" stroke="#5B4B6E" stroke-width="1.6"/><circle cx="-3" cy="-10" r="1.2" fill="#5B4B6E"/><circle cx="3" cy="-10" r="1.2" fill="#5B4B6E"/><ellipse cx="-5" cy="-7" rx="1.8" ry="1" fill="#FFB3C1"/><ellipse cx="5" cy="-7" rx="1.8" ry="1" fill="#FFB3C1"/>'+
+ (v.id==='elder'?'<path d="M-4 -5q4 6 8 0" fill="#fff" stroke="#5B4B6E" stroke-width="1"/><path d="M-8 -16q8-6 16 0" fill="none" stroke="'+v.hat+'" stroke-width="3" stroke-linecap="round"/>':v.id==='farmer'?'<path d="M-13 -15h26l-5-3h-16Z" fill="'+v.hat+'" stroke="#5B4B6E" stroke-width="1.2"/><path d="M-6 -18q6-7 12 0" fill="'+v.hat+'" stroke="#5B4B6E" stroke-width="1.2"/>':'<path d="M-9 -15q9-9 18 0Z" fill="'+v.hat+'" stroke="#5B4B6E" stroke-width="1.2"/><path d="M9 -15h4" stroke="#5B4B6E" stroke-width="1.6" stroke-linecap="round"/>')+'</g></g>';}
+function coScenery(q){var o='<g class="coscene">',r=function(i){var x=Math.sin(i*12.9898)*43758.5453;return x-Math.floor(x);};
+ var far=function(x,y){var pts=CO_PLOTS.concat(CO_SPOTS,[[CO_PLAZA[0],CO_PLAZA[1]],[198,66],[200,160],[318,94]]);for(var i=0;i<pts.length;i++)if(Math.hypot(pts[i][0]-x,(pts[i][1]-y)*1.2)<26)return false;var dx=(x-205)/150,dy=(y-150)/80;return dx*dx+dy*dy<=1;};
+ var n=0;for(var i=0;i<140&&n<34;i++){var x=60+r(i)*290,y=72+r(i+77)*156;if(!far(x,y))continue;n++;
+  if(n%3===0){var c=['#FF8FB1','#FFD23F','#B9A5D9','#FFFFFF'][n%4];o+='<g transform="translate('+x.toFixed(0)+' '+y.toFixed(0)+')"><path d="M0 0v-5" stroke="#5DAE4B" stroke-width="1.4"/><circle cy="-6" r="2.4" fill="'+c+'" stroke="#5B4B6E" stroke-width=".8"/><circle cy="-6" r=".9" fill="#FFE27A"/></g>';}
+  else o+='<path d="M'+x.toFixed(0)+' '+y.toFixed(0)+'l-2-6M'+x.toFixed(0)+' '+y.toFixed(0)+'l1-7M'+x.toFixed(0)+' '+y.toFixed(0)+'l3-5" stroke="'+(n%2?'#5DAE4B':'#7CC66A')+'" stroke-width="1.6" stroke-linecap="round" fill="none"/>';}
+ /* village corners */
+ o+=coHouse(44,160,'#E0509F',.95)+coHouse(70,150,'#9B7CC8',.8)+'<g transform="translate(36 176)"><circle r="6" fill="#B8E39C" stroke="#5B4B6E" stroke-width="1.4"/><path d="M0 0v6" stroke="#8B6B3E" stroke-width="2"/></g>';
+ o+=coHouse(236,52,'#F2A900',.85)+'<g transform="translate(176 54)"><path d="M-10 0h20" stroke="#8B6B3E" stroke-width="2"/><path d="M-8 0v-5M-3 0v-6M2 0v-5M7 0v-6" stroke="#5DAE4B" stroke-width="2"/></g>';
+ o+=coHouse(366,184,'#2FA8DC',.9)+'<path d="M330 214h28" stroke="#8B6B3E" stroke-width="3"/><path d="M334 214v6M354 214v6" stroke="#8B6B3E" stroke-width="2"/>';
+ return o+'</g>';}
+function coSynLinks(q){var L2=coLayout(q),o='';(q.syn||[]).forEach(function(id){var y=CO_SYN.filter(function(s){return s.id===id;})[0];if(!y)return;var a=CO_PLOTS[L2.disp[y.a]],b=CO_PLOTS[L2.disp[y.b]];
+  o+='<g class="cosyn"><path d="M'+a[0]+' '+(a[1]+6)+'L'+b[0]+' '+(b[1]+6)+'" stroke="#FFD23F" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 7" opacity=".95"/><circle cx="'+((a[0]+b[0])/2)+'" cy="'+((a[1]+b[1])/2+6)+'" r="5" fill="#FFF3C4" stroke="#E8920F" stroke-width="1.6"/></g>';});return o;}
+function coSpareMarks(q){return coLayout(q).spare.map(function(i){var p=CO_PLOTS[i];return '<g transform="translate('+p[0]+' '+p[1]+')"><ellipse cy="6" rx="22" ry="7" fill="rgba(255,255,255,.35)" stroke="#9B7CC8" stroke-width="1.4" stroke-dasharray="3 3"/><text y="10" text-anchor="middle" font-size="10" font-weight="900" fill="#9B7CC8">+</text></g>';}).join('');}
+/* outermost island wrapper: apply the squad's layout, add scenery + synergy links under the buildings, villagers on top */
+(function(){var i1=coIsland;coIsland=function(q){if(!q||!q.bld)return i1(q);var lay=coLayout(q);CO_UNITS.forEach(function(k){CO_POS[k]=CO_PLOTS[lay.disp[k]];});
+ var s=i1(q),k0='d="'+CO_IN+'"',i=s.indexOf(k0);if(i>=0){var e=s.indexOf('/>',i)+2;s=s.slice(0,e)+coScenery(q)+coSynLinks(q)+coSpareMarks(q)+s.slice(e);}
+ var j=s.indexOf('<g class="copals">');var vill=CO_VILL.map(coVillager).join('');if(j>=0)s=s.slice(0,j)+vill+s.slice(j);else{var z=s.lastIndexOf('</svg>');s=s.slice(0,z)+vill+s.slice(z);}
+ return s;};})();
+/* explore: villagers + spare plots are hotspots too */
+(function(){var h0=coHots;coHots=function(q){var H=h0(q);CO_VILL.forEach(function(v){H.push({k:'v',v:v,x:v.hx,y:v.hy});});coLayout(q).spare.forEach(function(i){H.push({k:'p',i:i,x:CO_PLOTS[i][0],y:CO_PLOTS[i][1]+14});});return H;};})();
+function coVillLine(v,q){var w=q.world,f=q.fog;
+ if(v.id==='elder')return f>=3?[L('The Fog is thick today! Repair quizzes push it back – and a full squad day keeps it away.','今日濃霧好厚！修復測驗可以把它擊退——全隊都溫習就能把它擋住。'),'repair']:[L('Clear skies! When everyone studies, buildings grow and the Fog stays away.','天朗氣清！大家都溫習，建築就會成長，濃霧也不敢靠近。'),'quest'];
+ if(v.id==='farmer'){if(w&&w.water<45)return [L('My crops are thirsty and the water is cloudy. Build drains and the treatment plant!','我的農作物好口渴，食水又混濁。快建雨水渠和濾水廠！'),'water'];var g=q.bld.green||0;return [g?L('Greenhouse Lv '+g+' – my flowers love it! Put the Water Works next door for Irrigation.','溫室 Lv '+g+'——我的花好喜歡！把淨水廠建在旁邊就有灌溉效果。'):L('Build a Greenhouse near the Water Works – plants need water to grow.','在淨水廠附近建溫室吧——植物需要水才能生長。'),'build'];}
+ if(w){var t=w.tonight;return t.sev>=2?[L('Heavy rain tonight – I can feel it! Prepare the drains before bedtime.','今晚有大雨，我感覺到！睡前要準備好雨水渠。'),'prep']:t.sev===1?[L('A little rain tonight. Rain is the water cycle bringing water back to us.','今晚有少量雨。下雨就是水循環把水送回來。'),'prep']:[L('Calm sea tonight. The sun is evaporating sea water into tomorrow’s clouds.','今晚風平浪靜。太陽正把海水蒸發成明天的雲。'),''];}
+ return [L('The sea gives us water – the Sun evaporates it, clouds carry it back as rain.','大海給我們水——太陽令它蒸發，雲再把它變成雨送回來。'),''];}
+(function(){var n0=coNear;coNear=function(fresh){var a=document.getElementById('coAct'),q=coopSq(),h=a&&q?coNearest():null;if(!h||(h.k!=='v'&&h.k!=='p'))return n0(fresh);
+ var ic,title,line,btn='';
+ if(h.k==='v'){var x=coVillLine(h.v,q);ic='<svg viewBox="-12 -24 24 28" width="38" height="40" aria-hidden="true">'+coVillager(Object.assign({},h.v,{x:0,y:0})).replace(/class="covill"[^>]*transform="translate\(0 0\)"/,'')+'</svg>';title=L(h.v.n[0],h.v.n[1]);line=x[0];
+  btn=x[1]==='repair'&&q.fog>0?'<button class="btn small" data-coop="repair">'+L('Repair','修復')+'</button>':x[1]==='prep'&&q.world?'<button class="btn small" data-cow="prep">'+L('Prepare','準備')+'</button>':x[1]==='water'&&q.world?'<button class="btn small" data-cotab="water">'+L('Water','供水')+'</button>':x[1]==='build'?'<button class="btn small" data-cotab="build">'+L('Build','建造')+'</button>':'';
+  var g=document.querySelector('.covill[data-v="'+h.v.id+'"]');if(g&&fresh){g.classList.remove('cowave');void g.getBoundingClientRect();g.classList.add('cowave');}}
+ else{ic='<span class="coexic">+</span>';title=L('Free plot','空地');line=L('Build any science building here. Think about its neighbours – some pairs work better together!','這裏可以建任何科學建築。想想旁邊是甚麼——有些建築放在一起效果更好！');btn='<button class="btn small pink" data-coplot="'+h.i+'">'+L('Build here','在這裏建造')+'</button>';}
+ a.innerHTML='<div class="coexchip'+(fresh?' fresh':'')+'">'+ic+'<div><b>'+title+'</b><small>'+line+'</small></div>'+btn+'</div>';
+ var bub=document.getElementById('coBub');if(bub)bub.innerHTML='<g class="cobubg'+(fresh?' fresh':'')+'"><rect x="-9" y="-16" width="18" height="16" rx="8" fill="#fff" stroke="#5B4B6E" stroke-width="1.6"/><text x="0" y="-4" text-anchor="middle" font-size="11" font-weight="900" fill="#E8920F">'+(h.k==='v'?'…':'+')+'</text></g>';};})();
+/* ---------- the plot picker: choose where to build (or move to), with a live synergy preview ---------- */
+function coSynFor(q,b,p){/* synergies building b would have on plot p */var out=[];CO_SYN.forEach(function(y){if(y.a!==b&&y.b!==b)return;var o=y.a===b?y.b:y.a,op=coPlotOf(q,o),built=(q.bld[o]||0)>0;out.push({y:y,o:o,on:built&&op!=null&&coNearP(p,op),placed:op!=null});});return out;}
+function coPickerOpen(mode,b,pre){COOP.pk={mode:mode,b:b,p:pre!=null?pre:null};coPickerShow();}
+function coPickerShow(){var X=COOP.pk,q=coopSq();if(!q||!X)return;var lay=coLayout(q),bldg=X.b?CO_B[X.b]:null,map='<svg class="copkmap" viewBox="20 30 360 220" role="group" aria-label="'+esc(L('Choose a plot','選擇地點'))+'"><path d="'+CO_TOP+'" fill="#CDEBB8" stroke="#5B4B6E" stroke-width="2"/>';
+ CO_PLOTS.forEach(function(pt,i){var owner=coPlotUsed(q,i),me=X.b&&owner===X.b,sel=X.p===i;
+  if(owner&&!me)map+='<g transform="translate('+pt[0]+' '+pt[1]+') scale(.55)" opacity=".9">'+coBld(owner,Math.max(1,q.bld[owner]||1),0,0,false,false)+'</g>';
+  else map+='<g class="copk'+(sel?' sel':'')+(me?' cur':'')+'" data-copk="'+i+'" tabindex="0" role="button" aria-label="'+esc(L('Plot ','地點 ')+(i+1))+'"><circle cx="'+pt[0]+'" cy="'+pt[1]+'" r="17" fill="'+(sel?'#FFD23F':me?'#B9E6FF':'#fff')+'" stroke="'+(sel?'#E8920F':'#9B7CC8')+'" stroke-width="2.5" stroke-dasharray="'+(sel||me?'0':'4 3')+'"/><text x="'+pt[0]+'" y="'+(pt[1]+5)+'" text-anchor="middle" font-size="13" font-weight="900" fill="#5B4B6E">'+(me?'★':i+1)+'</text></g>';});
+ [[198,66],[200,160],[318,94]].forEach(function(w,i){map+='<g transform="translate('+w[0]+' '+w[1]+') scale(.45)" opacity=".55">'+coBld(['obs','museum','light'][i],1,0,0,false,false)+'</g>';});
+ map+='</svg>';
+ var body='',choose='';
+ if(X.mode==='plot'&&!X.b){/* came from a free plot: pick which building */var opts=CO_UNITS.filter(function(k){return coPlotOf(q,k)==null&&!(q.bld[k]>0);});
+  body='<p class="cwq">'+L('Which building should stand on plot '+(X.p+1)+'?','地點 '+(X.p+1)+' 要建哪座建築？')+'</p><div class="copkb">'+opts.map(function(k){var c=q.costs[k],can=c&&c.req&&!q.con&&coAfford(q,c),syn=coSynFor(q,k,X.p).filter(function(s){return s.on;});
+   return '<button class="copkbtn" data-copkb="'+k+'"'+(can?'':' disabled')+'><svg viewBox="-45 -70 90 90" width="44" height="44" aria-hidden="true">'+coBld(k,1,0,0,false,false)+'</svg><b>'+esc(L(CO_B[k].n[0],CO_B[k].n[1]))+'</b>'+(syn.length?'<span class="cosynok">'+IC('sparkle')+syn.length+'</span>':'')+'</button>';}).join('')+'</div>'+(q.con?'<p class="cwnote">'+L('Finish the current construction first.','請先完成目前的建造。')+'</p>':'');
+  cwModal(IC('pencil')+L('Build on a free plot','在空地上建造'),map+body);return;}
+ var sel=X.p!=null&&X.b?coSynFor(q,X.b,X.p):null;
+ if(sel)choose='<div class="copkprev"><b>'+L('Neighbours on this plot','這個地點的鄰居')+'</b>'+sel.map(function(s){var O=CO_B[s.o];return '<div class="copkrow'+(s.on?' on':'')+'">'+(s.on?IC('check'):IC('lock'))+'<span><b>'+L(s.y.n[0],s.y.n[1])+'</b> · '+esc(L(O.n[0],O.n[1]))+(s.on?'':' – '+(s.placed?L('not next door','不在旁邊'):L('not built yet','尚未建成')))+'<small>'+L(s.y.e[0],s.y.e[1])+'</small></span></div>';}).join('')+'</div>';
+ var cost=X.mode==='move'?L('Moving costs 1 Blueprint.','搬遷需要 1 張藍圖。'):'';
+ cwModal(IC(X.mode==='move'?'swap':'pencil')+(X.mode==='move'?L('Move ','搬遷')+esc(L(bldg.n[0],bldg.n[1])):L('Where to build ','在哪裏建')+esc(L(bldg.n[0],bldg.n[1]))+L('?','？')),
+  '<p class="muted">'+L('Tap a free plot. Buildings that are neighbours can link up for bonuses.','輕按一塊空地。相鄰的建築可以連結，獲得額外效果。')+'</p>'+map+(choose||'<p class="cwnote">'+L('No plot chosen yet.','尚未選擇地點。')+'</p>')+(cost?'<p class="cwnote">'+cost+'</p>':'')+
+  '<button class="btn pink" data-copkgo="1"'+(X.p==null?' disabled':'')+'>'+(X.mode==='move'?L('Move here (1 Blueprint)','搬到這裏（1 張藍圖）'):L('Build here','在這裏建造'))+'</button>');}
+function coPickerGo(){var X=COOP.pk;if(!X||X.p==null||!X.b)return;var b=X.b,p=X.p,mode=X.mode;
+ coopCall(mode==='move'?'coopMove':'coopBuild',{b:b,plot:p}).then(function(j){if(j&&j.ok){closeModal();sfx('fanfare');toast(mode==='move'?L('Moved!','已搬遷！'):L('Construction started!','開始建造！'));var syn=j.squad&&j.squad.syn||[];if(syn.length)setTimeout(function(){toast(L('Active links: ','已連結：')+syn.length);},900);}});}
+/* the synergy card in the Build tab */
+function coSynCard(q){var on=q.syn||[];return '<div class="card cosyncard"><h4>'+IC('sparkle')+L('Neighbour links','鄰居連結')+' <small>'+on.length+'/'+CO_SYN.length+'</small></h4><p class="muted">'+L('Build these pairs next to each other. A fogged building switches its links off.','把以下建築建在相鄰位置。被霧籠罩的建築會失去連結。')+'</p>'+
+ CO_SYN.map(function(y){var a=on.indexOf(y.id)>=0,A=CO_B[y.a],B=CO_B[y.b];return '<div class="copkrow'+(a?' on':'')+'">'+(a?IC('check'):IC('lock'))+'<span><b>'+L(y.n[0],y.n[1])+'</b> · '+esc(L(A.n[0],A.n[1]))+' + '+esc(L(B.n[0],B.n[1]))+'<small>'+L(y.e[0],y.e[1])+'</small></span></div>';}).join('')+'</div>';}
+(function(){var bt=coBuildTab;coBuildTab=function(q){var h=bt(q),i=h.indexOf('<h3 class="cosub">'+L('Buildings','建築')+'</h3>');h=i>=0?h.slice(0,i)+coSynCard(q)+h.slice(i):h+coSynCard(q);
+ /* a Move button on every finished unit building */
+ CO_UNITS.forEach(function(k){if((q.bld[k]||0)>0&&coPlotOf(q,k)!=null&&!(q.con&&q.con.b===k)){var j=h.indexOf('data-cbk="'+k+'"');if(j<0)return;var d=h.indexOf('<details class="cbinfo">',j);if(d<0)return;
+  var tag='<button class="btn small white comove" data-comove="'+k+'"'+(q.bp<1?' disabled title="'+esc(L('Needs 1 Blueprint','需要 1 張藍圖'))+'"':'')+'>'+IC('swap')+L('Move','搬遷')+'</button>';h=h.slice(0,d)+tag+h.slice(d);}});return h;};})();
+/* clicks: first-time builds go through the plot picker (capture phase, before the old confirm box) */
+document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-coop="build"]');if(!t||t.disabled)return;var q=coopSq(),k=t.dataset.b;if(!q||CO_UNITS.indexOf(k)<0||coPlotOf(q,k)!=null)return;
+ e.stopPropagation();e.preventDefault();sfx('tap');coPickerOpen('build',k,null);},true);
+document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-copk],[data-copkgo],[data-copkb],[data-comove],[data-coplot]');if(!t||t.disabled)return;sfx('tap');var X=COOP.pk;
+ if(t.dataset.copk!=null&&X){X.p=+t.dataset.copk;coPickerShow();}
+ else if(t.dataset.copkgo)coPickerGo();
+ else if(t.dataset.copkb&&X){X.b=t.dataset.copkb;X.mode='build';coPickerShow();}
+ else if(t.dataset.comove)coPickerOpen('move',t.dataset.comove,null);
+ else if(t.dataset.coplot!=null)coPickerOpen('plot',null,+t.dataset.coplot);});
+document.addEventListener('keydown',function(e){var t=e.target;if(t&&t.dataset&&t.dataset.copk!=null&&(e.key==='Enter'||e.key===' ')){e.preventDefault();t.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
+(function(){var e1=coopErr;coopErr=function(e){return ({plot:L('That plot is taken – pick another one.','這塊地已被佔用——請選另一塊。'),locked:L('Build it first, then you can move it.','先建成才可以搬遷。'),busy:L('It is under construction – move it when it is finished.','正在建造中——完成後才可以搬遷。'),short:L('You need 1 Blueprint to move a building.','搬遷建築需要 1 張藍圖。')})[e]||e1(e);};})();
+window.__coop.place={plots:CO_PLOTS,syn:CO_SYN,layout:coLayout,pick:coPickerOpen};
 
 
 

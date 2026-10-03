@@ -21,6 +21,19 @@ var COOP_B = { safety: 1, water: 2, green: 3, cell: 4, power: 5, part: 6 };
 var COOP_ROLES = { chem: [2, 6], bio: [3, 4], phys: [5, 1], eng: [] };
 var COOP_DECO = { lamp: 3, flag: 2, bench: 2, tree: 3, statue: 5, fountain: 6 };
 var COOP_STARS = [7, 14, 30, 60];
+/* building plots: the 6 science buildings can stand on any of 9 plots (the game draws them at these island coordinates).
+   Plots closer than COOP_NEAR are neighbours; neighbouring pairs below form synergies. */
+var COOP_PLOTXY = [[78, 128], [150, 96], [244, 92], [320, 138], [112, 188], [290, 190], [256, 142], [140, 150], [200, 214]];
+var COOP_NEAR = 105;
+var COOP_DEFPLOT = { safety: 0, water: 1, green: 2, cell: 3, power: 4, part: 5 };
+var COOP_SYN = [
+  { id: 'irrig', a: 'water', b: 'green', mats: [2, 3] },            /* irrigation: water for the plants */
+  { id: 'clinic', a: 'safety', b: 'cell', mats: [1, 4] },           /* a safe, clean lab next to the clinic */
+  { id: 'energy', a: 'power', b: 'part', mats: [5, 6] },            /* energy to heat and cool the particle lab */
+  { id: 'pumps', a: 'power', b: 'water', mats: [5, 2], cap: 1 },    /* pumps need energy: +1 drainage on rainy nights */
+  { id: 'health', a: 'water', b: 'cell', mats: [2, 4], health: 1 }  /* clean water keeps people healthy: +1 health a night */
+];
+var COOP_SYNBONUS = 0.1;
 
 /* ---------- Island 3.0 "Living Island": every world constant in one place (tune here) ----------
    The world simulation runs automatically (weather comes from the date; nights resolve lazily in coopRoll).
@@ -86,7 +99,7 @@ function coopPaused() { return PROPS.getProperty('COOP_PAUSE') === '1'; }
 /* ---------- squad state ---------- */
 function coopNewState() {
   var t = cDay();
-  return { v: 2, w: coopWorldNew(), m: {}, mats: [0, 0, 0, 0, 0, 0, 0], bp: 0, spark: 0, crys: 0, star: 0,
+  return { v: 2, w: coopWorldNew(), plot: {}, m: {}, mats: [0, 0, 0, 0, 0, 0, 0], bp: 0, spark: 0, crys: 0, star: 0,
     bld: { safety: 0, water: 0, green: 0, cell: 0, power: 0, part: 0, obs: 0, museum: 0, light: 0 },
     con: null, fog: 0, fogB: null, frz: 1, blk: false, streak: 0, best: 0, sg: [], day: cAdd(t, -1), wk: {}, puz: null, log: [], deco: {}, prize: false, created: t };
 }
@@ -179,8 +192,9 @@ function coopEarn(u, recs) {
     if (ok.length) {
       var m = st.m[u.email];
       if (m.dk !== today) { m.dk = today; m.dm = 0; m.soft = 0; m.dc = 0; }
+      var syn = coopSyn(st);
       ok.forEach(function (r) {
-        var un = Number(r.unit), cor = Math.min(num(r.cor), 30), mul = COOP_ROLES[m.role] && COOP_ROLES[m.role].indexOf(un) >= 0 ? 1.5 : m.role === 'eng' ? 1.2 : 1;
+        var un = Number(r.unit), cor = Math.min(num(r.cor), 30), mul = (COOP_ROLES[m.role] && COOP_ROLES[m.role].indexOf(un) >= 0 ? 1.5 : m.role === 'eng' ? 1.2 : 1) * coopSynMul(syn, un);
         st.wk[today] = (st.wk[today] || 0) + cor;
         for (var i = 0; i < cor; i++) {
           if (m.dm < COOP_CAP) { m.fr += mul; var g = Math.floor(m.fr); m.fr -= g; st.mats[un] += g; m.dm += g; m.tot += g; }
@@ -243,7 +257,8 @@ function coopAction(u, b) {
       case 'coopRole':
         if (!row || !COOP_ROLES[b.role]) { err = 'bad'; break; }
         row.st.m[u.email].role = b.role; coopWrite(D, row); break;
-      case 'coopBuild': err = row ? coopBuild(row.st, String(b.b)) : 'no_squad'; if (!err) coopWrite(D, row); break;
+      case 'coopBuild': err = row ? coopBuild(row.st, String(b.b), b.plot) : 'no_squad'; if (!err) coopWrite(D, row); break;
+      case 'coopMove': err = row ? coopMove(row.st, String(b.b), b.plot) : 'no_squad'; if (!err) coopWrite(D, row); break;
       case 'coopPuzzle': err = row ? coopPuzzle(row.st, u, b) : 'no_squad'; if (!err) coopWrite(D, row); break;
       case 'coopRepair': err = row ? coopRepair(row.st, u.email, b) : 'no_squad'; if (!err) coopWrite(D, row); break;
       case 'coopTrade': err = row ? coopTrade(row.st, b) : 'no_squad'; if (!err) coopWrite(D, row); break;
@@ -282,7 +297,7 @@ function coopHost(row) { var m = Object.keys(row.st.m); return row.st.host && ro
 function coopCode() { var a = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', s = ''; for (var i = 0; i < 6; i++) s += a.charAt(Math.floor(Math.random() * a.length)); return s; }
 function coopPrune(left, today) { for (var e in left) if (cDiff(left[e], today) > 8) delete left[e]; return left; }
 
-function coopBuild(st, b) {
+function coopBuild(st, b, plot) {
   if (st.con) return 'busy';
   var lv = (st.bld[b] || 0) + 1, wonder = !COOP_B[b];
   if (st.bld[b] == null) return 'bad';
@@ -291,6 +306,11 @@ function coopBuild(st, b) {
   var c = coopCost(st, b, lv);
   for (var u = 1; u <= 6; u++) if (st.mats[u] < c.mats[u]) return 'short';
   if (st.bp < c.bp || st.star < c.star || st.spark < c.spark || st.crys < c.crys) return 'short';
+  if (COOP_B[b] && st.plot[b] == null) {
+    var pl = plot == null || plot === '' ? coopFreePlot(st, b) : Number(plot);
+    if (!(pl >= 0 && pl < COOP_PLOTXY.length) || coopPlotUsed(st, pl)) return 'plot';
+    st.plot[b] = pl;
+  }
   for (var k = 1; k <= 6; k++) st.mats[k] -= c.mats[k];
   st.bp -= c.bp; st.star -= c.star; st.spark -= c.spark; st.crys -= c.crys;
   st.con = { b: b, lv: lv, need: c.need, done: 0, since: cDay() };
@@ -384,7 +404,7 @@ function coopView(u, row, cool) {
     wk: { c: wc, need: 120 * mem.length, left: cDiff(today, sun) },
     puz: st.puz ? { day: st.puz.day, u: st.puz.u, seed: st.puz.seed, done: st.puz.done, parts: st.puz.parts.map(function (p) { return { who: idx[p.e], mine: p.e === u.email, ok: p.ok, by: p.by, tried: p.tried.indexOf(u.email) >= 0 }; }) } : null,
     me: { dm: me.dk === today ? me.dm : 0, dc: me.dk === today ? me.dc : 0, owe: me.owe || 0, rep: me.rep && me.rep.d === today ? me.rep.n : 0, role: me.role || '' },
-    costs: coopCosts(st)
+    costs: coopCosts(st), plot: st.plot || {}, syn: coopSyn(st).map(function (y) { return y.id; })
   };
   if (res.wOn) res.squad.world = coopWorldView(row, u.email);
   return res;
@@ -421,6 +441,7 @@ function coopWorldNew() {
 /* old squads (v1) get the world defaults; nothing else changes */
 function coopMigrate(st) {
   if (!st.w) st.w = coopWorldNew();
+  if (!st.plot) { st.plot = {}; for (var k in COOP_B) if (st.bld[k] > 0 || (st.con && st.con.b === k)) st.plot[k] = COOP_DEFPLOT[k]; }
   if (!st.v || st.v < 2) st.v = 2;
   return st;
 }
@@ -475,7 +496,8 @@ function coopWorldTick(st, d, absentN) {
   var load = coopRain(wx) * pave * (gentle ? 0.5 : 1);
   var prep = w.prep && w.prep.d === d ? w.prep.a : {};
   var fogPen = st.fog >= 6 ? 1 : st.fog >= 3 ? 0.5 : 0;
-  var cap = Math.max(0, W.soil + (w.mod.drain + (prep.drains || 0)) * W.drainCap + (w.mod.pond + (prep.pond || 0)) * W.pondCap - fogPen);
+  var syn = coopSyn(st), synCap = 0, synH = 0; syn.forEach(function (y) { synCap += y.cap || 0; synH += y.health || 0; });
+  var cap = Math.max(0, synCap + W.soil + (w.mod.drain + (prep.drains || 0)) * W.drainCap + (w.mod.pond + (prep.pond || 0)) * W.pondCap - fogPen);
   var half = absentN > 0 ? 0.5 : 1, dW = 0, dH = 0, res = 'calm', excess = 0, fogAdd = 0;
   if (load > 0) {
     var ratio = cap / load;
@@ -498,6 +520,7 @@ function coopWorldTick(st, d, absentN) {
     else { dH -= w.pol * W.polGerm; if (w.pol >= 3) { dH -= W.illness; ill = true; coopCdx(w, 'chlorine'); } }
   } else if (w.water >= 50) dH += W.calmHealth;
   if (w.mod.fluor && w.mod.chlor) dH += W.fluor;
+  dH += synH;
   if (res === 'crisis') { w.rec = cAddF(d, 1); if (absentN === 0 && !wx.tut && st.fog < W.sysFogMax) {   /* no Fog from systems on absent days or tutorial nights */
      fogAdd = W.sysFog; st.fog = Math.min(W.sysFogMax, st.fog + fogAdd); } coopLog(st, 'wcrisis', wx.t); }
   dW = Math.max(-W.maxLoss.water, dW); dH = Math.max(-W.maxLoss.health, dH);   /* one bad night can only do so much */
@@ -611,4 +634,29 @@ function coopWorldView(row, email) {
     rep: w.rep[0] || null, cdx: w.cdx, rec: w.rec === t,
     tasks: w.task && w.task.d === t ? w.task.list.map(function (T) { return { k: T.k, seed: T.seed, done: !!T.by, mine: T.by === email, who: T.by ? mem.indexOf(T.by) : -1, s: T.s }; }) : [],
     costs: { drains: COOP_PREP.drains.ops, pond: COOP_PREP.pond.ops, store: COOP_PREP.store.ops } };
+}
+
+/* =====================================================================================
+   Building placement + neighbour synergies
+   ===================================================================================== */
+function coopPlotUsed(st, pl) { for (var k in st.plot) if (st.plot[k] === pl) return k; return null; }
+function coopFreePlot(st, b) { var d = COOP_DEFPLOT[b]; if (d != null && !coopPlotUsed(st, d)) return d; for (var i = 0; i < COOP_PLOTXY.length; i++) if (!coopPlotUsed(st, i)) return i; return -1; }
+function coopNear(p, q) { var a = COOP_PLOTXY[p], c = COOP_PLOTXY[q]; return p !== q && Math.sqrt((a[0] - c[0]) * (a[0] - c[0]) + (a[1] - c[1]) * (a[1] - c[1])) <= COOP_NEAR; }
+/* a synergy is active when both buildings are built, stand on neighbouring plots and neither is fogged */
+function coopSyn(st) {
+  var plot = st.plot || {};
+  return COOP_SYN.filter(function (y) {
+    return st.bld[y.a] > 0 && st.bld[y.b] > 0 && plot[y.a] != null && plot[y.b] != null && coopNear(plot[y.a], plot[y.b]) && st.fogB !== y.a && st.fogB !== y.b;
+  });
+}
+function coopSynMul(syn, unit) { var n = 0; syn.forEach(function (y) { if (y.mats.indexOf(unit) >= 0) n++; }); return 1 + COOP_SYNBONUS * n; }
+/* move a finished building to another free plot: costs 1 Blueprint, so a new layout is a real decision */
+function coopMove(st, b, plot) {
+  if (!COOP_B[b]) return 'bad';
+  if (!(st.bld[b] > 0) || st.plot[b] == null) return 'locked';
+  if (st.con && st.con.b === b) return 'busy';
+  var pl = Number(plot);
+  if (!(pl >= 0 && pl < COOP_PLOTXY.length) || pl === st.plot[b] || coopPlotUsed(st, pl)) return 'plot';
+  if (st.bp < 1) return 'short';
+  st.bp--; st.plot[b] = pl; coopLog(st, 'move', b); return null;
 }
