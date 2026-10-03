@@ -217,7 +217,14 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
   - Holiday mode freezes the world.
 - **Fully automatic:** the weather comes from the date and each night resolves the next time anyone in the squad opens the game or studies (missed nights are caught up), so no timers or daily teacher steps are needed.
 - **Teacher view:** switch the world off/on and choose **gentle** mode (half the rain load); squads in crisis last night are listed.
-- **How to play:** a button at the top of the Island tab opens a short bilingual guide (it glows until a student has opened it once).
+- **How to play:** a button at the top of the Island tab opens a 6-card picture story (swipe or Next) built from the game's own pals and buildings; it glows until a student has opened it once.
+- **Island UI 4.0 (picture-first):**
+  - The screen splits into tabs: **Today / Build / Water / Squad**.
+  - A **Today's quest** bar shows 4 icons with ticks and one "next step" button.
+  - Daily jobs are icon tiles with one number each.
+  - Weather shows as a big icon with water and health gauges.
+  - The Field Report is "rain vs drains" bars plus one key line, with the full story under "More".
+  - The water system is a tap-to-build **flow diagram** (rain → drains → pond → reservoir; sedimentation → filtration → chlorination → fluoridation → homes).
 
 ## 🧠 Learning rewards (anti-grinding)
 - **Fresh topics pay more:** 🌱 a never-tried sub-topic ×1.5, 🔁 not played for 7+ days ×1.25; the same quiz again within 20 hours pays ×0.5, then ×0.25, then ×0.1. The same applies to each dictation and read-aloud set ("missed words" practice always pays in full).
