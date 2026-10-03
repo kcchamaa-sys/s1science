@@ -178,17 +178,17 @@ function coopAction(u, b) {
   try {
     var D = coopData(), row = coopFind(D, u.email), today = cDay(), err = null, extra = {};
     if (row && coopRoll(row)) coopWrite(D, row);
-    var left = coopProp('COOP_LEFT', '{}'), cool = left[u.email] ? Math.max(0, 7 - cDiff(left[u.email], today)) : 0;
+    var cool = 0; /* no time lock: anyone can leave and join/create a squad straight away */
     switch (b.action) {
       case 'coopGet': break;
       case 'coopCreate':
-        if (row) { err = 'in_squad'; break; } if (cool) { err = 'cooldown'; break; }
+        if (row) { err = 'in_squad'; break; }
         var code; do { code = coopCode(); } while (D.rows.some(function (x) { return x.code === code; }));
         row = { id: 'S' + Date.now().toString(36), name: clean(b.name, 24) || 'Squad', code: code, st: coopNewState() };
-        row.st.m[u.email] = coopMember(b.role); coopMark(row.st, u.email, b.studied ? today : '');
+        row.st.m[u.email] = coopMember(b.role); row.st.host = u.email; coopMark(row.st, u.email, b.studied ? today : '');
         coopLog(row.st, 'create', ''); coopWrite(D, row); break;
       case 'coopJoin':
-        if (row) { err = 'in_squad'; break; } if (cool) { err = 'cooldown'; break; }
+        if (row) { err = 'in_squad'; break; }
         var c2 = String(b.code || '').toUpperCase().replace(/[^A-Z0-9]/g, ''), t = null;
         D.rows.forEach(function (x) { if (x.code === c2) t = x; });
         if (!t) { err = 'no_code'; break; }
@@ -197,10 +197,12 @@ function coopAction(u, b) {
         coopLog(t.st, 'join', fullName(u.zh, u.en)); coopWrite(D, t); row = t; break;
       case 'coopLeave':
         if (!row) break;
+        /* host leaving = deleting the room (needs b.disband); a teammate just leaves and her squad progress stays here, never transfers */
+        if (coopHost(row) === u.email && Object.keys(row.st.m).length > 1 && !b.disband) { err = 'host_confirm'; break; }
+        if (coopHost(row) === u.email) { coopDelete(D, row); row = null; break; }
         delete row.st.m[u.email]; coopLog(row.st, 'leave', fullName(u.zh, u.en));
-        left[u.email] = today; PROPS.setProperty('COOP_LEFT', JSON.stringify(coopPrune(left, today)));
         if (!Object.keys(row.st.m).length) coopDelete(D, row); else coopWrite(D, row);
-        row = null; cool = 7; break;
+        row = null; break;
       case 'coopRole':
         if (!row || !COOP_ROLES[b.role]) { err = 'bad'; break; }
         row.st.m[u.email].role = b.role; coopWrite(D, row); break;
@@ -228,6 +230,8 @@ function coopAction(u, b) {
     return res;
   } finally { lock.releaseLock(); }
 }
+/* the squad's host: whoever created it (older squads: the first member) */
+function coopHost(row) { var m = Object.keys(row.st.m); return row.st.host && row.st.m[row.st.host] ? row.st.host : m[0]; }
 function coopCode() { var a = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', s = ''; for (var i = 0; i < 6; i++) s += a.charAt(Math.floor(Math.random() * a.length)); return s; }
 function coopPrune(left, today) { for (var e in left) if (cDiff(left[e], today) > 8) delete left[e]; return left; }
 
@@ -326,7 +330,7 @@ function coopView(u, row, cool) {
   for (var k = 0; k < 7; k++) { var d = cAdd(sun, -k); if (d <= today) wc += (st.wk[d] || 0); }
   var me = st.m[u.email] || {};
   res.squad = {
-    id: row.id, name: row.name, code: row.code, n: mem.length,
+    id: row.id, name: row.name, code: row.code, n: mem.length, host: coopHost(row) === u.email,
     members: mem.map(function (e) { var x = findUser(e) || {}, m = st.m[e]; return { n: fullName(x.zh, x.en), c: x.cls || '', p: pets[e] || 'mochi', role: m.role, today: m.days.indexOf(today) >= 0, me: e === u.email, tot: m.tot }; }),
     mats: st.mats, bp: st.bp, spark: st.spark, crys: st.crys, star: st.star, bld: st.bld, con: st.con, fog: st.fog, fogB: st.fogB,
     frz: st.frz, streak: st.streak, best: st.best, log: st.log, deco: st.deco, prize: st.prize,
