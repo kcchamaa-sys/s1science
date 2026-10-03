@@ -4,6 +4,7 @@
  * - Checks each Google sign-in (ID token) and looks the email up in the Users sheet.
  * - Saves quiz / study records and each student's game progress to the spreadsheet.
  * - Gives class statistics to staff accounts only.
+ * - Co-op squads (Mochi Science Island) live in the second file, Coop.gs.
  *
  * Script Properties (Project Settings → Script properties):
  *   SHEET_ID        ID of the Google Sheet that holds the Users tab   (required)
@@ -43,13 +44,21 @@ function doPost(e) {
     if (!user) return out({ ok: false, error: 'not_listed' });
     switch (body.action) {
       case 'login': return out({ ok: true, user: user, progress: getProgress(user.email) });
-      case 'save': saveProgress(user, body.state, body.summary || {}); return out({ ok: true });
-      case 'record': return out({ ok: true, saved: appendRecords(user, body.records || []) });
+      case 'save':
+        saveProgress(user, body.state, body.summary || {});
+        try { coopTouch(user.email, String((body.summary || {}).lastDay || '')); } catch (e1) { }
+        return out({ ok: true });
+      case 'record':
+        var saved = appendRecords(user, body.records || []);
+        try { coopEarn(user, body.records || []); } catch (e2) { }
+        return out({ ok: true, saved: saved });
       case 'board': return out(board(user, body.scope === 'all' ? 'all' : 'class'));
       case 'stats':
         if (!user.teacher) return out({ ok: false, error: 'forbidden' });
         return out(stats());
-      default: return out({ ok: false, error: 'unknown_action' });
+      default:
+        if (/^coop[A-Z][a-zA-Z]*$/.test(String(body.action))) return out(coopAction(user, body));
+        return out({ ok: false, error: 'unknown_action' });
     }
   } catch (err) {
     return out({ ok: false, error: 'server: ' + err });

@@ -140,7 +140,7 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
 - **Home layout**: on wide screens the Home page uses two balanced columns (room, streak, daily mission, Mochi's pets | pet card, chat, leaderboard, next step); phones keep one column.
 - **Retention**: daily streak with reward multiplier (up to ×1.5) and ❄️ Streak Freezes, daily gift, 30+ trophies (streak trophies up to 200 days), collection gallery.
 - **錯題本 Mistake Bank**: wrong answers are saved automatically; answer one right twice in a row to clear it (+6 coins).
-- **Saving**: auto-saves to `localStorage` key `s1SciencePals_v1`; 💾 gives a save code + share link (`…/#CODE`) to move devices, with preview and checksum. Codes from every earlier version (v1–v6) still load; the current format is v13 (adds the 6 Unit Pals).
+- **Saving**: auto-saves to `localStorage` key `s1SciencePals_v1`; 💾 gives a save code + share link (`…/#CODE`) to move devices, with preview and checksum. Codes from every earlier version (v1–v6) still load; the current format is v15 (v13 added the 6 Unit Pals, v14 the capsule items, v15 the co-op pal Lumi).
 
 ## 🏅 Nobel Time Quest (season event, Oct 2026 – Mar 2027)
 - A separate **Nobel** tab with its own dark neon style, holographic cards and synth music (a faster track for the boss battle).
@@ -158,6 +158,26 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
 - **Teacher dashboard:** a separate 🏅 Nobel Quest tab (join rate, Sparks per chapter and per class, progress groups, task heat-map, students not started, per-student table) plus a "Nobel 諾貝爾" sheet in the Excel download. Needs the latest `server/Code.gs` deployed (it adds two columns to the progress sheet).
 - **Preview:** teacher accounts see every chapter; you can also add `#nobel-preview` to the web address.
 - Content lives in `nobeldata.js` (in the build) and progress is stored in save code v11.
+
+## 🏝️ Mochi Science Island 麻糬科學島 (co-op, class accounts only)
+- A new **Island 小島** tab appears only for students and teachers signed in from the class list (not guests). It needs the latest `server/Code.gs` **and** `server/Coop.gs` deployed.
+- **Squads of 2–4**, any class. One student creates a squad and shares a 6-letter invite code. Each player picks a role: Chemist (Units 2 & 6 ×1.5 materials), Biologist (3 & 4), Physicist (5 & 1) or Engineer (+20% everything, clears more Fog).
+- **Materials come from real study:** every correct quiz / mistake-practice / dictation answer gives 1 material of that unit. **Soft cap:** full speed up to 30 a day, then 1 material per 3 correct (up to 45), plus 2 bonus coins per extra correct answer (up to 100 a day) for the normal game.
+- **Co-op tasks:**
+  - Daily **blueprint puzzle**: each member answers one part. If a part is wrong, a teammate can rescue it (+1 Eureka spark). All parts right = 1 Blueprint.
+  - **Repair quizzes** clear the Fog (+1 Fog Crystal).
+  - The **weekly Murk Raid** checks the squad's total correct answers on Sunday night.
+- **Streak pressure (gentle):**
+  - Construction only moves forward on days when **every** member studies.
+  - A missed day uses a Squad Freeze (1 a week). After that, each absent member adds 1 Fog (max 10).
+  - Fog 3+ switches off a building's perk. Fog 9+ lets Murk steal materials. A lost raid adds +3 Fog.
+  - Squad-streak milestones (7 / 14 / 30 / 60 days) give Star Plans.
+- **9 buildings:**
+  - 6 unit buildings with 3 levels each: Safety Lab, Water Works, Greenhouse, Cell Clinic, Power Station, Particle Factory. Their perks help the squad: fewer repair questions, Fog blocks, daily snacks, +XP, +coins, material trading.
+  - 3 wonders: Observatory, Science Museum, and the **Fog-Sealing Lighthouse**.
+  - Costs grow fast (Lv 3 needs Star Plans and 5 squad days), so the island takes about a term.
+- **End-of-term prize:** building the Lighthouse gives every member the mythic co-op pal **Lumi 燈燈** (+7% coins & XP) and the **Fog Sealers** trading-card trophy (save code v15).
+- **Teacher view** (on the Island tab): every squad with members, materials given, days studied and last study day. Teachers can remove a student and turn on **holiday mode**, which pauses the Fog.
 
 ## 🧠 Learning rewards (anti-grinding)
 - **Fresh topics pay more:** 🌱 a never-tried sub-topic ×1.5, 🔁 not played for 7+ days ×1.25; the same quiz again within 20 hours pays ×0.5, then ×0.25, then ×0.1. The same applies to each dictation and read-aloud set ("missed words" practice always pays in full).

@@ -20,6 +20,7 @@ Class sign-in needs three things: your **Google Sheet** (name list + records), a
 ## Step 3 · The Apps Script
 - Go to [script.google.com](https://script.google.com) → **New project** → name it `Mochi Science Pals server`.
 - Delete the sample code and paste everything from **`server/Code.gs`**.
+- Click **＋ → Script**, name it `Coop`, and paste everything from **`server/Coop.gs`** (the co-op Island; it creates the `合作小隊 Coop Squads` tab by itself).
 - **Project Settings (⚙️) → Script properties → Add**:
   | Property | Value |
   |---|---|
@@ -54,3 +55,9 @@ Class sign-in needs three things: your **Google Sheet** (name list + records), a
 ## Updating the server later
 
 When `Code.gs` changes (for example, the class leaderboard was added), replace ALL the code in the Apps Script editor, save, then choose **Deploy → Manage deployments → ✏️ Edit → Version: New version → Deploy**. The web app URL stays the same.
+
+### Co-op Island (Coop.gs)
+- Needs **both** `Code.gs` and `Coop.gs` in the same Apps Script project. After pasting, deploy a **New version** (see above).
+- Squads are stored in the `合作小隊 Coop Squads` tab (one row per squad). Please don't edit the JSON column by hand.
+- **Holiday mode:** on the Island tab, open *Teacher view* → **Holiday mode: pause the Fog**. While it is on, missed days don't add Fog or break squad streaks. (It sets the script property `COOP_PAUSE` to `1`.)
+- A student who leaves a squad waits 7 days before joining another. A teacher can **Remove** a student from a squad with no wait.
