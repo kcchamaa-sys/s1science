@@ -2035,6 +2035,7 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
  .coteach td{border:0;padding:3px 4px}
 }
 @media (prefers-reduced-motion:reduce){.spk2,.cofog,.waves path{animation:none}}
+.colock .btn{margin-top:8px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
 </style>
 </head>
@@ -8976,8 +8977,9 @@ function coopOK(){return AUTH.mode==='google'&&AUTH.user&&!AUTH.user.guest;}
 function coopSq(){return COOP.d&&COOP.d.squad;}
 
 /* ---------- server calls ---------- */
-function coopCall(action,data,quiet){if(!coopOK())return Promise.resolve(null);COOP.busy=true;
- return api(action,data).then(function(j){COOP.busy=false;if(j&&j.squad!==undefined){COOP.d=j;COOP.t=Date.now();coopAfterLoad();}
+function coopCall(action,data,quiet){if(!coopOK())return Promise.resolve(null);COOP.busy=true;var done=false;
+ var slow=new Promise(function(res){setTimeout(function(){res({ok:false,error:'timeout'});},20000);});
+ return Promise.race([api(action,data),slow]).then(function(j){if(done)return j;done=true;COOP.busy=false;if(j&&j.squad!==undefined){COOP.d=j;COOP.t=Date.now();COOP.fail=null;coopAfterLoad();}else if(!COOP.d)COOP.fail=(j&&j.error)||'network';
   if(j&&!j.ok&&!quiet){COOP.err=j.error;toast(coopErr(j.error));}else COOP.err=null;if(curScreen==='coop'&&!$('#ov'))render();return j;});}
 function coopErr(e){return ({cooldown:L('You left a squad recently – wait 7 days before joining another.','你最近離開了小隊——7 日後才可加入另一隊。'),no_code:L('No squad has that code.','沒有小隊使用這個邀請碼。'),full:L('That squad is full (4 players).','這個小隊已滿（4 人）。'),in_squad:L('You are already in a squad.','你已經在小隊中。'),short:L('Not enough materials yet.','材料未夠。'),busy:L('Finish the current construction first.','請先完成目前的建造。'),locked:L('Not unlocked yet.','尚未解鎖。'),limit:L('No repairs left today.','今日修復次數已用完。'),no_fog:L('No Fog to clear!','沒有霧需要清除！'),max:L('Already at the top level.','已達最高等級。'),unknown_action:L('The class server needs the new Coop.gs – please ask your teacher to deploy it.','班級伺服器需要加入新的 Coop.gs——請通知老師部署。'),network:L('No connection – try again.','沒有網絡——請再試。')})[e]||L('Something went wrong: ','出錯了：')+e;}
 /* perks that touch the main game + prize */
@@ -9025,6 +9027,7 @@ function coDeco(it,x,y){var g={lamp:'<rect x="-2" y="-26" width="4" height="26" 
 /* ---------- screen ---------- */
 function coopHTML(){var h='<h1 class="h-sec">'+IC('island')+' '+L('Mochi Science Island','麻糬科學島')+'</h1>';
  if(!coopOK())return h+'<div class="card colock">'+IC('lock')+'<div><b>'+L('Class members only','只限班級成員')+'</b><p>'+L('Sign in with your school Google account on the class list to build an island with your squad.','用班級名單上的學校 Google 帳戶登入，就可以和小隊一起建島。')+'</p></div></div>';
+ if(!COOP.d&&COOP.fail){var fe=COOP.fail;return h+'<div class="card colock">'+IC('warn')+'<div><b>'+L('Could not reach the island','未能到達小島')+'</b><p>'+(fe==='unknown_action'?L('The class server has not been updated for the Island yet. Teacher: paste Code.gs + the new Coop.gs into Apps Script and deploy a new version.','班級伺服器尚未更新小島功能。老師：請把 Code.gs 及新的 Coop.gs 貼到 Apps Script，並部署新版本。'):fe==='timeout'||fe==='network'?L('The server is slow or offline. Check your internet and try again.','伺服器太慢或未能連線，請檢查網絡後再試。'):esc(coopErr(fe)))+'</p><button class="btn small" data-coop="retry">'+L('Try again','再試一次')+'</button></div></div>';}
  if(!COOP.d){if(!COOP.busy)coopCall('coopGet',{},true);return h+'<div class="card coload">'+L('Sailing to the island…','正在駛往小島……')+'</div>';}
  if(!COOP.busy&&Date.now()-COOP.t>8000)setTimeout(function(){coopCall('coopGet',{},true);},0);
  var d=COOP.d,q=d.squad;h+=(AUTH.user&&AUTH.user.teacher?coopTeachHTML():'');
@@ -9109,6 +9112,7 @@ document.addEventListener('click',function(e){var g=e.target.closest&&e.target.c
  else if(k==='forge')coopCall('coopForge',{from:$('#coFrom').value});
  else if(k==='deco')coopCall('coopDeco',{item:b.dataset.it,slot:b.dataset.slot});
  else if(k==='leave'){confirmBox(L('Leave your squad?','確定離開小隊？'),L('You will need to wait 7 days to join another one. Your materials stay with the squad.','之後要等 7 日才可加入另一隊，你貢獻的材料會留在小隊。'),L('Leave','離開'),function(){coopCall('coopLeave',{});});}
+ else if(k==='retry'){COOP.fail=null;render();}
  else if(k==='tload')api('coopAll',{}).then(function(j){if(j&&j.ok){COOP.teach=j;render();}else toast(coopErr(j&&j.error));});
  else if(k==='pause')api('coopPause',{on:COOP.teach&&COOP.teach.pause?0:1}).then(function(){return api('coopAll',{});}).then(function(j){if(j&&j.ok){COOP.teach=j;COOP.d&&(COOP.d.pause=j.pause);render();}});
  else if(k==='kick'){var kid=b.dataset.id,ke=b.dataset.e;confirmBox(L('Remove this student?','確定移除這位學生？'),L('They leave the squad without a cooldown.','學生會離開小隊，不需等候。'),L('Remove','移除'),function(){api('coopKick',{id:kid,email:ke}).then(function(){return api('coopAll',{});}).then(function(j){if(j&&j.ok){COOP.teach=j;render();}});});}});
