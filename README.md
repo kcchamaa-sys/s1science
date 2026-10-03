@@ -217,7 +217,22 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
   - Holiday mode freezes the world.
 - **Fully automatic:** the weather comes from the date and each night resolves the next time anyone in the squad opens the game or studies (missed nights are caught up), so no timers or daily teacher steps are needed.
 - **Teacher view:** switch the world off/on and choose **gentle** mode (half the rain load); squads in crisis last night are listed.
-- **How to play:** a button at the top of the Island tab opens a 6-card picture story (swipe or Next) built from the game's own pals and buildings; it glows until a student has opened it once.
+- **How to play:** a button at the top of the Island tab opens **9 animated story cards** (swipe or Next) where the pals face Murk. Each card has a short looping scene and 2–3 "how it works" lines:
+  1. The island is in trouble.
+  2. How a day works (the loop).
+  3. Team up.
+  4. Study → materials.
+  5. Build on squad days.
+  6. Miss a day → Murk strikes (freeze shield, fog, repair beam).
+  7. Puzzle rescue + Sunday raid.
+  8. Weather + Prepare ×2.
+  9. The Lighthouse seals Murk → Lumi.
+
+  Reduced motion shows still frames.
+- **Explore the island:**
+  - Tap anywhere on the island (or use the arrow keys) and your own pal walks there, bobbing as it walks.
+  - Stop next to a building, decoration, the plaza or a teammate to get an action chip: building science facts and info, "build here", the quest, or **Cheer** a teammate (they wave back with hearts).
+  - Teammates' pals stand at fixed spots. Your position is saved on your device only.
 - **Island UI 4.0 (picture-first):**
   - The screen splits into tabs: **Today / Build / Water / Squad**.
   - A **Today's quest** bar shows 4 icons with ticks and one "next step" button.
