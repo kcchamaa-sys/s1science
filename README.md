@@ -183,7 +183,7 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
   - Motion effects: a level-up sequence (charge-up → black/white impact frames → shockwave that blows the fog away), a shockwave when a repair clears Fog, fog-creep tentacles when Fog rises, and materials flying into storage. Reduced-motion settings turn the flashes and movement off.
 - **Teacher view** (on the Island tab): every squad with members, materials given, days studied and last study day. Teachers can remove a student and turn on **holiday mode**, which pauses the Fog.
 
-### 🌧️ Living Island 3.0 – Phase 1: weather + the water system (off until the teacher turns it on)
+### 🌧️ Living Island 3.0 – Phase 1: weather + the water system (automatic, on by default)
 - **One Island Day (10–20 min):**
   1. Read last night's **Field Report** (what happened → why, with the S1 section → what next, plus an optional 1-question "Why?" check).
   2. **Study** as normal: every study day gives each member **+2 Ops** (island action points; up to 4 carry over).
@@ -215,7 +215,9 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
   - A crisis adds at most +1 Fog, and never beyond Fog 5, so Murk's theft at 9+ still only comes from missed study.
   - Nights with absent members do half damage, and no meter falls below 15 (20 on missed days).
   - Holiday mode freezes the world.
-- **Teacher view:** turn the world on/off and choose **gentle** mode (half the rain load); squads in crisis last night are listed.
+- **Fully automatic:** the weather comes from the date and each night resolves the next time anyone in the squad opens the game or studies (missed nights are caught up), so no timers or daily teacher steps are needed.
+- **Teacher view:** switch the world off/on and choose **gentle** mode (half the rain load); squads in crisis last night are listed.
+- **How to play:** a button at the top of the Island tab opens a short bilingual guide (it glows until a student has opened it once).
 
 ## 🧠 Learning rewards (anti-grinding)
 - **Fresh topics pay more:** 🌱 a never-tried sub-topic ×1.5, 🔁 not played for 7+ days ×1.25; the same quiz again within 20 hours pays ×0.5, then ×0.25, then ×0.1. The same applies to each dictation and read-aloud set ("missed words" practice always pays in full).

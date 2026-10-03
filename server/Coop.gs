@@ -23,7 +23,8 @@ var COOP_DECO = { lamp: 3, flag: 2, bench: 2, tree: 3, statue: 5, fountain: 6 };
 var COOP_STARS = [7, 14, 30, 60];
 
 /* ---------- Island 3.0 "Living Island": every world constant in one place (tune here) ----------
-   The world simulation is OFF until a teacher turns it on (Script property COOP_WORLD = 1).
+   The world simulation runs automatically (weather comes from the date; nights resolve lazily in coopRoll).
+   It is ON unless a teacher switches it off (Script property COOP_WORLD = 0).
    It never removes coins, XP, pets or materials already earned: it only moves the island meters,
    adds at most +1 Fog a night from a system crisis, and switches perks on/off. */
 var COOP_WORLD = {
@@ -410,7 +411,7 @@ function coopAll() {
 /* =====================================================================================
    Island 3.0 "Living Island" – Phase 1: shared weather + the water system
    ===================================================================================== */
-function coopWorldOn() { return PROPS.getProperty('COOP_WORLD') === '1'; }
+function coopWorldOn() { return PROPS.getProperty('COOP_WORLD') !== '0'; }   /* on by default; a teacher can switch it off (COOP_WORLD = 0) */
 function coopMode() { return PROPS.getProperty('COOP_MODE') === 'gentle' ? 'gentle' : 'standard'; }
 function coopWorldNew() {
   return { t0: '', water: COOP_WORLD.start.water, health: COOP_WORLD.start.health, pol: 0, miss: 0, rec: '',

@@ -63,7 +63,7 @@ When `Code.gs` changes (for example, the class leaderboard was added), replace A
 - A student who leaves a squad waits 7 days before joining another. A teacher can **Remove** a student from a squad with no wait.
 
 ### Living Island 3.0 (weather + water system)
-- It is **off** until you turn it on: Island tab → *Teacher view* → **Turn the world on**. (This sets the script property `COOP_WORLD` to `1`; `0` or empty = off.)
+- It is **on by default** and fully automatic (weather from the date; nights resolve when students open the game – no triggers to set up). To switch it off: Island tab → *Teacher view* → **World ON – switch off** (this sets the script property `COOP_WORLD` to `0`).
 - **Gentle mode** halves the rain load (`COOP_MODE` = `gentle`; anything else = standard). You can switch it in the same place.
 - Holiday mode (`COOP_PAUSE` = `1`) also freezes the weather and the island meters.
 - Old squads keep working: their data is upgraded automatically the first time it is read. Nothing a student earned is ever removed by the weather.
