@@ -2255,6 +2255,17 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .cwteach p{flex-basis:100%;margin:0}
 @media (max-width:420px){.cwsteps{grid-template-columns:1fr}.cwact{margin-left:0;width:100%}.cwact .btn{width:100%}}
 @media (prefers-reduced-motion:reduce){.cwrain{animation:none}.cwm-bar i{transition:none}}
+.coguide{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 12px;padding:10px 14px;border-radius:18px;border:2px solid #CDBDE5;background:linear-gradient(135deg,#FFFFFF,#F1E8FF);color:var(--ink);font:inherit;text-align:left;cursor:pointer;box-shadow:0 3px 0 #E4D9F2;min-height:48px}
+.coguide .ic{width:26px;height:26px;flex:none}.coguide span{flex:1;min-width:0}.coguide b{display:block;font-size:15px}.coguide small{display:block;color:var(--ink2);font-size:12px}
+.coguide .cogo{flex:none;font-size:24px;font-weight:900;color:#9B7CC8}
+.coguide.new{border-color:#E89A0F;background:linear-gradient(135deg,#FFF8E6,#FFEFD0);animation:coGuidePulse 2s ease-in-out infinite}
+@keyframes coGuidePulse{50%{box-shadow:0 3px 0 #F2C14E,0 0 0 5px rgba(242,193,78,.25)}}
+.coguide:focus-visible{outline:3px solid #2FA8DC;outline-offset:2px}
+.cogbody{display:flex;flex-direction:column;gap:10px}
+.cogoal{margin:0;padding:10px 12px;border-radius:14px;background:#FFF8E6;font-size:14.5px;line-height:1.55}
+.cogsec h3{margin:0 0 4px;font-size:16px;display:flex;align-items:center;gap:6px}.cogsec h3 .ic{width:20px;height:20px}
+.cogsec ul{margin:0;padding-left:20px}.cogsec li{font-size:14px;line-height:1.55;margin:2px 0}
+@media (prefers-reduced-motion:reduce){.coguide.new{animation:none}}
 @media (max-width:520px){.coscr{margin:0 -8px;padding:12px 8px 16px;border-radius:20px}.coscr .h-sec{font-size:21px}}
 @media (prefers-reduced-motion:reduce){.coscr *,.cofx *{animation:none!important}.cofx.p4 .cofx-t,.cofx.p4 .cofx-ring{opacity:1}.cofx.p4 .cofx-ring{opacity:0}.cofx.p4 .cofx-fog{opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
@@ -9588,7 +9599,7 @@ function coShock(n){var c=document.querySelector('.coislandc');if(!c)return;toas
  try{sfx('pop');}catch(e){}setTimeout(function(){w.remove();fl.remove();wp.remove();c.classList.remove('copush');},1300);}
 function coCreep(n){var c=document.querySelector('.coislandc');toast(L('Murk’s fog crept in (+'+n+'). Study together to push it back!','默克的濃霧蔓延了（+'+n+'）。一起溫習把它擊退！'));if(!c||coRM())return;
  c.classList.add('cocreep');var st=document.createElement('i');st.className='costatic';c.appendChild(st);setTimeout(function(){st.remove();c.classList.remove('cocreep');},1800);}
-function coPop(dm){var isl=document.querySelector('.coisle');if(!isl||coRM())return;var r=isl.getBoundingClientRect(),sx=r.left+r.width/2,sy=r.top+r.height*.45,vh=window.innerHeight,vw=window.innerWidth;
+function coPop(dm){var isl=document.querySelector('.coisle');if(!isl||coRM()||document.getElementById('ov'))return;var r=isl.getBoundingClientRect(),sx=r.left+r.width/2,sy=r.top+r.height*.45,vh=window.innerHeight,vw=window.innerWidth;
  if(r.bottom<0||r.top>vh){sx=vw/2;sy=vh*.4;}
  dm.forEach(function(x,i){var u=x[0],tg=document.querySelector('.costore span:nth-child('+u+')'),tr=tg?tg.getBoundingClientRect():{left:vw/2,top:vh,width:0,height:0},
   tx=Math.max(10,Math.min(vw-60,tr.left+tr.width/2-24)),ty=Math.max(10,Math.min(vh-40,tr.top+tr.height/2-12)),dx=(i-(dm.length-1)/2)*58;
@@ -9771,7 +9782,7 @@ function cwTasksHTML(w){var q=coopSq();return '<h3 class="cosub" id="cwTasks">'+
  var cr=(T.squads||[]).filter(function(s){return s.crisis;}).map(function(s){return esc(s.name);});
  var bar='<div class="cwteach"><b>'+L('Living Island (weather + water)','活力小島（天氣＋供水）')+'</b> <button class="btn small'+(T.wOn?' green':'')+'" data-cow="tworld">'+(T.wOn?L('World ON – switch off','世界已開啟——關閉'):L('Turn the world on','開啟小島世界'))+'</button>'+
   (T.wOn?' <button class="btn small white" data-cow="tmode">'+(T.wMode==='gentle'?L('Mode: gentle (switch to standard)','模式：溫和（改為標準）'):L('Mode: standard (switch to gentle)','模式：標準（改為溫和）'))+'</button>':'')+
-  (T.wOn?'<p class="muted">'+(cr.length?L('Crisis last night: ','昨晚陷入危機：')+cr.join('、'):L('No squad was in crisis last night.','昨晚沒有小隊陷入危機。'))+'</p>':'<p class="muted">'+L('Off by default. When on, every squad shares the same Hong Kong weather and starts a 7-night tutorial.','預設關閉。開啟後所有小隊共用同一香港天氣，並由 7 晚教學開始。')+'</p>')+'</div>';
+  (T.wOn?'<p class="muted">'+(cr.length?L('Crisis last night: ','昨晚陷入危機：')+cr.join('、'):L('No squad was in crisis last night.','昨晚沒有小隊陷入危機。'))+'</p>':'<p class="muted">'+L('The weather is switched off for every squad. Turn it on to give all squads the same Hong Kong weather (it starts with a 7-night tutorial).','所有小隊的天氣已關閉。開啟後所有小隊會共用同一香港天氣（由 7 晚教學開始）。')+'</p>')+'</div>';
  return h.replace('</summary>','</summary>'+bar);};})();
 
 /* ---------- modals: prepare, tasks, treatment plant, codex, why-check ---------- */
@@ -9845,6 +9856,22 @@ document.addEventListener('click',function(e){var b=e.target.closest&&e.target.c
  if(k==='tmode'){var md=COOP.teach&&COOP.teach.wMode==='gentle'?'standard':'gentle';api('coopMode',{mode:md}).then(function(){return api('coopAll',{});}).then(function(j){if(j&&j.ok){COOP.teach=j;coopCall('coopGet',{},true);render();}});return;}
 });
 window.__coop.cw={build:cwBuild,grade:cwGrade,tpl:CW_TPL,lines:cwReportLines};
+/* ---------- How to play: one button at the top of the Island tab ---------- */
+function coGuideSeen(){try{return localStorage.getItem('coGuide')==='1';}catch(e){return true;}}
+function coGuideBtn(){var n=!coGuideSeen();return '<button class="coguide'+(n?' new':'')+'" data-coguide="1">'+IC('book')+'<span><b>'+L('How to play','玩法說明')+'</b><small>'+L('New here? Read this first (2 min)','第一次玩？先看這裏（2 分鐘）')+'</small></span><span class="cogo" aria-hidden="true">›</span></button>';}
+function coGuideHTML(){var t=AUTH.user&&AUTH.user.teacher,sec=function(ic,h,items){return '<section class="cogsec"><h3>'+ic+h+'</h3><ul>'+items.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></section>';};
+ return '<p class="cogoal"><b>'+L('Goal:','目標：')+'</b> '+L('Study together, rebuild the island and seal Murk’s Fog with the Lighthouse. Every member then wins the co-op pal <b>Lumi</b> and a trophy card.','一起溫習、重建小島，再以燈塔封印默克的濃霧。全隊成員都會獲得合作小夥伴<b>燈燈</b>和獎盃卡。')+'</p>'+
+ sec(IC('user'),L('1. Make a squad','1. 組隊'),[L('2–4 players, any class. One person creates the squad and shares the 6-letter invite code.','2–4 人，不限班別。一人建立小隊並分享 6 位邀請碼。'),L('Pick a role: Chemist, Biologist or Physicist get +50% materials from their units; the Engineer gets +20% from everything.','選擇角色：化學家、生物學家、物理學家在自己的單元有 +50% 材料；工程師所有材料 +20%。')])+
+ sec(IC('books'),L('2. Study = materials','2. 溫習 = 材料'),[L('Every correct answer in a quiz, mistake practice or dictation gives 1 material from that unit.','測驗、錯題練習或默書每答對一題，就得到該單元 1 份材料。'),L('Full speed up to 30 a day, then slower – extra study also pays bonus coins.','每日 30 份內全速，之後較慢——多溫習還有額外金幣。')])+
+ sec(IC('flame'),L('3. Study every day as a team','3. 全隊每日溫習'),[L('Buildings only grow on days when <b>everyone</b> studies (a “squad day”).','只有<b>全部成員</b>都溫習的日子（全隊日），建築才會進展。'),L('A missed day uses a Squad Freeze; after that, Murk’s Fog creeps in and dims building perks.','缺席一日會用掉小隊凍結；之後默克的濃霧會蔓延，令建築效果減弱。'),L('Clear Fog with repair quizzes. Every Sunday night Murk raids – your squad’s correct answers that week are your defence.','用修復測驗清除濃霧。每個星期日晚默克來襲——小隊本週答對的題數就是防禦力。')])+
+ sec(IC('cards'),L('4. Daily jobs','4. 每日任務'),[L('Blueprint puzzle: everyone answers one part. Got one wrong? A teammate can rescue it.','藍圖拼圖：每人解答一部分。答錯了？隊友可以救援。'),L('Build and upgrade 6 science buildings (3 levels each), then 3 wonders – the last is the Lighthouse.','建造並升級 6 座科學建築（各 3 級），再建 3 個奇蹟——最後是燈塔。')])+
+ sec(IC('cloud'),L('5. Weather and water (automatic)','5. 天氣與供水（自動）'),[L('Real Hong Kong-style weather arrives every night by itself – the same for every squad. Tonight’s forecast is always certain.','每晚自動出現香港式天氣——所有小隊一樣。今晚的天氣預報一定準確。'),L('Each study day gives you <b>+2 Ops</b>. Spend them on <b>Prepare</b> before rain, and pick the scientific reason – the right reason doubles the effect.','每個溫習日得 <b>+2 行動點</b>。下雨前用來<b>準備</b>，並揀出科學原因——原因正確效果加倍。'),L('Build drains, a pond, a reservoir and a treatment plant. Put the plant in the right order (sedimentation → filtration → chlorination → fluoridation) to run it at 100%.','建造雨水渠、蓄洪池、水塘和濾水廠。把濾水廠排成正確次序（沉澱 → 過濾 → 加氯 → 加氟）效率才會達 100%。'),L('Read the Field Report each morning to see what happened and <b>why</b>, then do one island task.','每朝閱讀實地報告，了解發生了甚麼和<b>原因</b>，再完成一項小島任務。')])+
+ sec(IC('check'),L('Good to know','小提示'),[L('The weather never takes away coins, XP, pets or materials.','天氣永遠不會拿走金幣、經驗值、寵物或材料。'),L('Leaving a squad keeps your progress with that squad. If the host leaves, the squad is deleted.','離開小隊後，你的進度會留在原小隊。隊長離開會刪除整個小隊。')])+
+ (t?sec(IC('chart'),L('For teachers','給老師'),[L('Open <b>Teacher view</b> to see every squad, remove a student, pause the Fog for holidays, and switch the weather off or to gentle mode.','打開<b>老師檢視</b>可查看所有小隊、移除學生、在假期暫停濃霧，以及關閉天氣或改用溫和模式。')]):'')+
+ '<button class="btn pink" data-coguideclose="1">'+L('Got it – let’s build!','明白了——開始建島！')+'</button>';}
+function coGuideOpen(){try{localStorage.setItem('coGuide','1');}catch(e){}modal('<div class="sheet-h"><h2>'+IC('book')+L('How to play','玩法說明')+'</h2><button class="x" id="cogX" aria-label="Close">✕</button></div><div class="cogbody">'+coGuideHTML()+'</div>');$('#cogX').onclick=function(){closeModal();};}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-coguide],[data-coguideclose]');if(!b)return;sfx('tap');if(b.dataset.coguideclose)closeModal();else coGuideOpen();});
+(function(){var g0=coopHTML;coopHTML=function(){var h=g0(),i=h.indexOf('</h1>');return i<0?coGuideBtn()+h:h.slice(0,i+5)+coGuideBtn()+h.slice(i+5);};})();
 
 
 window.__game={dt:{DT:DT,pick:dtPick,card:dtCardHTML,prog:dtProgress},foods:FOODS,LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},sci:function(a,b){return sciSVG(a,b);},nqv:function(){return NQV;},nqpool:function(i){return nqbPool(i);},cap:{roll:function(){return capRoll();},prize:function(r){return capPrize(r);},lv:function(){return capLv();},s:function(){return capS();},items:function(){return ITEMS.length;}},nqq:function(){return NQV&&NQV.b&&NQV.b.cur?NQV.b.cur.q:null;},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},pick:pickQs,AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;},leg:{dmCount:dmCount,dmNeed:dmNeed,dmTotal:dmTotal,dmHit:dmHit,evoReq:evoReq,palBuff:palBuff,gain:function(c,x,ctx){gainCtx=ctx;return gain(c,x);},chk:checkPetUnlocks,PETS:PETS,dict:function(u){openDictSetup(u);},evo:function(){openEvolve();},get DQ(){return DQ;}}};
