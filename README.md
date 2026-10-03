@@ -21,6 +21,28 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
 - **Class login**: students on the school name list sign in with Google; progress syncs to the cloud and every quiz/study session is recorded. Teachers (教職員) get a 📊 dashboard with a 📈 Charts view (accuracy by class, students taking part, monthly progress by class, accuracy by unit, a pie chart of how students practise and a pie chart of who is active – each with a one-line 💡 insight and tap/hover numbers), a 📋 Tables view with class and individual statistics, and an Excel export. Guests can still play offline. Setup: `server/SETUP.md` (server code: `server/Code.gs`). Student names are never stored in this repo.
 - **🐾 Pets for your Science Pal** (12 companion pets based on real species, each with a bilingual background story and a science fact): Hong Kong shop cat, British Shorthair, Ragdoll, Maine Coon, Shiba Inu, Hong Kong local dog (唐狗), Pembroke Welsh Corgi, Golden Retriever (guide dog), and Hong Kong butterflies – Plain Tiger, Paris Peacock, Orange Oakleaf and Common Birdwing. They are unlocked **only** by dictation challenges (words spelled, perfect rounds, dictation days) and long study streaks. The chosen pet lives in Mochi's room.
 - **Phone layout fixes**: tab rows (shop, collection, teacher views) wrap onto extra lines instead of hiding off-screen; the bottom nav shares the width evenly however many tabs it has (fits 360 px phones); the home Science Pal advert's buttons wrap; teacher data tables turn into one card per row on phones (every column labelled, sort buttons shown as chips), so nothing is cut off.
+- **Lucky Capsule 幸運扭蛋** (replaces the old daily gift on Home):
+  - One capsule a day, unlocked by today's first quiz or study session, so every capsule is also a streak day.
+  - A cute gachapon "Lucky Lab" machine: crank turns, capsules mix, one drops and bounces. It can **upgrade** (blue → purple → gold → rainbow) with flashes, then bursts open into a prize card with spinning rays. Legendary and mythic pulls get a banner, screen shake and confetti.
+  - **Luck rises with the streak** at 20 / 40 / 60 / 80 / 100 days (shown as a luck meter with the current odds):
+
+    | Streak | Common | Rare | Epic | Legendary | Mythic |
+    |---|---|---|---|---|---|
+    | 0–19 days | 60% | 28% | 9% | 2.5% | 0.5% |
+    | 100+ days | 20% | 28% | 28% | 16% | 8% |
+
+  - Pity rule: epic or better is guaranteed within 10 draws.
+  - **Prizes**: coins, snacks, Streak Freezes, shop decor you don't own yet, and capsule-only items:
+    - 10 new apparatus / measuring-tool decorations:
+      - Rare: thermometer, tape measure, measuring cylinder.
+      - Epic: Bunsen burner, stopwatch, tripod & bubbling beaker.
+      - Legendary: Newton's spring balance, rainbow titration set.
+      - Mythic: galaxy hourglass, apparatus-constellation wallpaper.
+    - 3 new capsule-only Science Pals:
+      - **Bunsen** (legendary Bunsen burner, +10% quiz coins).
+      - **Cylie** (legendary measuring cylinder, +6% XP).
+      - **Gram 克克** (mythic electronic balance with TARE/ON buttons, a spirit-level antenna and a "♥520.00 g" screen; +6% coins & XP).
+  - Prize cards can set a new pal as active or place a decoration in the room straight away. Save codes moved to version 14 (older codes still load).
 - **Fog battle 2.0 (Nobel Quest boss)**:
   - **Knowledge Points**: a right answer earns 1 KP (max 5). On your turn, spend them: Quick Strike (1 KP, 100), Mend (2 KP, +1 heart) or the chapter's Heavy Blast (3 KP, 300, e.g. Radium Radiance). Or save them. Wrong answers heal Murk and cost a heart; answering in under 2.5 s is "dodged".
   - **Pal stances** (chosen before the battle): Striker (3-combo Nobel-winner assist), Protector (your pal absorbs the next 2 wrong-answer hits) or Scholar (one wrong option fades on every other question).
