@@ -143,6 +143,10 @@ function coopRoll(row) {
     var mem = Object.keys(st.m).filter(function (e) { return st.m[e].joined <= d; });
     if (cDow(d) === 1) { st.frz = 1 + (st.bld.safety >= 3 ? 1 : 0); st.blk = false; }
     if (!mem.length || paused) continue;
+    if (st.inc && st.inc.d === d && !st.inc.done && COOP_INC[st.inc.id] && COOP_INC[st.inc.id].m >= 0) {   /* the minion escapes */
+      st.inc.esc = 1; coopLog(st, 'incesc', st.inc.id);
+      if (coopWorldOn() && st.w) st.w.pol = Math.min(COOP_WORLD.polCap, st.w.pol + 1);
+    }
     var absent = mem.filter(function (e) { return st.m[e].days.indexOf(d) < 0; });
     if (!absent.length) {
       st.streak++; st.best = Math.max(st.best, st.streak);
@@ -228,7 +232,7 @@ function coopAction(u, b) {
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     var D = coopData(), row = coopFind(D, u.email), today = cDay(), err = null, extra = {};
-    if (row && (coopRoll(row) | coopOpsSync(row.st, u.email) | (coopWorldOn() && coopTaskEnsure(row)))) coopWrite(D, row);
+    if (row && (coopRoll(row) | coopOpsSync(row.st, u.email) | (coopWorldOn() && coopTaskEnsure(row)) | coopIncEnsure(row))) coopWrite(D, row);
     var cool = 0; /* no time lock: anyone can leave and join/create a squad straight away */
     switch (b.action) {
       case 'coopGet': break;
@@ -270,6 +274,7 @@ function coopAction(u, b) {
       case 'coopMod': err = row ? coopMod(row.st, String(b.m)) : 'no_squad'; if (!err) coopWrite(D, row); break;
       case 'coopTreat': err = row ? coopTreat(row.st, b, extra) : 'no_squad'; if (!err) coopWrite(D, row); break;
       case 'coopTask': err = row ? coopTask(row.st, u.email, b, extra) : 'no_squad'; if (!err) coopWrite(D, row); break;
+      case 'coopInc': err = row ? coopInc(row.st, u.email, b, extra) : 'no_squad'; if (!err) coopWrite(D, row); break;
       case 'coopWorld':
         if (!u.teacher) { err = 'forbidden'; break; }
         PROPS.setProperty('COOP_WORLD', b.on ? '1' : '0'); break;
@@ -285,7 +290,7 @@ function coopAction(u, b) {
         row = coopFind(D, u.email); break;
       default: err = 'unknown_action';
     }
-    if (row && row.st && (coopPuzzleEnsure(row.st) | (coopWorldOn() && coopTaskEnsure(row))) ) coopWrite(D, row);
+    if (row && row.st && (coopPuzzleEnsure(row.st) | (coopWorldOn() && coopTaskEnsure(row)) | coopIncEnsure(row)) ) coopWrite(D, row);
     var res = coopView(u, row, cool);
     if (err) { res.ok = false; res.error = err; }
     for (var k in extra) res[k] = extra[k];
@@ -404,7 +409,8 @@ function coopView(u, row, cool) {
     wk: { c: wc, need: 120 * mem.length, left: cDiff(today, sun) },
     puz: st.puz ? { day: st.puz.day, u: st.puz.u, seed: st.puz.seed, done: st.puz.done, parts: st.puz.parts.map(function (p) { return { who: idx[p.e], mine: p.e === u.email, ok: p.ok, by: p.by, tried: p.tried.indexOf(u.email) >= 0 }; }) } : null,
     me: { dm: me.dk === today ? me.dm : 0, dc: me.dk === today ? me.dc : 0, owe: me.owe || 0, rep: me.rep && me.rep.d === today ? me.rep.n : 0, role: me.role || '' },
-    costs: coopCosts(st), plot: st.plot || {}, syn: coopSyn(st).map(function (y) { return y.id; })
+    costs: coopCosts(st), plot: st.plot || {}, syn: coopSyn(st).map(function (y) { return y.id; }),
+    inc: coopIncView(st, u.email, idx), mon: st.mon || {}
   };
   if (res.wOn) res.squad.world = coopWorldView(row, u.email);
   return res;
@@ -659,4 +665,80 @@ function coopMove(st, b, plot) {
   if (!(pl >= 0 && pl < COOP_PLOTXY.length) || pl === st.plot[b] || coopPlotUsed(st, pl)) return 'plot';
   if (st.bp < 1) return 'short';
   st.bp--; st.plot[b] = pl; coopLog(st, 'move', b); return null;
+}
+
+/* =====================================================================================
+   Island incidents: one a day per squad. 20 are caused by Murk's ten minions (bad lab habits
+   and attitudes), 10 are lucky discoveries. Each member gets one answer; the first right answer
+   solves it (squad bonus, minion caught). An unsolved minion escapes at night: +1 pollution
+   (world on only). Never takes coins, XP or materials. Right answers (r) stay on the server.
+   ===================================================================================== */
+var COOP_INC = {
+ i01: { m: 0, u: 1, e: 'mat', r: 0 },
+ i02: { m: 0, u: 1, e: 'fog', r: 1 },
+ i03: { m: 1, u: 1, e: 'health', r: 2 },
+ i04: { m: 1, u: 1, e: 'mat', r: 0 },
+ i05: { m: 2, u: 1, e: 'ops', r: 1 },
+ i06: { m: 2, u: 1, e: 'mat', r: 2 },
+ i07: { m: 3, u: 1, e: 'fog', r: 0 },
+ i08: { m: 3, u: 5, e: 'ops', r: 1 },
+ i09: { m: 4, u: 1, e: 'health', r: 2 },
+ i10: { m: 4, u: 2, e: 'water', r: 0 },
+ i11: { m: 5, u: 1, e: 'mat', r: 1 },
+ i12: { m: 5, u: 3, e: 'health', r: 2 },
+ i13: { m: 6, u: 2, e: 'water', r: 0 },
+ i14: { m: 6, u: 3, e: 'mat', r: 1 },
+ i15: { m: 7, u: 6, e: 'mat', r: 2 },
+ i16: { m: 7, u: 5, e: 'ops', r: 0 },
+ i17: { m: 8, u: 2, e: 'water', r: 1 },
+ i18: { m: 8, u: 5, e: 'fog', r: 2 },
+ i19: { m: 9, u: 3, e: 'health', r: 0 },
+ i20: { m: 9, u: 2, e: 'ops', r: 1 },
+ i21: { m: -1, u: 2, e: 'water', r: 2 },
+ i22: { m: -1, u: 3, e: 'health', r: 0 },
+ i23: { m: -1, u: 5, e: 'ops', r: 1 },
+ i24: { m: -1, u: 6, e: 'mat', r: 2 },
+ i25: { m: -1, u: 2, e: 'water', r: 0 },
+ i26: { m: -1, u: 4, e: 'health', r: 1 },
+ i27: { m: -1, u: 1, e: 'fog', r: 2 },
+ i28: { m: -1, u: 5, e: 'mat', r: 0 },
+ i29: { m: -1, u: 3, e: 'mat', r: 1 },
+ i30: { m: -1, u: 6, e: 'ops', r: 2 }
+};
+function coopIncEnsure(row) {
+  var st = row.st, t = cDay();
+  if (st.inc && st.inc.d === t) return false;
+  var h = st.incH || [], ids = Object.keys(COOP_INC), c = ids.filter(function (k) { return h.indexOf(k) < 0; });
+  if (!c.length) c = ids;
+  var id = c[Math.floor(coopHash(row.id + 'inc' + t) * c.length)];
+  st.inc = { d: t, id: id, by: {}, done: '', esc: 0 };
+  h.push(id); if (h.length > 12) h.shift(); st.incH = h;
+  return true;
+}
+function coopInc(st, email, b, extra) {
+  var I = st.inc, t = cDay();
+  if (!I || I.d !== t || !COOP_INC[I.id]) return 'bad';
+  if (String(b.id) !== I.id) return 'stale';
+  if (I.by[email] != null) return 'done';
+  var X = COOP_INC[I.id], ok = Number(b.pick) === X.r, got = { mats: 0, u: X.u, e: '', n: 0, first: false };
+  I.by[email] = ok ? 1 : 0;
+  if (ok) {
+    st.mats[X.u] += 2; got.mats = 2;
+    if (!I.done) {
+      I.done = email; got.first = true;
+      var w = st.w, on = coopWorldOn() && w;
+      if (X.e === 'water' && on) { w.water = Math.min(100, w.water + 4); got.e = 'water'; got.n = 4; }
+      else if (X.e === 'health' && on) { w.health = Math.min(100, w.health + 4); got.e = 'health'; got.n = 4; }
+      else if (X.e === 'ops' && on) { var m = st.m[email]; m.ops = Math.min(COOP_WORLD.opsMax, (m.ops || 0) + 1); got.e = 'ops'; got.n = 1; }
+      else if (X.e === 'fog' && st.fog > 0) { st.fog--; coopFogB(st); got.e = 'fog'; got.n = 1; }
+      else { st.mats[X.u] += 4; got.e = 'mat'; got.n = 4; }
+      if (X.m >= 0) { st.mon = st.mon || {}; st.mon[X.m] = (st.mon[X.m] || 0) + 1; }
+      coopLog(st, X.m >= 0 ? 'inccatch' : 'incgood', I.id);
+    }
+  }
+  extra.inc = { ok: ok, r: X.r, got: got }; return null;
+}
+function coopIncView(st, email, idx) {
+  var I = st.inc; if (!I || I.d !== cDay() || !COOP_INC[I.id]) return null;
+  return { id: I.id, done: !!I.done, who: I.done ? idx[I.done] : -1, mine: I.by[email] == null ? null : I.by[email], n: Object.keys(I.by).length, r: I.by[email] != null ? COOP_INC[I.id].r : null };
 }

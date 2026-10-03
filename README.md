@@ -243,6 +243,14 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
     - Water Works + Cell Clinic = **Clean & healthy** (+1 island health a night, +10% Unit 2 and 4)
   - A fogged building switches its links off, so clearing the Fog matters more.
   - **Move** a finished building for 1 Blueprint (Build tab). Links show as golden dotted lines on the island.
+- **Daily island incidents + Murk's 10 minions:**
+  - Every day the squad gets one incident (30 in total). 20 come from **Murk's minions**, each a bad lab habit or science attitude:
+    Sloppo 亂糟糟 (messy bench), Sniffer 嗅嗅怪 (sniffs/tastes chemicals), Rushbolt 急急鬼 (skips instructions), Fibbit 作假怪 (makes up data), Blinkle 無鏡怪 (no safety spectacles),
+    Cherrypick 揀揀怪 (keeps only results it likes), Copycat 抄抄貓 (copies without evidence), Knowall 自大王 (ignores evidence), Wastrel 嘥嘥鬼 (wastes water and energy), Mixup 亂變怪 (unfair tests).
+  - 10 are lucky discoveries (dew, solar panels, a new beetle…).
+  - Each one has a short story, a science question (3 choices) and an explanation. Each member gets one try; the first right answer solves it for the squad (bonus: water, health, Ops, Fog or materials) and catches the minion for the **Minion file** (Squad tab). Every right answer also gives +2 materials.
+  - The minion stands on the island until it is stopped. If nobody stops it, it escapes overnight and adds a little pollution (world on only). Nothing is ever taken away.
+- **Walking hint:** your pal wears a pink **YOU / 你** tag; a tap demo and a hint under the island show on the first visits.
 - **The village:** grass, flowers and three villagers (Grandpa Oak, Farmer Bao, Fisher Mei). Walk up to them for tips that change with the weather, the Fog and your buildings. Free plots say "Build here" when you walk next to them.
 - **Island UI 4.0 (picture-first):**
   - The screen splits into tabs: **Today / Build / Water / Squad**.
