@@ -177,6 +177,10 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
   - 3 wonders: Observatory, Science Museum, and the **Fog-Sealing Lighthouse**.
   - Costs grow fast (Lv 3 needs Star Plans and 5 squad days), so the island takes about a term.
 - **End-of-term prize:** building the Lighthouse gives every member the mythic co-op pal **Lumi 燈燈** (+7% coins & XP) and the **Fog Sealers** trading-card trophy (save code v15).
+- **Look & feel (Island 2.0):** a dark, cinematic ink style (original art, inspired by modern action anime): heavy ink lines and hatching, cold purple-grey gloom for Murk's fog, and glowing amber / cyan / neon science tech for the rebuilt town.
+  - Each building has 3 stages, from hut to landmark: Safety Lab (shed → copper-pipe lab → glass-dome lab), Water Works (hand pump → filter tower → aqueduct citadel with glowing falls), Greenhouse (plastic sheet → glasshouse → geodesic biosphere), Cell Clinic (tent + microscope → clinic + pod → DNA-ring spire), Power Station (one panel + crank → panel array + coil → solar tower with lightning rods), Particle Factory (ice box → state-change chamber → accelerator ring with solid/liquid/gas orbs).
+  - Fog is living ink smoke with tentacles that grows with the Fog meter. A fogged building turns grey with static, and reclaimed land glows with energy lines from the central sigil.
+  - Motion effects: a level-up sequence (charge-up → black/white impact frames → shockwave that blows the fog away), a shockwave when a repair clears Fog, fog-creep tentacles when Fog rises, and materials flying into storage. Reduced-motion settings turn the flashes and movement off.
 - **Teacher view** (on the Island tab): every squad with members, materials given, days studied and last study day. Teachers can remove a student and turn on **holiday mode**, which pauses the Fog.
 
 ## 🧠 Learning rewards (anti-grinding)
