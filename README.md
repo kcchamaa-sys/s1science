@@ -272,3 +272,12 @@ All content is in the `CHAPTERS` array near the top of the first `<script>`.
 - `M(bloom, qEN, qZH, [[correctEN,correctZH], [wrongEN,wrongZH], ...], explainEN, explainZH)` – first option is the correct one (shuffled in game).
 - `T(bloom, statementEN, statementZH, true|false, explainEN, explainZH)` – true/false.
 Add new questions only at the **end** of a section's `qs` list so saved progress stays matched.
+
+### 🔥 Streak celebration + fold bars (less on screen at once)
+- **Streak-up ceremony:** the first exercise of the day plays a full-screen celebration. The flame charges up, the number rolls like an odometer (99 → 100), there's an impact burst, today's circle in the week strip gets stamped, and the pal cheers. Milestones (3, 7, 14, 21, 30, 50, 75, 100 … and every 100) turn gold with spinning rays and confetti. Tap to skip; Continue to close. It waits until any open quiz or popup is closed. Reduced motion shows the final frame. Tap the 🔥 chip at the top to replay today's celebration.
+- **Fold bars:** tap a bar to open or close it; the game remembers your choice on this device, and closed bars show a small peek (like 0/14).
+  - Study: Extra practice (explore, dictation, read aloud), and each unit (only the unit you're working on starts open).
+  - Home: the pal's tips, the pet list and the class leaderboard.
+  - Shop and Collection: Science Pals grouped by rarity.
+  - Nobel: the rescue rewards.
+  - Island: neighbour links, trade & decorations, my role, Minion file and squad diary.
