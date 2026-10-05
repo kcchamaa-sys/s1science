@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-03 villagers-v2">
+<meta name="build" content="2026-10-05 streak-fx-folds">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#FFFDF6">
 <title>Mochi Science Pals</title>
@@ -2513,6 +2513,78 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .comonbig{display:grid;place-items:center;padding:8px}.comonbig svg{filter:brightness(0) opacity(.18)}.comonbig.got svg{filter:none}
 @media (max-width:380px){.comongrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (prefers-reduced-motion:reduce){.coinc .coincart svg,.coincbob{animation:none}}
+/* fold bars */
+.fold{margin:0 0 12px;border-radius:20px;background:#fff;border:2px solid #F1E8DF;box-shadow:0 3px 0 #EADFD4;overflow:hidden}
+.foldh{list-style:none;display:flex;align-items:center;gap:10px;padding:12px 14px;min-height:52px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.foldh::-webkit-details-marker,.foldh::marker{display:none;content:''}
+.foldh:focus-visible{outline:3px solid #2FA8DC;outline-offset:-3px;border-radius:18px}
+.foldic{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:12px;background:#F6F2FA}.foldic .ic{width:22px;height:22px}
+.foldt{flex:1;min-width:0;font-size:15.5px;line-height:1.25}
+.foldpk{flex:none;max-width:48%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:900;color:var(--ink2);background:#F6F2FA;border-radius:99px;padding:3px 10px}
+.foldch{flex:none;width:28px;height:28px;border-radius:50%;background:#F3ECE6;position:relative;transition:transform .25s ease}
+.foldch::before{content:'';position:absolute;left:50%;top:45%;width:8px;height:8px;border-right:3px solid #8C7B6E;border-bottom:3px solid #8C7B6E;transform:translate(-50%,-50%) rotate(45deg);border-radius:1px}
+details[open]>.foldh .foldch{transform:rotate(180deg)}
+.foldb{padding:0 12px 12px}details[open]>.foldb{animation:foldIn .28s ease both}@keyframes foldIn{from{opacity:0;transform:translateY(-6px)}}
+.foldb>.card{margin:0;border:0;box-shadow:none;background:transparent;padding:4px 2px 0}
+.foldb .lbcard>.h-sec{display:none}
+.foldtier .foldt{font-size:15px}.tdot{display:block;width:18px;height:18px;border-radius:5px;transform:rotate(45deg);border:2px solid rgba(0,0,0,.18)}.td-common{background:#D9CBBE}.td-rare{background:#5CC8FF}.td-epic{background:#B07CFF}.td-legendary{background:#FFC800}.td-mythic{background:conic-gradient(#FF8FB1,#FFD23F,#7ED957,#5CC8FF,#B07CFF,#FF8FB1)}.foldtier .foldb>.items{margin:0}
+details.chap.fold{border:0;padding:0}details.chap>.foldh{padding:14px 14px 12px;margin:0}details.chap>.foldh h3{margin:2px 0 6px}
+details.chap>.foldb,details.chap>.row,details.chap>.sec{}
+details.chap:not([open])>.foldh{padding-bottom:14px}
+.chapbar{display:block;height:6px;border-radius:99px;background:rgba(255,255,255,.7);overflow:hidden;max-width:220px}.chapbar i{display:block;height:100%;background:linear-gradient(90deg,#7ED957,#3E9E5B);border-radius:99px}
+details.chap[open]>.foldh~*{animation:foldIn .28s ease both}
+.foldnq{background:rgba(255,255,255,.06);border-color:rgba(255,215,140,.35);box-shadow:none;color:#FFF3D6}.foldnq .foldpk{background:rgba(255,255,255,.12);color:#FFE9B0}.foldnq .foldic{background:rgba(255,255,255,.1);font-size:18px}.foldnq .foldch{background:rgba(255,255,255,.15)}.foldnq .foldch::before{border-color:#FFE9B0}
+@media (prefers-reduced-motion:reduce){details[open]>.foldb,details.chap[open]>.foldh~*{animation:none}.foldch{transition:none}}
+/* streak ceremony */
+.stkfx{position:fixed;inset:0;z-index:9500;display:grid;place-items:center;overflow:hidden;color:#fff;text-align:center;font-family:inherit;animation:stkIn .35s ease both}
+.stkfx.out{animation:stkOut .3s ease both}@keyframes stkIn{from{opacity:0}}@keyframes stkOut{to{opacity:0;transform:scale(1.04)}}
+.stk-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 34%,#FFC15E 0,#FF8A3D 22%,#E0509F 52%,#5B2C83 82%,#2B1745 100%)}
+.stkfx.gold .stk-bg{background:radial-gradient(circle at 50% 34%,#FFF3B0 0,#FFD23F 20%,#FF9F1C 46%,#C2410C 78%,#4A1D0A 100%)}
+.stk-rays{position:absolute;left:50%;top:34%;width:900px;height:900px;margin:-450px 0 0 -450px;background:repeating-conic-gradient(rgba(255,255,255,.22) 0 7deg,transparent 7deg 20deg);-webkit-mask:radial-gradient(circle,#000 10%,transparent 62%);mask:radial-gradient(circle,#000 10%,transparent 62%);animation:stkSpin 18s linear infinite;opacity:0;transition:opacity .6s}
+.stkfx.hit .stk-rays{opacity:1}@keyframes stkSpin{to{transform:rotate(360deg)}}
+.stk-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.stkfx.hit .stk-flash{animation:stkFlash .26s steps(1) 1}@keyframes stkFlash{0%{opacity:.9;background:#fff}35%{opacity:.85;background:#2B1745}70%,100%{opacity:0}}
+.stk-stage{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;width:min(92vw,420px);padding:16px 12px 24px;max-height:100%;overflow:auto}
+.stk-ribbon{padding:4px 18px;border-radius:99px;background:#fff;color:#C2410C;font-weight:900;letter-spacing:.18em;font-size:13px;box-shadow:0 4px 0 rgba(0,0,0,.18);opacity:0;transform:scale(1.8) rotate(-6deg)}
+.stkfx.hit .stk-ribbon{animation:stkSlam .45s cubic-bezier(.2,1.6,.4,1) both}
+.stk-fire{position:relative;width:190px;height:200px;display:grid;place-items:center}
+.stk-flame{grid-area:1/1;width:150px;line-height:0;filter:drop-shadow(0 0 18px rgba(255,200,80,.85));animation:stkCharge 1.5s cubic-bezier(.3,.7,.4,1) both,stkFlick .9s ease-in-out 1.5s infinite alternate;transform-origin:50% 90%}
+.stk-flame svg{width:100%;height:auto}
+@keyframes stkCharge{0%{transform:scale(.25) translateY(30px);opacity:0;filter:brightness(.4)}40%{opacity:1}80%{transform:scale(.92) rotate(-2deg);filter:brightness(1.1) drop-shadow(0 0 10px #FFD23F)}100%{transform:scale(.95)}}
+@keyframes stkFlick{from{transform:scale(.95) rotate(-1.5deg)}to{transform:scale(1) rotate(1.5deg)}}
+.stkfx.hit .stk-flame{animation:stkBurst .6s cubic-bezier(.2,1.6,.4,1) both,stkFlick .9s ease-in-out .6s infinite alternate}@keyframes stkBurst{0%{transform:scale(.95)}35%{transform:scale(1.28)}100%{transform:scale(1)}}
+.stk-odo{grid-area:1/1;align-self:end;margin-bottom:22px;display:flex;font-size:58px;font-weight:900;line-height:1;height:1em;overflow:hidden;color:#fff;-webkit-text-stroke:3px #5B2C83;paint-order:stroke;text-shadow:0 4px 0 rgba(0,0,0,.2);position:relative;z-index:2}
+.stk-col{display:block;height:1em;overflow:hidden}.stk-col.grow{animation:stkGrow .5s cubic-bezier(.2,1.4,.4,1) .95s both}@keyframes stkGrow{from{max-width:0}to{max-width:1em}}
+.stk-strip{display:flex;flex-direction:column;animation:stkRoll .7s cubic-bezier(.3,1.5,.5,1) calc(.95s + var(--dl)) both}.stk-strip b{display:block;height:1em;line-height:1em}
+@keyframes stkRoll{from{transform:translateY(0)}to{transform:translateY(var(--y))}}
+.stk-ins i{position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4.5px;border-radius:50%;background:#FFE27A;box-shadow:0 0 10px #FFD23F;transform:rotate(var(--a)) translateX(150px);opacity:0;animation:stkConv .9s ease-in calc(.15s + var(--d)) both}
+@keyframes stkConv{0%{opacity:0;transform:rotate(var(--a)) translateX(160px)}30%{opacity:1}100%{opacity:0;transform:rotate(var(--a)) translateX(0)}}
+.stk-ring{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px;border-radius:50%;border:4px solid #FFF3B0;box-shadow:0 0 18px #FFD23F;opacity:0}
+.stkfx.hit .stk-ring{animation:stkRing .8s ease-out both}@keyframes stkRing{0%{opacity:1;transform:scale(0)}100%{opacity:0;transform:scale(16)}}
+.stk-outs i{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px;background:#FFE27A;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);opacity:0}
+.stkfx.hit .stk-outs i{animation:stkBurstOut .9s cubic-bezier(.1,.7,.3,1) both}@keyframes stkBurstOut{0%{opacity:1;transform:rotate(var(--a)) translateX(10px) scale(1.4)}100%{opacity:0;transform:rotate(var(--a)) translateX(var(--r)) scale(.4)}}
+.stk-title{margin:0;font-size:30px;line-height:1.15;font-weight:900;color:#fff;-webkit-text-stroke:5px #6B2A0E;paint-order:stroke;text-shadow:0 3px 0 rgba(0,0,0,.25);opacity:0}.stk-sub,.stk-msg,.stk-next small,.stk-day small{text-shadow:0 1px 3px rgba(60,20,0,.55)}
+.stkfx.hit .stk-title{animation:stkSlam .5s cubic-bezier(.2,1.6,.4,1) .05s both}@keyframes stkSlam{0%{opacity:0;transform:scale(1.8) skewX(-12deg)}100%{opacity:1;transform:none}}
+.stk-sub,.stk-msg{margin:0;font-size:14.5px;line-height:1.4;font-weight:700;opacity:0;max-width:340px}.stk-msg{font-weight:900;color:#E0F4FF}
+.stkfx.hit .stk-sub,.stkfx.hit .stk-msg{animation:stkUp .4s ease .35s both}@keyframes stkUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.stk-week{display:flex;gap:6px;margin-top:6px;padding:8px 10px;border-radius:18px;background:rgba(255,255,255,.16);opacity:0}
+.stkfx.hit .stk-week{animation:stkUp .35s ease .5s both}
+.stk-day{display:flex;flex-direction:column;align-items:center;gap:3px}.stk-day i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.4)}
+.stk-day i .ic{width:20px;height:20px}.stk-day small{font-size:11px;font-weight:900;opacity:.9}
+.stk-day.on i{background:#FFB547;border-color:#fff}
+.stk-day.today i{background:#fff;border-color:#FFD23F;box-shadow:0 0 0 3px rgba(255,210,63,.6)}.stkfx.hit .stk-day.today i{animation:stkStamp .5s cubic-bezier(.2,1.8,.4,1) .85s both}
+@keyframes stkStamp{0%{transform:scale(2.2);opacity:0}100%{transform:none;opacity:1}}
+.stk-next{width:100%;max-width:300px;display:flex;flex-direction:column;gap:4px;opacity:0}.stkfx.hit .stk-next{animation:stkUp .35s ease .7s both}
+.stk-meter{height:10px;border-radius:99px;background:rgba(255,255,255,.25);overflow:hidden}.stk-meter i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#FFE27A,#7ED957)}
+.stkfx.hit .stk-meter i{animation:stkFill .8s ease 1s both}@keyframes stkFill{to{width:var(--w)}}
+.stk-next small{font-size:12px;font-weight:800;opacity:.92}
+.stk-pal{width:96px;line-height:0;opacity:0}.stk-pal svg{width:100%;height:auto}.stkfx.hit .stk-pal{animation:stkPal .6s cubic-bezier(.2,1.6,.4,1) .55s both,stkHop 1.2s ease-in-out 1.3s infinite}
+@keyframes stkPal{from{opacity:0;transform:translateY(40px) scale(.6)}to{opacity:1;transform:none}}@keyframes stkHop{50%{transform:translateY(-8px)}}
+.stk-go{min-width:200px;background:#fff!important;color:#C2410C!important;font-size:17px;box-shadow:0 5px 0 rgba(60,20,0,.3)!important;opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .3s,transform .3s}.stkfx.ready .stk-go{opacity:1;pointer-events:auto;transform:none}
+.stkfx.stk-end *,.stkfx.stk-end{animation-delay:0s!important;animation-duration:.01s!important;animation-iteration-count:1!important}
+.stkfx.stk-end .stk-flash{display:none}.stkfx.stk-end .stk-title,.stkfx.stk-end .stk-sub,.stkfx.stk-end .stk-msg,.stkfx.stk-end .stk-week,.stkfx.stk-end .stk-next,.stkfx.stk-end .stk-pal,.stkfx.stk-end .stk-ribbon{opacity:1;transform:none}.stkfx.stk-end .stk-meter i{width:var(--w)}.stkfx.stk-end .stk-go{opacity:1;pointer-events:auto;transform:none}
+.stkfx.stk-end .stk-rays{opacity:1;animation:none}
+@media (max-height:640px){.stk-fire{width:150px;height:150px}.stk-flame{width:112px}.stk-odo{font-size:46px;margin-bottom:12px}.stk-pal{width:70px}.stk-title{font-size:25px}}
 @media (max-width:520px){.coscr{margin:0 -8px;padding:12px 8px 16px;border-radius:20px}.coscr .h-sec{font-size:21px}}
 @media (prefers-reduced-motion:reduce){.coscr *,.cofx *{animation:none!important}.cofx.p4 .cofx-t,.cofx.p4 .cofx-ring{opacity:1}.cofx.p4 .cofx-ring{opacity:0}.cofx.p4 .cofx-fog{opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pop-ov[class*=fx-] .pop-card,.pop-ov[class*=fx-] .pop-prize::before{opacity:1!important}.fx-orb,.fx-flash,.fx-p{display:none}.fx-beams{opacity:1}}
@@ -5863,11 +5935,11 @@ function shopHTML(){var tabs=[['pets',IC('sparkle')+L('Science Pals','科學小�
  if(shopTab==='power')return h+frzShopHTML();if(shopTab==='clinic')return h+clinicHTML()+'<div class="items">'+medCards()+'</div>';
  if(shopTab==='food')h+='<div class="tipbar"><span>❤️ '+L('Favourite food = double happiness','最愛食物＝快樂加倍')+'</span><span>🧠 🪙 '+L('Boost foods multiply rewards','加成食物令獎勵倍增')+'</span><span>🍬 '+L('3 sugary snacks a day = sugar spike, then crash','一天 3 款高糖＝血糖急升又急跌')+'</span><span>🟢 🟡 🔴 '+L('Tap 🔍 for nutrition','按 🔍 看營養分析')+'</span></div>';
  if(shopTab==='room')h+='<div class="tipbar"><span>✨ '+L('Use 1 item from each group at the same time','每組可同時擺放 1 件')+'</span><span>👆 '+L('Tap again to take it away','再按一次即可收起')+'</span></div>';
- if(shopTab==='pets')h+=palsHeroHTML();
+ var TG={};if(shopTab==='pets')h+=palsHeroHTML();
  h+='<div class="items">';
  if(shopTab==='food')FOODS.slice().sort(function(x,y){return x.price-y.price;}).forEach(function(f){h+='<div class="item food'+(PET_FAV[S.active]===f.id?' favf':'')+'">'+(S.food[f.id]?'<span class="own">×'+S.food[f.id]+'</span>':'')+'<div class="pic">'+foodIcon(f)+'</div><div class="nm">'+esc(LL(f))+'</div>'+foodFx(f,S.active)+'<button class="btn small" data-buyfood="'+f.id+'"'+(S.coins<f.price?' disabled':'')+'>🪙 '+f.price+'</button>'+nutriHTML(f)+'</div>';});
- else if(shopTab==='pets')PETS.slice().sort(function(a,b){return tierRank(b.tier)-tierRank(a.tier);}).forEach(function(P){var has=!!S.pets[P.id];h+='<div class="item t-'+(P.tier||'common')+'">'+tierBadge(P)+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div>'+palDescHTML(P)+palBuffLine(P)+
-  (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):!P.cond?'<div class="sub">💰 '+L('Coins only – save up!','只可用金幣購買——努力儲錢！')+'</div><div class="prog" style="width:100%"><i style="width:'+Math.min(100,Math.round(S.coins/P.price*100))+'%;background:linear-gradient(90deg,#FF9AA2,#FFD58A,#9EE0C0,#9DB8F0,#D9A8F0)"></i></div><div class="sub">🪙 '+Math.min(S.coins,P.price)+' / '+P.price+'</div><button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>🪙 '+P.price+'</button>':'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+(P.capsule?'':' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')')+'</div>'+(P.price?'<button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>':'<div class="sub">'+(P.unit?IC('pen')+' '+L('Earn it in Unit '+P.unit+' dictation','於單元 '+P.unit+' 默書中贏取'):'👑 '+L('Quest only','只限任務'))+'</div>'))+'</div>';});
+ else if(shopTab==='pets')PETS.slice().sort(function(a,b){return tierRank(b.tier)-tierRank(a.tier);}).forEach(function(P){var has=!!S.pets[P.id];var h0=h;h='';h+='<div class="item t-'+(P.tier||'common')+'">'+tierBadge(P)+(has?'<span class="own">'+L('Adopted','已領養')+'</span>':'')+'<div class="pic">'+petSVG(P.id,'happy',{stage:1,eq:{}})+'</div><div class="nm">'+esc(LL(P))+'</div>'+palDescHTML(P)+palBuffLine(P)+
+  (has?(S.active===P.id?'<span class="tag">'+L('Active','陪伴中')+'</span>':'<button class="btn small white" data-active="'+P.id+'">'+L('Choose','選擇')+'</button>'):!P.cond?'<div class="sub">💰 '+L('Coins only – save up!','只可用金幣購買——努力儲錢！')+'</div><div class="prog" style="width:100%"><i style="width:'+Math.min(100,Math.round(S.coins/P.price*100))+'%;background:linear-gradient(90deg,#FF9AA2,#FFD58A,#9EE0C0,#9DB8F0,#D9A8F0)"></i></div><div class="sub">🪙 '+Math.min(S.coins,P.price)+' / '+P.price+'</div><button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>🪙 '+P.price+'</button>':'<div class="sub">🔓 '+esc(L(P.cond.en,P.cond.zh))+(P.capsule?'':' ('+Math.min(condVal(P.cond.k),P.cond.n)+'/'+P.cond.n+')')+'</div>'+(P.price?'<button class="btn small" data-buypet="'+P.id+'"'+(S.coins<P.price?' disabled':'')+'>'+L('or ','或 ')+'🪙 '+P.price+'</button>':'<div class="sub">'+(P.unit?IC('pen')+' '+L('Earn it in Unit '+P.unit+' dictation','於單元 '+P.unit+' 默書中贏取'):'👑 '+L('Quest only','只限任務'))+'</div>'))+'</div>';TG[P.tier||'common']=(TG[P.tier||'common']||'')+h;h=h0;});if(shopTab==='pets')h+=tierFolds('shop',TG,['mythic','legendary','epic','rare','common']);
  else{var list=shopTab==='quests'?ITEMS.filter(function(i){return i.quest;}):ITEMS.filter(function(it){return it.cat===shopTab&&it.id!=='w0';});
   var grp={};list.sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier)||(a.sec?1:0)-(b.sec?1:0)||a.price-b.price;}).forEach(function(it){var has=isOwned(it),free=it.sec||it.quest;
    var c='<div class="item t-'+it.tier+(free&&!has?' locked':'')+'">'+tierBadge(it)+(has?'<span class="own">✓</span>':'')+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+esc(LL(it))+'</div><div class="sub">'+(it.cat==='room'?decName(decCat(it)):slotName(it.slot))+'</div>'+
@@ -5880,7 +5952,7 @@ function colHTML(){var tabs=[['pets','🧸 '+L('Science Pals','科學小夥伴')
  var h='<h1 class="h-sec">🏆 '+L('Collection','收藏館')+'</h1><div class="card row" style="justify-content:space-around;text-align:center"><div><b style="font-size:22px">'+petsCount()+'/'+PETS.length+'</b><div class="muted" style="font-size:12px">'+L('Science Pals','科學小夥伴')+'</div></div><div><b style="font-size:22px">'+budOwned()+'/'+BUDS.length+'</b><div class="muted" style="font-size:12px">'+L('Pets','寵物')+'</div></div><div><b style="font-size:22px">'+got+'/'+TROPHIES.length+'</b><div class="muted" style="font-size:12px">'+L('Trophies','獎盃')+'</div></div><div><b style="font-size:22px">'+(ownedCount('wear')+ownedCount('room'))+'/'+ITEMS.filter(function(i){return i.id!=='w0';}).length+'</b><div class="muted" style="font-size:12px">'+L('Items','物品')+'</div></div><div><b style="font-size:22px">'+threeStars()+'/'+ALLSECS.length+'</b><div class="muted" style="font-size:12px">'+L('3-star topics','三星小節')+'</div></div></div>'+
  '<div class="tierbar">'+TIERS.map(function(t){return '<div class="tb t-'+t+'"><span>'+tierName(t)+'</span><b>'+tc[t][0]+' / '+tc[t][1]+'</b></div>';}).join('')+'</div>'+
  '<div class="tabs" role="tablist" style="margin-top:14px">'+tabs.map(function(t){return '<button role="tab" data-col="'+t[0]+'" aria-selected="'+(colTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div><div class="items">';
- if(colTab==='pets')PETS.slice().sort(function(a,b){return tierRank(a.tier)-tierRank(b.tier);}).forEach(function(P){h+=colPetCard(P);});
+ if(colTab==='pets'){var TG={};PETS.forEach(function(P){var t=P.tier||'common';TG[t]=(TG[t]||'')+colPetCard(P);});h+=tierFolds('col',TG,['common','rare','epic','legendary','mythic']);}
  else if(colTab==='buds')BUDS.forEach(function(B){h+=budCard(B,false);});
  else if(colTab==='trophies')h+='</div><div class="tgrid">'+trophyGrid();
  else{var grp={};ITEMS.filter(function(i){return (colTab==='closet'?i.cat==='wear':i.cat==='room')&&i.id!=='w0';}).sort(function(a,b){return tierRank(b.tier)-tierRank(a.tier);}).forEach(function(it){var has=isOwned(it);var c='<div class="item t-'+it.tier+(has?'':' locked')+'">'+tierBadge(it)+'<div class="pic">'+itemPic(it)+'</div><div class="nm">'+(has?esc(LL(it)):'???')+'</div><div class="sub">'+(it.cat==='room'?decName(decCat(it)):slotName(it.slot))+'</div>'+(has?(it.cat==='room'?equipBtn(it):''):lockLine(it))+'</div>';
@@ -5952,14 +6024,14 @@ function decay(){var now=Date.now();var mins=(now-(S.lastTick||now))/60000;if(mi
 /* ---------- streak ---------- */
 function streakMult(){return 1+0.1*Math.min(Math.max(S.streak-1,0),5);}
 function fedBonus(){var p=curPet();return p.energy>=50&&p.happy>=50?1.2:1;}
-function markActive(){var t=today();if(S.lastDay===t)return;
+function markActive(){var t=today();if(S.lastDay===t)return;var prev=S.streak;
  var gap=S.lastDay?dayNum(t)-dayNum(S.lastDay):99;var msg=null;
  if(gap===1)S.streak++;
  else if(gap>1&&gap<=1+S.shields&&S.streak>0){S.shields-=gap-1;frzRecord(S.lastDay,gap-1);S.streak++;msg=L('❄️ '+(gap-1)+' Streak Freeze'+(gap>2?'s':'')+' kept your streak safe!','❄️ '+(gap-1)+' 個連勝凍結保住了你的連續紀錄！');}
  else S.streak=1;
  
  S.best=Math.max(S.best,S.streak);S.lastDay=t;S.days++;S.hist.push(t);if(S.hist.length>14)S.hist=S.hist.slice(-14);
- setTimeout(function(){streakPopup('up',msg);},1100);
+ setTimeout(function(){stkQueue(S.streak===1?0:prev,S.streak,msg);},900);
  checkPetUnlocks();}
 
 /* ---------- rewards ---------- */
@@ -6071,6 +6143,37 @@ function closePop(){$('#poproot').innerHTML='';setTimeout(nextPop,250);}
 function flameSVG(n){var big=n>=7;return '<svg class="flame" viewBox="0 0 80 96" aria-hidden="true"><path d="M40 4 C54 24 70 36 70 60 C70 80 56 92 40 92 C24 92 10 80 10 60 C10 44 20 36 26 24 C30 34 34 38 38 38 C36 26 36 14 40 4Z" fill="'+(big?'#F7A06B':'#FFB77A')+'" stroke="'+O+'" stroke-width="3" stroke-linejoin="round"/><path d="M40 40 C48 52 56 58 56 70 C56 82 48 88 40 88 C32 88 24 82 24 70 C24 60 32 54 40 40Z" fill="#FFE9A6"/><circle cx="33" cy="68" r="3.5" fill="'+O+'"/><circle cx="47" cy="68" r="3.5" fill="'+O+'"/><path d="M35 76 Q40 81 45 76" stroke="'+O+'" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="27" cy="74" rx="4" ry="2.5" fill="#FFB3C1"/><ellipse cx="53" cy="74" rx="4" ry="2.5" fill="#FFB3C1"/></svg>';}
 var MILESTONES=[3,7,14,21,30,50,75,100,150,200];
 var STREAK_LINES=[['Tiny steps every day grow a big brain!','每日一小步，腦袋長大一大步！'],['Consistency beats cramming. You are proof!','持之以恆勝過臨急抱佛腳，你就是證明！'],['Your pet is doing a happy wiggle for you!','你的科學小夥伴正為你扭扭跳！'],['Same time tomorrow? I will be waiting 💕','明天同一時間見？我會等你 💕'],['Future-you just said thank you!','未來的你剛剛說了聲多謝！'],['Your flame is getting warmer and warmer!','你的小火焰越來越溫暖了！']];
+/* ---------- streak-up ceremony (first exercise of the day): flame charges, odometer rolls N-1 → N, impact, week stamp ---------- */
+var STK_Q=null;
+function stkQueue(from,to,msg){STK_Q={from:from,to:to,msg:msg};stkTry();}
+function stkTry(){if(!STK_Q)return;clearTimeout(stkTry.t);if(document.getElementById('ov')||document.getElementById('pop')||document.getElementById('stkfx')||document.getElementById('cofx')||document.hidden){stkTry.t=setTimeout(stkTry,600);return;}var X=STK_Q;STK_Q=null;streakFx(X.from,X.to,X.msg);}
+function stkOdo(from,to){var a=String(to),b=String(Math.max(0,from)),n=a.length;while(b.length<n)b=' '+b;
+ return '<span class="stk-odo" aria-hidden="true">'+a.split('').map(function(d,i){var p=b[i],strip=[],k=0;
+  if(p===d)strip=[d];else if(p===' '){strip=['',d];}else{var x=+p;strip.push(String(x));while(x!==+d){x=(x+1)%10;strip.push(String(x));}}
+  k=strip.length-1;return '<span class="stk-col'+(p===' '?' grow':'')+'"><span class="stk-strip" style="--y:'+(-k)+'em;--dl:'+((n-1-i)*0.06)+'s">'+strip.map(function(s){return '<b>'+(s===''?'&nbsp;':s)+'</b>';}).join('')+'</span></span>';}).join('')+'</span>';}
+function streakFx(from,to,msg){if(document.getElementById('stkfx'))return;var n=to,mile=MILESTONES.indexOf(n)>=0||(n>0&&n%100===0),t=today(),ln=pick(STREAK_LINES);
+ var next=MILESTONES.filter(function(m){return m>n;})[0]||(Math.floor(n/100)+1)*100,prevM=0;MILESTONES.forEach(function(m){if(m<=n)prevM=m;});
+ var wk='';for(var i=6;i>=0;i--){var d=fromDayNum(dayNum(t)-i),on=S.hist.indexOf(d)>=0,wd=new Date(d+'T12:00:00').getDay();
+  wk+='<span class="stk-day'+(i===0?' today':on?' on':'')+'" style="--i:'+(6-i)+'"><i>'+(on||i===0?IC('flame'):'')+'</i><small>'+L('SMTWTFS'[wd],'日一二三四五六'[wd])+'</small></span>';}
+ var sp='';for(var k=0;k<14;k++)sp+='<i class="stk-in" style="--a:'+(k*360/14)+'deg;--d:'+(k%4*0.05)+'s"></i>';
+ var bu='';for(var k2=0;k2<18;k2++)bu+='<i class="stk-out" style="--a:'+(k2*20+10)+'deg;--r:'+(110+(k2%3)*30)+'px"></i>';
+ var title=n===1?L('Day 1! A new streak begins','第 1 日！新的連續紀錄開始了'):L(n+' day streak!','連續 '+n+' 日！');
+ var o=document.createElement('div');o.id='stkfx';o.className='stkfx'+(mile?' gold':'')+(n===1?' first':'');o.setAttribute('role','dialog');o.setAttribute('aria-label',title);
+ o.innerHTML='<div class="stk-bg"></div>'+(mile?'<div class="stk-rays"></div>':'')+'<div class="stk-flash"></div>'+
+  '<div class="stk-stage">'+(mile?'<div class="stk-ribbon">'+L('MILESTONE','里程碑')+'</div>':'')+
+   '<div class="stk-fire"><div class="stk-ins">'+sp+'</div><div class="stk-ring"></div><div class="stk-outs">'+bu+'</div><div class="stk-flame">'+flameSVG(Math.max(n,7))+'</div>'+stkOdo(from,to)+'</div>'+
+   '<h2 class="stk-title">'+title+'</h2><p class="stk-sub">'+esc(L(ln[0],ln[1]))+'</p>'+(msg?'<p class="stk-msg">'+msg+'</p>':'')+
+   '<div class="stk-week">'+wk+'</div>'+
+   '<div class="stk-next"><div class="stk-meter"><i style="--w:'+(mile?100:Math.round((n-prevM)/Math.max(1,next-prevM)*100))+'%"></i></div><small>'+(mile?L('Milestone reached! Next: '+next+' days','達成里程碑！下一個：'+next+' 日'):L('Next milestone: '+next+' days','下一個里程碑：'+next+' 日'))+' · '+L('rewards ×','獎勵 ×')+streakMult().toFixed(1)+'</small></div>'+
+   '<div class="stk-pal">'+petSVG(S.active,'joy')+'</div>'+
+   '<button class="btn pink stk-go">'+L('Continue','繼續')+'</button></div>';
+ document.body.appendChild(o);sfx('tap');
+ var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+ var T=[];var end=function(){o.classList.add('stk-end');T.forEach(clearTimeout);T=[];};
+ if(rm)end();else{T.push(setTimeout(function(){o.classList.add('hit');sfx('fanfare');if(mile)confetti();},1650));T.push(setTimeout(function(){o.classList.add('ready');},2700));}
+ o.addEventListener('click',function(e){if(e.target.closest('.stk-go')){o.classList.add('out');setTimeout(function(){o.remove();render();},rm?0:320);return;}if(!o.classList.contains('ready')){if(!o.classList.contains('hit')){o.classList.add('hit');if(mile)confetti();}o.classList.add('ready');end();}});}
+/* tap the flame chip to replay today's celebration */
+document.addEventListener('click',function(e){var c=e.target.closest&&e.target.closest('.chip.fire');if(!c||!S||S.lastDay!==today()||S.streak<1)return;streakFx(S.streak-1,S.streak);});
 function streakPopup(kind,extra){var P=petDef(S.active),n=S.streak,pet='<div class="pop-pet">'+petSVG(S.active,kind==='broken'?'sad':'joy')+'</div>',h='';
  if(kind==='up'){var next=MILESTONES.filter(function(m){return m>n;})[0]||n+1,prevM=0;MILESTONES.forEach(function(m){if(m<=n)prevM=m;});
   var hit=MILESTONES.indexOf(n)>=0;var ln=pick(STREAK_LINES);
@@ -6227,6 +6330,16 @@ function roomHTML(){if(bubblePet!==S.active){bubble=null;bubblePet=S.active;}var
  return '<div class="room"><div class="wall" style="background:'+WALLS[S.room.wall||'w0']+'"></div><div class="window">'+winSVG()+'</div>'+'<div class="floor"></div>'+sh+
  '<div class="petwrap" id="petTap">'+petSVG(S.active,m)+ideaHTML()+'</div>'+(S.bud&&S.bud.act&&budDef(S.bud.act)?'<div class="budroom'+(budDef(S.bud.act).kind==='fly'?' flying':'')+'" id="budTap">'+buddySVG(S.bud.act,budMood())+'</div>':'')+'<div class="bubwrap">'+(bubble?'<div class="bubble" aria-live="polite">'+esc(bubble)+'</div>':'')+bubbleChips()+'</div>'+'</div>';}
 function statRow(label,v,col,txt){return '<div class="stat"><span>'+label+'</span><div class="bar" role="progressbar" aria-valuenow="'+Math.round(v)+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+clamp(v,0,100)+'%;background:'+col+'"></i></div><span class="num">'+txt+'</span></div>';}
+/* ---------- fold bars: one tap opens/closes a section; the choice is remembered per device ---------- */
+function foldOpen(id,def){try{var v=localStorage.getItem('fold_'+id);if(v!=null)return v==='1';}catch(e){}return !!def;}
+function fold(id,ic,title,peek,body,def,cls){return '<details class="fold'+(cls?' '+cls:'')+'" data-fold="'+id+'"'+(foldOpen(id,def)?' open':'')+'><summary class="foldh">'+(ic?'<span class="foldic">'+ic+'</span>':'')+'<b class="foldt">'+title+'</b>'+(peek!=null&&peek!==''?'<span class="foldpk">'+peek+'</span>':'')+'<span class="foldch" aria-hidden="true"></span></summary><div class="foldb">'+body+'</div></details>';}
+document.addEventListener('toggle',function(e){var d=e.target;if(d&&d.dataset&&d.dataset.fold){try{localStorage.setItem('fold_'+d.dataset.fold,d.open?'1':'0');}catch(x){}}},true);
+document.addEventListener('click',function(e){var s=e.target.closest&&e.target.closest('.foldh');if(s)try{sfx('tap');}catch(x){}});
+/* group cards by rarity tier into fold bars (Shop + Collection) */
+function tierFolds(scope,TG,order){var pick=null;order.forEach(function(t){if(pick||!TG[t])return;var own=PETS.filter(function(P){return (P.tier||'common')===t&&S.pets[P.id];}).length,tot=PETS.filter(function(P){return (P.tier||'common')===t;}).length;
+  if(scope==='shop'?PETS.some(function(P){return (P.tier||'common')===t&&!S.pets[P.id]&&!P.cond&&S.coins>=P.price;})||own<tot:own>0)pick=t;});if(!pick)pick=order.filter(function(t){return TG[t];})[0];
+ return '</div>'+order.filter(function(t){return TG[t];}).map(function(t){var own=PETS.filter(function(P){return (P.tier||'common')===t&&S.pets[P.id];}).length,tot=PETS.filter(function(P){return (P.tier||'common')===t;}).length;
+  return fold(scope+'_'+t,'<i class="tdot td-'+t+'"></i>',tierName(t),own+'/'+tot,'<div class="items">'+TG[t]+'</div>',t===pick,'foldtier t-'+t);}).join('')+'<div>';}
 function homeHTML(){var h=homeParts(),P=h.split('<!--S-->');nqAdCheck();
  return nqAdHTML()+palAdHTML()+'<div class="home"><div class="homeL"><div class="o1">'+P[0]+'</div><div class="o3">'+P[2]+'</div><div class="o4">'+P[3]+'</div><div class="o6">'+P[5]+'</div></div><div class="homeR"><div class="o2">'+P[1]+'</div><div class="o5">'+P[4]+'</div><div class="o7">'+P[6]+'</div></div></div>';}
 function homeParts(){var P=petDef(S.active),p=curPet(),lv=petLevel(p.xp),into=p.xp-lvXP(lv),need=lvXP(lv+1)-lvXP(lv);
@@ -6243,7 +6356,7 @@ function homeParts(){var P=petDef(S.active),p=curPet(),lv=petLevel(p.xp),into=p.
  capBtnHTML()+'</div></div>'+
  '<!--S--><div class="card"><div class="streak"><span class="flame" aria-hidden="true">'+IC('flame',S.streak>=7?'blaze':'')+'</span><div style="min-width:0"><b style="font-size:18px">'+S.streak+' '+L('day streak','日連續溫習')+'</b><div class="muted" style="font-size:13px">'+L('Reward ×','獎勵 ×')+streakMult().toFixed(1)+' · '+frzChip()+' · '+L('Best ','最佳 ')+S.best+'</div></div></div><div class="days" style="margin-top:10px">'+last7+'</div>'+
  (S.lastDay!==t?'<p class="muted" style="font-size:13px;margin:10px 0 0">'+L('Finish one study session or quiz today to keep the flame alive 🌱','今日完成一次溫習或測驗，讓火焰繼續燃燒 🌱')+'</p>':'<p style="font-size:13px;margin:10px 0 0">✅ '+L('Today counted! Your future self says thanks.','今日已計算！未來的你會多謝你。')+'</p>')+'</div>'+
- '<!--S-->'+dtCardHTML()+'<!--S-->'+chatHTML()+'<!--S-->'+buddyCardHTML()+'<!--S-->'+leaderboardHTML()+nextStepCard();}
+ '<!--S-->'+dtCardHTML()+'<!--S-->'+fold('h_chat',IC('bulb'),esc(LL(petDef(S.active)))+' '+L('says…','話你知……'),L('Tips & facts','貼士和趣聞'),chatHTML(),false)+'<!--S-->'+fold('h_buddy',IC('heart'),L(palName()+'\'s pets',palName()+'的寵物'),budOwned()+'/'+BUDS.length,buddyCardHTML(),false)+'<!--S-->'+fold('h_lb',IC('trophy'),L('Class leaderboard','班級龍虎榜'),L('Who\'s on top?','誰在榜首？'),leaderboardHTML(),false)+nextStepCard();}
 function nextStepCard(){var mc=Object.keys(S.mistakes).length;var s=null;
  for(var i=0;i<ALLSECS.length;i++){var st=(S.secs[ALLSECS[i].id]||{}).stars||0;if(st<3){s=ALLSECS[i];break;}}
  var txt,btn;
@@ -6261,13 +6374,13 @@ function chapIcon(k){var m={flask:'<path d="M22 6 L34 6 L34 18 L46 42 Q48 48 42 
  atom:'<ellipse cx="28" cy="28" rx="23" ry="8" fill="none" stroke="#8FC7E8" stroke-width="3"/><ellipse cx="28" cy="28" rx="23" ry="8" fill="none" stroke="#F7A9B5" stroke-width="3" transform="rotate(60 28 28)"/><ellipse cx="28" cy="28" rx="23" ry="8" fill="none" stroke="#9BCB8E" stroke-width="3" transform="rotate(-60 28 28)"/><circle cx="28" cy="28" r="5" fill="#FBD46D" stroke="'+O+'" stroke-width="2.5"/>'};
  return '<svg viewBox="0 0 56 56" width="40" height="40" aria-hidden="true">'+m[k]+'</svg>';}
 function mastered(sec){var n=0;sec.qs.forEach(function(q,i){if(S.q[sec.id+'#'+i]===1)n++;});return n;}
-function studyHTML(){var h='<h1 class="h-sec">📚 '+L('Study by topic','按課題溫習')+'</h1>'+exploreCardHTML()+'<div class="card dictcard"><div style="min-width:0"><b>✍️ '+L('Dictation','默書')+'</b><div class="muted" style="font-size:13px">'+L('Listen & spell, or spell from a meaning / picture.','聽音默書，或看定義／圖片默書。')+((S.dict&&Object.keys(S.dict.miss).length)?' · 📝 '+Object.keys(S.dict.miss).length+L(' missed words',' 個錯字'):'')+'</div></div><button class="btn pink" data-dict="">✍️ '+L('Start dictation','開始默書')+'</button></div><div class="card dictcard spk"><div style="min-width:0"><b>🎤 '+L('Read aloud','朗讀練習')+' <span class="tag" style="font-size:11px">NEW</span></b><div class="muted" style="font-size:13px">'+L('Say each word out loud and your Science Pal checks your British pronunciation.','大聲讀出詞彙，科學小夥伴會檢查你的英式發音。')+(Object.keys(S.say.miss).length?' · 🗣️ '+Object.keys(S.say.miss).length+L(' tricky words',' 個難讀字'):'')+'</div></div><button class="btn green" data-speak="">🎤 '+L('Start','開始')+'</button></div><p class="muted" style="margin-top:-4px">'+L('Each sub-topic: read the notes 📖 (your Science Pal studies with you), then take a quiz of 15 random questions ✏️ — new ones each time you come back!','每個小節：先讀筆記 📖（科學小夥伴陪你溫），再做 15 條隨機題目的測驗 ✏️——每次回來都有新題目！')+'</p><div class="grid">';
- CHAPTERS.forEach(function(c){var tot=0,got=0;c.sections.forEach(function(s){tot+=3;got+=(S.secs[s.id]||{}).stars||0;});
-  h+='<section class="chap" style="background:'+c.col+'"><div class="chap-h"><div class="ic">'+chapIcon(c.icon)+'</div><div style="min-width:0"><div class="muted" style="font-size:12px;font-weight:800">'+L('Unit ','第 ')+c.id+L('',' 單元')+'</div><h3>'+esc(LL(c))+'</h3></div><span class="chip" style="margin-left:auto">★ '+got+'/'+tot+'</span></div><div class="row" style="margin-top:10px;gap:8px"><button class="btn small white" data-vocab="'+c.id+'">🔊 '+L('Vocab: Listen & Repeat','詞彙：聆聽跟讀')+'</button><button class="btn small white" data-dict="'+c.id+'">✍️ '+L('Dictation','默書')+'</button><button class="btn small white" data-speak="'+c.id+'">🎤 '+L('Read aloud','朗讀')+'</button></div>';
+function studyHTML(){var h='<h1 class="h-sec">📚 '+L('Study by topic','按課題溫習')+'</h1>'+fold('s_extra',IC('sparkle'),L('Extra practice','額外練習'),L('Explore · Dictation · Read aloud','探索 · 默書 · 朗讀'),exploreCardHTML()+'<div class="card dictcard"><div style="min-width:0"><b>✍️ '+L('Dictation','默書')+'</b><div class="muted" style="font-size:13px">'+L('Listen & spell, or spell from a meaning / picture.','聽音默書，或看定義／圖片默書。')+((S.dict&&Object.keys(S.dict.miss).length)?' · 📝 '+Object.keys(S.dict.miss).length+L(' missed words',' 個錯字'):'')+'</div></div><button class="btn pink" data-dict="">✍️ '+L('Start dictation','開始默書')+'</button></div><div class="card dictcard spk"><div style="min-width:0"><b>🎤 '+L('Read aloud','朗讀練習')+' <span class="tag" style="font-size:11px">NEW</span></b><div class="muted" style="font-size:13px">'+L('Say each word out loud and your Science Pal checks your British pronunciation.','大聲讀出詞彙，科學小夥伴會檢查你的英式發音。')+(Object.keys(S.say.miss).length?' · 🗣️ '+Object.keys(S.say.miss).length+L(' tricky words',' 個難讀字'):'')+'</div></div><button class="btn green" data-speak="">🎤 '+L('Start','開始')+'</button></div>',false)+'<p class="muted" style="margin-top:-4px">'+L('Each sub-topic: read the notes 📖 (your Science Pal studies with you), then take a quiz of 15 random questions ✏️ — new ones each time you come back!','每個小節：先讀筆記 📖（科學小夥伴陪你溫），再做 15 條隨機題目的測驗 ✏️——每次回來都有新題目！')+'</p><div class="grid">';
+ var cur=null;CHAPTERS.forEach(function(c){var tot=0,got=0;c.sections.forEach(function(s){tot+=3;got+=(S.secs[s.id]||{}).stars||0;});
+  if(cur==null&&got<tot)cur=c.id;h+='<details class="chap fold" data-fold="u'+c.id+'"'+(foldOpen('u'+c.id,cur===c.id)?' open':'')+' style="background:'+c.col+'"><summary class="chap-h foldh"><div class="ic">'+chapIcon(c.icon)+'</div><div style="min-width:0;flex:1"><div class="muted" style="font-size:12px;font-weight:800">'+L('Unit ','第 ')+c.id+L('',' 單元')+'</div><h3>'+esc(LL(c))+'</h3><span class="chapbar"><i style="width:'+Math.round(got/tot*100)+'%"></i></span></div><span class="chip" style="margin-left:auto">★ '+got+'/'+tot+'</span><span class="foldch" aria-hidden="true"></span></summary><div class="row" style="margin-top:10px;gap:8px"><button class="btn small white" data-vocab="'+c.id+'">🔊 '+L('Vocab: Listen & Repeat','詞彙：聆聽跟讀')+'</button><button class="btn small white" data-dict="'+c.id+'">✍️ '+L('Dictation','默書')+'</button><button class="btn small white" data-speak="'+c.id+'">🎤 '+L('Read aloud','朗讀')+'</button></div>';
   c.sections.forEach(function(s){var r=S.secs[s.id]||{},mm=mastered(s),doneToday=S.studyDay[s.id]===today();
    h+='<div class="sec"><div style="min-width:0"><b>'+s.id+' '+esc(LL(s))+'</b><div class="meta">'+stars(r.stars||0)+'<span>'+L('Mastered ','已掌握 ')+mm+'/'+s.qs.length+'</span>'+(doneToday?'<span>📖✓</span>':'')+frChip(secFresh(s.id))+'</div><div class="prog"><i style="width:'+(mm/s.qs.length*100)+'%"></i></div></div>'+
    '<div class="acts"><button class="btn small green" data-studysec="'+s.id+'" aria-label="'+L('Notes','筆記')+' '+s.id+'">📖</button><button class="btn small" data-quizsec="'+s.id+'">✏️ '+L('Quiz','測驗')+'</button></div></div>';});
-  h+='</section>';});
+  h+='</details>';});
  return h+'</div>';}
 
 /* STUDY SESSION */
@@ -7366,7 +7479,7 @@ function nqPerkCard(i){var P=NQ_PERKS[i],got=!!nqS().perk[i+1],n=Math.min(nobelD
 function nqHubHTML(){var h='<section class="nq-hero"><div class="lan">'+lanternSVG(nobelDone()>0||nqOpen(0))+'</div><div><p class="nq-kicker">'+L('SEASON EVENT · OCT 2026 – MAR 2027','限定活動 · 2026 年 10 月 – 2027 年 3 月')+'</p><h1>'+L('Nobel Time Quest','諾貝爾時光大冒險')+'</h1><p>'+L('Learn from six Nobel Prize winners, win their Sparks of Discovery and rescue two Science Pals from Murk, the Fog of Forgetting. A new door in time opens every month.','向六位諾貝爾獎得主學習，贏取「發現之火」，從遺忘霧妖默克手中救出兩位科學小夥伴。每個月都會打開一道新的時光之門。')+'</p>'+nqOrbs()+'</div></section>';
  if(nqPreview())h+='<p class="nq-note">👀 '+L('Preview mode: every chapter is open.','預覽模式：所有章節已開放。')+'</p>';
  h+='<div class="row" style="gap:10px"><button class="nq-btn ghost" data-nqpro="pro">🎬 '+(nqS().seen.pro?L('Replay the prologue','重溫序章'):L('Start here: the prologue','由這裏開始：序章'))+'</button>'+(nqS().seen.win||nqPreview()?'<button class="nq-btn ghost" data-nqpro="win">🌅 '+L('Watch the finale','觀看終章')+'</button>':'')+'</div>';
- h+='<div class="nq-perks">'+nqPerkCard(0)+nqPerkCard(1)+'</div><h2 class="nq-h">'+L('The six doors in time','六道時光之門')+'</h2><div class="nq-grid">';
+ h+=fold('nq_perks','🎁',L('Rescue rewards','救援獎勵'),L('2 Science Pals','2 位科學小夥伴'),'<div class="nq-perks">'+nqPerkCard(0)+nqPerkCard(1)+'</div>',false,'foldnq')+'<h2 class="nq-h">'+L('The six doors in time','六道時光之門')+'</h2><div class="nq-grid">';
  NQ.forEach(function(c,i){var open=nqOpen(i),m=nqMask(c.id),n=0;for(var k=0;k<8;k++)if(m&(1<<k))n++;var done=m===NQ_ALL;
   h+='<button class="nq-card holo'+(open?'':' locked')+(done?' done':'')+'" style="--c:'+c.col+'" '+(open?'data-nqch="'+i+'"':'disabled aria-disabled="true"')+'><span class="mo">'+L('Chapter '+(i+1),'第 '+(i+1)+' 章')+' · '+nqDate(i)+'</span>'+nqCardArt(c,open)+'<b>'+esc(L(c.who[0],c.who[1]))+'</b><span class="ti">'+esc(L(c.title[0],c.title[1]))+'</span>'+
    (open?'<span class="pg"><span class="nq-bar"><i style="width:'+(n/8*100)+'%"></i></span>'+(done?'🔥 '+L('Spark won!','已贏得火種！'):n+' / 8')+'</span>':'<span class="lock">🔒 '+L('Opens ','開放日期：')+nqDate(i,true)+'<br><small>'+L('in '+nqDaysTo(i)+' days','還有 '+nqDaysTo(i)+' 日')+'</small></span>')+'</button>';});
@@ -10431,8 +10544,8 @@ function coPickerShow(){var X=COOP.pk,q=coopSq();if(!q||!X)return;var lay=coLayo
 function coPickerGo(){var X=COOP.pk;if(!X||X.p==null||!X.b)return;var b=X.b,p=X.p,mode=X.mode;
  coopCall(mode==='move'?'coopMove':'coopBuild',{b:b,plot:p}).then(function(j){if(j&&j.ok){closeModal();sfx('fanfare');toast(mode==='move'?L('Moved!','已搬遷！'):L('Construction started!','開始建造！'));var syn=j.squad&&j.squad.syn||[];if(syn.length)setTimeout(function(){toast(L('Active links: ','已連結：')+syn.length);},900);}});}
 /* the synergy card in the Build tab */
-function coSynCard(q){var on=q.syn||[];return '<div class="card cosyncard"><h4>'+IC('sparkle')+L('Neighbour links','鄰居連結')+' <small>'+on.length+'/'+CO_SYN.length+'</small></h4><p class="muted">'+L('Build these pairs next to each other. A fogged building switches its links off.','把以下建築建在相鄰位置。被霧籠罩的建築會失去連結。')+'</p>'+
- CO_SYN.map(function(y){var a=on.indexOf(y.id)>=0,A=CO_B[y.a],B=CO_B[y.b];return '<div class="copkrow'+(a?' on':'')+'">'+(a?IC('check'):IC('lock'))+'<span><b>'+L(y.n[0],y.n[1])+'</b> · '+esc(L(A.n[0],A.n[1]))+' + '+esc(L(B.n[0],B.n[1]))+'<small>'+L(y.e[0],y.e[1])+'</small></span></div>';}).join('')+'</div>';}
+function coSynCard(q){var on=q.syn||[];return fold('co_syn',IC('sparkle'),L('Neighbour links','鄰居連結'),on.length+'/'+CO_SYN.length,'<div class="card cosyncard"><h4>'+IC('sparkle')+L('Neighbour links','鄰居連結')+' <small>'+on.length+'/'+CO_SYN.length+'</small></h4><p class="muted">'+L('Build these pairs next to each other. A fogged building switches its links off.','把以下建築建在相鄰位置。被霧籠罩的建築會失去連結。')+'</p>'+
+ CO_SYN.map(function(y){var a=on.indexOf(y.id)>=0,A=CO_B[y.a],B=CO_B[y.b];return '<div class="copkrow'+(a?' on':'')+'">'+(a?IC('check'):IC('lock'))+'<span><b>'+L(y.n[0],y.n[1])+'</b> · '+esc(L(A.n[0],A.n[1]))+' + '+esc(L(B.n[0],B.n[1]))+'<small>'+L(y.e[0],y.e[1])+'</small></span></div>';}).join('')+'</div>',false);}
 (function(){var bt=coBuildTab;coBuildTab=function(q){var h=bt(q),i=h.indexOf('<h3 class="cosub">'+L('Buildings','建築')+'</h3>');h=i>=0?h.slice(0,i)+coSynCard(q)+h.slice(i):h+coSynCard(q);
  /* a Move button on every finished unit building */
  CO_UNITS.forEach(function(k){if((q.bld[k]||0)>0&&coPlotOf(q,k)!=null&&!(q.con&&q.con.b===k)){var j=h.indexOf('data-cbk="'+k+'"');if(j<0)return;var d=h.indexOf('<details class="cbinfo">',j);if(d<0)return;
@@ -10561,8 +10674,8 @@ function coIncPos(q){var sp=coLayout(q).spare,p=sp.length?CO_PLOTS[sp[sp.length-
  var bub=document.getElementById('coBub');if(bub)bub.innerHTML='<g class="cobubg'+(fresh?' fresh':'')+'"><rect x="-9" y="-16" width="18" height="16" rx="8" fill="#fff" stroke="#5B4B6E" stroke-width="1.6"/><text x="0" y="-4" text-anchor="middle" font-size="11" font-weight="900" fill="#E0509F">!</text></g>';};})();
 /* Squad tab: the minion file (bestiary) */
 function coMonCard(q){var mon=q.mon||{},got=CO_MIN.filter(function(_,i){return mon[i];}).length;
- return '<div class="card comon"><h4>'+IC('book')+L('Minion file','爪牙檔案')+' <small>'+got+'/'+CO_MIN.length+'</small></h4><p class="muted">'+L('Murk’s minions are bad lab habits. Catch each one by answering its incident.','默克的爪牙就是壞的實驗習慣。答對事件的問題就能捉住牠們。')+'</p><div class="comongrid">'+
-  CO_MIN.map(function(M,i){var n=mon[i]||0;return '<button class="comonc'+(n?' got':'')+'" data-comon="'+i+'"'+(n?'':' aria-label="'+esc(L('Unknown minion','未知爪牙'))+'"')+'>'+coMinion(i,52)+'<b>'+(n?esc(L(M.n[0],M.n[1])):'???')+'</b>'+(n?'<small>×'+n+'</small>':'')+'</button>';}).join('')+'</div></div>';}
+ return fold('co_mon',IC('book'),L('Minion file','爪牙檔案'),got+'/'+CO_MIN.length,'<div class="card comon"><h4>'+IC('book')+L('Minion file','爪牙檔案')+' <small>'+got+'/'+CO_MIN.length+'</small></h4><p class="muted">'+L('Murk’s minions are bad lab habits. Catch each one by answering its incident.','默克的爪牙就是壞的實驗習慣。答對事件的問題就能捉住牠們。')+'</p><div class="comongrid">'+
+  CO_MIN.map(function(M,i){var n=mon[i]||0;return '<button class="comonc'+(n?' got':'')+'" data-comon="'+i+'"'+(n?'':' aria-label="'+esc(L('Unknown minion','未知爪牙'))+'"')+'>'+coMinion(i,52)+'<b>'+(n?esc(L(M.n[0],M.n[1])):'???')+'</b>'+(n?'<small>×'+n+'</small>':'')+'</button>';}).join('')+'</div></div>',false);}
 function coMonOpen(i){var q=coopSq(),M=CO_MIN[i],n=q&&q.mon&&q.mon[i]||0;
  cwModal(IC('book')+(n?L(M.n[0],M.n[1]):L('Unknown minion','未知爪牙')),'<div class="comonbig'+(n?' got':'')+'">'+coMinion(i,120)+'</div>'+(n?'<p class="coinchab">'+IC('warn')+'<span><b>'+L('Bad habit','壞習慣')+'</b> '+esc(L(M.h[0],M.h[1]))+'</span></p><div class="coinchabit">'+IC('shield')+'<span><b>'+L('The good habit that beats it','打敗牠的好習慣')+'</b>'+esc(L(M.c[0],M.c[1]))+'</span></div><p class="muted">'+L('Caught ','已捉住 ')+n+L(' times',' 次')+'</p>':'<p class="muted">'+L('Not caught yet. It will turn up in an incident one day…','尚未捉到。牠總有一天會在事件中出現……')+'</p>')+'<div class="cwrow"><button class="btn small" data-cow="close">'+L('Close','關閉')+'</button></div>');}
 (function(){var s0=coSquadTab;coSquadTab=function(q,w){var h=s0(q,w),i=h.indexOf('<div class="card colog">');return i>=0?h.slice(0,i)+coMonCard(q)+h.slice(i):h+coMonCard(q);};})();
@@ -10571,11 +10684,17 @@ function coMonOpen(i){var q=coopSq(),M=CO_MIN[i],n=q&&q.mon&&q.mon[i]||0;
  return '<p class="cl"><small>'+l.d.slice(5)+'</small>'+t+'</p>';};})();
 (function(){var e2=coopErr;coopErr=function(e){return e==='done'&&COOP.inc&&!COOP.inc.res?L('You have already answered today’s incident.','你今日已回答過這件事件。'):e2(e);};})();
 window.__coop.inc={min:CO_MIN,inc:CO_INC,art:coMinion,open:coIncOpen};
+/* fold the extras on the Build and Squad tabs */
+(function(){var b0=coBuildTab;coBuildTab=function(q){var h=b0(q),a=h.indexOf('<div class="card cotrade">'),d=h.indexOf('<div class="card codeco">'),i=a>=0?a:d;if(i<0)return h;return h.slice(0,i)+fold('co_extra',IC('swap'),L('Trade & decorations','兌換和裝飾'),q.crys+' '+L('crystals','霧晶'),h.slice(i),false);};})();
+(function(){var s0=coSquadTab;coSquadTab=function(q,w){var h=s0(q,w),me=q.me,R=CO_ROLE[me.role],chips=coopRoleChips('coRole3',me.role);
+ var ri=h.indexOf('<div class="card corolec">'),ci=ri>=0?h.indexOf(chips,ri):-1;if(ci>0){var re=h.indexOf('</div>',ci+chips.length)+6;h=h.slice(0,ri)+fold('co_role',IC('user'),L('My role','我的角色'),R?L(R[1],R[2]):L('Pick one','選擇'),h.slice(ri,re),!me.role)+h.slice(re);}
+ var li=h.indexOf('<div class="card colog">'),le=h.indexOf('<p style="text-align:center"><button class="btn small white" data-coop="leave">',li);if(li>=0&&le>li)h=h.slice(0,li)+fold('co_log',IC('notebook'),L('Squad diary','小隊日記'),q.log.length?q.log[0].d.slice(5):'',h.slice(li,le),false)+h.slice(le);
+ return h;};})();
 
 
 
 
-window.__game={dt:{DT:DT,pick:dtPick,card:dtCardHTML,prog:dtProgress},foods:FOODS,LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},sci:function(a,b){return sciSVG(a,b);},nqv:function(){return NQV;},nqpool:function(i){return nqbPool(i);},cap:{roll:function(){return capRoll();},prize:function(r){return capPrize(r);},lv:function(){return capLv();},s:function(){return capS();},items:function(){return ITEMS.length;}},nqq:function(){return NQV&&NQV.b&&NQV.b.cur?NQV.b.cur.q:null;},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},pick:pickQs,AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;},leg:{dmCount:dmCount,dmNeed:dmNeed,dmTotal:dmTotal,dmHit:dmHit,evoReq:evoReq,palBuff:palBuff,gain:function(c,x,ctx){gainCtx=ctx;return gain(c,x);},chk:checkPetUnlocks,PETS:PETS,dict:function(u){openDictSetup(u);},evo:function(){openEvolve();},get DQ(){return DQ;}}};
+window.__game={streakFx:function(a,b,m){streakFx(a,b,m);},stkQueue:function(a,b,m){stkQueue(a,b,m);},dt:{DT:DT,pick:dtPick,card:dtCardHTML,prog:dtProgress},foods:FOODS,LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},sci:function(a,b){return sciSVG(a,b);},nqv:function(){return NQV;},nqpool:function(i){return nqbPool(i);},cap:{roll:function(){return capRoll();},prize:function(r){return capPrize(r);},lv:function(){return capLv();},s:function(){return capS();},items:function(){return ITEMS.length;}},nqq:function(){return NQV&&NQV.b&&NQV.b.cur?NQV.b.cur.q:null;},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},pick:pickQs,AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;},leg:{dmCount:dmCount,dmNeed:dmNeed,dmTotal:dmTotal,dmHit:dmHit,evoReq:evoReq,palBuff:palBuff,gain:function(c,x,ctx){gainCtx=ctx;return gain(c,x);},chk:checkPetUnlocks,PETS:PETS,dict:function(u){openDictSetup(u);},evo:function(){openEvolve();},get DQ(){return DQ;}}};
 })();
 
 </script>
