@@ -67,6 +67,7 @@ When `Code.gs` changes (for example, the class leaderboard was added), replace A
 - **Gentle mode** halves the rain load (`COOP_MODE` = `gentle`; anything else = standard). You can switch it in the same place.
 - Holiday mode (`COOP_PAUSE` = `1`) also freezes the weather and the island meters.
 - Old squads keep working: their data is upgraded automatically the first time it is read. Nothing a student earned is ever removed by the weather.
+- **Streak / sync fix (Code.gs):** `save` now rejects an older copy (`error: 'stale'`) and returns the newer progress; `login` also returns `act` (days with a finished activity from Science Records) so the game can repair a wrongly reset streak. Replace Code.gs and deploy a new version.
 - **Daily incidents:** one science incident per squad per day (new action `coopInc`, graded on the server). Unsolved minion incidents add +1 pollution overnight when the world is on.
 - **Free building + neighbour links:** squads choose a plot for each building and can move it later (1 Blueprint). Existing squads keep their buildings on the old default spots (upgraded automatically).
 - After pasting the new `Coop.gs`, deploy a **New version** as usual.

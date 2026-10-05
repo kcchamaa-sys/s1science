@@ -43,11 +43,8 @@ function doPost(e) {
     var user = findUser(v.email);
     if (!user) return out({ ok: false, error: 'not_listed' });
     switch (body.action) {
-      case 'login': return out({ ok: true, user: user, progress: getProgress(user.email) });
-      case 'save':
-        saveProgress(user, body.state, body.summary || {});
-        try { coopTouch(user.email, String((body.summary || {}).lastDay || '')); } catch (e1) { }
-        return out({ ok: true });
+      case 'login': return out(loginResp(user));
+      case 'save': return out(saveResp(user, body));
       case 'record':
         var saved = appendRecords(user, body.records || []);
         try { coopEarn(user, body.records || []); } catch (e2) { }
@@ -166,6 +163,40 @@ function saveProgress(u, state, s) {
     sh.getRange(r, DATA_COL + 6).setNumberFormat('@'); // keep "63,31,0,…" as text
     sh.getRange(r, 1, 1, row.length).setValues([row]);
   } finally { lock.releaseLock(); }
+}
+/* login: the saved progress + the days this student finished an activity (from Science Records),
+   so the game can repair a streak that an old device overwrote */
+function loginResp(user) {
+  var r = { ok: true, user: user, progress: getProgress(user.email) };
+  try { r.act = activeDays(user.email); } catch (e) { r.act = []; }
+  return r;
+}
+/* save: never let an older copy (an old tab on another device) overwrite newer progress.
+   "Newer" = later last-study day, then more active days. A restored save code sends force. */
+function progMeta(s) { try { var o = JSON.parse(s); return { d: String(o.lastDay || ''), n: Number(o.days) || 0 }; } catch (e) { return null; } }
+function saveResp(user, body) {
+  var cur = getProgress(user.email);
+  if (cur && !body.force) {
+    var a = progMeta(cur), b = progMeta(String(body.state || ''));
+    if (a && b && (a.d > b.d || (a.d === b.d && a.n > b.n))) return { ok: false, error: 'stale', progress: cur };
+  }
+  saveProgress(user, body.state, body.summary || {});
+  try { coopTouch(user.email, String((body.summary || {}).lastDay || '')); } catch (e1) { }
+  return { ok: true };
+}
+function activeDays(email) {
+  var sh = book().getSheetByName(REC); if (!sh) return [];
+  var last = sh.getLastRow(); if (last < 2) return [];
+  var from = Math.max(2, last - 40000), n = last - from + 1, tz = Session.getScriptTimeZone() || 'Asia/Hong_Kong';
+  var ts = sh.getRange(from, 1, n, 1).getValues(), em = sh.getRange(from, 3, n, 1).getValues(), stt = sh.getRange(from, 17, n, 1).getValues();
+  var seen = {}, cut = new Date(Date.now() - 400 * 864e5);
+  for (var i = 0; i < n; i++) {
+    if (String(em[i][0]).toLowerCase() !== email || stt[i][0] !== STATUS.done) continue;
+    var t = ts[i][0]; if (!(t instanceof Date)) t = new Date(t);
+    if (isNaN(t.getTime()) || t < cut) continue;
+    seen[Utilities.formatDate(t, tz, 'yyyy-MM-dd')] = 1;
+  }
+  return Object.keys(seen).sort();
 }
 function getProgress(email) {
   var sh = book().getSheetByName(PROG);

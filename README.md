@@ -281,3 +281,11 @@ Add new questions only at the **end** of a section's `qs` list so saved progress
   - Shop and Collection: Science Pals grouped by rarity.
   - Nobel: the rescue rewards.
   - Island: neighbour links, trade & decorations, my role, Minion file and squad diary.
+
+### 🛡️ Progress sync between devices (streak fix)
+- A game tab left open on another device used to upload its old progress when hidden, and its next study then reset the streak. Now:
+  - the server refuses a copy that is older (earlier last study day, or fewer active days) and sends the newer one back;
+  - when the game comes back to the front it fetches the cloud copy first;
+  - on login, a streak that was wrongly reset is rebuilt from the student's finished activities in **Science Records** (missed days are never revived; Streak Freeze days still bridge gaps).
+- Restoring a save code still replaces progress on purpose.
+- What counts for the streak: finishing a study session, a quiz, Mistake practice, dictation or read-aloud. Just logging in does not count.

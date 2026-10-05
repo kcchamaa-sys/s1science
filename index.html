@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-05 streak-fx-folds">
+<meta name="build" content="2026-10-05 streak-sync-fix">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#FFFDF6">
 <title>Mochi Science Pals</title>
@@ -6557,7 +6557,7 @@ function unpack(code){code=String(code).toUpperCase().replace(/[^0-9A-Z]/g,'').r
   if(ver>=11){o.nq={};NQ.forEach(function(c){var v=r(ver>=12?8:6);if(v)o.nq[c.id]=v;});}
   var end=pos,sum=0;for(var i2=0;i2<end;i2++)sum=(sum*31+bits[i2]*(i2%7+1))%1021;if(r(10)!==sum)return null;
   if(!Object.keys(o.pets).length)return null;return o;}catch(e){return null;}}
-function applyCode(o){if(!AUTH.mode)AUTH.mode='guest';var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
+function applyCode(o){if(!AUTH.mode)AUTH.mode='guest';FORCE_SAVE=1;var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=defaultState();S.started=true;for(var k in keep)S[k]=keep[k];
  S.coins=o.coins;S.pets={};PETS.forEach(function(P,i){if(o.pets[P.id]){var p=newPet();p.stage=o.pets[P.id].st;p.xp=o.pets[P.id].xp;S.pets[P.id]=p;}});
  S.active=PETS[o.active]&&S.pets[PETS[o.active].id]?PETS[o.active].id:Object.keys(S.pets)[0];S.pets[S.active].eq=o.eq;
  S.owned=o.owned;S.owned.w0=1;if(!S.pets[S.active])S.active=Object.keys(S.pets)[0];S.room=o.dec?{wall:o.wall,dec:o.dec}:migrateRoom({wall:o.wall,prop:o.prop},o.owned);S.nobel={t:o.nq||{},seen:{pro:o.nq?1:0},perk:{}};NQ_PERKS.forEach(function(P,i){if(nobelDone()>=P.n)S.nobel.perk[i+1]=today();});['streak','best','shields','lastDay','days','quizzes','perfect','cleared','studies','matchWins'].forEach(function(k){S[k]=o[k];});
@@ -8327,7 +8327,7 @@ function tcAfter(){liveWatch('.item.t-legendary,.item.t-mythic,.tgrid .tcard,.pa
 /* ---- sign-in only: bring guest progress from this device into the account, once ---- */
 function offerGuestImport(){var g=load(KEY);if(!g||!g.started||g.imported||!AUTH.user||AUTH.user.teacher)return;var mine=S.xpTotal||0;
  confirmBox(L('Bring your old progress?','要帶入舊進度嗎？'),L('This device has progress from before sign-in was required ('+LL(petDef(g.active))+', '+g.coins+' coins, '+(g.xpTotal||0)+' XP). Move it into your account? Only do this if it is yours.','此裝置有登入前的進度（'+LL(petDef(g.active))+'、'+g.coins+' 金幣、'+(g.xpTotal||0)+' XP）。要搬入你的帳戶嗎？只有是你自己的進度才可以這樣做。'),L('Yes, it\'s mine','是我的'),function(){
-  var moved=(g.xpTotal||0)>mine;if(moved){var lang=S.lang;S=upgradeState(g);S.lang=lang;S.started=true;}g.imported=1;try{localStorage.setItem(KEY,JSON.stringify(g));}catch(e){}save();cloudSaveSoon(1);render();toast(moved?L('Progress moved into your account ✓','進度已搬入你的帳戶 ✓'):L('Your account already has more progress, so we kept it ✓','你的帳戶進度較多，已保留帳戶進度 ✓'));});}
+  var moved=(g.xpTotal||0)>mine;if(moved){var lang=S.lang;S=upgradeState(g);S.lang=lang;S.started=true;FORCE_SAVE=1;}g.imported=1;try{localStorage.setItem(KEY,JSON.stringify(g));}catch(e){}save();cloudSaveSoon(1);render();toast(moved?L('Progress moved into your account ✓','進度已搬入你的帳戶 ✓'):L('Your account already has more progress, so we kept it ✓','你的帳戶進度較多，已保留帳戶進度 ✓'));});}
 
 /* ---- login screen: Mochi & Petal hero duo ---- */
 var LG_ATOM='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#1CB0F6" stroke-width="1.6"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#CE82FF" stroke-width="1.6" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#FF86D0" stroke-width="1.6" transform="rotate(-60 12 12)"/><circle cx="12" cy="12" r="2.4" fill="#FF9600"/></svg>';
@@ -8492,9 +8492,9 @@ function onCredential(resp){var tok=resp.credential,pl=jwtPayload(tok),em=String
  post('login',{}).then(function(j){if(!j.ok){AUTH.token=null;if(j.error==='not_listed'&&schoolGuestOk(pl)){enterSchoolGuest(pl);return;}loginMsg(errText(j.error),true);return;}
   AUTH.mode='google';AUTH.user=j.user;AUTH.stale=false;AUTH.lastSync=Date.now();
   var lang=S.lang,local=load(storeKey()),remote=null;try{remote=j.progress?JSON.parse(j.progress):null;}catch(e){}
-  var chosen=(remote&&(!local||(remote.upd||0)>(local.upd||0)))?remote:local;
+  var chosen=remote&&(!local||progNewer(remote,local))?remote:local;
   if(chosen){S=upgradeState(chosen);}else{S=defaultState();bubble=L('Hi! I\'m Mochi. Let\'s study together!','你好！我係麻糬，一齊溫書啦！');}
-  S.lang=lang;S.started=true;curScreen=AUTH.user.teacher?'teacher':'home';ac();save();render();if(!AUTH.user.teacher){openingPopup();setTimeout(offerGuestImport,2500);}flushQueue();
+  S.lang=lang;S.started=true;var healed=j.act&&streakHeal(j.act);pullSync.t=Date.now();if(healed)setTimeout(function(){toast('🔥 '+L('Streak restored from your study records: '+S.streak+' days','已根據你的溫習紀錄恢復連續日數：'+S.streak+' 日'));},2600);curScreen=AUTH.user.teacher?'teacher':'home';ac();save();render();if(!AUTH.user.teacher){openingPopup();setTimeout(offerGuestImport,2500);}flushQueue();
   if(pendCode){var pc=pendCode;pendCode=null;setTimeout(function(){openSave();$('#inCode').value=pc;previewCode(pc);},3800);}
   toast('👋 '+L('Hi ','你好，')+dispName()+(AUTH.user.cls?' ('+AUTH.user.cls+(AUTH.user.no?'-'+AUTH.user.no:'')+')':''));
  },function(){AUTH.token=null;loginMsg(errText('network'),true);});}
@@ -8514,7 +8514,29 @@ function cloudSaveSoon(now){if(AUTH.mode!=='google')return;clearTimeout(cloudTim
 function totalStars(){var n=0;for(var k in S.secs)n+=S.secs[k].stars||0;return n;}
 function cloudPayload(){var st=JSON.stringify(S);if(st.length>45000){var c=JSON.parse(st);c.seen={};c.hist=(c.hist||[]).slice(-7);st=JSON.stringify(c);}
  return {state:st,summary:{streak:S.streak,best:S.best,stars:totalStars(),level:petLevel(curPet().xp),coins:S.coins,pet:S.active,quizzes:S.quizzes,mistakes:Object.keys(S.mistakes).length,cleared:S.cleared,trophies:Object.keys(S.trophies).length,lastDay:S.lastDay||'',nq:NQ.map(function(c){return nqMask(c.id);}).join(','),sp:nobelDone(),xp:S.xpTotal||0,col:lbCount(),leg:lbTier('legendary'),myth:lbTier('mythic')}};}
-function cloudSave(){if(AUTH.mode!=='google')return;if(!tokenOk()){markStale();return;}api('save',cloudPayload()).then(function(j){if(j.ok)AUTH.lastSync=Date.now();});}
+function cloudSave(){if(AUTH.mode!=='google')return;if(!tokenOk()){markStale();return;}var pl=cloudPayload();if(FORCE_SAVE)pl.force=1;api('save',pl).then(function(j){if(j.ok){AUTH.lastSync=Date.now();FORCE_SAVE=0;}else if(j.error==='stale'&&j.progress)adoptRemote(j.progress,null);});}
+/* ---- keep devices in step: progress is "newer" when it has a later study day, then more active days (not just a later save time) ---- */
+var FORCE_SAVE=0;
+function progRank(x){return x?[x.lastDay?dayNum(x.lastDay):0,x.days||0,(x.quizzes||0)+(x.studies||0),x.upd||0]:[-1,0,0,0];}
+function progNewer(a,b){var A=progRank(a),B=progRank(b);for(var i=0;i<A.length;i++){if(A[i]!==B[i])return A[i]>B[i];}return false;}
+function adoptRemote(raw,act){var r=null;try{r=typeof raw==='string'?JSON.parse(raw):raw;}catch(e){}if(!r)return false;
+ if(document.getElementById('ov')||document.getElementById('stkfx')){pullSync.t=0;return false;}
+ var keep={lang:S.lang,sfx:S.sfx,music:S.music};S=upgradeState(r);for(var k in keep)S[k]=keep[k];S.started=true;if(act)streakHeal(act);
+ try{localStorage.setItem(storeKey(),JSON.stringify(S));}catch(e){}render();toast('☁️ '+L('Loaded your newer progress from another device','已載入你在另一部裝置的較新進度'));return true;}
+/* a streak wrongly broken by an old device is rebuilt from the days with a finished activity (Science Records) */
+function streakHeal(act){if(!act||!act.length)return false;var A={},F={};act.forEach(function(d){A[d]=1;});(S.hist||[]).forEach(function(d){A[d]=1;});(S.frz||[]).forEach(function(d){F[d]=1;});
+ var Ld=Object.keys(A).sort().pop();if(!Ld||Ld>today())return false;if(S.lastDay&&Ld<S.lastDay)return false;
+ var run=0,d=dayNum(Ld),reach=false,ld=S.lastDay?dayNum(S.lastDay):-1,after=0;
+ for(var g=0;g<800;g++){var ds=fromDayNum(d);if(A[ds]){run++;if(d>ld)after++;}else if(!F[ds])break;if(d===ld)reach=true;d--;}
+ var ns=Math.max(run,reach?S.streak+after:0);if(Ld===S.lastDay&&ns<=S.streak)return false;
+ S.streak=Math.max(ns,Ld===S.lastDay?S.streak:1);S.best=Math.max(S.best||0,S.streak);
+ if(Ld!==S.lastDay){S.lastDay=Ld;S.hist=(S.hist||[]).concat(act.filter(function(x){return (S.hist||[]).indexOf(x)<0;})).sort().slice(-14);}
+ return true;}
+/* when the game comes back to the front, fetch the cloud copy first, so an old tab never studies on stale data */
+function pullSync(){if(AUTH.mode!=='google'||!AUTH.user||AUTH.user.teacher||!tokenOk()||pullSync.busy||Date.now()-(pullSync.t||0)<45000)return;pullSync.busy=1;pullSync.t=Date.now();
+ post('login',{}).then(function(j){pullSync.busy=0;if(!j||!j.ok)return;var r=null;try{r=j.progress?JSON.parse(j.progress):null;}catch(e){}
+  if(r&&progNewer(r,S)){adoptRemote(r,j.act);return;}if(j.act&&streakHeal(j.act)){save();render();}},function(){pullSync.busy=0;});}
+document.addEventListener('visibilitychange',function(){if(!document.hidden)pullSync();});window.addEventListener('focus',function(){pullSync();});
 window.addEventListener('pagehide',function(){if(AUTH.mode==='google'&&tokenOk()&&navigator.sendBeacon){try{navigator.sendBeacon(CFGX.API_URL,JSON.stringify(Object.assign({action:'save',token:AUTH.token},cloudPayload())));var a=getQ();if(a.length)navigator.sendBeacon(CFGX.API_URL,JSON.stringify({action:'record',token:AUTH.token,records:a}));}catch(e){}}});
 
 /* ---- account sheet ---- */
@@ -10694,7 +10716,7 @@ window.__coop.inc={min:CO_MIN,inc:CO_INC,art:coMinion,open:coIncOpen};
 
 
 
-window.__game={streakFx:function(a,b,m){streakFx(a,b,m);},stkQueue:function(a,b,m){stkQueue(a,b,m);},dt:{DT:DT,pick:dtPick,card:dtCardHTML,prog:dtProgress},foods:FOODS,LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},sci:function(a,b){return sciSVG(a,b);},nqv:function(){return NQV;},nqpool:function(i){return nqbPool(i);},cap:{roll:function(){return capRoll();},prize:function(r){return capPrize(r);},lv:function(){return capLv();},s:function(){return capS();},items:function(){return ITEMS.length;}},nqq:function(){return NQV&&NQV.b&&NQV.b.cur?NQV.b.cur.q:null;},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},pick:pickQs,AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;},leg:{dmCount:dmCount,dmNeed:dmNeed,dmTotal:dmTotal,dmHit:dmHit,evoReq:evoReq,palBuff:palBuff,gain:function(c,x,ctx){gainCtx=ctx;return gain(c,x);},chk:checkPetUnlocks,PETS:PETS,dict:function(u){openDictSetup(u);},evo:function(){openEvolve();},get DQ(){return DQ;}}};
+window.__game={dev:{heal:function(a){return streakHeal(a);},markActive:function(){markActive();},cloudSave:function(){cloudSave();},S:function(){return S;}},streakFx:function(a,b,m){streakFx(a,b,m);},stkQueue:function(a,b,m){stkQueue(a,b,m);},dt:{DT:DT,pick:dtPick,card:dtCardHTML,prog:dtProgress},foods:FOODS,LB:LB,night:function(){return isNight();},hk:healthKey,pet:function(a,b,c){return petSVG(a,b,c);},bud:function(a,b){return buddySVG(a,b);},sci:function(a,b){return sciSVG(a,b);},nqv:function(){return NQV;},nqpool:function(i){return nqbPool(i);},cap:{roll:function(){return capRoll();},prize:function(r){return capPrize(r);},lv:function(){return capLv();},s:function(){return capS();},items:function(){return ITEMS.length;}},nqq:function(){return NQV&&NQV.b&&NQV.b.cur?NQV.b.cur.q:null;},BUDS:BUDS,check:function(){checkTrophies();},quiz:function(ids){startQuiz(null,'practice',ids);},pick:pickQs,AUTH:AUTH,TD:TD,get S(){return S;},set S(v){S=v;},save:save,render:render,packState:packState,unpack:unpack,get Q(){return Q;},leg:{dmCount:dmCount,dmNeed:dmNeed,dmTotal:dmTotal,dmHit:dmHit,evoReq:evoReq,palBuff:palBuff,gain:function(c,x,ctx){gainCtx=ctx;return gain(c,x);},chk:checkPetUnlocks,PETS:PETS,dict:function(u){openDictSetup(u);},evo:function(){openEvolve();},get DQ(){return DQ;}}};
 })();
 
 </script>
