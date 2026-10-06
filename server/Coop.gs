@@ -253,8 +253,9 @@ function coopAction(u, b) {
       case 'coopLeave':
         if (!row) break;
         /* host leaving = deleting the room (needs b.disband); a teammate just leaves and her squad progress stays here, never transfers */
-        if (coopHost(row) === u.email && Object.keys(row.st.m).length > 1 && !b.disband) { err = 'host_confirm'; break; }
-        if (coopHost(row) === u.email) { coopDelete(D, row); row = null; break; }
+        if (coopHost(row) === u.email && (b.disband || Object.keys(row.st.m).length <= 1)) { coopDelete(D, row); row = null; break; }
+        /* a host on an older page (no disband flag) just hands the squad to the next member and leaves – nothing is lost */
+        if (coopHost(row) === u.email) { delete row.st.m[u.email]; row.st.host = Object.keys(row.st.m)[0]; coopLog(row.st, 'leave', fullName(u.zh, u.en)); coopWrite(D, row); row = null; break; }
         delete row.st.m[u.email]; coopLog(row.st, 'leave', fullName(u.zh, u.en));
         if (!Object.keys(row.st.m).length) coopDelete(D, row); else coopWrite(D, row);
         row = null; break;
@@ -394,7 +395,7 @@ function coopDeco(st, b) {
 
 /* ---------- what the game sees ---------- */
 function coopView(u, row, cool) {
-  var res = { ok: true, pause: coopPaused(), cool: cool || 0, today: cDay(), squad: null, wOn: coopWorldOn(), wMode: coopMode() };
+  var res = { ok: true, ver: 3, pause: coopPaused(), cool: cool || 0, today: cDay(), squad: null, wOn: coopWorldOn(), wMode: coopMode() };
   if (!row) return res;
   var st = row.st, pets = coopPets(), mem = Object.keys(st.m), idx = {};
   mem.forEach(function (e, i) { idx[e] = i; });
