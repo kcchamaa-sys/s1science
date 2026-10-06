@@ -6016,7 +6016,7 @@ function defaultState(){return {v:1,lang:'zh',coins:40,xpTotal:0,pets:{mochi:new
  room:{wall:'w0',dec:{}},food:{onigiri:2,apple:1},streak:0,best:0,lastDay:null,shields:0,days:0,hist:[],
  secs:{},q:{},seen:{},mistakes:{},cleared:0,quizzes:0,perfect:0,studies:0,studyDay:{},matchWins:0,matchDay:{d:'',n:0},
  trophies:{},gift:'',vocabDay:{},dict:{n:0,miss:{},perf:0,days:0,dday:''},tc:0,bud:{own:{},act:null},ill:{lv:0,d:'',miss:0},say:{n:0,miss:{},rounds:0,perf:0},cures:0,illCure:null,buffs:{},sugar:null,dtask:null,qday:null,fresh:{},explore:null,specGot:{},nobel:{t:{},seen:{},perk:{}},mig4:1,lastTick:Date.now(),sfx:true,music:false,started:false};}
-function upgradeState(o){if(o.room)migrateRoom(o.room,o.owned,o.specGot);if(!o.mig4){o.specGot={};for(var q in (o.secs||{}))if((o.secs[q].stars||0)>0)o.specGot[q]=1;o.mig4=1;}var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];if(o.dict&&o.dict.perf==null)o.dict.perf=0;if(o.dict&&o.dict.days==null){o.dict.days=0;o.dict.dday='';}return o;}
+function upgradeState(o){if(o.room)migrateRoom(o.room,o.owned,o.specGot);if(!o.mig4){o.specGot={};for(var q in (o.secs||{}))if((o.secs[q].stars||0)>0)o.specGot[q]=1;o.mig4=1;}var d=defaultState();for(var k in d)if(!(k in o))o[k]=d[k];var px=0;for(var pid in (o.pets||{}))px+=(o.pets[pid]&&o.pets[pid].xp)||0;if((o.xpTotal||0)<px)o.xpTotal=px;if(o.dict&&o.dict.perf==null)o.dict.perf=0;if(o.dict&&o.dict.days==null){o.dict.days=0;o.dict.dday='';}return o;}
 function load(k){try{var r=localStorage.getItem(k||KEY);if(r){return upgradeState(JSON.parse(r));}}catch(e){}return null;}
 function save(){try{S.lastTick=Date.now();S.upd=Date.now();localStorage.setItem(storeKey(),JSON.stringify(S));}catch(e){}cloudSaveSoon();}
 window.addEventListener('pagehide',function(){if(S&&S.started)save();});
@@ -6969,9 +6969,20 @@ var LB_CATS={xp:['🌟','Effort','努力'],streak:['🔥','Streak','連續溫習
 var LB_THANKS={xp:[['Thank you for working so hard! 💪','多謝你咁努力！💪'],['Your effort is inspiring the whole class ✨','你的努力激勵着全班 ✨']],
  streak:[['Amazing consistency – a true habit hero 🔥','超強毅力——真正的習慣英雄 🔥'],['Day after day, you never gave up 🌱','日復一日，從不放棄 🌱']],
  col:[['Super collector – so many treasures! 🎀','收藏大師——寶物多到數唔晒！🎀'],['Your pets and outfits are legendary 👑','你的寵物和服飾都是傳說級 👑']]};
+/* XP can never be lower than what the pals have earned (older saves started the XP total late) */
+function lbXp(){var n=0;for(var id in (S.pets||{}))n+=(S.pets[id]&&S.pets[id].xp)||0;return Math.max(S.xpTotal||0,n);}
+/* the last day the streak is still alive: a study day, or a day covered by a Streak Freeze */
+function lbAlive(){var a=S.lastDay||'',f=(S.frz||[]).slice().sort().pop()||'';return f>a?f:a;}
+function lbStreakNow(){var al=lbAlive();return al&&al>=fromDayNum(dayNum(today())-1)?(S.streak||0):0;}
+/* show the student's own row with live numbers (the server copy can be a few minutes old), then re-rank */
+function lbLive(d,cat){var c=d&&d.cats&&d.cats[cat];if(!c)return {top:[]};var lv=cat==='xp'?lbXp():cat==='streak'?lbStreakNow():lbCount();
+ var top=c.top.map(function(r){if(!r.me)return r;var o={};for(var k in r)o[k]=r[k];o.v=lv;if(cat==='col'){o.g=lbTier('legendary');o.m=lbTier('mythic');}return o;});
+ var order=top.map(function(r,i){return [r,i];}).sort(function(a,b){return b[0].v-a[0].v||a[1]-b[1];}).map(function(x){return x[0];});
+ var me=c.me?{rank:c.me.rank,v:lv}:null;if(me){for(var i=0;i<order.length;i++)if(order[i].me){me.rank=i+1;break;}}
+ return {top:order,me:me};}
 function lbCount(){var c=ownedCount('wear')+ownedCount('room')+petsCount()+budOwned();return c;}
 function lbTier(t){return ITEMS.filter(function(i){return i.tier===t&&S.owned[i.id];}).length+BUDS.filter(function(B){return B.tier===t&&S.bud.own[B.id];}).length;}
-function lbLoad(force){if(AUTH.mode!=='google'){return;}var sc=LB.scope,d=LB.data[sc];if(!force&&d&&Date.now()-d.at<5*60000)return;LB.busy=LB.busy||{};if(LB.busy[sc])return;LB.busy[sc]=1;LB.loading=true;LB.err='';
+function lbLoad(force){if(AUTH.mode!=='google'){return;}var sc=LB.scope,d=LB.data[sc];if(!force&&d&&Date.now()-d.at<60000)return;LB.busy=LB.busy||{};if(LB.busy[sc])return;LB.busy[sc]=1;LB.loading=true;LB.err='';
  api('board',{scope:sc}).then(function(j){LB.busy[sc]=0;LB.loading=false;if(j.ok&&(!j.scope||j.scope===sc)){j.at=Date.now();LB.data[sc]=j;}else if(!j.ok)LB.err=errText(j.error);lbRefresh();},function(){LB.busy[sc]=0;LB.loading=false;LB.err=errText('network');lbRefresh();});}
 function lbRefresh(){var el=$('#lbBox');if(el){el.innerHTML=lbInner($('#ov #lbBox')?20:5);bindLB();}}
 function lbRow(r,i,cat){var med=i<3?rankBadge(i):'<span class="lbn">'+(i+1)+'</span>';var val=cat==='xp'?r.v+' XP':cat==='streak'?r.v+L(' days',' 日'):r.v+(r.m?' · 🌈'+r.m:'')+(r.g?' · 👑'+r.g:'');
@@ -6984,7 +6995,7 @@ function lbInner(n){if(AUTH.mode==='guest'&&AUTH.user)return guestBoardHTML();if
  if(LB.loading&&!d)return h+'<p class="muted">⏳ '+L('Loading…','載入中……')+'</p>';
  if(LB.err&&!d)return h+'<p class="muted">⚠️ '+esc(LB.err)+'</p>';
  if(!d)return h+'<p class="muted">⏳</p>';
- var c=d.cats&&d.cats[cat]||{top:[]};
+ var c=lbLive(d,cat);
  h+='<p class="muted" style="font-size:13px;margin:6px 0">'+(cat==='xp'?L('Effort = all the XP earned from quizzes, notes, dictation and read-aloud.','努力值＝測驗、筆記、默書和朗讀賺到的所有 XP。'):cat==='streak'?L('Current study streaks (days in a row).','目前的連續溫習日數。'):L('Outfits, decor, Science Pals and their pets collected. 🌈 = mythic, 👑 = legendary.','已收集的服飾、裝飾、科學小夥伴和寵物。🌈＝神話級，👑＝傳說級。'))+'</p>';
  if(!c.top.length)return h+'<p class="muted">'+L('No one is on the board yet – be the first! 🌱','榜上仍未有人——做第一個吧！🌱')+'</p>';
  var pod=c.top.length>=3?3:0;h+=(pod?lbPodium(c.top,cat):'')+'<div class="lblist">'+c.top.slice(pod,n).map(function(r,i){return lbRow(r,i+pod,cat);}).join('')+'</div>';
@@ -8520,7 +8531,7 @@ var cloudTimer=null;
 function cloudSaveSoon(now){if(AUTH.mode!=='google')return;clearTimeout(cloudTimer);cloudTimer=setTimeout(cloudSave,now?50:6000);}
 function totalStars(){var n=0;for(var k in S.secs)n+=S.secs[k].stars||0;return n;}
 function cloudPayload(){var st=JSON.stringify(S);if(st.length>45000){var c=JSON.parse(st);c.seen={};c.hist=(c.hist||[]).slice(-7);st=JSON.stringify(c);}
- return {state:st,summary:{streak:S.streak,best:S.best,stars:totalStars(),level:petLevel(curPet().xp),coins:S.coins,pet:S.active,quizzes:S.quizzes,mistakes:Object.keys(S.mistakes).length,cleared:S.cleared,trophies:Object.keys(S.trophies).length,lastDay:S.lastDay||'',nq:NQ.map(function(c){return nqMask(c.id);}).join(','),sp:nobelDone(),xp:S.xpTotal||0,col:lbCount(),leg:lbTier('legendary'),myth:lbTier('mythic')}};}
+ return {state:st,summary:{streak:S.streak,best:S.best,stars:totalStars(),level:petLevel(curPet().xp),coins:S.coins,pet:S.active,quizzes:S.quizzes,mistakes:Object.keys(S.mistakes).length,cleared:S.cleared,trophies:Object.keys(S.trophies).length,lastDay:S.lastDay||'',alive:lbAlive(),nq:NQ.map(function(c){return nqMask(c.id);}).join(','),sp:nobelDone(),xp:lbXp(),col:lbCount(),leg:lbTier('legendary'),myth:lbTier('mythic')}};}
 function cloudSave(){if(AUTH.mode!=='google')return;if(!tokenOk()){markStale();return;}var pl=cloudPayload();if(FORCE_SAVE)pl.force=1;api('save',pl).then(function(j){if(j.ok){AUTH.lastSync=Date.now();FORCE_SAVE=0;}else if(j.error==='stale'&&j.progress)adoptRemote(j.progress,null);});}
 /* ---- keep devices in step: progress is "newer" when it has a later study day, then more active days (not just a later save time) ---- */
 var FORCE_SAVE=0;
