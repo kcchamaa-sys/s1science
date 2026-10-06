@@ -24,7 +24,7 @@ var REC_HEAD = ['記錄時間 Timestamp', '練習編號 Session ID', '電郵 Ema
 var PROG_HEAD = ['電郵 Email', '更新時間 Updated', '連續日數 Streak', '最佳連續 Best streak', '星星 Stars', '寵物等級 Pet level',
   '金幣 Coins', '寵物 Pet', '測驗次數 Quizzes', '待清除錯題 Mistakes', '已清除錯題 Cleared', '獎盃 Trophies',
   '最後溫習日 Last study day', '進度資料 Data (do not edit)', '總經驗 Total XP', '收藏 Collection', '傳說 Legendary', '神話 Mythic',
-  '諾貝爾火種 Nobel Sparks', '諾貝爾任務 Nobel tasks (per chapter)'];
+  '諾貝爾火種 Nobel Sparks', '諾貝爾任務 Nobel tasks (per chapter)', '連勝有效日 Streak alive day'];
 var DATA_COL = 14; // column N holds the saved game data
 var MODES = { quiz: '測驗 Quiz', practice: '錯題練習 Mistake practice', study: '溫習筆記 Study notes', vocab: '詞彙跟讀 Vocab', match: '詞彙配對 Term Match',
   dict_listen: '默書（聽音）Dictation – listen', dict_meaning: '默書（看義／圖）Dictation – meaning/picture',
@@ -153,7 +153,7 @@ function saveProgress(u, state, s) {
     var sh = sheet(PROG, PROG_HEAD);
     var row = [u.email, new Date(), num(s.streak), num(s.best), num(s.stars), num(s.level), num(s.coins), clean(s.pet, 20),
       num(s.quizzes), num(s.mistakes), num(s.cleared), num(s.trophies), clean(s.lastDay, 12), state,
-      num(s.xp), num(s.col), num(s.leg), num(s.myth), num(s.sp), clean(s.nq, 40)];
+      num(s.xp), num(s.col), num(s.leg), num(s.myth), num(s.sp), clean(s.nq, 40), clean(s.alive || s.lastDay, 12)];
     if (sh.getLastColumn() < PROG_HEAD.length) {
       sh.getRange(1, 1, 1, PROG_HEAD.length).setValues([PROG_HEAD]).setFontWeight('bold').setBackground('#FFF1C5');
     }
@@ -161,6 +161,7 @@ function saveProgress(u, state, s) {
     if (r < 0) r = sh.getLastRow() + 1;
     sh.getRange(r, 13).setNumberFormat('@');
     sh.getRange(r, DATA_COL + 6).setNumberFormat('@'); // keep "63,31,0,…" as text
+    sh.getRange(r, DATA_COL + 7).setNumberFormat('@'); // keep the date as text
     sh.getRange(r, 1, 1, row.length).setValues([row]);
   } finally { lock.releaseLock(); }
 }
@@ -248,8 +249,21 @@ function fullName(zh, en) {
   zh = String(zh || '').trim();
   return zh || String(en || '').trim() || '?';
 }
+/* a Sheets date cell comes back as a Date object: always turn it into yyyy-MM-dd text before comparing days */
+function dayText(v, tz) {
+  if (v instanceof Date) return Utilities.formatDate(v, tz, 'yyyy-MM-dd');
+  return String(v || '').slice(0, 10);
+}
+function boardRowFrom(r, x, u, yest, tz) {
+  x = x || [];
+  var last = dayText(r[12], tz), alive = dayText(x[6], tz) || last;
+  if (last > alive) alive = last;
+  return { e: String(r[0]).toLowerCase(), n: u.n, c: u.c, p: String(r[7] || ''), lv: Number(r[5]) || 0, xp: Number(x[0]) || 0,
+    st: alive >= yest ? Number(r[2]) || 0 : 0, col: Number(x[1]) || 0, g: Number(x[2]) || 0, m: Number(x[3]) || 0 };
+}
+function boardYest(tz) { return Utilities.formatDate(new Date(Date.now() - 864e5), tz, 'yyyy-MM-dd'); }
 function boardRows() {
-  var cache = CacheService.getScriptCache(), hit = cache.get('board_rows3');
+  var cache = CacheService.getScriptCache(), hit = cache.get('board_rows4');
   if (hit) return JSON.parse(hit);
   var ss = book(), rows = [];
   var uv = ss.getSheetByName(PROPS.getProperty('USERS_SHEET') || USERS_DEFAULT).getDataRange().getValues();
@@ -262,23 +276,30 @@ function boardRows() {
   if (ps && ps.getLastRow() > 1) {
     var n = ps.getLastRow() - 1;
     var a = ps.getRange(2, 1, n, DATA_COL - 1).getValues();
-    var b = ps.getLastColumn() > DATA_COL ? ps.getRange(2, DATA_COL + 1, n, 4).getValues() : [];
-    var tz = Session.getScriptTimeZone() || 'Asia/Hong_Kong';
-    var yest = Utilities.formatDate(new Date(Date.now() - 864e5), tz, 'yyyy-MM-dd');
+    var b = ps.getLastColumn() > DATA_COL ? ps.getRange(2, DATA_COL + 1, n, 7).getValues() : [];
+    var tz = Session.getScriptTimeZone() || 'Asia/Hong_Kong', yest = boardYest(tz);
     a.forEach(function (r, k) {
-      var em = String(r[0]).toLowerCase(), u = info[em];
-      if (!u) return;
-      var x = b[k] || [];
-      var last = String(r[12] || '');
-      rows.push({ e: em, n: u.n, c: u.c, p: String(r[7] || ''), lv: Number(r[5]) || 0, xp: Number(x[0]) || 0,
-        st: last >= yest ? Number(r[2]) || 0 : 0, col: Number(x[1]) || 0, g: Number(x[2]) || 0, m: Number(x[3]) || 0 });
+      var u = info[String(r[0]).toLowerCase()];
+      if (u) rows.push(boardRowFrom(r, b[k], u, yest, tz));
     });
   }
-  cache.put('board_rows3', JSON.stringify(rows), 300);
+  cache.put('board_rows4', JSON.stringify(rows), 60);
   return rows;
 }
+/* the asking student's own row is always read fresh, so their own XP / items / streak never lag behind the cache */
+function freshBoardRow(user) {
+  try {
+    var ps = book().getSheetByName(PROG); if (!ps) return null;
+    var r = findRow(ps, user.email); if (r < 0) return null;
+    var tz = Session.getScriptTimeZone() || 'Asia/Hong_Kong';
+    var a = ps.getRange(r, 1, 1, DATA_COL - 1).getValues()[0], b = ps.getLastColumn() > DATA_COL ? ps.getRange(r, DATA_COL + 1, 1, 7).getValues()[0] : [];
+    return boardRowFrom(a, b, { n: fullName(user.zh, user.en), c: String(user.cls || '') }, boardYest(tz), tz);
+  } catch (e) { return null; }
+}
 function board(user, scope) {
-  var rows = boardRows().filter(function (r) { return scope === 'all' || r.c === user.cls; });
+  var all = boardRows(), mine = freshBoardRow(user);
+  if (mine) { var at = -1; all.forEach(function (r, i) { if (r.e === mine.e) at = i; }); all = all.slice(); if (at >= 0) all[at] = mine; else all.push(mine); }
+  var rows = all.filter(function (r) { return scope === 'all' || r.c === user.cls; });
   function cat(key, extra) {
     var list = rows.filter(function (r) { return r[key] > 0; }).sort(function (x, y) { return y[key] - x[key] || y.xp - x.xp; });
     var top = list.slice(0, 20).map(function (r) {
