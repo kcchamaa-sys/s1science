@@ -6043,7 +6043,7 @@ function markActive(){var t=today();if(S.lastDay===t)return;var prev=S.streak;
 
 /* ---------- rewards ---------- */
 function gain(coins,xp,why){var m=streakMult()*fedBonus(),pb=palBuff(gainCtx);gainCtx=null;var c=Math.round(coins*m*buffMult('coin')*(1+pb.c)),x=Math.round(xp*m*buffMult('xp')*(1+pb.x));
- var p=curPet();var before=petLevel(p.xp);S.coins+=c;p.xp+=x;S.xpTotal+=x;var after=petLevel(p.xp);
+ var p=curPet();var before=petLevel(p.xp);S.coins+=c;p.xp+=x;S.xpTotal=(+S.xpTotal||0)+x;var after=petLevel(p.xp);
  if(after>before){setTimeout(function(){sfx('level');toast('⬆️ '+LL(petDef(S.active))+' '+L('reached Level ','升到 ')+after+L('!',' 級！'));confetti();},600);}
  checkTrophies();save();return {c:c,x:x,m:m};}
 function checkTrophies(){checkQuests();checkBuddies();dtCheck();checkRoutes();TROPHIES.forEach(function(t){if(!S.trophies[t.id]){var v=t.f();if(v[0]>=v[1]){S.trophies[t.id]=today();S.coins+=20;
@@ -7115,7 +7115,7 @@ function foodFx(f,pet){var c=[];if(f.en2)c.push('⚡+'+(f.en2>=100?L('full','全
 function eatFood(f){var p=curPet();var boost=f.buff||f.xp;if(p.energy>=100&&p.happy>=100&&!boost){toast(L('Too full! Maybe later 😊','太飽了！遲啲再食 😊'));return false;}
  var fav=PET_FAV[S.active]===f.id,hp=f.hp*(fav?2:1);if(f.buff)p.fb=(p.fb||0)+1;else if(!f.sugar&&f.en2>0)p.fh=(p.fh||0)+1;
  p.energy=clamp(p.energy+f.en2,5,100);p.happy=clamp(p.happy+hp+2,5,100);
- if(f.xp){var before=petLevel(p.xp);p.xp+=f.xp;S.xpTotal+=f.xp;if(petLevel(p.xp)>before)setTimeout(function(){sfx('level');toast('⬆️ '+LL(petDef(S.active))+' Lv '+petLevel(p.xp));confetti();},500);}
+ if(f.xp){var before=petLevel(p.xp);p.xp+=f.xp;S.xpTotal=(+S.xpTotal||0)+f.xp;if(petLevel(p.xp)>before)setTimeout(function(){sfx('level');toast('⬆️ '+LL(petDef(S.active))+' Lv '+petLevel(p.xp));confetti();},500);}
  if(f.buff){S.buffs=S.buffs||{};var b=S.buffs[f.buff.k],base=b&&b.until>Date.now()?b.until:Date.now();S.buffs[f.buff.k]={m:Math.max(f.buff.m,b&&b.until>Date.now()?b.m:1),until:base+f.buff.mins*60000};}
  var msg=fav?L('My FAVOURITE! Double happiness! 💖','我最愛食呢樣！快樂加倍！💖'):pick([L('Yum yum! Thank you!','好好味！多謝你！'),L('Energy recharged ⚡','能量充滿 ⚡'),L('Now I can study more!','而家可以溫更多書！')]);
  if(f.buff)msg=L('I feel super smart! Rewards boosted for '+f.buff.mins+' minutes!','我覺得自己好聰明！'+f.buff.mins+' 分鐘內獎勵加成！');
