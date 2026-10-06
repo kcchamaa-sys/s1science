@@ -241,8 +241,9 @@ function stats() {
   }
   var progress = {}, ps = ss.getSheetByName(PROG);
   if (ps && ps.getLastRow() > 1) {
-    ps.getRange(2, 1, ps.getLastRow() - 1, DATA_COL - 1).getValues().forEach(function (r) {
-      progress[String(r[0]).toLowerCase()] = { upd: r[1] instanceof Date ? r[1].toISOString() : '', streak: r[2], best: r[3], stars: r[4],
+    var xs = ps.getLastColumn() > DATA_COL ? ps.getRange(2, DATA_COL + 1, ps.getLastRow() - 1, 2).getValues() : [];
+    ps.getRange(2, 1, ps.getLastRow() - 1, DATA_COL - 1).getValues().forEach(function (r, i) {
+      progress[String(r[0]).toLowerCase()] = { xp: Number(xs[i] && xs[i][0]) || 0, colN: Number(xs[i] && xs[i][1]) || 0, upd: r[1] instanceof Date ? r[1].toISOString() : '', streak: r[2], best: r[3], stars: r[4],
         level: r[5], coins: r[6], pet: r[7], quizzes: r[8], mistakes: r[9], cleared: r[10], trophies: r[11], lastDay: String(r[12] || '') };
     });
     // Nobel Time Quest columns (S, T): Sparks and task bit-masks per chapter, e.g. "63,31,0,0,0,0"
