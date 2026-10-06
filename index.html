@@ -2070,8 +2070,7 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .coscr .cohero{background:#F3EAFF}
 .coscr .cohtxt h2{font-size:22px}
 /* Island 3.0: parallax, ambient life, grain, effects switch */
-.coislandc .copl{transform:translate(calc(var(--px,0)*var(--kx,0)*1px),calc(var(--py,0)*var(--ky,0)*1px));transition:transform .35s ease-out;will-change:transform}
-.pl-far{--kx:3;--ky:2}.pl-sea{--kx:-1.5;--ky:-1}.pl-mid{--kx:-4;--ky:-3}.pl-fore{--kx:-10;--ky:-7}
+
 .cocloud{animation:coDrift 140s linear infinite}.cocloud.c2{animation-duration:110s;animation-delay:-80s}.cocloud.c3{animation-duration:180s;animation-delay:-30s}.cocloud.c1{animation-delay:-45s}
 @keyframes coDrift{from{transform:translateX(-110px)}to{transform:translateX(520px)}}
 .cobird{animation:coFlyB 30s linear infinite}@keyframes coFlyB{from{transform:translate(-30px,0)}to{transform:translate(440px,-16px)}}
@@ -2082,11 +2081,10 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 @keyframes coPet{0%{transform:translate(0,-40px) rotate(0);opacity:0}8%{opacity:.95}92%{opacity:.9}100%{transform:translate(70px,300px) rotate(540deg);opacity:0}}
 .cofly{animation:coFloat var(--d,7s) ease-in-out infinite alternate,coTwink 2.6s ease-in-out infinite}
 @keyframes coFloat{to{transform:translate(var(--dx,10px),var(--dy,-8px))}}@keyframes coTwink{50%{opacity:.35}}
-.coislandc::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:overlay;opacity:.2;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .45 0 0 0 0 .55 0 0 0 1.4 -.2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");animation:coGrain .6s steps(4) infinite}
-@keyframes coGrain{25%{background-position:-30px 20px}50%{background-position:40px -25px}75%{background-position:-15px -40px}}
+.coislandc::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .45 0 0 0 0 .55 0 0 0 1.4 -.2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
 .cofxbtn{position:absolute!important;right:12px;top:14px;z-index:3;display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:99px;border:2px solid var(--cl);background:#fff;color:var(--ink);font:inherit;font-size:12px;font-weight:800;cursor:pointer}
 .cofxbtn .ic{width:14px;height:14px}
-.lowfx .coamb,.lowfx .coislandc::after{display:none}.lowfx .copl{transform:none!important;transition:none}
+.lowfx .coamb,.lowfx .coislandc::after{display:none}.lowfx .copl{transform:none!important;transition:none}.lowfx .coisle *{animation:none!important}
 .cowipe{position:absolute;inset:0;pointer-events:none;border-radius:inherit;mix-blend-mode:screen;background:linear-gradient(105deg,transparent 30%,rgba(255,244,190,.0) 38%,rgba(255,240,170,.85) 50%,rgba(255,244,190,0) 62%,transparent 70%);transform:translateX(-110%);animation:coWipe .95s cubic-bezier(.3,.6,.3,1) forwards}
 @keyframes coWipe{to{transform:translateX(110%)}}
 .copunch .coisle{animation:coPunch .7s cubic-bezier(.2,1.4,.4,1)}@keyframes coPunch{0%{transform:scale(1.07);filter:brightness(1.25) saturate(1.2)}100%{transform:none}}
@@ -2095,7 +2093,16 @@ emo-i svg.ic{width:1.2em!important;height:1.2em!important;vertical-align:0!impor
 .cofx-lines{position:absolute;inset:-30%;opacity:0;pointer-events:none;background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,255,255,.95) 0 .6deg,transparent .6deg 4deg);-webkit-mask:radial-gradient(circle,transparent 22%,#000 60%);mask:radial-gradient(circle,transparent 22%,#000 60%)}
 .cofx.p4 .cofx-lines{animation:coLines .7s ease-out forwards}@keyframes coLines{0%{opacity:.95;transform:scale(1.5)}100%{opacity:0;transform:scale(1)}}
 .cofx.p4 .cofx-bw{animation:coPopIn .55s cubic-bezier(.2,1.5,.4,1),coChroma .6s ease-out}@keyframes coChroma{0%{filter:drop-shadow(4px 0 0 rgba(255,60,130,.75)) drop-shadow(-4px 0 0 rgba(60,210,255,.75))}100%{filter:none}}
-@media (prefers-reduced-motion:reduce){.coislandc::after{animation:none}.cowipe,.cofx-lines{display:none}}
+@media (prefers-reduced-motion:reduce){.cowipe,.cofx-lines{display:none}}
+/* performance: loops step at ~12 fps ("on twos", like hand-drawn anime) so the scene repaints far less; light rays stay still */
+.coisle .coray{animation:none}
+.coisle .cocloud{animation-timing-function:steps(1500)}
+.coisle .cobird{animation-timing-function:steps(360)}.coisle .cobird path{animation-timing-function:steps(5)}
+.coisle .coboat{animation-timing-function:steps(72)}.coisle .cowave{animation-timing-function:steps(60)}
+.coisle .copet{animation-timing-function:steps(150)}.coisle .cofly{animation-timing-function:steps(100),steps(30)}
+.coisle .comote{animation-timing-function:steps(84)}.coisle .cotent{animation-timing-function:steps(54)}
+.coisle .coflow{animation-timing-function:steps(10)}.coisle .cobreath{animation-timing-function:steps(26)}
+.coisle .cobob,.coisle .cospore{animation-timing-function:steps(30)}.coisle .cobub,.coisle .costeam,.coisle .codrip{animation-timing-function:steps(24)}
 /* in-scene motion */
 .coflow{animation:coFlow 1.6s linear infinite}
 .coring{animation:coFlow 2.4s linear infinite}.coring.r2{animation-direction:reverse}
@@ -9614,8 +9621,9 @@ function coopSq(){return COOP.d&&COOP.d.squad;}
 /* ---------- server calls ---------- */
 function coopCall(action,data,quiet){if(!coopOK())return Promise.resolve(null);COOP.busy=true;var done=false;
  var slow=new Promise(function(res){setTimeout(function(){res({ok:false,error:'timeout'});},20000);});
- return Promise.race([api(action,data),slow]).then(function(j){if(done)return j;done=true;COOP.busy=false;if(j&&j.squad!==undefined){COOP.d=j;COOP.t=Date.now();COOP.fail=null;coopAfterLoad();}else if(!COOP.d)COOP.fail=(j&&j.error)||'network';
-  if(j&&!j.ok&&!quiet){COOP.err=j.error;toast(coopErr(j.error));}else COOP.err=null;if(curScreen==='coop'&&!$('#ov'))render();return j;});}
+ return Promise.race([api(action,data),slow]).then(function(j){if(done)return j;done=true;COOP.busy=false;var same=false;COOP.t=Date.now();/* even a failed call waits before the next background refresh (stops a retry→redraw loop) */
+  if(j&&j.squad!==undefined){var sig='';try{sig=JSON.stringify(j);}catch(e){}same=!!quiet&&!!COOP.d&&sig!==''&&sig===COOP.sig;COOP.sig=sig;COOP.d=j;COOP.fail=null;coopAfterLoad();}else if(!COOP.d)COOP.fail=(j&&j.error)||'network';
+  if(j&&!j.ok&&!quiet){COOP.err=j.error;toast(coopErr(j.error));}else COOP.err=null;if(same&&!COOP.err)return j;/* nothing changed: do not redraw the whole island */if(curScreen==='coop'&&!$('#ov'))render();return j;});}
 function coopErr(e){return ({host_confirm:L('You are the host – leaving deletes the squad for everyone. Please confirm.','你是隊長——離開會為所有成員刪除小隊，請確認。'),no_code:L('No squad has that code.','沒有小隊使用這個邀請碼。'),full:L('That squad is full (4 players).','這個小隊已滿（4 人）。'),in_squad:L('You are already in a squad.','你已經在小隊中。'),short:L('Not enough materials yet.','材料未夠。'),busy:L('Finish the current construction first.','請先完成目前的建造。'),locked:L('Not unlocked yet.','尚未解鎖。'),limit:L('No repairs left today.','今日修復次數已用完。'),no_fog:L('No Fog to clear!','沒有霧需要清除！'),max:L('Already at the top level.','已達最高等級。'),unknown_action:L('The class server needs the new Coop.gs – please ask your teacher to deploy it.','班級伺服器需要加入新的 Coop.gs——請通知老師部署。'),network:L('No connection – try again.','沒有網絡——請再試。')})[e]||L('Something went wrong: ','出錯了：')+e;}
 /* perks that touch the main game + prize */
 function coopAfterLoad(){var q=coopSq();if(!q)return;S.coopB=q.bld;var t=today();
@@ -9763,7 +9771,7 @@ var CO_ACC={safety:'A',water:'C',green:'N',cell:'T',power:'Y',part:'M',obs:'C',m
 var CO_COL={A:'#FFB547',C:'#4FD8FF',N:'#7CFF6B',T:'#3FE0C5',Y:'#FFE45C',M:'#FF5FD2'};
 function coRM(){try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}}
 function cS(w){return ' stroke="'+CO_INK+'" stroke-width="'+(w||2.2)+'" stroke-linejoin="round" stroke-linecap="round"';}
-function cG(s,big){return '<g filter="url(#'+(big?'coGlow2':'coGlow')+')">'+s+'</g>';}
+function cG(s,big){return coFxOn()?'<g filter="url(#'+(big?'coGlow2':'coGlow')+')">'+s+'</g>':'<g>'+s+'</g>';}
 function cH(d,x){return '<path d="'+d+'" fill="url(#'+(x?'coHX':'coH')+')"/>';}
 function cPipe(d,col,w){return '<path d="'+d+'" fill="none" stroke="'+CO_INK+'" stroke-width="'+((w||2.6)+2.4)+'" stroke-linejoin="round"/><path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="'+(w||2.6)+'" stroke-linejoin="round"/>';}
 
@@ -9777,16 +9785,21 @@ function coPartHTML(T){var o='';if(T.night<.7){for(var i=0;i<9;i++){var x=(i*47+
  if(T.night>.3){for(var j=0;j<10;j++){var fx=(j*61+30)%330+35,fy=(j*43+80)%120+90;o+='<g transform="translate('+fx+' '+fy+')" opacity="'+Math.min(1,T.night*1.2).toFixed(2)+'"><g class="cofly" style="--d:'+(6+j%4*2)+'s;--dx:'+(j%2?14:-12)+'px;--dy:'+(j%3?-10:8)+'px;animation-delay:-'+(j*.9).toFixed(1)+'s"><circle r="5" fill="url(#coLamp)"/><circle r="1.5" fill="#FFF7C2"/></g></g>';}}
  return '<g class="coamb" pointer-events="none">'+o+'</g>';}
 function coForeHTML(){var bl=function(x,h,w,c){return '<path d="M'+x+' 270Q'+(x+w*.2)+' '+(270-h*.6)+' '+(x+w*.5)+' '+(270-h)+'Q'+(x+w*.8)+' '+(270-h*.5)+' '+(x+w)+' 270Z" fill="'+c+'" stroke="'+CO_INK+'" stroke-width="1.8" stroke-linejoin="round"/>';};
- return '<g style="filter:blur(.7px)">'+bl(-14,46,18,'#6EC47E')+bl(-4,62,20,'#8ED98F')+bl(8,40,16,'#6EC47E')+bl(22,30,14,'#8ED98F')+'<circle cx="14" cy="214" r="4.5" fill="#FFB3CF" stroke="'+CO_INK+'" stroke-width="1.4"/><circle cx="14" cy="214" r="1.6" fill="#FFE27A"/>'+
+ return '<g>'+bl(-14,46,18,'#6EC47E')+bl(-4,62,20,'#8ED98F')+bl(8,40,16,'#6EC47E')+bl(22,30,14,'#8ED98F')+'<circle cx="14" cy="214" r="4.5" fill="#FFB3CF" stroke="'+CO_INK+'" stroke-width="1.4"/><circle cx="14" cy="214" r="1.6" fill="#FFE27A"/>'+
   bl(372,52,18,'#8ED98F')+bl(384,66,20,'#6EC47E')+bl(396,42,16,'#8ED98F')+bl(358,30,14,'#6EC47E')+'<circle cx="386" cy="208" r="4.5" fill="#D9C2FF" stroke="'+CO_INK+'" stroke-width="1.4"/><circle cx="386" cy="208" r="1.6" fill="#FFE27A"/></g>';}
 var CO_PAR={x:0,y:0,raf:0};
-function coParApply(){CO_PAR.raf=0;var c=document.querySelector('.coscr:not(.lowfx) .coislandc');if(!c||coRM())return;c.style.setProperty('--px',CO_PAR.x.toFixed(3));c.style.setProperty('--py',CO_PAR.y.toFixed(3));}
+var CO_PK={'pl-far':[3,2],'pl-sea':[-1.5,-1],'pl-mid':[-4,-3],'pl-fore':[-10,-7]};
+function coParApply(){CO_PAR.raf=0;if(coRM()||!coFxOn())return;document.querySelectorAll('.coislandc .copl').forEach(function(g){for(var k in CO_PK)if(g.classList.contains(k)){g.style.transform='translate('+(CO_PAR.x*CO_PK[k][0]).toFixed(2)+'px,'+(CO_PAR.y*CO_PK[k][1]).toFixed(2)+'px)';}});}
 function coParSched(){if(!CO_PAR.raf)CO_PAR.raf=requestAnimationFrame(coParApply);}
 function coParScroll(){var c=document.querySelector('.coislandc');if(!c)return;var r=c.getBoundingClientRect(),vh=window.innerHeight||800;CO_PAR.y=Math.max(-1,Math.min(1,((r.top+r.height/2)-vh/2)/(vh/2)));coParSched();}
 window.addEventListener('scroll',coParScroll,{passive:true});
-window.addEventListener('pointermove',function(e){CO_PAR.x=(e.clientX/(window.innerWidth||400)-.5)*2;coParSched();},{passive:true});
+window.addEventListener('pointermove',function(e){var x=(e.clientX/(window.innerWidth||400)-.5)*2;if(Math.abs(x-CO_PAR.x)<.04)return;CO_PAR.x=x;coParSched();},{passive:true});
 window.addEventListener('deviceorientation',function(e){if(e.gamma==null)return;CO_PAR.x=Math.max(-1,Math.min(1,e.gamma/30));coParSched();},true);
-(function(){var r1=render;render=function(){var r=r1.apply(this,arguments);if(curScreen==='coop')setTimeout(coParScroll,30);return r;};})();
+var CO_PERF={done:false};
+function coAutoPerf(){if(CO_PERF.done||coRM())return;try{if(localStorage.getItem('coFx')!==null){CO_PERF.done=true;return;}}catch(e){CO_PERF.done=true;return;}CO_PERF.done=true;
+ setTimeout(function(){if(document.hidden||curScreen!=='coop')return;var t0=performance.now(),n=0,hid=false;document.addEventListener('visibilitychange',function(){hid=true;},{once:true});
+  (function f(t){n++;if(t-t0<1600){requestAnimationFrame(f);return;}var fps=n/((t-t0)/1000);if(!hid&&!document.hidden&&curScreen==='coop'&&fps<40){try{localStorage.setItem('coFx','0');}catch(e){}render();toast(L('Visual effects were switched off to keep the island smooth. Tap ✨ to turn them back on.','為了令小島更流暢，已自動關閉視覺特效。按 ✨ 可重新開啟。'));}})(t0);},1800);}
+(function(){var r1=render;render=function(){var r=r1.apply(this,arguments);if(curScreen==='coop'){setTimeout(coParScroll,30);coAutoPerf();}return r;};})();
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-cofx]');if(!b)return;try{localStorage.setItem('coFx',coFxOn()?'0':'1');}catch(x){}render();});
 /* finish moment: the island punches in and the residents squash & stretch */
 function coPunch(){var c=document.querySelector('.coislandc');if(!c||coRM()||!coFxOn())return;c.classList.add('copunch');setTimeout(function(){c.classList.remove('copunch');},700);document.querySelectorAll('.comemb').forEach(function(m,i){m.classList.remove('cosq');void m.getBoundingClientRect();var q=m.querySelector('.comsq');if(q)q.style.animationDelay=(i*70)+'ms';m.classList.add('cosq');});}
@@ -9801,7 +9814,10 @@ function coTod(){var h=coHour(),i=0;while(i<CO_TOD.length-2&&h>=CO_TOD[i+1][0])i
  var c=function(k){return coMix(a[k],b[k],t);},n=function(k){return a[k]+(b[k]-a[k])*t;},night=n(8),sunUp=h>=6&&h<18,u=sunUp?(h-6)/12:((h>=18?h-18:h+6)/12);
  return {h:h,sky:[c(1),c(2),c(3)],sea:[c(4),c(5)],tint:c(6),ta:n(7),night:night,sunUp:sunUp,bx:40+320*u,by:74-46*Math.sin(Math.PI*u),warm:sunUp?coMix('#FFF6D6','#FFB070',Math.abs(u-.5)*2):'#EAF0FF',
   name:night>.75?['Night','夜晚']:night>.3?['Dusk','黃昏']:h<8?['Sunrise','日出']:h>=16.5?['Golden hour','黃金時刻']:['Daytime','日間']};}
-function coStars(T){if(T.night<.15)return '';var o='';for(var i=0;i<26;i++){var x=(i*53+17)%390+5,y=(i*37+9)%62+16,r=.7+(i%3)*.5;o+='<circle class="coglint" style="animation-delay:'+(-(i*.37)).toFixed(2)+'s" cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#FFFBE6" opacity="'+(T.night*.9).toFixed(2)+'"/>';}return o;}
+/* deterministic wobbly blob (replaces the live displacement filter: same smoke look, no per-frame filter cost) */
+function coBlob(cx,cy,rx,ry,seed){var n=10,pts=[],i,r,a;for(i=0;i<n;i++){a=i/n*Math.PI*2;r=.82+.3*Math.abs(Math.sin(seed*12.9898+i*78.233)*43758.5453%1);pts.push([cx+Math.cos(a)*rx*r,cy+Math.sin(a)*ry*r]);}
+ var d='M'+((pts[n-1][0]+pts[0][0])/2).toFixed(1)+' '+((pts[n-1][1]+pts[0][1])/2).toFixed(1);for(i=0;i<n;i++){var q=pts[i],nx=pts[(i+1)%n];d+='Q'+q[0].toFixed(1)+' '+q[1].toFixed(1)+' '+((q[0]+nx[0])/2).toFixed(1)+' '+((q[1]+nx[1])/2).toFixed(1);}return d+'Z';}
+function coStars(T){if(T.night<.15)return '';var o='';for(var i=0;i<26;i++){var x=(i*53+17)%390+5,y=(i*37+9)%62+16,r=.7+(i%3)*.5;o+='<circle'+(i%4?'':' class="coglint" style="animation-delay:'+(-(i*.37)).toFixed(2)+'s"')+' cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#FFFBE6" opacity="'+(T.night*.9).toFixed(2)+'"/>';}return o;}
 function coDefs(){var T=coTod(),rg='';for(var k in CO_COL)rg+='<radialGradient id="coRg'+k+'"><stop offset="0" stop-color="'+CO_COL[k]+'" stop-opacity=".5"/><stop offset=".55" stop-color="'+CO_COL[k]+'" stop-opacity=".14"/><stop offset="1" stop-color="'+CO_COL[k]+'" stop-opacity="0"/></radialGradient>';
  var anim=!coRM();
  return '<svg class="codefs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0"><defs>'+rg+
@@ -9817,9 +9833,8 @@ function coDefs(){var T=coTod(),rg='';for(var k in CO_COL)rg+='<radialGradient i
  '<pattern id="coHX" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V6M0 0H6" stroke="'+CO_INK+'" stroke-width="1.1" opacity=".55"/></pattern>'+
  '<filter id="coGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'+
  '<filter id="coGlow2" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'+
- '<filter id="coInk" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.02 0.045" numOctaves="2" seed="4" result="n">'+(anim?'<animate attributeName="baseFrequency" dur="16s" values="0.02 0.045;0.028 0.055;0.02 0.045" repeatCount="indefinite"/>':'')+'</feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="16" xChannelSelector="R" yChannelSelector="G"/></filter>'+
  '<filter id="coGray" x="-10%" y="-10%" width="120%" height="120%"><feColorMatrix in="SourceGraphic" type="saturate" values="0.06" result="g"/><feComponentTransfer in="g" result="d"><feFuncR type="linear" slope="1.05" intercept=".08"/><feFuncG type="linear" slope="1.02" intercept=".08"/><feFuncB type="linear" slope="1.1" intercept=".1"/></feComponentTransfer>'+
-  '<feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="1" seed="2" result="n">'+(anim?'<animate attributeName="seed" values="1;4;7;2;9" dur=".6s" repeatCount="indefinite"/>':'')+'</feTurbulence><feColorMatrix in="n" type="matrix" values="0 0 0 0 .62  0 0 0 0 .58  0 0 0 0 .72  1.1 0 0 0 -.72" result="n2"/><feComposite in="n2" in2="SourceAlpha" operator="in" result="n3"/><feMerge><feMergeNode in="d"/><feMergeNode in="n3"/></feMerge></filter>'+
+  '</filter>'+
  '</defs></svg>';}
 
 /* ---------- buildings: hut (Lv 1) → workshop (Lv 2) → landmark (Lv 3) ---------- */
@@ -9961,19 +9976,19 @@ function coIsland(q){var fog=+q.fog||0,b=q.bld||{},tot=0,k;for(k in b)tot+=b[k]|
  (q.members||[]).forEach(function(m,i){var x=150+i*34,y=228;s+='<g class="comemb" transform="translate('+(x-17)+' '+(y-30)+')"><ellipse cx="17" cy="30" rx="13" ry="3" fill="rgba(90,70,110,.2)"/><g class="comsq"><svg x="0" y="0" width="34" height="31" viewBox="-10 0 220 200">'+petSVG(m.p,m.today?'joy':'sleepy',{stage:1,eq:{},plain:1}).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')+'</svg></g></g>';});
  s+='</g>';
  /* lighting pass: key light from the sun/moon, rim light, lamp bloom at dusk, colour grade */
- s+='<rect x="0" y="-40" width="400" height="300" fill="url(#coKey)" style="mix-blend-mode:soft-light" opacity="'+(T.sunUp?.9:.55)+'" pointer-events="none"/>';
+ s+='<rect x="0" y="-40" width="400" height="300" fill="url(#coKey)" opacity="'+(T.sunUp?.34:.22)+'" pointer-events="none"/>';
  s+='<path d="'+CO_TOP+'" fill="none" stroke="url(#coRim)" stroke-width="3.4" stroke-linecap="round" opacity="'+(.55+.3*(1-T.night)).toFixed(2)+'" pointer-events="none"/>';
- var lampA=Math.min(1,T.night*1.25);if(lampA>.05){var lp='';CO_ORDER.forEach(function(k){var p=CO_POS[k],lv=b[k]||0;if(lv)lp+='<circle cx="'+p[0]+'" cy="'+(p[1]-6)+'" r="'+(30+lv*7)+'" fill="url(#coLamp)"/><circle cx="'+(p[0]-5)+'" cy="'+(p[1]-8)+'" r="1.8" fill="#FFF3B0"/><circle cx="'+(p[0]+6)+'" cy="'+(p[1]-3)+'" r="1.8" fill="#FFF3B0"/>';});s+='<g opacity="'+lampA.toFixed(2)+'" style="mix-blend-mode:screen" pointer-events="none">'+lp+'</g>';}
- s+='<rect x="0" y="-40" width="400" height="300" fill="'+T.tint+'" opacity="'+T.ta.toFixed(2)+'" style="mix-blend-mode:'+(T.night>.5?'multiply':'soft-light')+'" pointer-events="none"/>';
+ var lampA=Math.min(1,T.night*1.25);if(lampA>.05){var lp='';CO_ORDER.forEach(function(k){var p=CO_POS[k],lv=b[k]||0;if(lv)lp+='<circle cx="'+p[0]+'" cy="'+(p[1]-6)+'" r="'+(30+lv*7)+'" fill="url(#coLamp)"/><circle cx="'+(p[0]-5)+'" cy="'+(p[1]-8)+'" r="1.8" fill="#FFF3B0"/><circle cx="'+(p[0]+6)+'" cy="'+(p[1]-3)+'" r="1.8" fill="#FFF3B0"/>';});s+='<g opacity="'+lampA.toFixed(2)+'" pointer-events="none">'+lp+'</g>';}
+ s+='<rect x="0" y="-40" width="400" height="300" fill="'+T.tint+'" opacity="'+(T.ta*(T.night>.5?1.15:.65)).toFixed(2)+'" pointer-events="none"/>';
  /* Murk's fog: viscous ink smoke + tentacles creeping in from the edges */
  if(fog>0){var nb=Math.min(CO_BLOB.length,Math.ceil(fog*.6)+1),nt=Math.min(CO_TENTS.length,Math.ceil(fog*.8)),f='';
-  for(var i=0;i<nb;i++){var B=CO_BLOB[i];f+='<ellipse cx="'+B[0]+'" cy="'+B[1]+'" rx="'+B[2]+'" ry="'+B[3]+'" fill="#C9B8E8"/><ellipse cx="'+(B[0]+B[2]*.3)+'" cy="'+(B[1]-B[3]*.4)+'" rx="'+(B[2]*.55)+'" ry="'+(B[3]*.5)+'" fill="#E6DCF8" opacity=".8"/>';}
-  for(var j=0;j<nt;j++){var T=CO_TENTS[j],sz=(.9+fog*.08)*T[3];f+='<g transform="translate('+T[0]+' '+T[1]+') rotate('+T[2]+') scale('+(sz*1.25).toFixed(2)+')"><path class="cotent'+(j%2?' d2':'')+'" d="'+CO_TENT+'" fill="#B49CDA" stroke="#7B5FB8" stroke-width=".8"/></g>';}
-  s+='<g class="copl pl-mid"><g class="cofogL" opacity="'+Math.min(.95,.38+fog*.06).toFixed(2)+'" filter="url(#coInk)">'+f+'</g></g><rect x="0" y="-40" width="400" height="300" fill="#CBB8EE" opacity="'+(fog*.03).toFixed(2)+'" style="mix-blend-mode:color"/>';}
+  for(var i=0;i<nb;i++){var B=CO_BLOB[i];f+='<path d="'+coBlob(B[0],B[1],B[2],B[3],i+1)+'" fill="#C9B8E8"/><path d="'+coBlob(B[0]+B[2]*.3,B[1]-B[3]*.4,B[2]*.55,B[3]*.5,i+7)+'" fill="#E6DCF8" opacity=".8"/>';}
+  for(var j=0;j<nt;j++){var TN=CO_TENTS[j],sz=(.9+fog*.08)*TN[3];f+='<g transform="translate('+TN[0]+' '+TN[1]+') rotate('+TN[2]+') scale('+(sz*1.25).toFixed(2)+')"><path class="cotent'+(j%2?' d2':'')+'" d="'+CO_TENT+'" fill="#B49CDA" stroke="#7B5FB8" stroke-width=".8"/></g>';}
+  s+='<g class="copl pl-mid"><g class="cofogL" opacity="'+Math.min(.95,.38+fog*.06).toFixed(2)+'">'+f+'</g></g><rect x="0" y="-40" width="400" height="300" fill="#CBB8EE" opacity="'+(fog*.025).toFixed(2)+'" pointer-events="none"/>';}
  s+='<g class="copl pl-fore">'+coForeHTML()+'</g>'+coPartHTML(T);
  /* dust motes + vignette */
- var mo='';for(var m2=0;m2<14;m2++){var mx2=(m2*67+23)%380+10,my2=(m2*41+30)%200+20;mo+='<circle class="comote" style="animation-delay:'+(-(m2*0.55)).toFixed(2)+'s" cx="'+mx2+'" cy="'+my2+'" r="'+(1+(m2%3)*.4)+'" fill="'+(m2%2?'#FFCF7A':'#7FE8FF')+'"/>';}
- s+=cG(mo)+'<rect x="0" y="-40" width="400" height="300" fill="url(#coVig)" pointer-events="none"/>';
+ var mo='';for(var m2=0;m2<7;m2++){var mx2=(m2*67+23)%380+10,my2=(m2*41+30)%200+20;mo+='<circle class="comote" style="animation-delay:'+(-(m2*0.55)).toFixed(2)+'s" cx="'+mx2+'" cy="'+my2+'" r="'+(1+(m2%3)*.4)+'" fill="'+(m2%2?'#FFCF7A':'#7FE8FF')+'"/>';}
+ s+='<g>'+mo+'</g>'+'<rect x="0" y="-40" width="400" height="300" fill="url(#coVig)" pointer-events="none"/>';
  return s+'</svg>';}
 
 /* dark cinematic frame around the whole Island screen */
