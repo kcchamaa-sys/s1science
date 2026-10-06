@@ -328,3 +328,38 @@ function board(user, scope) {
   }
   return { ok: true, scope: scope, cats: { xp: cat('xp'), streak: cat('st'), col: cat('col', true) } };
 }
+
+/* ------------------------------------------------------------------------------------------------
+ *  repairXp  –  run once from the Apps Script editor (select repairXp, press Run).
+ *  Every XP point a student earns is also added to one of their pals, so a student's real XP is
+ *  never less than the sum of their pals' XP stored in the saved game data (column N).
+ *  For every student this raises "Total XP" (column O) and the saved xpTotal to that value if it is
+ *  lower. It never lowers anything. The list of changes is written to the log and to the tab
+ *  `XP修復紀錄 XP Repair Log` so you can see who was fixed.
+ * ---------------------------------------------------------------------------------------------- */
+function repairXp() {
+  var lock = LockService.getScriptLock(); lock.waitLock(30000);
+  try {
+    var sh = book().getSheetByName(PROG);
+    if (!sh || sh.getLastRow() < 2) { Logger.log('No progress rows.'); return; }
+    var n = sh.getLastRow() - 1, emails = sh.getRange(2, 1, n, 1).getValues(), states = sh.getRange(2, DATA_COL, n, 2).getValues(), fixed = [];
+    for (var i = 0; i < n; i++) {
+      var raw = String(states[i][0] || ''), cur = Number(states[i][1]) || 0, o;
+      if (!raw) continue;
+      try { o = JSON.parse(raw); } catch (e) { continue; }
+      var pets = o.pets || {}, sum = 0;
+      for (var id in pets) sum += Number(pets[id] && pets[id].xp) || 0;
+      var best = Math.max(sum, Number(o.xpTotal) || 0);
+      if (best <= cur && (Number(o.xpTotal) || 0) >= best) continue;
+      if (best > cur) sh.getRange(i + 2, DATA_COL + 1).setValue(best);
+      if ((Number(o.xpTotal) || 0) < best) { o.xpTotal = best; var js = JSON.stringify(o); if (js.length <= 49000) sh.getRange(i + 2, DATA_COL).setValue(js); }
+      fixed.push([new Date(), String(emails[i][0]), cur, best]);
+    }
+    if (fixed.length) {
+      var lg = sheet('XP修復紀錄 XP Repair Log', ['時間 Time', '電郵 Email', '原本XP Before', '修復後XP After']);
+      lg.getRange(lg.getLastRow() + 1, 1, fixed.length, 4).setValues(fixed);
+    }
+    CacheService.getScriptCache().remove('board_rows4');
+    Logger.log('XP repaired for ' + fixed.length + ' student(s).');
+  } finally { lock.releaseLock(); }
+}
