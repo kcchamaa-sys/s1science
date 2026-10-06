@@ -174,12 +174,26 @@ function loginResp(user) {
 }
 /* save: never let an older copy (an old tab on another device) overwrite newer progress.
    "Newer" = later last-study day, then more active days. A restored save code sends force. */
-function progMeta(s) { try { var o = JSON.parse(s); return { d: String(o.lastDay || ''), n: Number(o.days) || 0 }; } catch (e) { return null; } }
+function progMeta(s) { try { var o = JSON.parse(s); return { d: String(o.lastDay || ''), n: Number(o.days) || 0, xp: Number(o.xpTotal) || 0 }; } catch (e) { return null; } }
+/* every time a save would lower a student's XP, the old copy is kept here so it can be restored by hand */
+var BACKUP = '進度備份 Progress Backup', BACKUP_HEAD = ['時間 Time', '電郵 Email', '原因 Reason', '舊XP Old XP', '新XP New XP', '舊進度資料 Old data'];
+function backupProgress(email, oldState, why, oldXp, newXp) {
+  try {
+    var sh = sheet(BACKUP, BACKUP_HEAD), keep = 3000;
+    sh.appendRow([new Date(), email, why, oldXp, newXp, String(oldState).slice(0, 49000)]);
+    var n = sh.getLastRow(); if (n > keep + 1) sh.deleteRows(2, n - keep - 1);
+  } catch (e) { }
+}
 function saveResp(user, body) {
   var cur = getProgress(user.email);
   if (cur && !body.force) {
     var a = progMeta(cur), b = progMeta(String(body.state || ''));
     if (a && b && (a.d > b.d || (a.d === b.d && a.n > b.n))) return { ok: false, error: 'stale', progress: cur };
+    /* XP only ever goes up: a copy with less XP is an old or empty copy – keep the cloud one and hand it back */
+    if (a && b && b.xp < a.xp) { backupProgress(user.email, String(body.state || ''), 'blocked: lower XP', a.xp, b.xp); return { ok: false, error: 'stale', progress: cur }; }
+  } else if (cur) {
+    var a2 = progMeta(cur), b2 = progMeta(String(body.state || ''));
+    if (a2 && b2 && b2.xp < a2.xp) backupProgress(user.email, cur, 'overwritten by forced save', a2.xp, b2.xp);
   }
   saveProgress(user, body.state, body.summary || {});
   try { coopTouch(user.email, String((body.summary || {}).lastDay || '')); } catch (e1) { }
