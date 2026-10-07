@@ -140,7 +140,7 @@ Single file: `index.html` (HTML + CSS + vanilla JS, no build step, no images –
 - **Home layout**: on wide screens the Home page uses two balanced columns (room, streak, daily mission, Mochi's pets | pet card, chat, leaderboard, next step); phones keep one column.
 - **Retention**: daily streak with reward multiplier (up to ×1.5) and ❄️ Streak Freezes, daily gift, 30+ trophies (streak trophies up to 200 days), collection gallery.
 - **錯題本 Mistake Bank**: wrong answers are saved automatically; answer one right twice in a row to clear it (+6 coins).
-- **Saving**: auto-saves to `localStorage` key `s1SciencePals_v1`; 💾 gives a save code + share link (`…/#CODE`) to move devices, with preview and checksum. Codes from every earlier version (v1–v6) still load; the current format is v15 (v13 added the 6 Unit Pals, v14 the capsule items, v15 the co-op pal Lumi).
+- **Saving**: auto-saves to `localStorage` key `s1SciencePals_v1`; 💾 gives a save code + share link (`…/#CODE`) to move devices, with preview and checksum. Codes from every earlier version (v1–v6) still load; the current format is v16 (v13 added the 6 Unit Pals, v14 the capsule items, v15 the co-op pal Lumi, v16 raised the per-pal XP limit from 20,475 to 327,675).
 
 ## 🏅 Nobel Time Quest (season event, Oct 2026 – Mar 2027)
 - A separate **Nobel** tab with its own dark neon style, holographic cards and synth music (a faster track for the boss battle).
