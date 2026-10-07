@@ -10084,8 +10084,8 @@ function coForeHTML(){var bl=function(x,h,w,c){return '<path d="M'+x+' 270Q'+(x+
 var CO_PAR={x:0,y:0,raf:0};
 var CO_PK={'pl-far':[3,2],'pl-sea':[-1.5,-1],'pl-mid':[-4,-3],'pl-fore':[-10,-7]};
 function coParApply(){CO_PAR.raf=0;if(coRM()||!coFxOn())return;document.querySelectorAll('.coislandc .copl').forEach(function(g){for(var k in CO_PK)if(g.classList.contains(k)){g.style.transform='translate('+(CO_PAR.x*CO_PK[k][0]).toFixed(2)+'px,'+(CO_PAR.y*CO_PK[k][1]).toFixed(2)+'px)';}});}
-function coParSched(){if(!CO_PAR.raf)CO_PAR.raf=requestAnimationFrame(coParApply);}
-function coParScroll(){var c=document.querySelector('.coislandc');if(!c)return;var r=c.getBoundingClientRect(),vh=window.innerHeight||800;CO_PAR.y=Math.max(-1,Math.min(1,((r.top+r.height/2)-vh/2)/(vh/2)));coParSched();}
+function coParSched(){if(CO_PAR.raf)return;var w=Math.max(0,(CO_PAR.last||0)+66-performance.now());CO_PAR.raf=setTimeout(function(){CO_PAR.last=performance.now();requestAnimationFrame(coParApply);},w);}/* at most ~15 updates a second: each one repaints the whole island */
+function coParScroll(){var c=document.querySelector('.coislandc');if(!c)return;var r=c.getBoundingClientRect(),vh=window.innerHeight||800;if(r.bottom<0||r.top>vh)return;CO_PAR.y=Math.max(-1,Math.min(1,((r.top+r.height/2)-vh/2)/(vh/2)));coParSched();}
 window.addEventListener('scroll',coParScroll,{passive:true});
 window.addEventListener('pointermove',function(e){var x=(e.clientX/(window.innerWidth||400)-.5)*2;if(Math.abs(x-CO_PAR.x)<.04)return;CO_PAR.x=x;coParSched();},{passive:true});
 window.addEventListener('deviceorientation',function(e){if(e.gamma==null)return;CO_PAR.x=Math.max(-1,Math.min(1,e.gamma/30));coParSched();},true);
@@ -10094,6 +10094,20 @@ function coAutoPerf(){if(CO_PERF.done||coRM())return;try{if(localStorage.getItem
  setTimeout(function(){if(document.hidden||curScreen!=='coop')return;var t0=performance.now(),n=0,hid=false;document.addEventListener('visibilitychange',function(){hid=true;},{once:true});
   (function f(t){n++;if(t-t0<1600){requestAnimationFrame(f);return;}var fps=n/((t-t0)/1000);if(!hid&&!document.hidden&&curScreen==='coop'&&fps<40){try{localStorage.setItem('coFx','0');}catch(e){}render();toast(L('Visual effects were switched off to keep the island smooth. Tap ✨ to turn them back on.','為了令小島更流暢，已自動關閉視覺特效。按 ✨ 可重新開啟。'));}})(t0);},1800);}
 (function(){var r1=render;render=function(){var r=r1.apply(this,arguments);if(curScreen==='coop'){setTimeout(coParScroll,30);coAutoPerf();}return r;};})();
+/* Island frame governor: the island is one big SVG, so every animation step anywhere repaints all of it.
+   Dozens of loops with different lengths meant a repaint on almost every screen frame (~60/s).
+   Here the looping island animations are paused and moved forward together ~12 times a second,
+   and they stand still while the island is off-screen, covered by a pop-up or the tab is hidden. */
+var CO_TICK={m:typeof WeakMap!=='undefined'?new WeakMap():null};
+function coTick(){if(curScreen!=='coop'||!CO_TICK.m||!document.getAnimations)return;var root=document.querySelector('.coscr');if(!root)return;
+ var now=performance.now(),vh=window.innerHeight||800,c=document.querySelector('.coislandc'),r=c&&c.getBoundingClientRect();
+ var run=!document.hidden&&!$('#ov')&&!(r&&(r.bottom<0||r.top>vh));
+ document.getAnimations().forEach(function(a){var e=a.effect,t=e&&e.target;if(!t||!t.closest||!root.contains(t)||!t.closest('svg')||t.closest('.fig'))return;
+  var k=CO_TICK.m.get(a);if(!k){if(a.playState!=='running')return;var ct;try{ct=e.getComputedTiming();}catch(x){return;}if(ct.iterations!==Infinity)return;k={b:a.currentTime||0,t0:now};CO_TICK.m.set(a,k);a.pause();}
+  if(run)a.currentTime=k.b+(now-k.t0);else{k.b=a.currentTime||0;k.t0=now;}});
+ root.querySelectorAll('svg.coisle').forEach(function(sv){if(!sv.pauseAnimations||!sv.querySelector('animate,animateTransform,animateMotion'))return;var k=CO_TICK.m.get(sv);
+  if(!k){k={b:sv.getCurrentTime(),t0:now};CO_TICK.m.set(sv,k);sv.pauseAnimations();}if(run)sv.setCurrentTime(k.b+(now-k.t0)/1000);else{k.b=sv.getCurrentTime();k.t0=now;}});}
+setInterval(coTick,83);
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-cofx]');if(!b)return;try{localStorage.setItem('coFx',coFxOn()?'0':'1');}catch(x){}render();});
 /* finish moment: the island punches in and the residents squash & stretch */
 function coPunch(){var c=document.querySelector('.coislandc');if(!c||coRM()||!coFxOn())return;c.classList.add('copunch');setTimeout(function(){c.classList.remove('copunch');},700);document.querySelectorAll('.comemb').forEach(function(m,i){m.classList.remove('cosq');void m.getBoundingClientRect();var q=m.querySelector('.comsq');if(q)q.style.animationDelay=(i*70)+'ms';m.classList.add('cosq');});}
