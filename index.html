@@ -209,6 +209,36 @@ textarea,input[type=text]{width:100%;font:inherit;font-family:ui-monospace,Menlo
 .ctx b{font-size:13px}
 .fig{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px;margin-bottom:10px;display:flex;justify-content:center;overflow:hidden}
 .fig svg{width:100%;max-width:400px;height:auto;max-height:210px;display:block}
+.fig svg.mqsvg{max-width:420px;max-height:250px}
+.mmtag{background:#EDE6FB}
+.mqminis{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;max-width:420px}
+.mqminis>div{position:relative}.mqminis b{position:absolute;left:4px;top:2px;font-size:13px}
+.fig .mqminis svg{max-height:120px}
+.mqcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;width:100%;text-align:left}
+.mqcard{background:#FFF8E6;border:2px solid var(--line);border-radius:12px;padding:8px 10px;font-size:14px;line-height:1.4}
+.mqcard b{display:block;margin-bottom:2px}.mqcard i{font-style:normal;display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--line);font-size:12px;margin-right:2px}
+.mqtable{width:100%;overflow-x:auto;font-size:14px}.mqtable b{display:block;margin-bottom:4px}
+.mqtable table{border-collapse:collapse;width:100%;background:#fff}.mqtable th,.mqtable td{border:1.5px solid var(--line);padding:5px 7px;text-align:center}.mqtable th{background:#F3EEFF}
+.mqstack{display:grid;gap:8px;width:100%;justify-items:center}
+.opts.gopts{grid-template-columns:1fr 1fr}
+.opts.gopts .opt{flex-direction:column;align-items:stretch;padding:8px;gap:4px}.opts.gopts .opt .k{align-self:flex-start}
+.opt .gm svg{width:100%;height:auto;display:block}
+.opts.tapk{grid-template-columns:repeat(auto-fit,minmax(60px,1fr))}.opts.tapk .opt{justify-content:center;min-height:48px}
+.tapfig .tapt{cursor:pointer;outline:none}
+.tapfig .tapt:hover .mqtag circle,.tapfig .tapt:focus .mqtag circle{fill:#FFF1A8}
+.tapfig .tapt.right .mqtag circle{fill:#BDEBC8;stroke:#3E9B57}.tapfig .tapt.wrong .mqtag circle{fill:#F8C4CC;stroke:#C9455A}
+.tapfig .tapt.done{pointer-events:none}
+.sortq{display:grid;gap:8px;margin-top:10px}
+.sorthint{margin:6px 0 0;font-size:13px}
+.srow{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;justify-content:space-between;background:#fff;border:2px solid var(--line);border-radius:14px;padding:8px 10px}
+.srow.right{background:#E6F5EA;border-color:var(--good)}.srow.wrong{background:#FDECEF;border-color:var(--bad)}
+.sitem{font-weight:700;flex:1 1 140px}
+.sbins{display:flex;gap:6px;flex-wrap:wrap}
+.sb{min-height:40px;padding:6px 12px;border-radius:12px;border:2px solid var(--line);background:#FBF7F2;font-weight:700;font-size:13px}
+.sb.on{background:var(--butter);border-color:#C9A227}
+.sb.ans{outline:3px solid var(--good);outline-offset:1px}
+#bCheck{margin-top:10px}
+.mqpause{display:inline-flex;align-items:center;gap:4px;min-height:32px;padding:2px 10px;margin-left:6px;border-radius:999px;border:2px solid var(--line);background:#fff;font-size:12px;font-weight:700;vertical-align:middle}
 .keybox{display:grid;gap:4px;font-size:14px;width:100%;text-align:left}
 .chip.acct{max-width:40vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
 .chip.acct.warn{border-color:var(--bad);background:#FDECEF}
@@ -5665,6 +5695,246 @@ var CHEERS=[
 
 </script>
 <script>
+/* ===================== Media questions (XQ5) =====================
+   Idea ported from the biology game's media engine, rebuilt for S1 Science (bilingual, ES5, inline SVG only).
+   Six formats, all appended to the end of each sub-topic so saved question ids never move:
+     V virtual lab (animated scene) · D graph detective (chart) · K case file (evidence cards / data table)
+     G pick the graph (graphs are the options) · P tap it (tap the right part of a picture) · S sort it (put cards into groups)
+   Every V/D/K/G/P question is still a normal 4-option question underneath (q.o, correct first), so the co-op island,
+   mistake practice and teacher reports keep working. G and P use letter options (A–D) that match the labels in the picture.
+   S questions have t:'sort' and only appear in the main quiz and mistake practice.
+   Scenes: MQS[kind](spec, tap) → SVG/HTML string, built at render time so L(en,zh) picks the current language.
+   Text values in specs are either a plain string (same in both languages) or [en, zh]. */
+var MQS={},MQ={},XQ5={};
+function mqL(v){if(v==null)return '';if(Object.prototype.toString.call(v)==='[object Array]')return (typeof L==='function'?L(v[0],v[1]):v[0]);return String(v);}
+function mqE(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function mqT(x,y,t,o){o=o||{};return '<text x="'+(+x).toFixed(1)+'" y="'+(+y).toFixed(1)+'" text-anchor="'+(o.a||'middle')+'" font-size="'+(o.s||12)+'" font-weight="'+(o.w||700)+'" fill="'+(o.c||FO)+'"'+(o.r?' transform="rotate('+o.r+' '+(+x).toFixed(1)+' '+(+y).toFixed(1)+')"':'')+' dominant-baseline="middle">'+mqE(mqL(t))+'</text>';}
+function mqSvg(w,h,body,label){return '<svg class="mqsvg" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+mqE(mqL(label||['diagram','圖']))+'" font-family="M PLUS Rounded 1c,Noto Sans TC,sans-serif" fill="'+FO+'">'+body+'</svg>';}
+/* seeded random so a scene looks the same on every visit */
+function mqRnd(s){s=s|0||1;return function(){s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+function mqHash(str){var h=2166136261;str=String(str);for(var i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+/* a letter badge; in tap mode the group around it becomes a tap target */
+function mqTag(x,y,t){return '<g class="mqtag"><circle cx="'+(+x).toFixed(1)+'" cy="'+(+y).toFixed(1)+'" r="10" fill="#fff" stroke="'+FO+'" stroke-width="2"/><text x="'+(+x).toFixed(1)+'" y="'+(+y+.5).toFixed(1)+'" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="800" fill="'+FO+'">'+mqE(t)+'</text></g>';}
+function mqTapG(tag,tap,body){if(!tag||!tap)return body;return '<g class="tapt" data-t="'+mqE(tag)+'" tabindex="0" role="button" aria-label="'+mqE(tag)+'">'+body+'</g>';}
+var MQC={water:'#BFE3F7',red:'#E8616F',blue:'#4C9BE8',green:'#5DBB73',yellow:'#F6C945',orange:'#F29A4A',purple:'#9B7FD9',grey:'#B8B0AD',pink:'#F28DB2',brown:'#B07A4F'};
+var MQ_SER=['#E8616F','#4C9BE8','#5DBB73','#F29A4A','#9B7FD9'];
+var MQ_ARW='<defs><marker id="mqa" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="'+FO+'"/></marker></defs>';
+
+/* ---------- chart: line / bar graphs (graph detective) ----------
+   {k:'chart', type:'line'|'bar', x:label, y:label, xmin,xmax,xstep (line) | cats:[label,...] (bar), ymin,ymax,ystep,
+    series:[{n:label, pts:[[x,y],...] (line) | vals:[...] (bar), c:colour, dash:true, dots:false}], marks:[{x,y,t:'A'}] (x = category index for bar), w,h} */
+MQS.chart=function(sp,tap){var W=sp.w||360,H=sp.h||230,L0=50,R=W-14,T=16,B=H-42,bar=sp.type==='bar';
+ var ymin=sp.ymin||0,ymax=sp.ymax,ys=sp.ystep||((ymax-ymin)/5),Y=function(v){return B-(B-T)*(v-ymin)/(ymax-ymin);};
+ var cats=sp.cats||[],xmin=sp.xmin||0,xmax=sp.xmax,xs=sp.xstep||((xmax-xmin)/5),X=bar?function(i){return L0+(R-L0)*(i+.5)/cats.length;}:function(v){return L0+(R-L0)*(v-xmin)/(xmax-xmin);};
+ var s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#FFFDF7"/>',v,u;
+ for(v=ymin;v<=ymax+1e-9;v+=ys){var y=Y(v);s+='<path d="M'+L0+' '+y.toFixed(1)+'H'+R+'" stroke="#EDE3DA" stroke-width="1"/>'+mqT(L0-6,y,+v.toFixed(3),{a:'end',s:10.5,w:600});}
+ if(!bar)for(u=xmin;u<=xmax+1e-9;u+=xs){var x=X(u);s+='<path d="M'+x.toFixed(1)+' '+T+'V'+B+'" stroke="#F3EBE3" stroke-width="1"/>'+mqT(x,B+11,+u.toFixed(3),{s:10.5,w:600});}
+ else cats.forEach(function(c,i){s+=mqT(X(i),B+12,c,{s:10.5});});
+ s+='<path d="M'+L0+' '+T+'V'+B+'H'+R+'" fill="none" stroke="'+FO+'" stroke-width="2"/>';
+ s+=mqT((L0+R)/2,H-10,sp.x||'',{s:11.5})+mqT(14,(T+B)/2,sp.y||'',{s:11.5,r:-90});
+ var se0=sp.series||[],ns=se0.length;
+ se0.forEach(function(se,k){var c=se.c||MQ_SER[k%5];
+  if(bar){var bw=(R-L0)/cats.length*.7/ns;(se.vals||[]).forEach(function(val,i){var x=X(i)-bw*ns/2+bw*k,y=Y(val);s+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+(bw-2).toFixed(1)+'" height="'+Math.max(0,B-y).toFixed(1)+'" rx="3" fill="'+c+'" stroke="'+FO+'" stroke-width="1.2"/>';});}
+  else{var d=(se.pts||[]).map(function(p,i){return (i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1);}).join('');s+='<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"'+(se.dash?' stroke-dasharray="7 5"':'')+'/>';
+   if(se.dots!==false)(se.pts||[]).forEach(function(p){s+='<circle cx="'+X(p[0]).toFixed(1)+'" cy="'+Y(p[1]).toFixed(1)+'" r="3" fill="'+c+'" stroke="'+FO+'" stroke-width="1"/>';});}});
+ var named=se0.filter(function(se){return se.n;});
+ if(named.length){var lx=L0+10,ly=T+8;se0.forEach(function(se,k){if(!se.n)return;var c=se.c||MQ_SER[k%5];s+='<rect x="'+lx+'" y="'+(ly-5)+'" width="14" height="10" rx="2" fill="'+c+'" stroke="'+FO+'" stroke-width="1"/>'+mqT(lx+18,ly,se.n,{a:'start',s:10.5});ly+=15;});}
+ (sp.marks||[]).forEach(function(m){var x=X(m.x),y=Y(m.y);s+=mqTapG(m.t,tap,'<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="16" fill="#fff" fill-opacity=".01"/>'+mqTag(x,y-15,m.t)+'<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="4" fill="#fff" stroke="'+FO+'" stroke-width="2"/>');});
+ return mqSvg(W,H,s,sp.alt||['graph','圖表']);};
+
+/* ---------- mini graph (pick-the-graph options): {pts:[[x,y],...] in 0–10 units, lines:[pts,pts] (two lines), x:label, y:label, ref:y (dashed line)} ---------- */
+MQS.mini=function(sp){var W=150,H=104,L0=22,R=W-8,T=8,B=H-22,X=function(v){return L0+(R-L0)*v/10;},Y=function(v){return B-(B-T)*v/10;};
+ var s='<rect width="'+W+'" height="'+H+'" rx="10" fill="#FFFDF7"/><path d="M'+L0+' '+(T-2)+'V'+B+'H'+(R+2)+'" fill="none" stroke="'+FO+'" stroke-width="2"/><path d="M'+(L0-4)+' '+(T+3)+'L'+L0+' '+(T-3)+'L'+(L0+4)+' '+(T+3)+'M'+(R-3)+' '+(B-4)+'L'+(R+3)+' '+B+'L'+(R-3)+' '+(B+4)+'" fill="none" stroke="'+FO+'" stroke-width="1.6"/>';
+ if(sp.ref!=null)s+='<path d="M'+L0+' '+Y(sp.ref).toFixed(1)+'H'+R+'" stroke="#B8B0AD" stroke-width="1.5" stroke-dasharray="4 3"/>';
+ (sp.lines||[sp.pts]).forEach(function(pts,k){s+='<path d="'+pts.map(function(p,i){return (i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1);}).join('')+'" fill="none" stroke="'+MQ_SER[k%5]+'" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>';});
+ s+=mqT((L0+R)/2,H-8,sp.x||'',{s:10})+mqT(9,(T+B)/2,sp.y||'',{s:10,r:-90});
+ return mqSvg(W,H,s,['small graph','小圖表']);};
+MQS.minis=function(sp){return '<div class="mqminis">'+sp.graphs.map(function(g,i){return '<div><b>'+'ABCD'[i]+'</b>'+MQS.mini(g)+'</div>';}).join('')+'</div>';};
+
+/* ---------- particles: animated boxes of particles ----------
+   {k:'particles', boxes:[{st:'solid'|'liquid'|'gas', n, sp:speed 1–3, lab, c:colour, r:radius, fill:0–1 (liquid level), tag, lid:true, w}], seed} */
+MQS.particles=function(sp,tap){var bx=sp.boxes,n=bx.length,W=sp.w||Math.max(330,n*120),H=sp.h||190,gw=(W-20)/n,s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#F7FBFF"/>',rnd=mqRnd(sp.seed||7);
+ bx.forEach(function(b){var i=bx.indexOf(b),bwid=Math.min(gw-24,b.w||110),x0=10+gw*i+(gw-bwid)/2,y0=24,bh=H-64,r=b.r||6,c=b.c||MQC.blue,spd=b.sp||2,k=b.n||(b.st==='gas'?8:b.st==='liquid'?16:20),body='',pos=[],j;
+  body+='<rect x="'+x0.toFixed(1)+'" y="'+y0+'" width="'+bwid.toFixed(1)+'" height="'+bh+'" rx="6" fill="#fff" stroke="'+FO+'" stroke-width="2.4"/>'+(b.lid?'<path d="M'+(x0-3).toFixed(1)+' '+y0+'H'+(x0+bwid+3).toFixed(1)+'" stroke="'+FO+'" stroke-width="5" stroke-linecap="round"/>':'');
+  var amp=b.st==='gas'?Math.min(bwid,bh)*.3:b.st==='liquid'?Math.min(bwid*.2,14):0;
+  if(b.st==='solid'){var d=2*r+1,cols=Math.max(2,Math.floor((bwid-8)/d)),rows=Math.ceil(k/cols),gy=y0+bh-4-rows*d,ox=x0+4+((bwid-8)-cols*d)/2;for(j=0;j<k;j++)pos.push([ox+r+(j%cols)*d,gy+r+Math.floor(j/cols)*d]);}
+  else if(b.st==='liquid'){var fl=b.fill||.5,top=y0+bh*(1-fl);body+='<rect x="'+(x0+1.5).toFixed(1)+'" y="'+top.toFixed(1)+'" width="'+(bwid-3).toFixed(1)+'" height="'+(y0+bh-top-1.5).toFixed(1)+'" fill="'+(b.bg||'#E3F2FC')+'"/>';for(j=0;j<k;j++)pos.push([x0+r+3+amp+rnd()*Math.max(1,bwid-2*(r+3+amp)),top+r+2+rnd()*Math.max(1,y0+bh-top-2*r-4)]);}
+  else for(j=0;j<k;j++)pos.push([x0+r+3+amp+rnd()*Math.max(1,bwid-2*(r+3+amp)),y0+r+3+amp+rnd()*Math.max(1,bh-2*(r+3+amp))]);
+  pos.forEach(function(p){var a;
+   if(b.st==='solid'){var dd=(0.5+spd*0.45).toFixed(1);a='<animateTransform attributeName="transform" type="translate" values="0 0;'+dd+' -'+dd+';-'+dd+' '+dd+';0 0" dur="'+(0.45/spd+rnd()*.2).toFixed(2)+'s" repeatCount="indefinite"/>';}
+   else{var pts=['0 0'];for(var q=0;q<4;q++)pts.push(((rnd()-.5)*2*amp).toFixed(1)+' '+((rnd()-.5)*2*(b.st==='gas'?amp:amp*.4)).toFixed(1));pts.push('0 0');
+    a='<animateTransform attributeName="transform" type="translate" values="'+pts.join(';')+'" dur="'+((b.st==='gas'?5:9)/spd+rnd()*2).toFixed(1)+'s" repeatCount="indefinite"/>';}
+   body+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+r+'" fill="'+c+'" stroke="'+FO+'" stroke-width="1.2">'+a+'</circle>';});
+  body+=mqT(x0+bwid/2,H-26,b.lab||'',{s:12});
+  if(b.tag)body+=mqTag(x0+bwid-2,y0+2,b.tag);
+  s+=mqTapG(b.tag,tap,body);});
+ return mqSvg(W,H,s,['animated particles','粒子動畫']);};
+
+/* ---------- beakers: a row of beakers (fair tests, dissolving, heating, mixtures) ----------
+   {k:'beakers', dur:10, items:[{lab, liq:'#colour'|null (empty), lvl:0–1, solid:{amt:0–1, c, kind:'grains'|'lump'|'sand'|'powder'}, diss:seconds until it has dissolved (animated),
+    stir:true, heat:true, temp:number (thermometer), bub:true (boiling bubbles), steam:true, cloudy:true, tag, note}]} */
+MQS.beakers=function(sp,tap){var it=sp.items,n=it.length,W=sp.w||Math.max(330,n*104),H=sp.h||220,gw=(W-10)/n,s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#FFFDF7"/>',rnd=mqRnd(sp.seed||3);
+ it.forEach(function(b,i){var cx=5+gw*i+gw/2,bw=Math.min(78,gw-20),x0=cx-bw/2,top=44,bot=top+104,body='',lv=b.lvl==null?.6:b.lvl,ly=bot-(bot-top-6)*lv,liq=b.liq===null?null:(b.liq||MQC.water),k;
+  if(b.heat){body+='<path d="M'+(cx-26)+' '+(bot+10)+'H'+(cx+26)+'" stroke="'+FO+'" stroke-width="3"/><path d="M'+(cx-20)+' '+(bot+10)+'L'+(cx-26)+' '+(bot+34)+'M'+(cx+20)+' '+(bot+10)+'L'+(cx+26)+' '+(bot+34)+'" stroke="'+FO+'" stroke-width="2.4"/><path d="M'+cx+' '+(bot+32)+'C'+(cx-9)+' '+(bot+22)+' '+(cx-4)+' '+(bot+18)+' '+cx+' '+(bot+11)+'C'+(cx+4)+' '+(bot+18)+' '+(cx+9)+' '+(bot+22)+' '+cx+' '+(bot+32)+'Z" fill="#7FB8FF" stroke="'+FO+'" stroke-width="1.4"><animate attributeName="opacity" values="1;.6;1" dur=".7s" repeatCount="indefinite"/></path>';}
+  if(liq)body+='<path d="M'+(x0+2)+' '+ly.toFixed(1)+'H'+(x0+bw-2)+'V'+(bot-6)+'Q'+(x0+bw-2)+' '+(bot-2)+' '+(x0+bw-6)+' '+(bot-2)+'H'+(x0+6)+'Q'+(x0+2)+' '+(bot-2)+' '+(x0+2)+' '+(bot-6)+'Z" fill="'+liq+'" opacity=".9"/>';
+  if(b.cloudy&&liq)for(k=0;k<14;k++)body+='<circle cx="'+(x0+6+rnd()*(bw-12)).toFixed(1)+'" cy="'+(ly+4+rnd()*Math.max(1,bot-ly-10)).toFixed(1)+'" r="1.6" fill="#8D6E52" opacity=".7"/>';
+  if(b.solid){var so=b.solid,amt=so.amt==null?.5:so.amt,sc=so.c||'#FFFFFF',g='';
+   if(so.kind==='lump')g='<rect x="'+(cx-10*amt-6).toFixed(1)+'" y="'+(bot-10-16*amt).toFixed(1)+'" width="'+(20*amt+12).toFixed(1)+'" height="'+(16*amt+6).toFixed(1)+'" rx="3" fill="'+sc+'" stroke="'+FO+'" stroke-width="1.4"/>';
+   else{var m=Math.round(8+30*amt);for(k=0;k<m;k++){var gx=x0+8+rnd()*(bw-16),gy=bot-5-rnd()*(so.kind==='sand'?10:6)*amt*2;g+=(so.kind==='powder'?'<circle cx="'+gx.toFixed(1)+'" cy="'+gy.toFixed(1)+'" r="1.6"':'<rect x="'+gx.toFixed(1)+'" y="'+(gy-2).toFixed(1)+'" width="3" height="3" rx=".6"')+' fill="'+sc+'" stroke="'+FO+'" stroke-width=".7"/>';}}
+   if(b.diss>0){var D=sp.dur||10;g='<g>'+g+'<animate attributeName="opacity" values="1;0;0;1" keyTimes="0;'+Math.min(.9,b.diss/D).toFixed(3)+';.97;1" dur="'+D+'s" repeatCount="indefinite"/></g>';}
+   body+=g;}
+  if(b.stir)body+='<g><path d="M'+(cx+4)+' '+(top-22)+'L'+(cx-6)+' '+(bot-12)+'" stroke="#9C7B5B" stroke-width="4" stroke-linecap="round"/><animateTransform attributeName="transform" type="rotate" values="-10 '+cx.toFixed(1)+' '+(top-22)+';10 '+cx.toFixed(1)+' '+(top-22)+';-10 '+cx.toFixed(1)+' '+(top-22)+'" dur="1.2s" repeatCount="indefinite"/></g>';
+  if(b.bub&&liq)for(k=0;k<5;k++){var bx2=x0+10+rnd()*(bw-20);body+='<circle cx="'+bx2.toFixed(1)+'" cy="'+(bot-8)+'" r="3" fill="#fff" stroke="'+FO+'" stroke-width="1"><animate attributeName="cy" values="'+(bot-8)+';'+(ly+3).toFixed(1)+'" dur="'+(0.9+rnd()*.8).toFixed(2)+'s" begin="'+(k*.25).toFixed(2)+'s" repeatCount="indefinite"/></circle>';}
+  if(b.steam)for(k=0;k<3;k++){var sx=cx-14+k*14;body+='<path d="M'+sx.toFixed(1)+' '+(top-4)+'q-6 -8 0 -14q6 -8 0 -14" fill="none" stroke="#B8C7D6" stroke-width="3" stroke-linecap="round" opacity="0"><animate attributeName="opacity" values="0;.9;0" dur="2.4s" begin="'+(k*.8)+'s" repeatCount="indefinite"/></path>';}
+  body+='<path d="M'+(x0-4)+' '+(top-2)+'H'+x0+'V'+(bot-6)+'Q'+x0+' '+bot+' '+(x0+6)+' '+bot+'H'+(x0+bw-6)+'Q'+(x0+bw)+' '+bot+' '+(x0+bw)+' '+(bot-6)+'V'+top+'" fill="none" stroke="'+FO+'" stroke-width="2.6" stroke-linejoin="round"/>';
+  if(b.temp!=null){var tx=x0+bw-12,tb=bot-14,fr=Math.max(0,Math.min(1,b.temp/100));body+='<rect x="'+(tx-3)+'" y="'+(top-26)+'" width="6" height="'+(tb-top+26)+'" rx="3" fill="#fff" stroke="'+FO+'" stroke-width="1.4"/><circle cx="'+tx+'" cy="'+tb+'" r="5" fill="'+MQC.red+'" stroke="'+FO+'" stroke-width="1.4"/><rect x="'+(tx-1.5)+'" y="'+(tb-4-fr*(tb-top+20)).toFixed(1)+'" width="3" height="'+(4+fr*(tb-top+20)).toFixed(1)+'" fill="'+MQC.red+'"/>'+mqT(tx,top-34,b.temp+' °C',{s:11});}
+  if(b.note)body+=mqT(cx,bot+(b.heat?44:14),b.note,{s:10.5,w:600,c:'#8A7B78'});
+  body+=mqT(cx,H-12,b.lab||'',{s:12});
+  if(b.tag)body+=mqTag(x0+4,top-12,b.tag);
+  s+=mqTapG(b.tag,tap,body);});
+ return mqSvg(W,H,s,['beakers','燒杯']);};
+
+/* ---------- thermometers (static reading or animated rise/fall) ----------
+   {k:'thermo', min, max, step, minor:2 (ticks per step), items:[{v, from (animate from this value), lab, tag}], dur, unit} */
+MQS.thermo=function(sp,tap){var it=sp.items,n=it.length,W=sp.w||Math.max(240,n*96),H=sp.h||220,gw=(W-10)/n,T=24,B=H-58,mn=sp.min==null?0:sp.min,mx=sp.max==null?100:sp.max,st=sp.step||10,Y=function(v){return B-(B-T)*(v-mn)/(mx-mn);},s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#FFFDF7"/>';
+ it.forEach(function(t,i){var cx=5+gw*i+gw/2,body='<rect x="'+(cx-7)+'" y="'+(T-8)+'" width="14" height="'+(B-T+14)+'" rx="7" fill="#fff" stroke="'+FO+'" stroke-width="2"/><circle cx="'+cx+'" cy="'+(B+14)+'" r="11" fill="'+MQC.red+'" stroke="'+FO+'" stroke-width="2"/>';
+  var mi=st/(sp.minor||2);for(var v=mn;v<=mx+1e-9;v+=mi){var y=Y(v),maj=Math.abs((v-mn)/st-Math.round((v-mn)/st))<1e-6;body+='<path d="M'+(cx+7)+' '+y.toFixed(1)+'h'+(maj?9:5)+'" stroke="'+FO+'" stroke-width="1.3"/>'+(maj?mqT(cx+19,y,+v.toFixed(2),{a:'start',s:10}):'');}
+  var yv=Y(t.v),h0=B+6-yv;
+  if(t.from!=null){var yf=Y(t.from),D=(sp.dur||6)+'s';body+='<rect x="'+(cx-3)+'" y="'+yv.toFixed(1)+'" width="6" height="'+h0.toFixed(1)+'" fill="'+MQC.red+'"><animate attributeName="y" values="'+yf.toFixed(1)+';'+yv.toFixed(1)+';'+yv.toFixed(1)+'" keyTimes="0;.8;1" dur="'+D+'" repeatCount="indefinite"/><animate attributeName="height" values="'+(B+6-yf).toFixed(1)+';'+h0.toFixed(1)+';'+h0.toFixed(1)+'" keyTimes="0;.8;1" dur="'+D+'" repeatCount="indefinite"/></rect>';}
+  else body+='<rect x="'+(cx-3)+'" y="'+yv.toFixed(1)+'" width="6" height="'+h0.toFixed(1)+'" fill="'+MQC.red+'"/>';
+  body+=mqT(cx,H-12,t.lab||'',{s:11.5})+mqT(cx-22,T-4,sp.unit||'°C',{s:10,c:'#8A7B78'});
+  if(t.tag)body+=mqTag(cx-22,B-10,t.tag);
+  s+=mqTapG(t.tag,tap,body);});
+ return mqSvg(W,H,s,['thermometer','溫度計']);};
+
+/* ---------- measuring cylinder: {k:'cylinder', unit, items:[{v, max, step, minor, obj:'stone', lab, tag}], eyes:true (adds eye positions P, Q, R for the first cylinder)} ---------- */
+MQS.cylinder=function(sp,tap){var it=sp.items,n=it.length,ex=sp.eyes?60:0,W=sp.w||Math.max(200,n*130)+ex,H=sp.h||230,gw=(W-10-ex)/n,T=20,B=H-40,s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#FFFDF7"/>';
+ it.forEach(function(c,i){var cx=ex+5+gw*i+gw/2,mx=c.max||100,st=c.step||10,mi=c.minor||(st/5),Y=function(v){return B-6-(B-T-16)*v/mx;},bw=46,x0=cx-bw/2,body='',yv=Y(c.v);
+  body+='<path d="M'+x0+' '+(yv-4).toFixed(1)+'Q'+cx+' '+(yv+4).toFixed(1)+' '+(x0+bw)+' '+(yv-4).toFixed(1)+'V'+(B-2)+'H'+x0+'Z" fill="'+MQC.water+'"/><path d="M'+x0+' '+(yv-4).toFixed(1)+'Q'+cx+' '+(yv+4).toFixed(1)+' '+(x0+bw)+' '+(yv-4).toFixed(1)+'" fill="none" stroke="#5B9BC4" stroke-width="1.6"/>';
+  if(c.obj==='stone')body+='<path d="M'+(cx-14)+' '+(B-4)+'q-2 -14 10 -16q14 -2 16 8q2 8 -6 8z" fill="#9C948E" stroke="'+FO+'" stroke-width="1.4"/>';
+  for(var v=0;v<=mx+1e-9;v+=mi){var y=Y(v),maj=Math.abs(v/st-Math.round(v/st))<1e-6;body+='<path d="M'+x0+' '+y.toFixed(1)+'h'+(maj?14:7)+'" stroke="'+FO+'" stroke-width="1.2"/>'+(maj?mqT(x0-4,y,+v.toFixed(2),{a:'end',s:9.5}):'');}
+  body+='<path d="M'+x0+' '+T+'V'+B+'M'+(x0+bw)+' '+T+'V'+B+'" stroke="'+FO+'" stroke-width="2.4"/><path d="M'+(x0-14)+' '+(B+2)+'H'+(x0+bw+14)+'" stroke="'+FO+'" stroke-width="4" stroke-linecap="round"/>'+mqT(x0+bw+4,T+4,sp.unit||'cm³',{a:'start',s:10});
+  body+=mqT(cx,H-14,c.lab||'',{s:11.5});if(c.tag)body+=mqTag(x0+bw+14,B-14,c.tag);
+  s+=mqTapG(c.tag,tap,body);
+  if(sp.eyes&&i===0)[['P',yv-34],['Q',yv],['R',yv+34]].forEach(function(e){s+=mqTapG(e[0],tap,'<ellipse cx="24" cy="'+e[1].toFixed(1)+'" rx="11" ry="7" fill="#fff" stroke="'+FO+'" stroke-width="1.8"/><circle cx="27" cy="'+e[1].toFixed(1)+'" r="3.4" fill="'+FO+'"/><path d="M36 '+e[1].toFixed(1)+'L'+(x0-2)+' '+yv.toFixed(1)+'" stroke="#E2828F" stroke-width="1.6" stroke-dasharray="4 3"/>'+mqTag(10,e[1]-12,e[0]));});});
+ return mqSvg(W,H,s,['measuring cylinder','量筒']);};
+
+/* ---------- electronic balance: {k:'balance', items:[{v:'123.4', unit:'g', obj:label, c, lab, tag}]} ---------- */
+MQS.balance=function(sp,tap){var it=sp.items,n=it.length,W=sp.w||Math.max(220,n*150),H=sp.h||170,gw=(W-10)/n,s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#FFFDF7"/>';
+ it.forEach(function(b,i){var cx=5+gw*i+gw/2,body='<rect x="'+(cx-56)+'" y="88" width="112" height="44" rx="10" fill="#E9E4F5" stroke="'+FO+'" stroke-width="2.2"/><rect x="'+(cx-40)+'" y="98" width="80" height="24" rx="5" fill="#2E3B33" stroke="'+FO+'" stroke-width="1.6"/>'+mqT(cx+34,111,String(b.v)+' '+(b.unit||'g'),{a:'end',s:13,c:'#9CF7B1',w:800})+'<rect x="'+(cx-46)+'" y="80" width="92" height="8" rx="3" fill="#D6D0E6" stroke="'+FO+'" stroke-width="1.8"/>';
+  if(b.obj)body+='<rect x="'+(cx-30)+'" y="44" width="60" height="36" rx="8" fill="'+(b.c||'#FFE3A6')+'" stroke="'+FO+'" stroke-width="2"/>'+mqT(cx,62,b.obj,{s:10.5});
+  body+=mqT(cx,H-14,b.lab||'',{s:11.5});if(b.tag)body+=mqTag(cx-52,40,b.tag);s+=mqTapG(b.tag,tap,body);});
+ return mqSvg(W,H,s,['electronic balance','電子天平']);};
+
+/* ---------- conduction rods: wax-stuck pins drop off one by one (time-lapse loop) ----------
+   {k:'rods', dur:10, items:[{lab, c, times:[s,...] (when each pin falls; null = never), tag}]} */
+MQS.rods=function(sp,tap){var it=sp.items,n=it.length,W=sp.w||360,rowH=44,H=sp.h||(40+rowH*n+20),dur=sp.dur||10,s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#FFFDF7"/>'+mqT(W-12,12,['time-lapse: '+dur+' s loop','縮時：'+dur+' 秒循環'],{a:'end',s:10,c:'#8A7B78'});
+ var fy=34+rowH*(n-1)/2;s+='<path d="M44 '+(fy+40)+'C30 '+(fy+24)+' 36 '+(fy+12)+' 44 '+(fy-2)+'C52 '+(fy+12)+' 58 '+(fy+24)+' 44 '+(fy+40)+'Z" fill="#7FB8FF" stroke="'+FO+'" stroke-width="1.6" opacity=".85"><animate attributeName="opacity" values=".85;.55;.85" dur=".6s" repeatCount="indefinite"/></path>';
+ it.forEach(function(r,i){var y=34+rowH*i,body='<rect x="30" y="'+(y-6)+'" width="'+(W-130)+'" height="12" rx="5" fill="'+(r.c||'#D9A066')+'" stroke="'+FO+'" stroke-width="1.8"/>';
+  var pins=(r.times||[]).length,gap=(W-180)/Math.max(1,pins);
+  (r.times||[]).forEach(function(t,j){var px=(84+gap*j).toFixed(1),pin='<g><path d="M'+px+' '+(y+6)+'v14" stroke="'+FO+'" stroke-width="2"/><circle cx="'+px+'" cy="'+(y+7)+'" r="3.4" fill="#FFF3C4" stroke="'+FO+'" stroke-width="1"/>';
+   if(t!=null&&t<dur){var k=(t/dur).toFixed(3),k2=Math.min(.97,t/dur+.06).toFixed(3);pin+='<animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 '+(rowH-12)+';0 '+(rowH-12)+'" keyTimes="0;'+k+';'+k2+';1" dur="'+dur+'s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;'+k+';'+k2+';1" dur="'+dur+'s" repeatCount="indefinite"/>';}
+   body+=pin+'</g>';});
+  body+=mqT(W-94,y,r.lab||'',{a:'start',s:11.5});if(r.tag)body+=mqTag(W-106,y-14,r.tag);s+=mqTapG(r.tag,tap,body);});
+ return mqSvg(W,H,s,['conduction rods with wax pins','附有蠟的釘的傳導棒']);};
+
+/* ---------- Sankey energy diagram: {k:'sankey', in:{v, lab}, out:[{v, lab, use:true, tag}] (first output goes straight on), unit:'J'} ---------- */
+MQS.sankey=function(sp,tap){var W=sp.w||360,H=sp.h||220,tot=sp.in.v,sc=80/tot,x0=16,xs=130,y0=40,s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#FFFDF7"/>',u=sp.unit||'J';
+ s+='<rect x="'+x0+'" y="'+y0+'" width="'+(xs-x0)+'" height="'+(tot*sc).toFixed(1)+'" fill="#F6C945" stroke="'+FO+'" stroke-width="1.6"/>'+mqT(x0+4,y0-14,[mqL(sp.in.lab)+' '+tot+' '+u,mqL(sp.in.lab)+' '+tot+' '+u],{a:'start',s:11.5});
+ var yy=y0,rest=sp.out.length-1,i2=0;sp.out.forEach(function(o,i){var h=Math.max(2,o.v*sc),c=o.use?'#5DBB73':'#F29A4A',body,lx,ly;
+  if(i===0){body='<path d="M'+xs+' '+yy.toFixed(1)+'H'+(W-110)+'V'+(yy-6).toFixed(1)+'L'+(W-92)+' '+(yy+h/2).toFixed(1)+'L'+(W-110)+' '+(yy+h+6).toFixed(1)+'V'+(yy+h).toFixed(1)+'H'+xs+'Z" fill="'+c+'" stroke="'+FO+'" stroke-width="1.6"/>'+mqT(W-88,yy+h/2-7,o.v+' '+u,{a:'start',s:11})+mqT(W-88,yy+h/2+8,o.lab,{a:'start',s:10.5});lx=W-118;ly=yy-12;}
+  else{var bx=xs+16+(i2++)*((W-150-xs)/Math.max(1,rest));body='<path d="M'+xs+' '+yy.toFixed(1)+'H'+bx.toFixed(1)+'Q'+(bx+h).toFixed(1)+' '+yy.toFixed(1)+' '+(bx+h).toFixed(1)+' '+(yy+h+10).toFixed(1)+'V'+(H-50)+'H'+(bx+h+6).toFixed(1)+'L'+(bx+h/2).toFixed(1)+' '+(H-38)+'L'+(bx-6).toFixed(1)+' '+(H-50)+'H'+bx.toFixed(1)+'V'+(yy+h+10).toFixed(1)+'Q'+bx.toFixed(1)+' '+(yy+h).toFixed(1)+' '+xs+' '+(yy+h).toFixed(1)+'Z" fill="'+c+'" stroke="'+FO+'" stroke-width="1.6"/>'+mqT(bx+h/2,H-26,o.v+' '+u,{s:10.5})+mqT(bx+h/2,H-12,o.lab,{s:10});lx=bx+h+12;ly=H-62;}
+  if(o.tag)body+=mqTag(lx,ly,o.tag);
+  s+=mqTapG(o.tag,tap,body);yy+=h;});
+ return mqSvg(W,H,s,['energy flow diagram','能量流程圖']);};
+
+/* ---------- floaters: objects dropped into liquid layers (floating / sinking / density) ----------
+   {k:'floaters', layers:[{lab, c, h}] (top → bottom, h = share of height), objs:[{lab, c, shape:'cube'|'ball', y:0–1 (final depth: 0 floats at the top, 1 rests on the bottom), tag}], dur} */
+MQS.floaters=function(sp,tap){var W=sp.w||330,H=sp.h||230,x0=50,x1=W-90,T=40,B=H-16,s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#F7FBFF"/>',yy=T,tot=0;
+ (sp.layers||[]).forEach(function(l){tot+=l.h||1;});
+ (sp.layers||[]).forEach(function(l){var h=(B-T-2)*(l.h||1)/tot;s+='<rect x="'+(x0+2)+'" y="'+yy.toFixed(1)+'" width="'+(x1-x0-4)+'" height="'+h.toFixed(1)+'" fill="'+(l.c||MQC.water)+'" opacity=".9"/>'+mqT(x1+6,yy+h/2,l.lab||'',{a:'start',s:10.5});yy+=h;});
+ s+='<path d="M'+x0+' '+(T-14)+'V'+B+'H'+x1+'V'+(T-14)+'" fill="none" stroke="'+FO+'" stroke-width="2.6"/>';
+ var os=sp.objs||[],n=os.length;os.forEach(function(o,i){var cx=x0+(x1-x0)*(i+.5)/n,r=11,yf=T+(B-T-r-3)*(o.y==null?.5:o.y),sh=o.shape==='cube'?'<rect x="'+(cx-r).toFixed(1)+'" y="'+(-r)+'" width="'+(2*r)+'" height="'+(2*r)+'" rx="3"':'<circle cx="'+cx.toFixed(1)+'" cy="0" r="'+r+'"';
+  var body='<g>'+sh+' fill="'+(o.c||MQC.yellow)+'" stroke="'+FO+'" stroke-width="1.8"/>'+(o.tag?mqTag(cx+r+5,-r-2,o.tag):'')+'<animateTransform attributeName="transform" type="translate" values="0 8;0 '+yf.toFixed(1)+';0 '+yf.toFixed(1)+'" keyTimes="0;.45;1" dur="'+(sp.dur||5)+'s" repeatCount="indefinite"/></g>'+mqT(cx,12,o.lab||'',{s:10.5});
+  s+=mqTapG(o.tag,tap,body);});
+ return mqSvg(W,H,s,['objects in liquids','液體中的物件']);};
+
+/* ---------- sealed syringes with gas particles: {k:'syringe', items:[{lab, vol:0.3–1 (plunger position), from:0.3–1 (animate from), n, sp, tag}], dur} ---------- */
+MQS.syringe=function(sp,tap){var it=sp.items,n=it.length,W=sp.w||340,rowH=70,H=sp.h||(20+rowH*n+10),s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#F7FBFF"/>',rnd=mqRnd(sp.seed||11);
+ it.forEach(function(g,i){var y=20+rowH*i,x0=40,len=W-140,v=g.vol==null?1:g.vol,xp=x0+len*v,body='<rect x="'+x0+'" y="'+y+'" width="'+len+'" height="34" rx="4" fill="#fff" stroke="'+FO+'" stroke-width="2.2"/><path d="M'+(x0-14)+' '+(y+17)+'H'+x0+'" stroke="'+FO+'" stroke-width="6" stroke-linecap="round"/><circle cx="'+(x0-16)+'" cy="'+(y+17)+'" r="5" fill="#F28DB2" stroke="'+FO+'" stroke-width="1.4"/>';
+  var pl='<g><rect x="'+xp.toFixed(1)+'" y="'+(y+2)+'" width="7" height="30" fill="#C9C1BE" stroke="'+FO+'" stroke-width="1.4"/><path d="M'+(xp+7).toFixed(1)+' '+(y+17)+'H'+(x0+len+50)+'" stroke="'+FO+'" stroke-width="4"/><path d="M'+(x0+len+50)+' '+(y+5)+'V'+(y+29)+'" stroke="'+FO+'" stroke-width="5" stroke-linecap="round"/>';
+  if(g.from!=null){var dx=(len*(g.from-v)).toFixed(1);pl+='<animateTransform attributeName="transform" type="translate" values="'+dx+' 0;0 0;0 0;'+dx+' 0" keyTimes="0;.4;.8;1" dur="'+(sp.dur||6)+'s" repeatCount="indefinite"/>';}
+  body+=pl+'</g>';var k=g.n||10,w=xp-x0-12;
+  for(var j=0;j<k;j++){var px=x0+6+rnd()*Math.max(2,w),py=y+7+rnd()*20,am=Math.max(2,Math.min(12,w*.15)),vals='0 0;'+((rnd()-.5)*am).toFixed(1)+' '+((rnd()-.5)*8).toFixed(1)+';'+((rnd()-.5)*am).toFixed(1)+' '+((rnd()-.5)*8).toFixed(1)+';0 0';
+   body+='<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="3.2" fill="'+MQC.blue+'" stroke="'+FO+'" stroke-width=".8"><animateTransform attributeName="transform" type="translate" values="'+vals+'" dur="'+(2.4/(g.sp||1.5)+rnd()).toFixed(2)+'s" repeatCount="indefinite"/></circle>';}
+  body+=mqT(x0,y+48,g.lab||'',{a:'start',s:11});if(g.tag)body+=mqTag(16,y+2,g.tag);s+=mqTapG(g.tag,tap,body);});
+ return mqSvg(W,H,s,['sealed syringes','密封的針筒']);};
+
+/* ---------- cell under the microscope with tappable parts ----------
+   {k:'cell', kind:'plant'|'animal', tags:{nucleus:'A', membrane:'B', wall:'C', chloro:'D', vacuole:'E', cyto:'F'}} – only tagged parts get letters */
+MQS.cell=function(sp,tap){var W=300,H=210,pl=sp.kind==='plant',tg=sp.tags||{},s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#F4FBF2"/><circle cx="150" cy="105" r="98" fill="#fff" stroke="#C9D9C4" stroke-width="3"/>',part=function(k,body,lx,ly){return mqTapG(tg[k],tap,body+(tg[k]?mqTag(lx,ly,tg[k]):''));};
+ if(pl){s+=part('wall','<rect x="70" y="40" width="160" height="130" rx="10" fill="#CDEBB5" stroke="#3E8E3A" stroke-width="7"/>',240,34);
+  s+=part('cyto','<rect x="80" y="50" width="140" height="110" rx="8" fill="#E7F5D9"/>',100,96);
+  s+=part('membrane','<rect x="78" y="48" width="144" height="114" rx="8" fill="none" stroke="'+FO+'" stroke-width="2"/>',62,176);
+  s+=part('vacuole','<rect x="112" y="70" width="70" height="70" rx="22" fill="#DDF0FA" stroke="'+FO+'" stroke-width="1.6"/>',147,105);
+  var ch='';[[92,66],[208,62],[92,146],[208,148],[150,58],[150,152]].forEach(function(p){ch+='<ellipse cx="'+p[0]+'" cy="'+p[1]+'" rx="8" ry="5" fill="#4FA64B" stroke="'+FO+'" stroke-width="1.2"/>';});
+  s+=part('chloro',ch,226,166);
+  s+=part('nucleus','<circle cx="200" cy="104" r="13" fill="#B79BE0" stroke="'+FO+'" stroke-width="1.8"/>',200,80);}
+ else{var bl='M86 70C100 34 196 30 220 66C246 100 228 160 186 170C140 182 90 168 78 132C70 110 76 88 86 70Z';
+  s+=part('cyto','<path d="'+bl+'" fill="#FCE6EC"/>',110,130);
+  s+=part('membrane','<path d="'+bl+'" fill="none" stroke="'+FO+'" stroke-width="2.6"/>',238,96);
+  s+=part('nucleus','<circle cx="160" cy="100" r="18" fill="#B79BE0" stroke="'+FO+'" stroke-width="1.8"/>',160,70);}
+ return mqSvg(W,H,s,[pl?'plant cell':'animal cell',pl?'植物細胞':'動物細胞']);};
+
+/* ---------- flow: boxes joined by arrows (energy chains, processes, cycles) ----------
+   {k:'flow', nodes:[{t:label, tag, c}], arrows:[label,...] (between nodes), cycle:true (loop), cols, w, h} */
+MQS.flow=function(sp,tap){var nd=sp.nodes,n=nd.length,s,W,H,tw=function(t){var x=mqL(t),w=0;for(var i=0;i<x.length;i++)w+=x.charCodeAt(i)>255?12:6.4;return w;};
+ if(sp.cycle){W=sp.w||340;H=sp.h||250;var cx=W/2,cy=H/2,rx=W/2-64,ry=H/2-36;s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#FFFDF7"/>'+MQ_ARW;
+  var P=nd.map(function(_,i){var a=-Math.PI/2+2*Math.PI*i/n;return [cx+rx*Math.cos(a),cy+ry*Math.sin(a)];});
+  P.forEach(function(p,i){var q=P[(i+1)%n],mx=(p[0]+q[0])/2,my=(p[1]+q[1])/2,ox=(mx-cx)*.3,oy=(my-cy)*.3;s+='<path d="M'+(p[0]+(q[0]-p[0])*.3).toFixed(1)+' '+(p[1]+(q[1]-p[1])*.3).toFixed(1)+'Q'+(mx+ox).toFixed(1)+' '+(my+oy).toFixed(1)+' '+(p[0]+(q[0]-p[0])*.7).toFixed(1)+' '+(p[1]+(q[1]-p[1])*.7).toFixed(1)+'" fill="none" stroke="'+FO+'" stroke-width="2" marker-end="url(#mqa)"/>';
+   if(sp.arrows&&sp.arrows[i]!=null)s+=mqT(mx+ox*1.5,my+oy*1.5,sp.arrows[i],{s:10,c:'#7A5F9E'});});
+  nd.forEach(function(o,i){var p=P[i],w=Math.max(64,tw(o.t)+18);s+=mqTapG(o.tag,tap,'<rect x="'+(p[0]-w/2).toFixed(1)+'" y="'+(p[1]-15).toFixed(1)+'" width="'+w.toFixed(1)+'" height="30" rx="10" fill="'+(o.c||'#FFF1C5')+'" stroke="'+FO+'" stroke-width="1.8"/>'+mqT(p[0],p[1],o.t,{s:11})+(o.tag?mqTag(p[0]-w/2,p[1]-15,o.tag):''));});}
+ else{var cols=sp.cols||Math.min(n,3),rows=Math.ceil(n/cols);W=sp.w||360;var bw=(W-20-(cols-1)*26)/cols,bh=40;H=sp.h||(24+rows*(bh+34)-16);s='<rect width="'+W+'" height="'+H+'" rx="12" fill="#FFFDF7"/>'+MQ_ARW;
+  var pos=nd.map(function(_,i){var r=Math.floor(i/cols),c=i%cols;if(r%2)c=cols-1-c;return [10+c*(bw+26),16+r*(bh+34)];});
+  pos.forEach(function(p,i){if(i===n-1)return;var q=pos[i+1],x1,y1,x2,y2,hz=q[1]===p[1];if(hz){var dir=q[0]>p[0]?1:-1;x1=dir>0?p[0]+bw:p[0];x2=dir>0?q[0]:q[0]+bw;y1=y2=p[1]+bh/2;}else{x1=x2=p[0]+bw/2;y1=p[1]+bh;y2=q[1];}
+   s+='<path d="M'+x1.toFixed(1)+' '+y1.toFixed(1)+'L'+(x2-(x2-x1)*.15).toFixed(1)+' '+(y2-(y2-y1)*.15).toFixed(1)+'" stroke="'+FO+'" stroke-width="2" marker-end="url(#mqa)"/>';
+   if(sp.arrows&&sp.arrows[i]!=null)s+=mqT((x1+x2)/2+(hz?0:8),(y1+y2)/2+(hz?-12:0),sp.arrows[i],{s:9.5,c:'#7A5F9E',a:hz?'middle':'start'});});
+  nd.forEach(function(o,i){var p=pos[i];s+=mqTapG(o.tag,tap,'<rect x="'+p[0].toFixed(1)+'" y="'+p[1]+'" width="'+bw.toFixed(1)+'" height="'+bh+'" rx="10" fill="'+(o.c||'#FFF1C5')+'" stroke="'+FO+'" stroke-width="1.8"/>'+mqT(p[0]+bw/2+(o.tag?6:0),p[1]+bh/2,o.t,{s:bw<100?9.5:11})+(o.tag?mqTag(p[0]+2,p[1]+2,o.tag):''));});}
+ return mqSvg(W,H,s,['flow diagram','流程圖']);};
+
+/* ---------- case file: evidence cards (HTML) {k:'cards', cards:[{h:label, t:label, tag}]} ---------- */
+MQS.cards=function(sp){return '<div class="mqcards">'+sp.cards.map(function(c,i){return '<div class="mqcard"><b>'+(c.tag?'<i>'+mqE(c.tag)+'</i> ':'')+mqE(mqL(c.h||['Evidence '+(i+1),'證據 '+(i+1)]))+'</b><span>'+mqE(mqL(c.t))+'</span></div>';}).join('')+'</div>';};
+/* ---------- data table (HTML) {k:'table', head:[label,...], rows:[[label,...],...], cap:label} ---------- */
+MQS.table=function(sp){return '<div class="mqtable">'+(sp.cap?'<b>'+mqE(mqL(sp.cap))+'</b>':'')+'<table><thead><tr>'+sp.head.map(function(h){return '<th>'+mqE(mqL(h))+'</th>';}).join('')+'</tr></thead><tbody>'+sp.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+mqE(mqL(c))+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table></div>';};
+/* several scenes stacked: {k:'stack', parts:[spec,...]} */
+MQS.stack=function(sp,tap){return '<div class="mqstack">'+sp.parts.map(function(p){return MQS[p.k](p,tap);}).join('')+'</div>';};
+
+/* ---------- builders ---------- */
+var MQ_N=0;
+function mqFig(spec){var id='mq'+(++MQ_N);FIGS[id]=function(){return MQS[spec.k](spec,false);};return id;}
+function mqAnim(spec){try{return /<animate/.test(MQS[spec.k](spec,false));}catch(e){return false;}}
+/* V / D / K: a normal question with a media figure. o = [[en,zh] correct, wrong, wrong, wrong] (like M) */
+MQ.mc=function(f,b,en,zh,o,xe,xz,spec){var q=M(b,en,zh,o,xe,xz);q.fig=mqFig(spec);q.fx=1;q.mm=f;if(mqAnim(spec))q.anim=1;return q;};
+MQ.V=function(b,en,zh,o,xe,xz,spec){return MQ.mc('V',b,en,zh,o,xe,xz,spec);};
+MQ.D=function(b,en,zh,o,xe,xz,spec){return MQ.mc('D',b,en,zh,o,xe,xz,spec);};
+MQ.K=function(b,en,zh,o,xe,xz,spec){return MQ.mc('K',b,en,zh,o,xe,xz,spec);};
+/* G: pick the graph. graphs = [correct mini spec, wrong, wrong, wrong]; ax = [x label, y label] shared by all four */
+MQ.G=function(b,en,zh,graphs,xe,xz,ax){var r=mqRnd(mqHash(en)),ord=[0,1,2,3],i,j,t;for(i=3;i>0;i--){j=Math.floor(r()*(i+1));t=ord[i];ord[i]=ord[j];ord[j]=t;}
+ var g=ord.map(function(k){var s={},p;for(p in graphs[k])s[p]=graphs[k][p];if(ax&&s.x==null){s.x=ax[0];s.y=ax[1];}return s;}),right='ABCD'[ord.indexOf(0)];
+ var q=M(b,en,zh,[[right,right]].concat('ABCD'.split('').filter(function(x){return x!==right;}).map(function(x){return [x,x];})),xe,xz);q.fig=mqFig({k:'minis',graphs:g});q.fx=1;q.mm='G';q.gch=g;return q;};
+/* P: tap it. spec = a scene whose items carry tag letters; tags = every letter in the scene; want = the right letter; ra = [en,zh] name of the right part (optional) */
+MQ.P=function(b,en,zh,spec,tags,want,xe,xz,ra){var q=M(b,en,zh,[[want,want]].concat(tags.filter(function(x){return x!==want;}).map(function(x){return [x,x];})),xe,xz);q.fig=mqFig(spec);q.fx=1;q.mm='P';q.tap=spec;if(ra)q.ra=ra;if(mqAnim(spec))q.anim=1;return q;};
+/* S: sort it. bins = [[en,zh],...] (2–3 groups); items = [[en, zh, bin index], ...] (4–8 cards) */
+MQ.S=function(b,en,zh,bins,items,xe,xz){return {b:b,t:'sort',en:en,zh:zh,bins:bins,items:items,xe:xe,xz:xz,mm:'S'};};
+/* the right answer of a sort question as text */
+function mqSortText(q,zh){return q.bins.map(function(bn,k){return (zh?bn[1]:bn[0])+': '+q.items.filter(function(x){return x[2]===k;}).map(function(x){return zh?x[1]:x[0];}).join(zh?'、':', ');}).join(' · ');}
+</script>
+<script>
+/* XQ5-BEGIN */
+/* XQ5-END */
+(function(){CHAPTERS.forEach(function(c){c.sections.forEach(function(s){if(XQ5[s.id])XQ5[s.id].forEach(function(q){s.qs.push(q);});});});})();
+</script>
+<script>
 /* ===================== Mochi Science Pals – game engine ===================== */
 (function(){
 'use strict';
@@ -6427,7 +6697,7 @@ function startQuiz(id,mode,list){var ids;if(id&&secById(id))S.lastUnit=secById(i
  Q={mode:mode,sec:id,ids:ids,i:0,res:[],shown:0,answered:false,fast:0,t0:Date.now(),fr:mode==='quiz'?secFresh(id):null,newOk:0,repOk:0,rush:0,rushed:{}};showQ();}
 function quizRec(status,stars){if(!Q)return;var done=Q.ids.slice(0,Q.res.length);var sec=Q.mode==='quiz'?secById(Q.sec):null;
  logRec({mode:Q.mode,unit:sec?String(sec.chap.id):'',sec:sec?Q.sec:'',ans:Q.res.length,cor:Q.res.filter(Boolean).length,stars:stars||0,secs:Math.round((Date.now()-Q.t0)/1000),status:status,start:new Date(Q.t0).toISOString(),ids:done.join(' '),wrong:done.filter(function(id,i){return !Q.res[i];}).join(' ')});}
-function optsFor(q){if(q.t==='tf')return [{en:TF_EN[0],zh:TF_ZH[0],ok:q.a},{en:TF_EN[1],zh:TF_ZH[1],ok:!q.a}];
+function optsFor(q){if(q.t==='sort')return [{en:mqSortText(q,0),zh:mqSortText(q,1),ok:true},{en:'',zh:'',ok:false}];if(q.t==='tf')return [{en:TF_EN[0],zh:TF_ZH[0],ok:q.a},{en:TF_EN[1],zh:TF_ZH[1],ok:!q.a}];
  var os=q.o.map(function(o,i){return {en:o[0],zh:o[1],ok:i===0};});if(os.every(function(o){return o.en.length<=2;}))return os.sort(function(a,b){return a.en<b.en?-1:1;});return shuffle(os);}
 function showQ(){var qid=Q.ids[Q.i],q=qById(qid),sec=secById(qid.split('#')[0]);Q.opts=optsFor(q);Q.answered=false;Q.shown=Date.now();
  var dots=Q.ids.map(function(_,i){return '<span class="'+(i<Q.res.length?(Q.res[i]?'ok':'no'):(i===Q.i?'cur':''))+'"></span>';}).join('');
@@ -6435,14 +6705,27 @@ function showQ(){var qid=Q.ids[Q.i],q=qById(qid),sec=secById(qid.split('#')[0]);
  var extra=Q.mode==='practice'?'<span class="pips" title="'+L('Correct in a row','連續答對')+'">'+[0,1].map(function(k){return '<i class="'+((S.mistakes[qid]||{}).s>k?'on':'')+'"></i>';}).join('')+'</span>':'';
  modal('<div class="sheet-h"><h2>'+title+'</h2><button class="x" id="xClose" aria-label="Close">✕</button></div>'+
  '<div class="qtop"><div class="dots">'+dots+'</div><span class="bloom">'+L(BLOOM[q.b][0],BLOOM[q.b][1])+' · L'+q.b+'</span>'+extra+(Q.mode==='practice'?'<span class="muted" style="font-size:12px">'+sec.id+'</span>':'')+'</div>'+
- '<div class="card qcard">'+(q.ce?'<div class="ctx"><b>📋 '+L('Context','情境')+'</b><div>'+esc(L(q.ce,q.cz))+'</div></div>':'')+(q.fig&&FIGS[q.fig]?'<div class="fig">'+FIGS[q.fig]()+'</div>':'')+'<div class="qtext">'+(S.lang==='en'?'<button class="say inl" data-say="'+esc(q.en)+'" aria-label="Read question aloud">🔊</button>':'')+(q.t==='tf'?'<span class="tag" style="background:var(--sky)">'+L('True or false?','是非題')+'</span><br>':'')+esc(LL(q))+'</div>'+
- '<div class="opts'+(q.t==='tf'?' two':'')+'" id="opts">'+Q.opts.map(function(o,i){return '<button class="opt" data-i="'+i+'"><span class="k">'+(q.t==='tf'?(i===0?'✓':'✗'):'ABCDE'[i])+'</span><span>'+esc(LL(o))+'</span></button>';}).join('')+'</div><div id="fb"></div></div>',function(){Q=null;});
+ '<div class="card qcard">'+(q.ce?'<div class="ctx"><b>📋 '+L('Context','情境')+'</b><div>'+esc(L(q.ce,q.cz))+'</div></div>':'')+(q.tap?'<div class="fig tapfig">'+MQS[q.tap.k](q.tap,true)+'</div>':q.fig&&FIGS[q.fig]&&!q.gch?'<div class="fig">'+FIGS[q.fig]()+'</div>':'')+'<div class="qtext">'+(S.lang==='en'?'<button class="say inl" data-say="'+esc(q.en)+'" aria-label="Read question aloud">🔊</button>':'')+(q.t==='tf'?'<span class="tag" style="background:var(--sky)">'+L('True or false?','是非題')+'</span><br>':q.mm?mmTag(q)+mqPauseBtn(q)+'<br>':'')+esc(LL(q))+'</div>'+
+ (q.t==='sort'?sortHTML(q):'<div class="opts'+(q.t==='tf'?' two':q.gch?' gopts':q.tap?' tapk':'')+'" id="opts">'+Q.opts.map(function(o,i){return '<button class="opt" data-i="'+i+'"'+(q.gch?' aria-label="'+L('Graph ','圖 ')+esc(o.en)+'"':'')+'><span class="k">'+(q.t==='tf'?(i===0?'✓':'✗'):q.gch||q.tap?esc(o.en):'ABCDE'[i])+'</span>'+(q.gch?'<span class="gm">'+MQS.mini(q.gch['ABCD'.indexOf(o.en)])+'</span>':q.tap?'':'<span>'+esc(LL(o))+'</span>')+'</button>';}).join('')+'</div>')+'<div id="fb"></div></div>',function(){Q=null;});
  $('#ov').dataset.lock='1';
  $('#xClose').onclick=function(){if(Q&&Q.res.length&&Q.mode==='quiz'){confirmBox(L('Leave quiz?','離開測驗？'),L('Your answers so far won\'t earn stars.','目前的答案不會獲得星星。'),L('Leave','離開'),function(){quizRec('quit');Q=null;});}else{if(Q&&Q.res.length)quizRec('quit');Q=null;closeModal();}};
- document.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){answer(+b.dataset.i);};});}
+ document.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){answer(+b.dataset.i);};});
+ document.querySelectorAll('.tapfig .tapt').forEach(function(g){var go=function(){if(Q&&!Q.answered)Q.opts.forEach(function(o,k){if(o.en===g.dataset.t)answer(k);});};g.addEventListener('click',go);g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});});
+ if(q.t==='sort')sortWire(q);
+ var pz=$('#mqPause');if(pz)pz.onclick=function(){var svs=document.querySelectorAll('.qcard .fig svg'),on=pz.getAttribute('aria-pressed')!=='true';svs.forEach(function(sv){if(sv.pauseAnimations){if(on)sv.pauseAnimations();else sv.unpauseAnimations();}});pz.setAttribute('aria-pressed',on?'true':'false');pz.textContent=on?L('▶ Play','▶ 播放'):L('⏸ Pause','⏸ 暫停');};}
+/* media question helpers (format badge, sort-it cards) */
+function mqPauseBtn(q){return q.anim?'<button class="mqpause" id="mqPause" aria-pressed="false">'+L('⏸ Pause','⏸ 暫停')+'</button>':'';}
+function mmTag(q){var f={V:['🧪','Virtual lab','虛擬實驗'],D:['📈','Graph detective','圖表偵探'],K:['🗂️','Case file','案件檔案'],G:['📉','Pick the graph','選出圖表'],P:['👆','Tap it','點一點'],S:['🧺','Sort it','分一分']}[q.mm];return f?'<span class="tag mmtag">'+f[0]+' '+L(f[1],f[2])+'</span>':'';}
+function sortHTML(q){Q.sel={};Q.sord=shuffle(q.items.map(function(_,k){return k;}));
+ return '<p class="muted sorthint">'+L('Put every card in a group, then press Check.','把每張卡放進一個組別，然後按「檢查」。')+'</p><div class="sortq" id="opts">'+Q.sord.map(function(k){var it=q.items[k];return '<div class="srow" data-r="'+k+'"><span class="sitem">'+esc(L(it[0],it[1]))+'</span><span class="sbins">'+q.bins.map(function(bn,b){return '<button class="sb" data-r="'+k+'" data-b="'+b+'" aria-pressed="false">'+esc(L(bn[0],bn[1]))+'</button>';}).join('')+'</span></div>';}).join('')+'</div><button class="btn" id="bCheck" disabled>'+L('Check ✓','檢查 ✓')+'</button>';}
+function sortWire(q){document.querySelectorAll('.sortq .sb').forEach(function(b){b.onclick=function(){if(Q.answered)return;var r=+b.dataset.r;Q.sel[r]=+b.dataset.b;document.querySelectorAll('.sortq .sb[data-r="'+r+'"]').forEach(function(x){var on=+x.dataset.b===Q.sel[r];x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false');});
+  $('#bCheck').disabled=Object.keys(Q.sel).length<q.items.length;};});
+ $('#bCheck').onclick=function(){if(Q.answered||Object.keys(Q.sel).length<q.items.length)return;var ok=true;q.items.forEach(function(it,k){var good=Q.sel[k]===it[2];if(!good)ok=false;var row=document.querySelector('.srow[data-r="'+k+'"]');row.classList.add(good?'right':'wrong');row.querySelectorAll('.sb').forEach(function(x){x.disabled=true;if(+x.dataset.b===it[2])x.classList.add('ans');});});
+  $('#bCheck').remove();answer(ok?0:1);};}
 function answer(i){if(Q.answered)return;Q.answered=true;var qid=Q.ids[Q.i],q=qById(qid),o=Q.opts[i],ok=o.ok,dt=(Date.now()-Q.shown)/1000;
  var btns=document.querySelectorAll('.opt');btns.forEach(function(b,k){b.disabled=true;if(Q.opts[k].ok)b.classList.add('right');});
- if(!ok)btns[i].classList.add('wrong');
+ if(!ok&&btns[i])btns[i].classList.add('wrong');
+ if(q.tap)document.querySelectorAll('.tapfig .tapt').forEach(function(g){g.classList.add('done');if(g.dataset.t===Q.opts.filter(function(x){return x.ok;})[0].en)g.classList.add('right');else if(g.dataset.t===o.en)g.classList.add('wrong');});
  Q.res.push(ok);if(Q.mode==='quiz'&&ok){if(dt<minReadSecs(q)){Q.rush++;Q.rushed[Q.res.length-1]=1;}else if(S.q[qid]===1)Q.repOk++;else Q.newOk++;}S.q[qid]=ok?1:0;if(ok)S.tc=(S.tc||0)+1;var p=curPet();var msg='',cool=0;
  if(Q.mode==='quiz'){if(!ok){S.mistakes[qid]=S.mistakes[qid]||{s:0,t:Date.now()};S.mistakes[qid].s=0;}}
  else{var m=S.mistakes[qid];if(m){if(ok){m.s++;if(m.s>=2){delete S.mistakes[qid];S.cleared++;gainCtx={src:'mist'};var g=gain(6,8);msg='<b>🔨 '+L('Mistake crushed! +','錯題清除！+')+g.c+' 🪙</b> '+pick([L('You turned a weak spot into a strong one.','你把弱點變成強項了。'),L('That\'s real learning!','這才是真正的學習！'),L('Your brain just levelled up.','你的腦袋升級了。')])+'<br>';confetti();}else msg='<b>'+L('One more correct in a row to clear it!','再連續答對一次就能清除！')+'</b><br>';}else m.s=0;}}
@@ -6450,7 +6733,7 @@ function answer(i){if(Q.answered)return;Q.answered=true;var qid=Q.ids[Q.i],q=qBy
  if(ok&&Q.mode==='quiz'&&Q.rushed[Q.res.length-1])msg+='<b>🎲 '+L('Answered in under '+minReadSecs(q)+' seconds, so no coins (it looks like a guess). Read the question first!','少於 '+minReadSecs(q)+' 秒就作答，似是估答案，不計金幣。先讀題目！')+'</b><br>';
  sfx(ok?'right':'wrong');
  var right=Q.opts.filter(function(x){return x.ok;})[0];
- $('#fb').innerHTML='<div class="fb '+(ok?'ok':'no')+'"><div class="mini">'+petSVG(S.active,ok?'joy':'sad')+'</div><div style="min-width:0">'+msg+(ok?'<b>'+pick([L('Correct!','答對了！'),L('Yaha! Right!','呀哈！正確！'),L('Brilliant!','好叻！')])+'</b>':'<b>'+L('Answer: ','答案：')+esc(LL(right))+'</b>')+'<div style="margin-top:4px">'+esc(L(q.xe,q.xz))+'</div>'+
+ $('#fb').innerHTML='<div class="fb '+(ok?'ok':'no')+'"><div class="mini">'+petSVG(S.active,ok?'joy':'sad')+'</div><div style="min-width:0">'+msg+(ok?'<b>'+pick([L('Correct!','答對了！'),L('Yaha! Right!','呀哈！正確！'),L('Brilliant!','好叻！')])+'</b>':'<b>'+L('Answer: ','答案：')+esc(LL(right))+(q.ra?' ('+esc(L(q.ra[0],q.ra[1]))+')':'')+'</b>')+'<div style="margin-top:4px">'+esc(L(q.xe,q.xz))+'</div>'+
  '<button class="btn" id="bNext" style="margin-top:10px"'+(cool?' disabled':'')+'>'+(Q.i<Q.ids.length-1?L('Next →','下一題 →'):L('Finish','完成'))+'</button></div></div>';
  var nb=$('#bNext');if(cool){var c=cool;nb.textContent='⏳ '+c;var iv=setInterval(function(){c--;var n=$('#bNext');if(!n){clearInterval(iv);return;}if(c<=0){clearInterval(iv);n.disabled=false;n.textContent=Q.i<Q.ids.length-1?L('Next →','下一題 →'):L('Finish','完成');}else n.textContent='⏳ '+c;},1000);}
  nb.onclick=function(){if(Q.i<Q.ids.length-1){Q.i++;showQ();}else whyRound(finishQuiz);};
@@ -8053,11 +8336,11 @@ function exploreCardHTML(){var e=exS(),n=Math.min(EXPLORE_N,Object.keys(e.k).len
   (picks.length?'<div class="row" style="gap:6px"><span class="muted" style="font-size:13px;font-weight:800">'+L('Fresh picks:','推介新挑戰：')+'</span>'+picks.map(function(s){return '<button class="btn small white" data-quizsec="'+s.id+'">'+secFresh(s.id).ic+' '+s.id+' '+esc(LL(s))+'</button>';}).join('')+'</div>':'')+'</div>';}
 
 /* rushed answers: too fast to have read the question */
-function minReadSecs(q){return (q.t==='tf'?2:3)+(q.fig?1:0);}
+function minReadSecs(q){return (q.t==='tf'?2:3)+(q.fig?1:0)+(q.anim?2:0)+(q.t==='sort'?3:0);}
 
 /* "Why?" check after a quiz: pick the right explanation (or fill the key word) for 2 questions you got right */
 function whyItems(){var out=[],sec=secById(Q.sec),pool=[];
- Q.ids.forEach(function(id,i){if(Q.res[i]&&!(Q.rushed||{})[i])pool.push(id);});
+ Q.ids.forEach(function(id,i){var q=qById(id);if(Q.res[i]&&!(Q.rushed||{})[i]&&!q.gch&&!q.tap&&q.t!=='sort')pool.push(id);});
  pool=shuffle(pool).sort(function(a,b){return (qById(b).t==='tf'?1:0)-(qById(a).t==='tf'?1:0);});
  var terms=[];sec.chap.sections.forEach(function(s){(s.terms||[]).forEach(function(t){terms.push(t);});});
  pool.slice(0,2).forEach(function(id){var q=qById(id),ex=L(q.xe,q.xz)||'';if(!ex)return;
@@ -9732,13 +10015,13 @@ function coopTeachHTML(){var T=COOP.teach;return '<details class="card coteach"'
 
 /* ---------- mini quiz (puzzle part, rescue, repair) ---------- */
 function coSecs(u){return ALLSECS.filter(function(s){return s.chap&&String(s.chap.id)===String(u);});}
-function coPickQ(u,seed,k){var ss=coSecs(u);if(!ss.length)ss=ALLSECS;var s=ss[(seed+k*7)%ss.length],qs=s.qs.filter(function(q){return !q.ce;});return {s:s,q:qs[(seed*31+k*13)%qs.length]};}
-function coRepairQs(n){var weak=ALLSECS.filter(function(s){return ((S.secs[s.id]||{}).stars||0)<3;});if(!weak.length)weak=ALLSECS;var out=[];for(var i=0;i<n;i++){var s=pick(weak),qs=s.qs.filter(function(q){return !q.ce;});out.push({s:s,q:pick(qs)});}return out;}
+function coPickQ(u,seed,k){var ss=coSecs(u);if(!ss.length)ss=ALLSECS;var s=ss[(seed+k*7)%ss.length],qs=s.qs.filter(function(q){return !q.ce&&q.t!=='sort';});return {s:s,q:qs[(seed*31+k*13)%qs.length]};}
+function coRepairQs(n){var weak=ALLSECS.filter(function(s){return ((S.secs[s.id]||{}).stars||0)<3;});if(!weak.length)weak=ALLSECS;var out=[];for(var i=0;i<n;i++){var s=pick(weak),qs=s.qs.filter(function(q){return !q.ce&&q.t!=='sort';});out.push({s:s,q:pick(qs)});}return out;}
 function coQuiz(kind,list,meta){COOP.q={kind:kind,list:list,i:0,cor:0,meta:meta||{},ans:null,opts:null};coQuizShow();}
 function coQuizShow(){var Q=COOP.q,it=Q.list[Q.i],q=it.q;if(!Q.opts)Q.opts=optsFor(q);
  var title={part:L('Blueprint puzzle – my part','藍圖拼圖——我的部分'),rescue:L('Rescue a teammate','救援隊友'),repair:L('Repair quiz','修復測驗')}[Q.kind];
  var h='<div class="sheet-h"><h2>'+IC('cards')+title+(Q.list.length>1?' · '+(Q.i+1)+'/'+Q.list.length:'')+'</h2><button class="x" id="coX" aria-label="Close">✕</button></div><p class="muted" style="margin:0 0 8px">'+esc(it.s.id+' '+LL(it.s))+'</p>'+
-  (q.fig&&typeof FIGS!=='undefined'&&FIGS[q.fig]?'<div class="fig">'+FIGS[q.fig]()+'</div>':'')+'<div class="card qcard"><div class="qtext">'+esc(LL(q))+'</div><div class="opts coopts'+(q.t==='tf'?' two':'')+'">'+Q.opts.map(function(o,i){var cls=Q.ans==null?'':o.ok?' right':i===Q.ans?' wrong':'';return '<button class="opt'+cls+'" data-coans="'+i+'"'+(Q.ans!=null?' disabled':'')+'><span class="k">'+(q.t==='tf'?(i===0?'✓':'✗'):'ABCDE'[i])+'</span><span>'+esc(LL(o))+'</span></button>';}).join('')+'</div></div>'+
+  (q.fig&&typeof FIGS!=='undefined'&&FIGS[q.fig]?'<div class="fig">'+FIGS[q.fig]()+'</div>':'')+'<div class="card qcard"><div class="qtext">'+esc(LL(q))+'</div><div class="opts coopts'+(q.t==='tf'?' two':'')+'">'+Q.opts.map(function(o,i){var cls=Q.ans==null?'':o.ok?' right':i===Q.ans?' wrong':'';return '<button class="opt'+cls+'" data-coans="'+i+'"'+(Q.ans!=null?' disabled':'')+'><span class="k">'+(q.t==='tf'?(i===0?'✓':'✗'):'ABCDE'[i])+'</span>'+(q.gch||q.tap?'':'<span>'+esc(LL(o))+'</span>')+'</button>';}).join('')+'</div></div>'+
   (Q.ans!=null?'<p class="coexp">'+(Q.opts[Q.ans].ok?IC('check')+L('Correct!','答對了！'):IC('warn')+L('Not quite.','答錯了。'))+' '+esc(q.xe?L(q.xe,q.xz||q.xe):'')+'</p><button class="btn pink" id="coNext">'+(Q.i<Q.list.length-1?L('Next','下一題'):L('Finish','完成'))+'</button>':'');
  modal(h);$('#coX').onclick=function(){COOP.q=null;closeModal();};
  document.querySelectorAll('#ov [data-coans]').forEach(function(b){b.onclick=function(){if(Q.ans!=null)return;Q.ans=+b.dataset.coans;var okk=Q.opts[Q.ans].ok;if(okk)Q.cor++;sfx(okk?'right':'wrong');coQuizShow();};});
@@ -10197,7 +10480,7 @@ function cwTreatSend(){var P=COOP.cwp;coopCall('coopTreat',{ord:P.cur}).then(fun
 function cwCodexOpen(){var w=cwW();if(!w)return;cwModal(IC('book')+L('Island Codex','小島圖鑑'),'<p class="muted">'+L('Concept cards unlocked by what happens on your island.','小島上發生的事會解鎖概念卡。')+'</p><div class="cwcdx">'+Object.keys(CW_CDX).map(function(k){var C=CW_CDX[k],on=w.cdx.indexOf(k)>=0;
   return on?'<button class="cwcard" data-cow="cdx" data-k="'+k+'">'+cwCdxIcon(k)+'<b>'+esc(L(C.n[0],C.n[1]))+'</b>'+cwSecTag(C.sec)+'</button>':'<div class="cwcard lock" aria-label="'+esc(L('Locked card','未解鎖'))+'">'+IC('lock')+'<b>???</b></div>';}).join('')+'</div>');}
 function cwCdxShow(k){var C=CW_CDX[k];cwModal(cwCdxIcon(k)+esc(L(C.n[0],C.n[1])),'<p>'+esc(L(C.t[0],C.t[1]))+'</p><p class="cwhk"><b>'+L('In Hong Kong','香港例子')+'</b> '+esc(L(C.hk[0],C.hk[1]))+'</p><div class="cwrow"><button class="btn small white" data-cow="codex">'+L('All cards','所有卡')+'</button><button class="btn small" data-cow="studysec" data-sec="'+C.sec+'">'+IC('books')+L('Study note','溫習筆記')+' '+C.sec+'</button></div>');}
-function cwWhyOpen(sec){var s=secById(sec);if(!s){toast(L('No questions for this section yet.','此課暫時未有題目。'));return;}var qs=s.qs.filter(function(q){return !q.ce&&!q.fig;});if(!qs.length)return;
+function cwWhyOpen(sec){var s=secById(sec);if(!s){toast(L('No questions for this section yet.','此課暫時未有題目。'));return;}var qs=s.qs.filter(function(q){return !q.ce&&!q.fig&&q.t!=='sort';});if(!qs.length)return;
  var q=pick(qs),opts=optsFor(q);COOP.cwy={q:q,opts:opts,sec:sec,ans:null};cwWhyShow();}
 function cwWhyShow(){var Y=COOP.cwy,q=Y.q;cwModal(IC('bulb')+L('Why did that happen?','為甚麼會這樣？'),'<p class="cwq">'+esc(LL(q))+' '+cwSecTag(Y.sec)+'</p><div class="opts'+(q.t==='tf'?' two':'')+'">'+Y.opts.map(function(o,i){var cls=Y.ans==null?'':o.ok?' right':i===Y.ans?' wrong':'';return '<button class="opt'+cls+'" data-cow="whya" data-i="'+i+'"'+(Y.ans!=null?' disabled':'')+'><span>'+esc(LL(o))+'</span></button>';}).join('')+'</div>'+
   (Y.ans!=null?'<div class="cwfeed '+(Y.opts[Y.ans].ok?'ok':'bad')+'"><p><b>'+(Y.opts[Y.ans].ok?L('Correct!','答對了！'):L('Not quite.','答錯了。'))+'</b> '+esc(q.xe?L(q.xe,q.xz||q.xe):'')+'</p><div class="cwrow"><button class="btn small white" data-cow="studysec" data-sec="'+Y.sec+'">'+IC('books')+L('Study note','溫習筆記')+'</button><button class="btn small" data-cow="close">'+L('Done','完成')+'</button></div></div>':''));}
