@@ -298,3 +298,18 @@ Add new questions only at the **end** of a section's `qs` list so saved progress
   - on login, a streak that was wrongly reset is rebuilt from the student's finished activities in **Science Records** (missed days are never revived; Streak Freeze days still bridge gaps).
 - Restoring a save code still replaces progress on purpose.
 - What counts for the streak: finishing a study session, a quiz, Mistake practice, dictation or read-aloud. Just logging in does not count.
+
+### 🌈 Wild & Bloom pals (18 new) + the Prismatic tier
+- **New top tier: Prismatic 虹光** (above Mythic). Its one pal, **Iris 虹蕊** (a white wolf with a rainbow flower crown and prism gem), unlocks only with a **365-day streak**. Rainbow effect: spinning seven-colour halo, light rays, twinkling sparkles, colour-cycling glow, rainbow card border and name, and its own unlock ceremony. Perk: +25% coins & XP (the strongest).
+- **Mythic:** Frost Tiger 霜虎 (100-day streak), Bloom Lion 花獅 (200-day streak).
+- **Legendary:** Leo 獅王 (3★ in 30 sub-topics), Aurora 極光狼 (90 study days), Sequoia 巨杉 (250 quizzes), Ursa 大熊星 (50-day streak), Venus 捕蠅草 (clear 150 mistakes).
+- **Rare:** Wolf Pup 狼仔 (10-day streak), Cactus 仙人掌 (clear 25 mistakes), Bamboo 竹竹 (30 study sessions), Tiger Cub 虎仔 (15 perfect scores), Lavender 薰衣草 (150 dictation words) – or buy with coins.
+- **Common:** Sprout 豆苗, Clover 四葉, Acorn 橡子, Bear Cub 熊寶, Tulip 鬱金香 – easy first goals, or buy with coins.
+- Each pal's story is a small science idea (germination, photosynthesis, hibernation, camouflage, diffusion, insulation, dispersion of light…).
+- Legendary, Mythic and Prismatic unlocks now play a ceremony (one after another if several unlock together).
+
+### 👗 Wardrobe & wallpapers from S3 Science
+- 101 items copied from the S3 Science pet game and re-fitted onto the S1 pals: 42 hats & hairstyles, 14 glasses/face items, 23 accessories & outfits, 15 hand-held props and 7 room wallpapers (Victoria Harbour, Mong Kok neon, outer space…).
+- Left out: frames and full costumes (no slot for them in S1) and items that copy one specific franchise character's look (house rule: original art only).
+- The Shop wardrobe and Collection closet are grouped by rarity in fold bars.
+- Save codes are now **version 17** (more pals and items); older codes still load.
