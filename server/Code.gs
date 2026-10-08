@@ -46,13 +46,14 @@ function doPost(e) {
       case 'login': return out(loginResp(user));
       case 'save': return out(saveResp(user, body));
       case 'record':
-        var saved = appendRecords(user, body.records || []);
-        try { coopEarn(user, body.records || []); } catch (e2) { }
+        var fresh = newRecords(user, body.records || []); /* a resend after a lost reply must not count twice */
+        var saved = appendRecords(user, fresh);
+        try { coopEarn(user, fresh); } catch (e2) { }
         return out({ ok: true, saved: saved });
       case 'board': return out(board(user, body.scope === 'all' ? 'all' : 'class'));
       case 'stats':
         if (!user.teacher) return out({ ok: false, error: 'forbidden' });
-        return out(stats());
+        return out(stats(Number(body.days) || 0));
       default:
         if (/^coop[A-Z][a-zA-Z]*$/.test(String(body.action))) return out(coopAction(user, body));
         return out({ ok: false, error: 'unknown_action' });
@@ -75,7 +76,7 @@ function sheet(name, head) {
   return sh;
 }
 function clean(s, n) { return String(s == null ? '' : s).slice(0, n || 200).replace(/^[=+\-@\t\r]+/, ''); }
-function num(x) { var n = Number(x); return isFinite(n) ? Math.max(0, Math.min(n, 100000)) : 0; }
+function num(x) { var n = Number(x); return isFinite(n) ? Math.max(0, Math.min(n, 10000000)) : 0; }
 function when(s) { var d = new Date(s); return isNaN(d) ? '' : d; }
 
 /** Verifies a Google ID token with Google and caches the result until it expires. */
@@ -119,6 +120,26 @@ function findUser(email) {
   return null;
 }
 
+/* drop records this student already has (same session, mode, unit, sub-topic, start and end time) */
+function recKey(session, mode, unit, sec, start, end) {
+  var iso = function (v) { return v instanceof Date ? v.toISOString() : v ? new Date(v).toISOString() : ''; };
+  try { return [String(session), String(mode), String(unit), String(sec), iso(start), iso(end)].join('|'); } catch (e) { return ''; }
+}
+function newRecords(u, recs) {
+  if (!recs.length) return recs;
+  var sh = book().getSheetByName(REC), seen = {};
+  if (sh && sh.getLastRow() > 1) {
+    var last = sh.getLastRow(), from = Math.max(2, last - 600);
+    sh.getRange(from, 2, last - from + 1, 19).getValues().forEach(function (r) {
+      if (String(r[1]).toLowerCase() === u.email) seen[recKey(r[0], r[7], r[8], r[9], r[17], r[18])] = 1;
+    });
+  }
+  return recs.filter(function (r) {
+    var k = recKey(clean(r.session, 40), MODES[r.mode] || clean(r.mode, 30), clean(r.unit, 10), clean(r.sec, 10), when(r.start), when(r.end));
+    if (!k || seen[k]) return false;
+    seen[k] = 1; return true;
+  });
+}
 function appendRecords(u, recs) {
   if (!recs.length) return 0;
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
@@ -220,7 +241,9 @@ function getProgress(email) {
   return r < 0 ? null : String(sh.getRange(r, DATA_COL).getValue() || '') || null;
 }
 
-function stats() {
+/* days > 0: send only the records of the last `days` days (the sheet is appended in time order, so the start is found
+   by binary search) – far less to read, send and draw. `seen` always carries every student's last activity time. */
+function stats(days) {
   var ss = book();
   var uv = ss.getSheetByName(PROPS.getProperty('USERS_SHEET') || USERS_DEFAULT).getDataRange().getValues();
   var students = [];
@@ -230,9 +253,17 @@ function stats() {
       cls: String(uv[i][4] || ''), no: uv[i][5] === '' || uv[i][5] == null ? '' : String(uv[i][5]) });
   }
   var rev = {}; for (var k in MODES) rev[MODES[k]] = k;
-  var records = [], rs = ss.getSheetByName(REC);
+  var records = [], seen = {}, rs = ss.getSheetByName(REC);
   if (rs && rs.getLastRow() > 1) {
-    rs.getRange(2, 1, rs.getLastRow() - 1, REC_HEAD.length).getValues().forEach(function (r) {
+    var lastRow = rs.getLastRow(), first = 2, meta = rs.getRange(2, 1, lastRow - 1, 3).getValues();
+    var ms = function (v) { return v instanceof Date ? v.getTime() : Date.parse(v) || 0; };
+    meta.forEach(function (m) { var e = String(m[2]).toLowerCase(), t = ms(m[0]); if (t && (!seen[e] || t > seen[e])) seen[e] = t; });
+    if (days > 0) {
+      var cut = Date.now() - days * 864e5, lo = 0, hi = meta.length;
+      while (lo < hi) { var mid = (lo + hi) >> 1; if (ms(meta[mid][0]) < cut) lo = mid + 1; else hi = mid; }
+      first = Math.max(2, 2 + lo - 300); /* small safety margin for rows that were uploaded a little late */
+    }
+    if (first <= lastRow) rs.getRange(first, 1, lastRow - first + 1, REC_HEAD.length).getValues().forEach(function (r) {
       var t = r[0] instanceof Date ? r[0].toISOString() : String(r[0]);
       records.push({ t: t, email: String(r[2]).toLowerCase(), mode: rev[r[8]] || String(r[8]), unit: String(r[9]), sec: String(r[10]),
         ans: r[11], cor: r[12], stars: r[14], secs: r[15], status: r[16] === STATUS.quit ? 'quit' : 'done', lang: r[17],
@@ -255,7 +286,8 @@ function stats() {
       });
     }
   }
-  return { ok: true, students: students, records: records, progress: progress };
+  var seenIso = {}; for (var se in seen) seenIso[se] = new Date(seen[se]).toISOString();
+  return { ok: true, students: students, records: records, progress: progress, seen: seenIso, days: days || 0 };
 }
 
 /** Class leaderboard: top 20 students for effort (XP), current streak and collection.
