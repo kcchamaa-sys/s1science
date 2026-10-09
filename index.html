@@ -165,6 +165,10 @@ h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance}
 .pdmore .ic{width:14px;height:14px}
 .pbio{text-align:center}.pbio .pic{width:150px;margin:0 auto 8px}.pbio p{margin:0;text-align:left;line-height:1.7;font-size:15px}
 .item.locked .pic{filter:grayscale(1) opacity(.35)}
+.item .tier{max-width:calc(100% - 16px);text-overflow:clip}
+.item:has(.own) .tier{max-width:calc(100% - 46px)}
+.item:has(.tier) .own{font-size:0;padding:0;width:24px;height:24px;display:grid;place-items:center}
+.item:has(.tier) .own::after{content:"✓";font-size:13px;font-weight:900}
 .item .own{position:absolute;top:8px;right:8px;background:var(--good);color:#fff;border-radius:999px;font-size:11px;font-weight:800;padding:1px 8px}
 .trophy .pic{background:linear-gradient(var(--butter),#fff)}
 .toast{position:fixed;left:50%;top:calc(70px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:80;background:#fff;border-radius:18px;padding:10px 16px;box-shadow:var(--shadow);font-weight:800;border:2px solid var(--butter);animation:pop .35s cubic-bezier(.3,1.6,.5,1);max-width:calc(100% - 32px);text-align:center}
@@ -510,7 +514,8 @@ p .tier{position:static;display:inline-block;margin:2px 2px 2px 0}
 .tipbar{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
 .tipbar span{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:4px 10px;font-size:13px;font-weight:700}
 .item.food .nchip{margin:0}
-.item.food{align-self:start}
+.item.food{align-self:stretch}
+.items>.item>.btn{margin-top:auto}.items>.item>.btn~.btn{margin-top:0}
 
 .dech{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;font-size:16px;margin:18px 0 0}
 .dech span{font-size:13px;font-weight:700;color:var(--muted);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:2px 9px}
@@ -8017,7 +8022,7 @@ function lockLine(it){if(it.quest){var v=it.quest.f(),pc=Math.min(100,Math.round
  if(it.sec)return '<div class="sub">🔒 '+L('Get 3★ (14/15 or more) in the '+it.sec+' quiz','在 '+it.sec+' 測驗取得 3★（14/15 或以上）')+'</div>';return '';}
 function shopHTML(){var tabs=[['pets',IC('sparkle')+L('Science Pals','科學小夥伴')+'<span class="hotb">HOT</span>'],['power','❄️ '+L('Streak Freeze','連勝凍結')+(S.shields<FRZ_MAX?'':' ✓')],['food','🍙 '+L('Snacks','小食')],['wear','👒 '+L('Wardrobe','衣櫃')],['room','🛋️ '+L('Room decor','房間裝飾')],['quests','🎯 '+L('Quests','任務')],['clinic','🏥 '+L('Clinic','診所')+(S.ill&&S.ill.lv?' ❗':'')]];
  var h='<h1 class="h-sec">🛍️ '+L('Shop','商店')+'</h1><div class="tabs" role="tablist">'+tabs.map(function(t){return '<button role="tab" data-shop="'+t[0]+'" aria-selected="'+(shopTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</div>';
- if(shopTab==='wear'||shopTab==='room'||shopTab==='quests')h+='<div class="tlegend">'+ITEM_TIERS().map(function(t){return tierBadge({tier:t});}).join('')+'</div><p class="muted" style="margin:6px 0 0;font-size:14px">'+L('✦ Rare sub-topic items: 3★ in that quiz · 💎 Epic unit rewards: 3★ in a whole unit · 👑 Legendary: very hard milestones · 🌈 Mythic: long streaks and the toughest challenges.','✦ 稀有小節物品：該測驗 3★ · 💎 史詩單元獎勵：整個單元 3★ · 👑 傳說：非常困難的里程碑 · 🌈 神話：超長連續溫習及最艱難挑戰。')+'</p>'+(shopTab==='quests'?'<div class="row" style="margin-top:8px;gap:8px"><button class="btn small" data-fx="legendary">👑 '+L('Preview legendary unlock','預覽傳說級解鎖')+'</button><button class="btn small lav" data-fx="mythic">🌈 '+L('Preview mythic unlock','預覽神話級解鎖')+'</button></div>':'');
+ if(shopTab==='wear'||shopTab==='room'||shopTab==='quests')h+='<p class="muted" style="margin:10px 0 0;font-size:14px">'+L('✦ Rare sub-topic items: 3★ in that quiz · 💎 Epic unit rewards: 3★ in a whole unit · 👑 Legendary: very hard milestones · 🌈 Mythic: long streaks and the toughest challenges.','✦ 稀有小節物品：該測驗 3★ · 💎 史詩單元獎勵：整個單元 3★ · 👑 傳說：非常困難的里程碑 · 🌈 神話：超長連續溫習及最艱難挑戰。')+'</p>'+(shopTab==='quests'?'<div class="row" style="margin-top:8px;gap:8px"><button class="btn small" data-fx="legendary">👑 '+L('Preview legendary unlock','預覽傳說級解鎖')+'</button><button class="btn small lav" data-fx="mythic">🌈 '+L('Preview mythic unlock','預覽神話級解鎖')+'</button></div>':'');
  if(shopTab==='power')return h+frzShopHTML();if(shopTab==='clinic')return h+clinicHTML()+'<div class="items">'+medCards()+'</div>';
  if(shopTab==='food')h+='<div class="tipbar"><span>❤️ '+L('Favourite food = double happiness','最愛食物＝快樂加倍')+'</span><span>🧠 🪙 '+L('Boost foods multiply rewards','加成食物令獎勵倍增')+'</span><span>🍬 '+L('3 sugary snacks a day = sugar spike, then crash','一天 3 款高糖＝血糖急升又急跌')+'</span><span>🟢 🟡 🔴 '+L('Tap 🔍 for nutrition','按 🔍 看營養分析')+'</span></div>';
  if(shopTab==='room')h+='<div class="tipbar"><span>✨ '+L('Use 1 item from each group at the same time','每組可同時擺放 1 件')+'</span><span>👆 '+L('Tap again to take it away','再按一次即可收起')+'</span></div>';

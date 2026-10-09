@@ -90,15 +90,25 @@ function ok(c, m) { if (c) pass++; else { fail++; console.log('  FAIL: ' + m); }
       await pg.close();
     }
   }
-  { // 5. tier badges line up
+  { // 5. shop: no tier badge row on item tabs, badges never cut off, cards in a row equally tall
     const { pg } = await open();
-    await pg.evaluate(() => { const g = window.__game; g.S.started = true; g.AUTH.mode = 'guest'; g.AUTH.user = { email: 'g@s', guest: true }; g.render(); });
+    await pg.addStyleTag({ content: '*{font-family:"DejaVu Sans",Verdana,sans-serif!important}.item{content-visibility:visible!important}' }); // a wide font, like the real web font
+    await pg.setViewportSize({ width: 360, height: 900 });
+    await pg.evaluate(() => { const g = window.__game; g.S.started = true; g.S.lang = 'en'; g.AUTH.mode = 'guest'; g.AUTH.user = { email: 'g@s', guest: true }; g.render(); });
     await pg.evaluate(() => document.querySelector('[data-nav=shop]').click()); await pg.waitForTimeout(400);
-    await pg.evaluate(() => document.querySelector('[data-shop=wear]').click()); await pg.waitForTimeout(600);
-    const tops = await pg.evaluate(() => [...document.querySelectorAll('.tlegend .tier')].map(e => Math.round(e.getBoundingClientRect().top)));
-    ok(tops.length >= 5 && new Set(tops).size === 1, 'all tier badges sit on one line (' + tops.join(',') + ')');
-    const names = await pg.evaluate(() => [...document.querySelectorAll('.tlegend .tier')].map(e => e.className));
-    ok(!names.some(c => /t-prismatic/.test(c)), 'item tabs do not show the Prismatic tier (Science Pals only)');
+    for (const tab of ['pets', 'food', 'wear', 'room', 'quests']) {
+      await pg.evaluate(t => document.querySelector('[data-shop=' + t + ']').click(), tab); await pg.waitForTimeout(500);
+      await pg.evaluate(() => document.querySelectorAll('details.fold,details:not(.nutri)').forEach(d => d.open = true)); await pg.waitForTimeout(300);
+      const r = await pg.evaluate(() => {
+        const cut = [...document.querySelectorAll('.item .tier')].filter(e => e.offsetParent && e.scrollWidth > e.clientWidth + 1).map(e => e.textContent.trim());
+        const rows = {}; document.querySelectorAll('.items').forEach((g, gi) => [...g.children].forEach(it => { if (!it.offsetParent) return; const b = it.getBoundingClientRect(); (rows[gi + '|' + Math.round(b.top)] = rows[gi + '|' + Math.round(b.top)] || []).push(b.height); }));
+        const uneven = Object.values(rows).filter(h => Math.max(...h) - Math.min(...h) > 6).length;
+        return { cut, uneven, legend: !!document.querySelector('.tlegend') };
+      });
+      ok(r.cut.length === 0, tab + ': no tier badge is cut off (' + r.cut.slice(0, 3).join(', ') + ')');
+      ok(r.uneven === 0, tab + ': cards in each row are the same height');
+      if (tab !== 'pets' && tab !== 'food') ok(!r.legend, tab + ': no tier badge row');
+    }
     await pg.close();
   }
   await browser.close();
