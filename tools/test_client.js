@@ -96,7 +96,9 @@ function ok(c, m) { if (c) pass++; else { fail++; console.log('  FAIL: ' + m); }
     await pg.evaluate(() => document.querySelector('[data-nav=shop]').click()); await pg.waitForTimeout(400);
     await pg.evaluate(() => document.querySelector('[data-shop=wear]').click()); await pg.waitForTimeout(600);
     const tops = await pg.evaluate(() => [...document.querySelectorAll('.tlegend .tier')].map(e => Math.round(e.getBoundingClientRect().top)));
-    ok(tops.length >= 6 && new Set(tops).size === 1, 'all tier badges sit on one line (' + tops.join(',') + ')');
+    ok(tops.length >= 5 && new Set(tops).size === 1, 'all tier badges sit on one line (' + tops.join(',') + ')');
+    const names = await pg.evaluate(() => [...document.querySelectorAll('.tlegend .tier')].map(e => e.className));
+    ok(!names.some(c => /t-prismatic/.test(c)), 'item tabs do not show the Prismatic tier (Science Pals only)');
     await pg.close();
   }
   await browser.close();
