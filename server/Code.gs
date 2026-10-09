@@ -24,7 +24,7 @@ var REC_HEAD = ['記錄時間 Timestamp', '練習編號 Session ID', '電郵 Ema
 var PROG_HEAD = ['電郵 Email', '更新時間 Updated', '連續日數 Streak', '最佳連續 Best streak', '星星 Stars', '寵物等級 Pet level',
   '金幣 Coins', '寵物 Pet', '測驗次數 Quizzes', '待清除錯題 Mistakes', '已清除錯題 Cleared', '獎盃 Trophies',
   '最後溫習日 Last study day', '進度資料 Data (do not edit)', '總經驗 Total XP', '收藏 Collection', '傳說 Legendary', '神話 Mythic',
-  '諾貝爾火種 Nobel Sparks', '諾貝爾任務 Nobel tasks (per chapter)', '連勝有效日 Streak alive day'];
+  '諾貝爾火種 Nobel Sparks', '諾貝爾任務 Nobel tasks (per chapter)', '連勝有效日 Streak alive day', '凍結日 Freeze days'];
 var DATA_COL = 14; // column N holds the saved game data
 var MODES = { quiz: '測驗 Quiz', practice: '錯題練習 Mistake practice', study: '溫習筆記 Study notes', vocab: '詞彙跟讀 Vocab', match: '詞彙配對 Term Match',
   dict_listen: '默書（聽音）Dictation – listen', dict_meaning: '默書（看義／圖）Dictation – meaning/picture',
@@ -63,7 +63,9 @@ function doPost(e) {
   }
 }
 
-function out(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
+/* bump SERVER_VER whenever this file changes how data is saved or shown; the game warns teachers when the deployed copy is older */
+var SERVER_VER = 5;
+function out(o) { if (o && typeof o === 'object') o.sv = SERVER_VER; return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 function book() { return SpreadsheetApp.openById(PROPS.getProperty('SHEET_ID')); }
 function sheet(name, head) {
   var ss = book(), sh = ss.getSheetByName(name);
@@ -166,23 +168,29 @@ function findRow(sh, email) {
   for (var i = 0; i < col.length; i++) if (String(col[i][0]).toLowerCase() === email) return i + 2;
   return -1;
 }
+/* every XP point is also added to a pal, so the pals' XP (and the saved xpTotal) is a floor for Total XP */
+function stateXp(state) {
+  try { var o = JSON.parse(state), n = 0; for (var id in (o.pets || {})) n += Number(o.pets[id] && o.pets[id].xp) || 0; return num(Math.max(n, Number(o.xpTotal) || 0)); } catch (e) { return 0; }
+}
 function saveProgress(u, state, s) {
   state = String(state || '');
   if (state.length > 49000) throw 'progress too large';
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     var sh = sheet(PROG, PROG_HEAD);
-    var row = [u.email, new Date(), num(s.streak), num(s.best), num(s.stars), num(s.level), num(s.coins), clean(s.pet, 20),
-      num(s.quizzes), num(s.mistakes), num(s.cleared), num(s.trophies), clean(s.lastDay, 12), state,
-      num(s.xp), num(s.col), num(s.leg), num(s.myth), num(s.sp), clean(s.nq, 40), clean(s.alive || s.lastDay, 12)];
     if (sh.getLastColumn() < PROG_HEAD.length) {
       sh.getRange(1, 1, 1, PROG_HEAD.length).setValues([PROG_HEAD]).setFontWeight('bold').setBackground('#FFF1C5');
     }
-    var r = findRow(sh, u.email);
+    var r = findRow(sh, u.email), old = r > 0 ? sh.getRange(r, DATA_COL + 1, 1, 4).getValues()[0] : [0, 0, 0, 0];
+    var frz = Array.isArray(s.frz) ? s.frz.map(function (d) { return clean(d, 10); }).filter(function (d) { return /^\d{4}-\d\d-\d\d$/.test(d); }).slice(-30).join(',') : '';
+    var row = [u.email, new Date(), num(s.streak), num(s.best), num(s.stars), num(s.level), num(s.coins), clean(s.pet, 20),
+      num(s.quizzes), num(s.mistakes), num(s.cleared), num(s.trophies), clean(s.lastDay, 12), state,
+      Math.max(num(s.xp), stateXp(state), num(old[0])), Math.max(num(s.col), num(old[1])), Math.max(num(s.leg), num(old[2])), Math.max(num(s.myth), num(old[3])),
+      num(s.sp), clean(s.nq, 40), clean(s.alive || s.lastDay, 12), frz];
     if (r < 0) r = sh.getLastRow() + 1;
     sh.getRange(r, 13).setNumberFormat('@');
     sh.getRange(r, DATA_COL + 6).setNumberFormat('@'); // keep "63,31,0,…" as text
-    sh.getRange(r, DATA_COL + 7).setNumberFormat('@'); // keep the date as text
+    sh.getRange(r, DATA_COL + 7, 1, 2).setNumberFormat('@'); // keep the dates as text
     sh.getRange(r, 1, 1, row.length).setValues([row]);
   } finally { lock.releaseLock(); }
 }
@@ -277,6 +285,7 @@ function stats(days) {
       progress[String(r[0]).toLowerCase()] = { xp: Number(xs[i] && xs[i][0]) || 0, colN: Number(xs[i] && xs[i][1]) || 0, upd: r[1] instanceof Date ? r[1].toISOString() : '', streak: r[2], best: r[3], stars: r[4],
         level: r[5], coins: r[6], pet: r[7], quizzes: r[8], mistakes: r[9], cleared: r[10], trophies: r[11], lastDay: String(r[12] || '') };
     });
+    try { boardRows().forEach(function (b) { if (progress[b.e]) { progress[b.e].streakNow = b.st; progress[b.e].xp = Math.max(progress[b.e].xp, b.xp); } }); } catch (e3) { }
     // Nobel Time Quest columns (S, T): Sparks and task bit-masks per chapter, e.g. "63,31,0,0,0,0"
     if (ps.getLastColumn() >= DATA_COL + 6) {
       var em = ps.getRange(2, 1, ps.getLastRow() - 1, 1).getValues();
@@ -301,16 +310,41 @@ function dayText(v, tz) {
   if (v instanceof Date) return Utilities.formatDate(v, tz, 'yyyy-MM-dd');
   return String(v || '').slice(0, 10);
 }
-function boardRowFrom(r, x, u, yest, tz) {
+function boardRowFrom(r, x, u, yest, tz, act) {
   x = x || [];
   var last = dayText(r[12], tz), alive = dayText(x[6], tz) || last;
   if (last > alive) alive = last;
+  var game = alive >= yest ? Number(r[2]) || 0 : 0, rec = recStreak(act, String(x[7] || ''), alive, yest);
   return { e: String(r[0]).toLowerCase(), n: u.n, c: u.c, p: String(r[7] || ''), lv: Number(r[5]) || 0, xp: Number(x[0]) || 0,
-    st: alive >= yest ? Number(r[2]) || 0 : 0, col: Number(x[1]) || 0, g: Number(x[2]) || 0, m: Number(x[3]) || 0 };
+    st: Math.max(game, rec), sr: rec, col: Number(x[1]) || 0, g: Number(x[2]) || 0, m: Number(x[3]) || 0 };
+}
+/* days with a finished activity, per student, from the Science Records tab (the record the game cannot overwrite) */
+function actMap(tz) {
+  var sh = book().getSheetByName(REC), A = {};
+  if (!sh || sh.getLastRow() < 2) return A;
+  var last = sh.getLastRow(), from = Math.max(2, last - 60000), n = last - from + 1;
+  var ts = sh.getRange(from, 1, n, 1).getValues(), em = sh.getRange(from, 3, n, 1).getValues(), st = sh.getRange(from, 17, n, 1).getValues();
+  for (var i = 0; i < n; i++) {
+    if (st[i][0] !== STATUS.done) continue;
+    var t = ts[i][0]; if (!(t instanceof Date)) t = new Date(t); if (isNaN(t.getTime())) continue;
+    var e = String(em[i][0]).toLowerCase(); (A[e] || (A[e] = {}))[Utilities.formatDate(t, tz, 'yyyy-MM-dd')] = 1;
+  }
+  return A;
+}
+function prevDay(d) { var t = new Date(d + 'T12:00:00Z'); t.setUTCDate(t.getUTCDate() - 1); return t.toISOString().slice(0, 10); }
+/* same rule as the game: study days count, Streak-Freeze days bridge a gap but do not count */
+function recStreak(days, frz, alive, yest) {
+  if (!days) return 0;
+  var ks = Object.keys(days).sort(), last = ks[ks.length - 1]; if (!last) return 0;
+  if ((alive > last ? alive : last) < yest) return 0;
+  var F = {}; String(frz || '').split(',').forEach(function (d) { if (d) F[d] = 1; });
+  var n = 0, d = last;
+  for (var g = 0; g < 800; g++) { if (days[d]) n++; else if (!F[d]) break; d = prevDay(d); }
+  return n;
 }
 function boardYest(tz) { return Utilities.formatDate(new Date(Date.now() - 864e5), tz, 'yyyy-MM-dd'); }
 function boardRows() {
-  var cache = CacheService.getScriptCache(), hit = cache.get('board_rows4');
+  var cache = CacheService.getScriptCache(), hit = cache.get('board_rows5');
   if (hit) return JSON.parse(hit);
   var ss = book(), rows = [];
   var uv = ss.getSheetByName(PROPS.getProperty('USERS_SHEET') || USERS_DEFAULT).getDataRange().getValues();
@@ -323,14 +357,15 @@ function boardRows() {
   if (ps && ps.getLastRow() > 1) {
     var n = ps.getLastRow() - 1;
     var a = ps.getRange(2, 1, n, DATA_COL - 1).getValues();
-    var b = ps.getLastColumn() > DATA_COL ? ps.getRange(2, DATA_COL + 1, n, 7).getValues() : [];
-    var tz = Session.getScriptTimeZone() || 'Asia/Hong_Kong', yest = boardYest(tz);
+    var b = ps.getLastColumn() > DATA_COL ? ps.getRange(2, DATA_COL + 1, n, 8).getValues() : [];
+    var tz = Session.getScriptTimeZone() || 'Asia/Hong_Kong', yest = boardYest(tz), A = {};
+    try { A = actMap(tz); } catch (e) { }
     a.forEach(function (r, k) {
-      var u = info[String(r[0]).toLowerCase()];
-      if (u) rows.push(boardRowFrom(r, b[k], u, yest, tz));
+      var e = String(r[0]).toLowerCase(), u = info[e];
+      if (u) rows.push(boardRowFrom(r, b[k], u, yest, tz, A[e]));
     });
   }
-  cache.put('board_rows4', JSON.stringify(rows), 60);
+  cache.put('board_rows5', JSON.stringify(rows), 60);
   return rows;
 }
 /* the asking student's own row is always read fresh, so their own XP / items / streak never lag behind the cache */
@@ -339,13 +374,13 @@ function freshBoardRow(user) {
     var ps = book().getSheetByName(PROG); if (!ps) return null;
     var r = findRow(ps, user.email); if (r < 0) return null;
     var tz = Session.getScriptTimeZone() || 'Asia/Hong_Kong';
-    var a = ps.getRange(r, 1, 1, DATA_COL - 1).getValues()[0], b = ps.getLastColumn() > DATA_COL ? ps.getRange(r, DATA_COL + 1, 1, 7).getValues()[0] : [];
+    var a = ps.getRange(r, 1, 1, DATA_COL - 1).getValues()[0], b = ps.getLastColumn() > DATA_COL ? ps.getRange(r, DATA_COL + 1, 1, 8).getValues()[0] : [];
     return boardRowFrom(a, b, { n: fullName(user.zh, user.en), c: String(user.cls || '') }, boardYest(tz), tz);
   } catch (e) { return null; }
 }
 function board(user, scope) {
   var all = boardRows(), mine = freshBoardRow(user);
-  if (mine) { var at = -1; all.forEach(function (r, i) { if (r.e === mine.e) at = i; }); all = all.slice(); if (at >= 0) all[at] = mine; else all.push(mine); }
+  if (mine) { var at = -1; all.forEach(function (r, i) { if (r.e === mine.e) at = i; }); all = all.slice(); if (at >= 0) { mine.sr = all[at].sr || 0; mine.st = Math.max(mine.st, mine.sr); all[at] = mine; } else all.push(mine); }
   var rows = all.filter(function (r) { return scope === 'all' || r.c === user.cls; });
   function cat(key, extra) {
     var list = rows.filter(function (r) { return r[key] > 0; }).sort(function (x, y) { return y[key] - x[key] || y.xp - x.xp; });
@@ -391,7 +426,7 @@ function repairXp() {
       var lg = sheet('XP修復紀錄 XP Repair Log', ['時間 Time', '電郵 Email', '原本XP Before', '修復後XP After']);
       lg.getRange(lg.getLastRow() + 1, 1, fixed.length, 4).setValues(fixed);
     }
-    CacheService.getScriptCache().remove('board_rows4');
+    CacheService.getScriptCache().remove('board_rows5');
     Logger.log('XP repaired for ' + fixed.length + ' student(s).');
   } finally { lock.releaseLock(); }
 }
